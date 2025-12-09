@@ -50,9 +50,10 @@
             this.lblTitle.BackColor = System.Drawing.Color.White;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Maroon;
-            this.lblTitle.Location = new System.Drawing.Point(333, 27);
+            this.lblTitle.Location = new System.Drawing.Point(250, 22);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(481, 36);
+            this.lblTitle.Size = new System.Drawing.Size(389, 29);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "NEW MEMBER REGISTRATION";
             // 
@@ -60,9 +61,10 @@
             // 
             this.txtMemberID.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtMemberID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMemberID.Location = new System.Drawing.Point(240, 117);
+            this.txtMemberID.Location = new System.Drawing.Point(180, 95);
+            this.txtMemberID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtMemberID.Name = "txtMemberID";
-            this.txtMemberID.Size = new System.Drawing.Size(305, 27);
+            this.txtMemberID.Size = new System.Drawing.Size(230, 23);
             this.txtMemberID.TabIndex = 1;
             this.txtMemberID.Text = "Member ID";
             // 
@@ -70,9 +72,10 @@
             // 
             this.txtFullName.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtFullName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFullName.Location = new System.Drawing.Point(240, 167);
+            this.txtFullName.Location = new System.Drawing.Point(180, 136);
+            this.txtFullName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtFullName.Name = "txtFullName";
-            this.txtFullName.Size = new System.Drawing.Size(305, 27);
+            this.txtFullName.Size = new System.Drawing.Size(230, 23);
             this.txtFullName.TabIndex = 2;
             this.txtFullName.Text = "Full Name";
             // 
@@ -80,10 +83,11 @@
             // 
             this.txtAddress.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(240, 324);
+            this.txtAddress.Location = new System.Drawing.Point(180, 263);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(305, 52);
+            this.txtAddress.Size = new System.Drawing.Size(230, 43);
             this.txtAddress.TabIndex = 3;
             this.txtAddress.Text = "Address";
             // 
@@ -91,9 +95,10 @@
             // 
             this.txtContact.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtContact.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContact.Location = new System.Drawing.Point(240, 220);
+            this.txtContact.Location = new System.Drawing.Point(180, 179);
+            this.txtContact.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtContact.Name = "txtContact";
-            this.txtContact.Size = new System.Drawing.Size(305, 27);
+            this.txtContact.Size = new System.Drawing.Size(230, 23);
             this.txtContact.TabIndex = 4;
             this.txtContact.Text = "Contact";
             // 
@@ -101,9 +106,10 @@
             // 
             this.txtEmail.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(240, 268);
+            this.txtEmail.Location = new System.Drawing.Point(180, 218);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(305, 27);
+            this.txtEmail.Size = new System.Drawing.Size(230, 23);
             this.txtEmail.TabIndex = 5;
             this.txtEmail.Text = "Email";
             // 
@@ -112,9 +118,10 @@
             this.cmbMemberType.BackColor = System.Drawing.Color.PapayaWhip;
             this.cmbMemberType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMemberType.FormattingEnabled = true;
-            this.cmbMemberType.Location = new System.Drawing.Point(685, 116);
+            this.cmbMemberType.Location = new System.Drawing.Point(514, 94);
+            this.cmbMemberType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbMemberType.Name = "cmbMemberType";
-            this.cmbMemberType.Size = new System.Drawing.Size(133, 28);
+            this.cmbMemberType.Size = new System.Drawing.Size(101, 25);
             this.cmbMemberType.TabIndex = 6;
             this.cmbMemberType.Text = "Member Type";
             // 
@@ -123,18 +130,20 @@
             this.dtpExpDate.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpExpDate.CalendarMonthBackground = System.Drawing.Color.White;
             this.dtpExpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpExpDate.Location = new System.Drawing.Point(685, 308);
+            this.dtpExpDate.Location = new System.Drawing.Point(514, 250);
+            this.dtpExpDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dtpExpDate.Name = "dtpExpDate";
-            this.dtpExpDate.Size = new System.Drawing.Size(290, 27);
+            this.dtpExpDate.Size = new System.Drawing.Size(218, 23);
             this.dtpExpDate.TabIndex = 7;
             // 
             // dtpRegDate
             // 
             this.dtpRegDate.CalendarMonthBackground = System.Drawing.Color.White;
             this.dtpRegDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpRegDate.Location = new System.Drawing.Point(685, 220);
+            this.dtpRegDate.Location = new System.Drawing.Point(514, 179);
+            this.dtpRegDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dtpRegDate.Name = "dtpRegDate";
-            this.dtpRegDate.Size = new System.Drawing.Size(290, 27);
+            this.dtpRegDate.Size = new System.Drawing.Size(218, 23);
             this.dtpRegDate.TabIndex = 8;
             // 
             // lblRegTitle
@@ -142,9 +151,10 @@
             this.lblRegTitle.AutoSize = true;
             this.lblRegTitle.BackColor = System.Drawing.Color.PapayaWhip;
             this.lblRegTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegTitle.Location = new System.Drawing.Point(690, 197);
+            this.lblRegTitle.Location = new System.Drawing.Point(518, 160);
+            this.lblRegTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRegTitle.Name = "lblRegTitle";
-            this.lblRegTitle.Size = new System.Drawing.Size(140, 20);
+            this.lblRegTitle.Size = new System.Drawing.Size(118, 17);
             this.lblRegTitle.TabIndex = 9;
             this.lblRegTitle.Text = "Registration Date";
             // 
@@ -153,9 +163,10 @@
             this.lblExpDate.AutoSize = true;
             this.lblExpDate.BackColor = System.Drawing.Color.PapayaWhip;
             this.lblExpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExpDate.Location = new System.Drawing.Point(690, 285);
+            this.lblExpDate.Location = new System.Drawing.Point(518, 232);
+            this.lblExpDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblExpDate.Name = "lblExpDate";
-            this.lblExpDate.Size = new System.Drawing.Size(124, 20);
+            this.lblExpDate.Size = new System.Drawing.Size(104, 17);
             this.lblExpDate.TabIndex = 10;
             this.lblExpDate.Text = "Expiration Date";
             // 
@@ -164,9 +175,10 @@
             this.btnRegister.BackColor = System.Drawing.Color.Maroon;
             this.btnRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegister.ForeColor = System.Drawing.Color.White;
-            this.btnRegister.Location = new System.Drawing.Point(240, 457);
+            this.btnRegister.Location = new System.Drawing.Point(180, 371);
+            this.btnRegister.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(121, 51);
+            this.btnRegister.Size = new System.Drawing.Size(91, 41);
             this.btnRegister.TabIndex = 11;
             this.btnRegister.Text = "Register";
             this.btnRegister.UseVisualStyleBackColor = false;
@@ -176,20 +188,21 @@
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(424, 457);
+            this.btnCancel.Location = new System.Drawing.Point(318, 371);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(121, 51);
+            this.btnCancel.Size = new System.Drawing.Size(91, 41);
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             // 
             // RegistrationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1098, 597);
+            this.ClientSize = new System.Drawing.Size(819, 485);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.lblExpDate);
@@ -203,6 +216,7 @@
             this.Controls.Add(this.txtFullName);
             this.Controls.Add(this.txtMemberID);
             this.Controls.Add(this.lblTitle);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "RegistrationForm";
             this.Text = "Registration";
             this.Load += new System.EventHandler(this.RegistrationForm_Load);

@@ -46,11 +46,15 @@
             this.cmbRole.BackColor = System.Drawing.Color.PapayaWhip;
             this.cmbRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbRole.FormattingEnabled = true;
+            this.cmbRole.Items.AddRange(new object[] {
+            "Admin",
+            "Librarian"});
             this.cmbRole.Location = new System.Drawing.Point(631, 247);
             this.cmbRole.Name = "cmbRole";
-            this.cmbRole.Size = new System.Drawing.Size(290, 28);
+            this.cmbRole.Size = new System.Drawing.Size(290, 25);
             this.cmbRole.TabIndex = 0;
             this.cmbRole.Text = "Role";
+            this.cmbRole.SelectedIndexChanged += new System.EventHandler(this.cmbRole_SelectedIndexChanged);
             // 
             // txtUsername
             // 
@@ -62,6 +66,7 @@
             this.txtUsername.Size = new System.Drawing.Size(290, 35);
             this.txtUsername.TabIndex = 1;
             this.txtUsername.Text = "Username";
+            this.txtUsername.TextChanged += new System.EventHandler(this.txtUsername_TextChanged);
             // 
             // txtPassword
             // 
@@ -73,6 +78,7 @@
             this.txtPassword.Size = new System.Drawing.Size(290, 35);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.Text = "Password";
+            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // btnSignin
             // 
@@ -98,6 +104,7 @@
             this.btnSignUp.TabIndex = 4;
             this.btnSignUp.Text = "Sign Up";
             this.btnSignUp.UseVisualStyleBackColor = false;
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
             // label1
             // 
@@ -107,7 +114,7 @@
             this.label1.ForeColor = System.Drawing.Color.Maroon;
             this.label1.Location = new System.Drawing.Point(164, 158);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(197, 46);
+            this.label1.Size = new System.Drawing.Size(159, 37);
             this.label1.TabIndex = 5;
             this.label1.Text = "LIBRARY";
             // 
@@ -118,7 +125,7 @@
             this.label2.ForeColor = System.Drawing.Color.Maroon;
             this.label2.Location = new System.Drawing.Point(163, 229);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(317, 46);
+            this.label2.Size = new System.Drawing.Size(258, 37);
             this.label2.TabIndex = 6;
             this.label2.Text = "MANAGEMENT";
             // 
@@ -129,7 +136,7 @@
             this.label3.ForeColor = System.Drawing.Color.Maroon;
             this.label3.Location = new System.Drawing.Point(164, 307);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(190, 46);
+            this.label3.Size = new System.Drawing.Size(154, 37);
             this.label3.TabIndex = 7;
             this.label3.Text = "SYSTEM";
             // 
@@ -145,7 +152,7 @@
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
