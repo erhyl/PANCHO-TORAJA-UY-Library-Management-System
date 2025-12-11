@@ -42,15 +42,11 @@ namespace Project5LMS.Admin_Dashboard
         // BUTTON EVENTS (SIDE MENU)
         // =====================================================
 
+
+
         private void btn_dashboard_Click(object sender, EventArgs e)
         {
-            this.panelMain.Controls.Clear();  // remove whatever is inside
-            Label lbl = new Label();
-            lbl.Text = "Welcome to the Admin Dashboard!";
-            lbl.Dock = DockStyle.Fill;
-            lbl.TextAlign = ContentAlignment.MiddleCenter;
-            lbl.Font = new Font("Arial", 20, FontStyle.Bold);
-            this.panelMain.Controls.Add(lbl);
+            LoadFormInPanel(new Dashboard_Home());
 
         }
 
@@ -107,6 +103,9 @@ namespace Project5LMS.Admin_Dashboard
 
         }
 
-        
+        private void panelMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

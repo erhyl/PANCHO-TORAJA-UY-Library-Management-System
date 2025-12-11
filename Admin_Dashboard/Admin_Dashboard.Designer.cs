@@ -37,30 +37,30 @@
             this.btn_dashboard = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btn_Catalog = new System.Windows.Forms.Button();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.btn_Members = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btn_Circulation = new System.Windows.Forms.Button();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.btn_Fines = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.btn_Inventory = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btn_Fines = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btn_Search = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.btn_Logout = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.btn_Members = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
-            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -69,16 +69,16 @@
             this.flowLayoutPanel1.Controls.Add(this.panel1);
             this.flowLayoutPanel1.Controls.Add(this.panel2);
             this.flowLayoutPanel1.Controls.Add(this.panel3);
-            this.flowLayoutPanel1.Controls.Add(this.panel4);
-            this.flowLayoutPanel1.Controls.Add(this.panel5);
-            this.flowLayoutPanel1.Controls.Add(this.panel6);
-            this.flowLayoutPanel1.Controls.Add(this.panel7);
             this.flowLayoutPanel1.Controls.Add(this.panel9);
+            this.flowLayoutPanel1.Controls.Add(this.panel4);
+            this.flowLayoutPanel1.Controls.Add(this.panel6);
+            this.flowLayoutPanel1.Controls.Add(this.panel5);
+            this.flowLayoutPanel1.Controls.Add(this.panel7);
             this.flowLayoutPanel1.Controls.Add(this.panel8);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(255, 579);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(255, 886);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -180,10 +180,35 @@
             this.btn_Catalog.UseVisualStyleBackColor = true;
             this.btn_Catalog.Click += new System.EventHandler(this.btn_Catalog_Click);
             // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.btn_Members);
+            this.panel9.Location = new System.Drawing.Point(3, 147);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(252, 41);
+            this.panel9.TabIndex = 3;
+            // 
+            // btn_Members
+            // 
+            this.btn_Members.FlatAppearance.BorderSize = 0;
+            this.btn_Members.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Members.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Members.Image = ((System.Drawing.Image)(resources.GetObject("btn_Members.Image")));
+            this.btn_Members.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Members.Location = new System.Drawing.Point(-3, 0);
+            this.btn_Members.Name = "btn_Members";
+            this.btn_Members.Padding = new System.Windows.Forms.Padding(40, 0, 0, 0);
+            this.btn_Members.Size = new System.Drawing.Size(255, 41);
+            this.btn_Members.TabIndex = 0;
+            this.btn_Members.Text = "         Members";
+            this.btn_Members.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Members.UseVisualStyleBackColor = true;
+            this.btn_Members.Click += new System.EventHandler(this.btn_Members_Click);
+            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.btn_Circulation);
-            this.panel4.Location = new System.Drawing.Point(3, 147);
+            this.panel4.Location = new System.Drawing.Point(3, 194);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(252, 41);
             this.panel4.TabIndex = 2;
@@ -204,31 +229,6 @@
             this.btn_Circulation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Circulation.UseVisualStyleBackColor = true;
             this.btn_Circulation.Click += new System.EventHandler(this.btn_Circulation_Click);
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.btn_Fines);
-            this.panel5.Location = new System.Drawing.Point(3, 194);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(252, 41);
-            this.panel5.TabIndex = 2;
-            // 
-            // btn_Fines
-            // 
-            this.btn_Fines.FlatAppearance.BorderSize = 0;
-            this.btn_Fines.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Fines.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Fines.Image = ((System.Drawing.Image)(resources.GetObject("btn_Fines.Image")));
-            this.btn_Fines.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_Fines.Location = new System.Drawing.Point(0, 0);
-            this.btn_Fines.Name = "btn_Fines";
-            this.btn_Fines.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.btn_Fines.Size = new System.Drawing.Size(252, 41);
-            this.btn_Fines.TabIndex = 0;
-            this.btn_Fines.Text = "         Fines";
-            this.btn_Fines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_Fines.UseVisualStyleBackColor = true;
-            this.btn_Fines.Click += new System.EventHandler(this.btn_Fines_Click);
             // 
             // panel6
             // 
@@ -255,10 +255,35 @@
             this.btn_Inventory.UseVisualStyleBackColor = true;
             this.btn_Inventory.Click += new System.EventHandler(this.btn_Inventory_Click);
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btn_Fines);
+            this.panel5.Location = new System.Drawing.Point(3, 288);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(252, 41);
+            this.panel5.TabIndex = 2;
+            // 
+            // btn_Fines
+            // 
+            this.btn_Fines.FlatAppearance.BorderSize = 0;
+            this.btn_Fines.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Fines.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Fines.Image = ((System.Drawing.Image)(resources.GetObject("btn_Fines.Image")));
+            this.btn_Fines.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Fines.Location = new System.Drawing.Point(0, 0);
+            this.btn_Fines.Name = "btn_Fines";
+            this.btn_Fines.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.btn_Fines.Size = new System.Drawing.Size(252, 41);
+            this.btn_Fines.TabIndex = 0;
+            this.btn_Fines.Text = "         Fines";
+            this.btn_Fines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Fines.UseVisualStyleBackColor = true;
+            this.btn_Fines.Click += new System.EventHandler(this.btn_Fines_Click);
+            // 
             // panel7
             // 
             this.panel7.Controls.Add(this.btn_Search);
-            this.panel7.Location = new System.Drawing.Point(3, 288);
+            this.panel7.Location = new System.Drawing.Point(3, 335);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(252, 41);
             this.panel7.TabIndex = 2;
@@ -311,7 +336,7 @@
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(255, 0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(697, 50);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(1255, 50);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
             // panelMain
@@ -319,56 +344,34 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(255, 50);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(697, 529);
+            this.panelMain.Size = new System.Drawing.Size(1255, 836);
             this.panelMain.TabIndex = 3;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.btn_Members);
-            this.panel9.Location = new System.Drawing.Point(3, 335);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(252, 41);
-            this.panel9.TabIndex = 3;
-            // 
-            // btn_Members
-            // 
-            this.btn_Members.FlatAppearance.BorderSize = 0;
-            this.btn_Members.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Members.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Members.Image = ((System.Drawing.Image)(resources.GetObject("btn_Members.Image")));
-            this.btn_Members.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_Members.Location = new System.Drawing.Point(-3, 0);
-            this.btn_Members.Name = "btn_Members";
-            this.btn_Members.Padding = new System.Windows.Forms.Padding(40, 0, 0, 0);
-            this.btn_Members.Size = new System.Drawing.Size(255, 41);
-            this.btn_Members.TabIndex = 0;
-            this.btn_Members.Text = "         Members";
-            this.btn_Members.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_Members.UseVisualStyleBackColor = true;
-            this.btn_Members.Click += new System.EventHandler(this.btn_Members_Click);
+            this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
             // Admin_Dashboard
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(952, 579);
+            this.ClientSize = new System.Drawing.Size(1510, 886);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Admin_Dashboard";
             this.Text = "Admin_Dashboard";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Admin_Dashboard_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
