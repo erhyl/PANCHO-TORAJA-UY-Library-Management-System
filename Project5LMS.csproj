@@ -95,101 +95,178 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin_Dashboard\AddBookForm.cs">
+    <Compile Include="Data\DatabaseContext.cs" />
+    <Compile Include="Forms\Catalog\AddBookForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\AddBookForm.Designer.cs">
+    <Compile Include="Forms\Catalog\AddBookForm.Designer.cs">
       <DependentUpon>AddBookForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Admin_Dashboard.cs">
+    <Compile Include="Forms\Catalog\EditBookForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Admin_Dashboard.Designer.cs">
-      <DependentUpon>Admin_Dashboard.cs</DependentUpon>
+    <Compile Include="Forms\Catalog\EditBookForm.Designer.cs">
+      <DependentUpon>EditBookForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Catalog.cs">
+    <Compile Include="Forms\Catalog\ImportBooksForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Catalog.Designer.cs">
-      <DependentUpon>Catalog.cs</DependentUpon>
+    <Compile Include="Forms\Catalog\ImportBooksForm.Designer.cs">
+      <DependentUpon>ImportBooksForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Circulation.cs">
+    <Compile Include="Forms\Circulation\BorrowReturnForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Circulation.Designer.cs">
-      <DependentUpon>Circulation.cs</DependentUpon>
+    <Compile Include="Forms\Circulation\BorrowReturnForm.Designer.cs">
+      <DependentUpon>BorrowReturnForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Dashboard_Home.cs">
+    <Compile Include="Forms\Catalog\CatalogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Dashboard_Home.Designer.cs">
-      <DependentUpon>Dashboard_Home.cs</DependentUpon>
+    <Compile Include="Forms\Catalog\CatalogForm.Designer.cs">
+      <DependentUpon>CatalogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Fines.cs">
+    <Compile Include="Forms\Circulation\CirculationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Fines.Designer.cs">
-      <DependentUpon>Fines.cs</DependentUpon>
+    <Compile Include="Forms\Circulation\CirculationForm.Designer.cs">
+      <DependentUpon>CirculationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Inventory.cs">
+    <Compile Include="Forms\Dashboard\AdminDashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Inventory.Designer.cs">
-      <DependentUpon>Inventory.cs</DependentUpon>
+    <Compile Include="Forms\Dashboard\AdminDashboardForm.Designer.cs">
+      <DependentUpon>AdminDashboardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Members.cs">
+    <Compile Include="Forms\Dashboard\AdminMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Members.Designer.cs">
-      <DependentUpon>Members.cs</DependentUpon>
+    <Compile Include="Forms\Dashboard\AdminMainForm.Designer.cs">
+      <DependentUpon>AdminMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Admin_Dashboard\Search.cs">
+    <Compile Include="Forms\Dashboard\User_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin_Dashboard\Search.Designer.cs">
-      <DependentUpon>Search.cs</DependentUpon>
+    <Compile Include="Forms\Dashboard\User_Dashboard.Designer.cs">
+      <DependentUpon>User_Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\Fines\FinesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Fines\FinesForm.Designer.cs">
+      <DependentUpon>FinesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Inventory\InventoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Inventory\InventoryForm.Designer.cs">
+      <DependentUpon>InventoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Members\MembersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Members\MembersForm.Designer.cs">
+      <DependentUpon>MembersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Members\AddMemberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Members\AddMemberForm.Designer.cs">
+      <DependentUpon>AddMemberForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Search\CatalogSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Search\CatalogSearchForm.Designer.cs">
+      <DependentUpon>CatalogSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\CirculationController.cs" />
+    <Compile Include="Controllers\FinesController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Forms\Login\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Login\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Search\CirculationSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Search\CirculationSearchForm.Designer.cs">
+      <DependentUpon>CirculationSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Search\MemberSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Search\MemberSearchForm.Designer.cs">
+      <DependentUpon>MemberSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Helpers\FileImporter.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\PasswordHasher.cs" />
+    <Compile Include="Helpers\Validator.cs" />
+    <Compile Include="Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Interfaces\IBookService.cs" />
+    <Compile Include="Interfaces\ICirculationService.cs" />
+    <Compile Include="Interfaces\IFinesService.cs" />
+    <Compile Include="Interfaces\IMembersService.cs" />
+    <Compile Include="Interfaces\ISearchService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\CatalogItem.cs" />
+    <Compile Include="Models\CirculationRecord.cs" />
+    <Compile Include="Models\FineRecord.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
+    <Compile Include="Models\Librarian.cs" />
+    <Compile Include="Models\LibraryStaff.cs" />
+    <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\Form1.cs">
+    <Compile Include="Forms\Login\Registration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registration\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Login\Registration.Designer.cs">
+      <DependentUpon>Registration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registration\Member.cs" />
-    <EmbeddedResource Include="Admin_Dashboard\Admin_Dashboard.resx">
-      <DependentUpon>Admin_Dashboard.cs</DependentUpon>
+    <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\CatalogService.cs" />
+    <Compile Include="Services\CirculationService.cs" />
+    <Compile Include="Services\FinesService.cs" />
+    <Compile Include="Services\MembersService.cs" />
+    <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <EmbeddedResource Include="Forms\Catalog\CatalogForm.resx">
+      <DependentUpon>CatalogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Catalog.resx">
-      <DependentUpon>Catalog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Circulation\CirculationForm.resx">
+      <DependentUpon>CirculationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Circulation.resx">
-      <DependentUpon>Circulation.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Dashboard\AdminDashboardForm.resx">
+      <DependentUpon>AdminDashboardForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Dashboard_Home.resx">
-      <DependentUpon>Dashboard_Home.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Dashboard\AdminMainForm.resx">
+      <DependentUpon>AdminMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Fines.resx">
-      <DependentUpon>Fines.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Fines\FinesForm.resx">
+      <DependentUpon>FinesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Inventory.resx">
-      <DependentUpon>Inventory.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Inventory\InventoryForm.resx">
+      <DependentUpon>InventoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Members.resx">
-      <DependentUpon>Members.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Members\MembersForm.resx">
+      <DependentUpon>MembersForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin_Dashboard\Search.resx">
-      <DependentUpon>Search.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Search\CatalogSearchForm.resx">
+      <DependentUpon>CatalogSearchForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Login\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -200,8 +277,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Registration\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Login\Registration.resx">
+      <DependentUpon>Registration.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -218,7 +295,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Login\" />
+    <Folder Include="Resources\Images\BookCovers\" />
+    <Folder Include="Resources\Images\Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
