@@ -10,7 +10,7 @@ namespace Project5LMS.Data
 {
     public class DatabaseContext
     {
-        private readonly string connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
+        public readonly string connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
 
         public MySqlConnection GetConnection()
         {

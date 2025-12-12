@@ -102,6 +102,12 @@
     <Compile Include="Forms\Catalog\AddBookForm.Designer.cs">
       <DependentUpon>AddBookForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Catalog\BookCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Catalog\BookCard.Designer.cs">
+      <DependentUpon>BookCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Catalog\EditBookForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +247,12 @@
     <Compile Include="Services\MembersService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <EmbeddedResource Include="Forms\Catalog\AddBookForm.resx">
+      <DependentUpon>AddBookForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Catalog\BookCard.resx">
+      <DependentUpon>BookCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Catalog\CatalogForm.resx">
       <DependentUpon>CatalogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -276,6 +288,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Forms\Login\Registration.resx">
       <DependentUpon>Registration.cs</DependentUpon>
@@ -297,6 +310,9 @@
   <ItemGroup>
     <Folder Include="Resources\Images\BookCovers\" />
     <Folder Include="Resources\Images\Icons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Images\no_image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

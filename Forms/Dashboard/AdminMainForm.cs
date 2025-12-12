@@ -1,5 +1,5 @@
 ﻿using Project5LMS.Admin_Dashboard;
-using Project5LMS.Forms.Dashboard; // Make sure your forms namespace is correct
+using Project5LMS.Forms.Dashboard; 
 using System;
 using System.Windows.Forms;
 
@@ -15,11 +15,11 @@ namespace Project5LMS.Forms.Dashboard
         // Helper method to load forms inside panelMain
         private void LoadFormInPanel(Form form)
         {
-            MainPanel.Controls.Clear();   // Clear previous form
-            form.TopLevel = false;        // Non-top-level
+            MainPanel.Controls.Clear();   
+            form.TopLevel = false;        
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
-            MainPanel.Controls.Add(form); // Add form to panel
+            MainPanel.Controls.Add(form); 
             MainPanel.Tag = form;
             form.Show();
         }
