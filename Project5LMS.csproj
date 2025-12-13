@@ -210,6 +210,7 @@
       <DependentUpon>MemberSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\FileImporter.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
@@ -270,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inventory\InventoryForm.resx">
       <DependentUpon>InventoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Members\AddMemberForm.resx">
+      <DependentUpon>AddMemberForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Members\MembersForm.resx">
       <DependentUpon>MembersForm.cs</DependentUpon>

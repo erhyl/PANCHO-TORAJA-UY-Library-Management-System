@@ -2,11 +2,14 @@
 using Project5LMS.Forms.Dashboard; 
 using System;
 using System.Windows.Forms;
+using Project5LMS.Controllers;
 
 namespace Project5LMS.Forms.Dashboard
 {
     public partial class AdminMainForm : Form
     {
+        private string connectionString = "server=localhost;user=root;password=1234;database=lmsdb;";
+
         public AdminMainForm()
         {
             InitializeComponent();
@@ -42,7 +45,7 @@ namespace Project5LMS.Forms.Dashboard
 
         private void btn_Members_Click(object sender, EventArgs e)
         {
-            LoadFormInPanel(new MembersForm());
+            LoadFormInPanel(new MembersForm()); // no argument needed now
         }
 
         private void btn_Circulation_Click(object sender, EventArgs e)
