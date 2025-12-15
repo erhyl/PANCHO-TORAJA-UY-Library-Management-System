@@ -119,7 +119,7 @@
             this.panel6.Controls.Add(this.btn_Delete);
             this.panel6.Controls.Add(this.btn_EditBook);
             this.panel6.Controls.Add(this.btn_AddCopies);
-            this.panel6.Location = new System.Drawing.Point(591, 12);
+            this.panel6.Location = new System.Drawing.Point(436, 12);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(585, 54);
             this.panel6.TabIndex = 7;
@@ -179,7 +179,7 @@
             this.dta_Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dta_Grid1.Location = new System.Drawing.Point(12, 144);
             this.dta_Grid1.Name = "dta_Grid1";
-            this.dta_Grid1.Size = new System.Drawing.Size(1130, 315);
+            this.dta_Grid1.Size = new System.Drawing.Size(1009, 315);
             this.dta_Grid1.TabIndex = 10;
             this.dta_Grid1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dta_Grid1_CellContentClick);
             // 
@@ -214,7 +214,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1520, 927);
+            this.ClientSize = new System.Drawing.Size(1386, 788);
             this.ControlBox = false;
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
