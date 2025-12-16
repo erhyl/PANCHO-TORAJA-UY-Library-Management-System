@@ -42,9 +42,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dta_Grid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_addBook
@@ -114,6 +120,9 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.pictureBox3);
+            this.panel6.Controls.Add(this.pictureBox2);
+            this.panel6.Controls.Add(this.pictureBox1);
             this.panel6.Controls.Add(this.btn_Import);
             this.panel6.Controls.Add(this.btn_addBook);
             this.panel6.Controls.Add(this.btn_Delete);
@@ -127,7 +136,7 @@
             // txtSearch
             // 
             this.txtSearch.BackColor = System.Drawing.Color.White;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Location = new System.Drawing.Point(3, 8);
             this.txtSearch.Multiline = true;
             this.txtSearch.Name = "txtSearch";
@@ -148,7 +157,6 @@
             // cmbStatus
             // 
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbStatus.FormattingEnabled = true;
             this.cmbStatus.Location = new System.Drawing.Point(519, 8);
             this.cmbStatus.Name = "cmbStatus";
@@ -159,7 +167,6 @@
             // cmbTypes
             // 
             this.cmbTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTypes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbTypes.FormattingEnabled = true;
             this.cmbTypes.Items.AddRange(new object[] {
             "",
@@ -210,10 +217,47 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "Status";
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Orange;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Image = global::Project5LMS.Properties.Resources.editButton;
+            this.pictureBox2.Location = new System.Drawing.Point(132, 17);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(20, 19);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Orange;
+            this.pictureBox1.BackgroundImage = global::Project5LMS.Properties.Resources.add_button;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(15, 17);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(20, 19);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Orange;
+            this.pictureBox3.BackgroundImage = global::Project5LMS.Properties.Resources.add_button;
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox3.Location = new System.Drawing.Point(246, 17);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(20, 19);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 16;
+            this.pictureBox3.TabStop = false;
+            // 
             // CatalogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1386, 788);
             this.ControlBox = false;
             this.Controls.Add(this.label3);
@@ -231,6 +275,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dta_Grid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,5 +298,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }

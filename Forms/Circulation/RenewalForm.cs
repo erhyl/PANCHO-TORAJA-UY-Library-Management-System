@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Project5LMS.Forms.Circulation
+{
+    public partial class RenewalForm : Form
+    {
+        public RenewalForm()
+        {
+            InitializeComponent();
+        }
+
+        private void FineCalculatorForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

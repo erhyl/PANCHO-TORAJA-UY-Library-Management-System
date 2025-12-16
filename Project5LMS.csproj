@@ -132,11 +132,35 @@
     <Compile Include="Forms\Catalog\CatalogForm.Designer.cs">
       <DependentUpon>CatalogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Circulation\CheckoutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Circulation\CheckoutForm.Designer.cs">
+      <DependentUpon>CheckoutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Circulation\CirculationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Circulation\CirculationForm.Designer.cs">
       <DependentUpon>CirculationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Circulation\HistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Circulation\HistoryForm.Designer.cs">
+      <DependentUpon>HistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Circulation\RenewalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Circulation\RenewalForm.Designer.cs">
+      <DependentUpon>RenewalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Circulation\ReturnBookForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Circulation\ReturnBookForm.Designer.cs">
+      <DependentUpon>ReturnBookForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dashboard\AdminDashboardForm.cs">
       <SubType>Form</SubType>
@@ -155,6 +179,12 @@
     </Compile>
     <Compile Include="Forms\Dashboard\User_Dashboard.Designer.cs">
       <DependentUpon>User_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Fines\FineCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Fines\FineCalculatorForm.Designer.cs">
+      <DependentUpon>FineCalculatorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Fines\FinesForm.cs">
       <SubType>Form</SubType>
@@ -179,6 +209,12 @@
     </Compile>
     <Compile Include="Forms\Members\AddMemberForm.Designer.cs">
       <DependentUpon>AddMemberForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Reservation\ReservationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reservation\ReservationForm.Designer.cs">
+      <DependentUpon>ReservationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Search\CatalogSearchForm.cs">
       <SubType>Form</SubType>
@@ -257,14 +293,29 @@
     <EmbeddedResource Include="Forms\Catalog\CatalogForm.resx">
       <DependentUpon>CatalogForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Circulation\CheckoutForm.resx">
+      <DependentUpon>CheckoutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Circulation\CirculationForm.resx">
       <DependentUpon>CirculationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Circulation\HistoryForm.resx">
+      <DependentUpon>HistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Circulation\RenewalForm.resx">
+      <DependentUpon>RenewalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Circulation\ReturnBookForm.resx">
+      <DependentUpon>ReturnBookForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dashboard\AdminDashboardForm.resx">
       <DependentUpon>AdminDashboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dashboard\AdminMainForm.resx">
       <DependentUpon>AdminMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Fines\FineCalculatorForm.resx">
+      <DependentUpon>FineCalculatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Fines\FinesForm.resx">
       <DependentUpon>FinesForm.cs</DependentUpon>
@@ -277,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Members\MembersForm.resx">
       <DependentUpon>MembersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Reservation\ReservationForm.resx">
+      <DependentUpon>ReservationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Search\CatalogSearchForm.resx">
       <DependentUpon>CatalogSearchForm.cs</DependentUpon>
@@ -316,6 +370,8 @@
     <Folder Include="Resources\Images\Icons\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\add button.png" />
+    <None Include="Resources\editButton.png" />
     <Content Include="Resources\Images\no_image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,9 @@
 ﻿using Project5LMS.Admin_Dashboard;
+using Project5LMS.Controllers;
 using Project5LMS.Forms.Dashboard; 
+using Project5LMS.Forms.Reservation;
 using System;
 using System.Windows.Forms;
-using Project5LMS.Controllers;
 
 namespace Project5LMS.Forms.Dashboard
 {
@@ -76,6 +77,11 @@ namespace Project5LMS.Forms.Dashboard
             login.Show();
         }
 
+        private void btn_Reservation_Click(object sender, EventArgs e)
+        {
+            LoadFormInPanel(new ReservationForm());
+        }
+
         // Optional paint events
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
         private void panel1_Paint(object sender, PaintEventArgs e) { }
@@ -93,5 +99,7 @@ namespace Project5LMS.Forms.Dashboard
         {
 
         }
+
+        
     }
 }

@@ -184,6 +184,7 @@
             this.Controls.Add(this.btnSave);
             this.Name = "AddMemberForm";
             this.Text = "Add / Edit Member";
+            this.Load += new System.EventHandler(this.AddMemberForm_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 

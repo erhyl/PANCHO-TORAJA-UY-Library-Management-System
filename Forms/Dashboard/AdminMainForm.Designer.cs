@@ -64,6 +64,9 @@
             this.btn_Logout = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.btn_Reservation = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -86,6 +89,8 @@
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            this.panel11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -96,6 +101,7 @@
             this.flowLayoutPanel1.Controls.Add(this.panel5);
             this.flowLayoutPanel1.Controls.Add(this.panel4);
             this.flowLayoutPanel1.Controls.Add(this.panel6);
+            this.flowLayoutPanel1.Controls.Add(this.panel11);
             this.flowLayoutPanel1.Controls.Add(this.panel7);
             this.flowLayoutPanel1.Controls.Add(this.panel9);
             this.flowLayoutPanel1.Controls.Add(this.panel8);
@@ -254,7 +260,7 @@
             this.panel6.Controls.Add(this.btn_Circulation);
             this.panel6.Location = new System.Drawing.Point(3, 254);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(350, 53);
+            this.panel6.Size = new System.Drawing.Size(350, 47);
             this.panel6.TabIndex = 7;
             // 
             // pictureBox5
@@ -276,7 +282,7 @@
             this.btn_Circulation.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Circulation.Location = new System.Drawing.Point(-27, -5);
             this.btn_Circulation.Name = "btn_Circulation";
-            this.btn_Circulation.Size = new System.Drawing.Size(350, 58);
+            this.btn_Circulation.Size = new System.Drawing.Size(350, 55);
             this.btn_Circulation.TabIndex = 0;
             this.btn_Circulation.Text = "           Circulation";
             this.btn_Circulation.UseVisualStyleBackColor = false;
@@ -286,9 +292,9 @@
             // 
             this.panel7.Controls.Add(this.pictureBox6);
             this.panel7.Controls.Add(this.btn_Fines);
-            this.panel7.Location = new System.Drawing.Point(3, 313);
+            this.panel7.Location = new System.Drawing.Point(3, 364);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(350, 57);
+            this.panel7.Size = new System.Drawing.Size(305, 54);
             this.panel7.TabIndex = 8;
             // 
             // pictureBox6
@@ -310,7 +316,7 @@
             this.btn_Fines.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Fines.Location = new System.Drawing.Point(-24, 0);
             this.btn_Fines.Name = "btn_Fines";
-            this.btn_Fines.Size = new System.Drawing.Size(347, 57);
+            this.btn_Fines.Size = new System.Drawing.Size(347, 43);
             this.btn_Fines.TabIndex = 0;
             this.btn_Fines.Text = "           Fines";
             this.btn_Fines.UseVisualStyleBackColor = false;
@@ -320,18 +326,18 @@
             // 
             this.panel9.Controls.Add(this.pictureBox8);
             this.panel9.Controls.Add(this.btn_Inventory);
-            this.panel9.Location = new System.Drawing.Point(3, 376);
+            this.panel9.Location = new System.Drawing.Point(3, 424);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(350, 57);
+            this.panel9.Size = new System.Drawing.Size(350, 45);
             this.panel9.TabIndex = 9;
             // 
             // pictureBox8
             // 
             this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(54, 12);
+            this.pictureBox8.Location = new System.Drawing.Point(52, 3);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(49, 37);
+            this.pictureBox8.Size = new System.Drawing.Size(47, 37);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox8.TabIndex = 3;
             this.pictureBox8.TabStop = false;
@@ -343,9 +349,9 @@
             this.btn_Inventory.FlatAppearance.BorderSize = 0;
             this.btn_Inventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Inventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Inventory.Location = new System.Drawing.Point(-24, -3);
+            this.btn_Inventory.Location = new System.Drawing.Point(-24, -11);
             this.btn_Inventory.Name = "btn_Inventory";
-            this.btn_Inventory.Size = new System.Drawing.Size(350, 72);
+            this.btn_Inventory.Size = new System.Drawing.Size(350, 56);
             this.btn_Inventory.TabIndex = 0;
             this.btn_Inventory.Text = "           Inventory";
             this.btn_Inventory.UseVisualStyleBackColor = false;
@@ -355,16 +361,16 @@
             // 
             this.panel8.Controls.Add(this.pictureBox7);
             this.panel8.Controls.Add(this.btn_Search);
-            this.panel8.Location = new System.Drawing.Point(3, 439);
+            this.panel8.Location = new System.Drawing.Point(3, 475);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(350, 55);
+            this.panel8.Size = new System.Drawing.Size(350, 41);
             this.panel8.TabIndex = 8;
             // 
             // pictureBox7
             // 
             this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(56, 12);
+            this.pictureBox7.Location = new System.Drawing.Point(49, -1);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(50, 35);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -377,9 +383,9 @@
             this.btn_Search.FlatAppearance.BorderSize = 0;
             this.btn_Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Search.Location = new System.Drawing.Point(-24, -6);
+            this.btn_Search.Location = new System.Drawing.Point(-6, -12);
             this.btn_Search.Name = "btn_Search";
-            this.btn_Search.Size = new System.Drawing.Size(350, 62);
+            this.btn_Search.Size = new System.Drawing.Size(311, 53);
             this.btn_Search.TabIndex = 0;
             this.btn_Search.Text = "           Search";
             this.btn_Search.UseVisualStyleBackColor = false;
@@ -389,7 +395,7 @@
             // 
             this.settingsPanel.Controls.Add(this.pictureBox10);
             this.settingsPanel.Controls.Add(this.btn_Settings);
-            this.settingsPanel.Location = new System.Drawing.Point(3, 500);
+            this.settingsPanel.Location = new System.Drawing.Point(3, 522);
             this.settingsPanel.Name = "settingsPanel";
             this.settingsPanel.Size = new System.Drawing.Size(350, 51);
             this.settingsPanel.TabIndex = 10;
@@ -398,7 +404,7 @@
             // 
             this.pictureBox10.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
-            this.pictureBox10.Location = new System.Drawing.Point(54, 1);
+            this.pictureBox10.Location = new System.Drawing.Point(49, 3);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(50, 39);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -420,9 +426,9 @@
             // 
             // panel12
             // 
-            this.panel12.Location = new System.Drawing.Point(3, 557);
+            this.panel12.Location = new System.Drawing.Point(3, 579);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(350, 33);
+            this.panel12.Size = new System.Drawing.Size(305, 33);
             this.panel12.TabIndex = 11;
             // 
             // panel10
@@ -430,9 +436,9 @@
             this.panel10.Controls.Add(this.pictureBox11);
             this.panel10.Controls.Add(this.pictureBox9);
             this.panel10.Controls.Add(this.btn_Logout);
-            this.panel10.Location = new System.Drawing.Point(3, 596);
+            this.panel10.Location = new System.Drawing.Point(3, 618);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(350, 57);
+            this.panel10.Size = new System.Drawing.Size(305, 57);
             this.panel10.TabIndex = 9;
             // 
             // pictureBox11
@@ -464,9 +470,9 @@
             this.btn_Logout.FlatAppearance.BorderSize = 0;
             this.btn_Logout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Logout.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Logout.Location = new System.Drawing.Point(3, -3);
+            this.btn_Logout.Location = new System.Drawing.Point(19, 0);
             this.btn_Logout.Name = "btn_Logout";
-            this.btn_Logout.Size = new System.Drawing.Size(350, 57);
+            this.btn_Logout.Size = new System.Drawing.Size(302, 57);
             this.btn_Logout.TabIndex = 0;
             this.btn_Logout.Text = "Admin";
             this.btn_Logout.UseVisualStyleBackColor = false;
@@ -490,6 +496,40 @@
             this.MainPanel.Size = new System.Drawing.Size(1062, 675);
             this.MainPanel.TabIndex = 2;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.pictureBox12);
+            this.panel11.Controls.Add(this.btn_Reservation);
+            this.panel11.Location = new System.Drawing.Point(3, 307);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(305, 51);
+            this.panel11.TabIndex = 11;
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox12.Image")));
+            this.pictureBox12.Location = new System.Drawing.Point(52, 3);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(47, 39);
+            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox12.TabIndex = 3;
+            this.pictureBox12.TabStop = false;
+            // 
+            // btn_Reservation
+            // 
+            this.btn_Reservation.BackColor = System.Drawing.Color.LightGray;
+            this.btn_Reservation.FlatAppearance.BorderSize = 0;
+            this.btn_Reservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Reservation.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Reservation.Location = new System.Drawing.Point(9, -7);
+            this.btn_Reservation.Name = "btn_Reservation";
+            this.btn_Reservation.Size = new System.Drawing.Size(296, 55);
+            this.btn_Reservation.TabIndex = 0;
+            this.btn_Reservation.Text = "          Reservation";
+            this.btn_Reservation.UseVisualStyleBackColor = false;
+            this.btn_Reservation.Click += new System.EventHandler(this.btn_Reservation_Click);
             // 
             // AdminMainForm
             // 
@@ -526,6 +566,8 @@
             this.panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            this.panel11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -567,5 +609,8 @@
         private System.Windows.Forms.Button btn_Settings;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.Button btn_Reservation;
     }
 }

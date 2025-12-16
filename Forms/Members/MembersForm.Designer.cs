@@ -122,6 +122,7 @@
             this.btnDeleteMember.TabIndex = 4;
             this.btnDeleteMember.Text = "Delete Member";
             this.btnDeleteMember.UseVisualStyleBackColor = false;
+            this.btnDeleteMember.Click += new System.EventHandler(this.btnDeleteMember_Click);
             // 
             // label1
             // 
@@ -154,6 +155,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(696, 450);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -166,7 +168,7 @@
             this.Controls.Add(this.dta_Members);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MembersForm";
-            this.Text = "Members";
+            this.Text = "h";
             this.Load += new System.EventHandler(this.MembersForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dta_Members)).EndInit();
             this.panel1.ResumeLayout(false);

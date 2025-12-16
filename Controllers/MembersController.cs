@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Data;
+using System.Windows.Forms;
 
 namespace Project5LMS.Controllers
 {
@@ -120,5 +121,85 @@ namespace Project5LMS.Controllers
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
+
+        public static class MemberValidation
+        {
+            // This method validates the input fields and returns true if valid, false otherwise.
+            // It takes the UI controls as arguments.
+            public static bool ValidateAddMemberForm(
+                TextBox txtFullName,
+                TextBox txtEmail,
+                ComboBox cmbMemberType,
+                ComboBox cmbStatus)
+            {
+                // Check if FullName is empty
+                if (string.IsNullOrWhiteSpace(txtFullName.Text))
+                {
+                    MessageBox.Show("Please enter the Full Name.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtFullName.Focus();
+                    return false;
+                }
+
+                // Check if Email is empty
+                if (string.IsNullOrWhiteSpace(txtEmail.Text))
+                {
+                    MessageBox.Show("Please enter the Email address.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
+                    return false;
+                }
+
+                // Check if MemberType is selected
+                if (cmbMemberType.SelectedIndex == -1 || string.IsNullOrWhiteSpace(cmbMemberType.Text))
+                {
+                    MessageBox.Show("Please select a Member Type.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbMemberType.Focus();
+                    return false;
+                }
+
+                // Check if Status is selected
+                if (cmbStatus.SelectedIndex == -1 || string.IsNullOrWhiteSpace(cmbStatus.Text))
+                {
+                    MessageBox.Show("Please select a Status.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbStatus.Focus();
+                    return false;
+                }
+
+                // All checks pass
+                return true;
+            }
+        }
+
+        public bool DeleteMember(int memberId)
+        {
+            string query = "DELETE FROM Members WHERE MemberID = @ID";
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", memberId);
+
+                    conn.Open();
+                    // ExecuteNonQuery returns the number of rows affected. 
+                    // If rows > 0, the deletion was successful.
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log the specific MySQL error (e.g., foreign key constraint failure)
+                MessageBox.Show($"Database Error during deletion: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Log general exception
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
+
 }

@@ -55,7 +55,7 @@
             // 
             this.txtTitle.Location = new System.Drawing.Point(93, 37);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(100, 20);
+            this.txtTitle.Size = new System.Drawing.Size(121, 20);
             this.txtTitle.TabIndex = 0;
             this.txtTitle.TextChanged += new System.EventHandler(this.txtTitle_TextChanged);
             // 
@@ -63,7 +63,7 @@
             // 
             this.txtAuthor.Location = new System.Drawing.Point(93, 63);
             this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.Size = new System.Drawing.Size(100, 20);
+            this.txtAuthor.Size = new System.Drawing.Size(121, 20);
             this.txtAuthor.TabIndex = 1;
             this.txtAuthor.TextChanged += new System.EventHandler(this.txtAuthor_TextChanged);
             // 
@@ -71,7 +71,7 @@
             // 
             this.txtISBN.Location = new System.Drawing.Point(93, 89);
             this.txtISBN.Name = "txtISBN";
-            this.txtISBN.Size = new System.Drawing.Size(100, 20);
+            this.txtISBN.Size = new System.Drawing.Size(121, 20);
             this.txtISBN.TabIndex = 2;
             this.txtISBN.TextChanged += new System.EventHandler(this.txtISBN_TextChanged);
             // 
@@ -79,7 +79,7 @@
             // 
             this.txtPublisher.Location = new System.Drawing.Point(93, 115);
             this.txtPublisher.Name = "txtPublisher";
-            this.txtPublisher.Size = new System.Drawing.Size(100, 20);
+            this.txtPublisher.Size = new System.Drawing.Size(121, 20);
             this.txtPublisher.TabIndex = 3;
             this.txtPublisher.TextChanged += new System.EventHandler(this.txtPublisher_TextChanged);
             // 
@@ -87,7 +87,7 @@
             // 
             this.txtYear.Location = new System.Drawing.Point(93, 141);
             this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(100, 20);
+            this.txtYear.Size = new System.Drawing.Size(121, 20);
             this.txtYear.TabIndex = 4;
             this.txtYear.TextChanged += new System.EventHandler(this.txtYear_TextChanged);
             // 
@@ -104,7 +104,7 @@
             // 
             this.txtCopies.Location = new System.Drawing.Point(93, 194);
             this.txtCopies.Name = "txtCopies";
-            this.txtCopies.Size = new System.Drawing.Size(100, 20);
+            this.txtCopies.Size = new System.Drawing.Size(121, 20);
             this.txtCopies.TabIndex = 6;
             this.txtCopies.TextChanged += new System.EventHandler(this.txtCopies_TextChanged);
             // 
@@ -112,7 +112,7 @@
             // 
             this.txtBarcode.Location = new System.Drawing.Point(93, 220);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(100, 20);
+            this.txtBarcode.Size = new System.Drawing.Size(121, 20);
             this.txtBarcode.TabIndex = 7;
             this.txtBarcode.TextChanged += new System.EventHandler(this.txtBarcode_TextChanged);
             // 

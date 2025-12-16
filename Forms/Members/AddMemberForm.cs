@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using static Project5LMS.Controllers.MembersController;
 
 namespace Project5LMS.Admin_Dashboard
 {
@@ -56,8 +57,20 @@ namespace Project5LMS.Admin_Dashboard
             }
         }
 
+        
+
         private void btnSave_Click(object sender, EventArgs e)
         {
+            if (!MemberValidation.ValidateAddMemberForm(
+                 txtFullName,
+                 txtEmail,
+                 cmbMemberType,
+                 cmbStatus))
+            {
+                // Stop execution if validation fails
+                return;
+            }
+
             string fullName = txtFullName.Text.Trim();
             string email = txtEmail.Text.Trim();
             string type = cmbMemberType.Text;
@@ -88,6 +101,11 @@ namespace Project5LMS.Admin_Dashboard
             {
                 MessageBox.Show("Failed to save member.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void AddMemberForm_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

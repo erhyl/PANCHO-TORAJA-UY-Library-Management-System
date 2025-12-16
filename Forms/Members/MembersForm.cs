@@ -99,5 +99,10 @@ namespace Project5LMS.Admin_Dashboard
                     LoadMembers();
             }
         }
+
+        private void btnDeleteMember_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
