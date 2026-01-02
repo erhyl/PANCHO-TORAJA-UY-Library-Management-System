@@ -40,20 +40,20 @@ namespace Project5LMS.Admin_Dashboard
             // Style all textboxes and comboboxes
             foreach (Control control in panelFormContent.Controls)
             {
-                if (control is TextBox)
+                if (control is TextBox textBox)
                 {
-                    control.BackColor = Color.White;
-                    control.BorderStyle = BorderStyle.FixedSingle;
+                    textBox.BackColor = Color.White;
+                    textBox.BorderStyle = BorderStyle.FixedSingle;
                 }
-                else if (control is ComboBox)
+                else if (control is ComboBox comboBox)
                 {
-                    control.BackColor = Color.White;
-                    ((ComboBox)control).FlatStyle = FlatStyle.Flat;
+                    comboBox.BackColor = Color.White;
+                    comboBox.FlatStyle = FlatStyle.Flat;
                 }
-                else if (control is DateTimePicker)
+                else if (control is DateTimePicker dateTimePicker)
                 {
-                    control.BackColor = Color.White;
-                    ((DateTimePicker)control).CalendarForeColor = Color.Black;
+                    dateTimePicker.BackColor = Color.White;
+                    dateTimePicker.CalendarForeColor = Color.Black;
                 }
             }
         }

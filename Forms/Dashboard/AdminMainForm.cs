@@ -3,6 +3,9 @@ using Project5LMS.Forms.Dashboard;
 using System;
 using System.Windows.Forms;
 using Project5LMS.Controllers;
+using Project5LMS.Forms.Settings;
+using Project5LMS.Forms.Reports;
+using Project5LMS.Forms.Reservation;
 
 namespace Project5LMS.Forms.Dashboard
 {
@@ -66,6 +69,21 @@ namespace Project5LMS.Forms.Dashboard
             LoadFormInPanel(new CatalogSearchForm());
         }
 
+        private void btn_Settings_Click(object sender, EventArgs e)
+        {
+            LoadFormInPanel(new SettingsForm());
+        }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            LoadFormInPanel(new ReportsForm());
+        }
+
+        private void btnReservation_Click(object sender, EventArgs e)
+        {
+            LoadFormInPanel(new ReservationForm());
+        }
+
         private void btn_Logout_Click(object sender, EventArgs e)
         {
             // Close the dashboard and return to login
@@ -106,5 +124,7 @@ namespace Project5LMS.Forms.Dashboard
         {
 
         }
+
+        
     }
 }

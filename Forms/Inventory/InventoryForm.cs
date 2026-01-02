@@ -16,5 +16,15 @@ namespace Project5LMS.Admin_Dashboard
         {
             InitializeComponent();
         }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void InventoryForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

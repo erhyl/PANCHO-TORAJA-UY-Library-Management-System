@@ -185,6 +185,7 @@ namespace Project5LMS.Admin_Dashboard
                 string type = cmbTypes.Text == "All Types" ? "All" : cmbTypes.Text;
                 string status = cmbStatus.Text == "All Status" ? "All" : cmbStatus.Text;
 
+                // Query using CirculationRecords table (correct table name)
                 string query = @"SELECT 
                                     m.MemberID,
                                     m.FullName,
@@ -193,10 +194,10 @@ namespace Project5LMS.Admin_Dashboard
                                     m.Status,
                                     m.RegistrationDate,
                                     m.ExpirationDate,
-                                    COALESCE(COUNT(DISTINCT CASE WHEN t.Status = 'Borrowed' OR t.Status = 'Active' THEN t.TransactionID END), 0) as BooksBorrowed,
-                                    COALESCE(SUM(CASE WHEN f.Status = 'Pending' OR f.Status = 'Unpaid' THEN f.Amount ELSE 0 END), 0) as TotalFines
+                                    COALESCE(COUNT(DISTINCT CASE WHEN cr.ReturnDate IS NULL THEN cr.RecordID END), 0) as BooksBorrowed,
+                                    COALESCE(SUM(CASE WHEN f.Paid = FALSE THEN f.FineAmount ELSE 0 END), 0) as TotalFines
                                 FROM Members m
-                                LEFT JOIN Transactions t ON m.MemberID = t.MemberID
+                                LEFT JOIN CirculationRecords cr ON m.MemberID = cr.MemberID
                                 LEFT JOIN Fines f ON m.MemberID = f.MemberID
                                 WHERE 
                                     (@Keyword = '' OR m.Email LIKE @Keyword OR CAST(m.MemberID AS CHAR) LIKE @Keyword)

@@ -102,11 +102,10 @@ namespace Project5LMS.Admin_Dashboard
                 {
                     conn.Open();
 
-                    // Pending Fines (sum of pending/unpaid fines)
+                    // Pending Fines (sum of unpaid fines) - Fines table uses Paid (boolean)
                     try
                     {
-                        string query = @"SELECT COALESCE(SUM(Amount), 0) FROM Fines 
-                                       WHERE Status = 'Pending' OR Status = 'Unpaid' OR Status = 'Active'";
+                        string query = @"SELECT COALESCE(SUM(FineAmount), 0) FROM Fines WHERE Paid = FALSE";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             object result = cmd.ExecuteScalar();
@@ -119,7 +118,7 @@ namespace Project5LMS.Admin_Dashboard
                     // Collected (sum of paid fines)
                     try
                     {
-                        string query = "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE Status = 'Paid'";
+                        string query = "SELECT COALESCE(SUM(FineAmount), 0) FROM Fines WHERE Paid = TRUE";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             object result = cmd.ExecuteScalar();
@@ -132,8 +131,7 @@ namespace Project5LMS.Admin_Dashboard
                     // Unpaid Fines (count)
                     try
                     {
-                        string query = @"SELECT COUNT(*) FROM Fines 
-                                       WHERE Status = 'Pending' OR Status = 'Unpaid' OR Status = 'Active'";
+                        string query = "SELECT COUNT(*) FROM Fines WHERE Paid = FALSE";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             int count = Convert.ToInt32(cmd.ExecuteScalar());
@@ -173,26 +171,28 @@ namespace Project5LMS.Admin_Dashboard
                 string statusFilter = cmbStatusFilter.Text;
                 if (statusFilter == "All Status") statusFilter = "";
 
+                // Query using CirculationRecords table (correct table name)
+                // Fines table uses FineAmount (not Amount), Paid (boolean, not Status), and RecordID (not TransactionID)
                 string query = @"SELECT 
                                     f.FineID,
-                                    f.Amount,
-                                    f.Status,
-                                    f.DueDate,
-                                    f.CreatedDate,
+                                    f.FineAmount as Amount,
+                                    f.Paid,
+                                    cr.DueDate,
+                                    cr.BorrowDate,
                                     m.FullName as MemberName,
-                                    b.Title as BookTitle,
-                                    t.DueDate as TransactionDueDate,
-                                    t.BorrowDate
+                                    b.Title as BookTitle
                                 FROM Fines f
                                 INNER JOIN Members m ON f.MemberID = m.MemberID
-                                LEFT JOIN Transactions t ON f.TransactionID = t.TransactionID
-                                LEFT JOIN Books b ON t.BookID = b.BookID
+                                LEFT JOIN CirculationRecords cr ON f.RecordID = cr.RecordID
+                                LEFT JOIN Books b ON cr.BookID = b.BookID
                                 WHERE (@Keyword = '' 
                                        OR m.FullName LIKE @Keyword 
-                                       OR b.Title LIKE @Keyword
+                                       OR COALESCE(b.Title, '') LIKE @Keyword
                                        OR CAST(f.FineID AS CHAR) LIKE @Keyword)
-                                AND (@Status = '' OR f.Status = @Status)
-                                ORDER BY f.CreatedDate DESC, f.FineID DESC
+                                AND (@Status = '' OR 
+                                     (@Status = 'Unpaid' AND f.Paid = FALSE) OR
+                                     (@Status = 'Paid' AND f.Paid = TRUE))
+                                ORDER BY cr.BorrowDate DESC, f.FineID DESC
                                 LIMIT 500";
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -207,27 +207,25 @@ namespace Project5LMS.Admin_Dashboard
                         {
                             int fineId = reader.GetInt32("FineID");
                             decimal amount = reader["Amount"] != DBNull.Value ? Convert.ToDecimal(reader["Amount"]) : 0;
-                            string status = reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "";
-                            DateTime createdDate = reader["CreatedDate"] != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : DateTime.MinValue;
-                            DateTime? transactionDueDate = reader["TransactionDueDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["TransactionDueDate"]) : null;
+                            bool paid = reader["Paid"] != DBNull.Value ? Convert.ToBoolean(reader["Paid"]) : false;
+                            string status = paid ? "Paid" : "Unpaid";
+                            DateTime? dueDate = reader["DueDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["DueDate"]) : null;
                             DateTime? borrowDate = reader["BorrowDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["BorrowDate"]) : null;
                             string memberName = reader["MemberName"].ToString();
                             string bookTitle = reader["BookTitle"] != DBNull.Value ? reader["BookTitle"].ToString() : "N/A";
 
                             // Calculate reason (days overdue)
                             string reason = "Overdue";
-                            if (transactionDueDate.HasValue && borrowDate.HasValue)
+                            if (dueDate.HasValue && borrowDate.HasValue)
                             {
-                                int daysOverdue = (createdDate - transactionDueDate.Value).Days;
+                                int daysOverdue = (DateTime.Now - dueDate.Value).Days;
                                 if (daysOverdue > 0)
                                 {
                                     reason = $"Overdue - {daysOverdue} day(s) late";
                                 }
-                                else
-                                {
-                                    reason = "Overdue";
-                                }
                             }
+                            
+                            DateTime createdDate = borrowDate ?? DateTime.Now;
 
                             string dateDisplay = createdDate != DateTime.MinValue ? createdDate.ToString("yyyy-MM-dd") : "N/A";
                             string amountDisplay = $"₱{amount:F0}";
@@ -245,18 +243,13 @@ namespace Project5LMS.Admin_Dashboard
 
                             DataGridViewRow row = dta_Fines.Rows[rowIndex];
 
-                            // Style Status column (green for Active, gray for others)
-                            if (status == "Active" || status == "Pending" || status == "Unpaid")
+                            // Style Status column (green for Unpaid, gray for Paid)
+                            if (status == "Unpaid")
                             {
                                 row.Cells["Status"].Style.ForeColor = Color.FromArgb(76, 175, 80);
                                 row.Cells["Status"].Style.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold);
                             }
-                            else if (status == "Paid")
-                            {
-                                row.Cells["Status"].Style.ForeColor = Color.Gray;
-                                row.Cells["Status"].Style.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular);
-                            }
-                            else
+                            else // Paid
                             {
                                 row.Cells["Status"].Style.ForeColor = Color.Gray;
                                 row.Cells["Status"].Style.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular);
@@ -334,11 +327,11 @@ namespace Project5LMS.Admin_Dashboard
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "UPDATE Fines SET Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID";
+                    // Fines table uses Paid (boolean) instead of Status
+                    string query = "UPDATE Fines SET Paid = TRUE WHERE FineID = @FineID";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);
-                        cmd.Parameters.AddWithValue("@PaidDate", DateTime.Now);
                         cmd.ExecuteNonQuery();
                     }
                 }

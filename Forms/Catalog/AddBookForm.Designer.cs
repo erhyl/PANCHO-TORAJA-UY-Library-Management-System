@@ -57,10 +57,9 @@
             this.panelMainContainer.Controls.Add(this.lblFormTitle);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(700, 800);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30, 24, 30, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(525, 650);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelButtons
@@ -68,10 +67,9 @@
             this.panelButtons.Controls.Add(this.btnCancel);
             this.panelButtons.Controls.Add(this.btnSave);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelButtons.Location = new System.Drawing.Point(40, 720);
-            this.panelButtons.Margin = new System.Windows.Forms.Padding(4);
+            this.panelButtons.Location = new System.Drawing.Point(30, 585);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(620, 50);
+            this.panelButtons.Size = new System.Drawing.Size(465, 41);
             this.panelButtons.TabIndex = 2;
             // 
             // btnCancel
@@ -82,10 +80,9 @@
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(400, 10);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Location = new System.Drawing.Point(300, 8);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 40);
+            this.btnCancel.Size = new System.Drawing.Size(75, 32);
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -99,10 +96,9 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(510, 10);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Location = new System.Drawing.Point(382, 8);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(100, 40);
+            this.btnSave.Size = new System.Drawing.Size(75, 32);
             this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -131,20 +127,18 @@
             this.panelFormContent.Controls.Add(this.txtTitle);
             this.panelFormContent.Controls.Add(this.lblTitle);
             this.panelFormContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFormContent.Location = new System.Drawing.Point(40, 86);
-            this.panelFormContent.Margin = new System.Windows.Forms.Padding(4);
+            this.panelFormContent.Location = new System.Drawing.Point(30, 69);
             this.panelFormContent.Name = "panelFormContent";
-            this.panelFormContent.Size = new System.Drawing.Size(620, 684);
+            this.panelFormContent.Size = new System.Drawing.Size(465, 557);
             this.panelFormContent.TabIndex = 1;
             // 
             // txtPublicationYear
             // 
             this.txtPublicationYear.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPublicationYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPublicationYear.Location = new System.Drawing.Point(320, 517);
-            this.txtPublicationYear.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPublicationYear.Location = new System.Drawing.Point(240, 420);
             this.txtPublicationYear.Name = "txtPublicationYear";
-            this.txtPublicationYear.Size = new System.Drawing.Size(280, 28);
+            this.txtPublicationYear.Size = new System.Drawing.Size(210, 24);
             this.txtPublicationYear.TabIndex = 8;
             this.txtPublicationYear.TextChanged += new System.EventHandler(this.txtPublicationYear_TextChanged);
             // 
@@ -153,10 +147,9 @@
             this.lblPublicationYear.AutoSize = true;
             this.lblPublicationYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPublicationYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPublicationYear.Location = new System.Drawing.Point(320, 480);
-            this.lblPublicationYear.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPublicationYear.Location = new System.Drawing.Point(240, 390);
             this.lblPublicationYear.Name = "lblPublicationYear";
-            this.lblPublicationYear.Size = new System.Drawing.Size(146, 24);
+            this.lblPublicationYear.Size = new System.Drawing.Size(114, 18);
             this.lblPublicationYear.TabIndex = 19;
             this.lblPublicationYear.Text = "Publication Year";
             // 
@@ -164,10 +157,9 @@
             // 
             this.picCoverPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picCoverPhoto.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picCoverPhoto.Location = new System.Drawing.Point(0, 480);
-            this.picCoverPhoto.Margin = new System.Windows.Forms.Padding(4);
+            this.picCoverPhoto.Location = new System.Drawing.Point(0, 390);
             this.picCoverPhoto.Name = "picCoverPhoto";
-            this.picCoverPhoto.Size = new System.Drawing.Size(280, 150);
+            this.picCoverPhoto.Size = new System.Drawing.Size(210, 122);
             this.picCoverPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picCoverPhoto.TabIndex = 17;
             this.picCoverPhoto.TabStop = false;
@@ -178,10 +170,9 @@
             this.lblCoverPhoto.AutoSize = true;
             this.lblCoverPhoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCoverPhoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCoverPhoto.Location = new System.Drawing.Point(0, 450);
-            this.lblCoverPhoto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCoverPhoto.Location = new System.Drawing.Point(0, 366);
             this.lblCoverPhoto.Name = "lblCoverPhoto";
-            this.lblCoverPhoto.Size = new System.Drawing.Size(114, 24);
+            this.lblCoverPhoto.Size = new System.Drawing.Size(92, 18);
             this.lblCoverPhoto.TabIndex = 16;
             this.lblCoverPhoto.Text = "Cover Photo";
             // 
@@ -189,10 +180,9 @@
             // 
             this.txtAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAvailable.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAvailable.Location = new System.Drawing.Point(320, 400);
-            this.txtAvailable.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAvailable.Location = new System.Drawing.Point(240, 325);
             this.txtAvailable.Name = "txtAvailable";
-            this.txtAvailable.Size = new System.Drawing.Size(280, 28);
+            this.txtAvailable.Size = new System.Drawing.Size(210, 24);
             this.txtAvailable.TabIndex = 6;
             // 
             // lblAvailable
@@ -200,10 +190,9 @@
             this.lblAvailable.AutoSize = true;
             this.lblAvailable.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAvailable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblAvailable.Location = new System.Drawing.Point(320, 370);
-            this.lblAvailable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAvailable.Location = new System.Drawing.Point(240, 301);
             this.lblAvailable.Name = "lblAvailable";
-            this.lblAvailable.Size = new System.Drawing.Size(86, 24);
+            this.lblAvailable.Size = new System.Drawing.Size(65, 18);
             this.lblAvailable.TabIndex = 14;
             this.lblAvailable.Text = "Available";
             // 
@@ -211,10 +200,9 @@
             // 
             this.txtCopies.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCopies.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCopies.Location = new System.Drawing.Point(0, 400);
-            this.txtCopies.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCopies.Location = new System.Drawing.Point(0, 325);
             this.txtCopies.Name = "txtCopies";
-            this.txtCopies.Size = new System.Drawing.Size(280, 28);
+            this.txtCopies.Size = new System.Drawing.Size(210, 24);
             this.txtCopies.TabIndex = 5;
             // 
             // lblCopies
@@ -222,10 +210,9 @@
             this.lblCopies.AutoSize = true;
             this.lblCopies.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCopies.Location = new System.Drawing.Point(0, 370);
-            this.lblCopies.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCopies.Location = new System.Drawing.Point(0, 301);
             this.lblCopies.Name = "lblCopies";
-            this.lblCopies.Size = new System.Drawing.Size(69, 24);
+            this.lblCopies.Size = new System.Drawing.Size(55, 18);
             this.lblCopies.TabIndex = 12;
             this.lblCopies.Text = "Copies";
             // 
@@ -234,10 +221,9 @@
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(320, 320);
-            this.cmbCategory.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbCategory.Location = new System.Drawing.Point(240, 260);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(280, 30);
+            this.cmbCategory.Size = new System.Drawing.Size(211, 26);
             this.cmbCategory.TabIndex = 4;
             // 
             // lblCategory
@@ -245,10 +231,9 @@
             this.lblCategory.AutoSize = true;
             this.lblCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCategory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCategory.Location = new System.Drawing.Point(320, 290);
-            this.lblCategory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCategory.Location = new System.Drawing.Point(240, 236);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(85, 24);
+            this.lblCategory.Size = new System.Drawing.Size(68, 18);
             this.lblCategory.TabIndex = 10;
             this.lblCategory.Text = "Category";
             // 
@@ -256,10 +241,9 @@
             // 
             this.cmbPublisher.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbPublisher.FormattingEnabled = true;
-            this.cmbPublisher.Location = new System.Drawing.Point(0, 320);
-            this.cmbPublisher.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbPublisher.Location = new System.Drawing.Point(0, 260);
             this.cmbPublisher.Name = "cmbPublisher";
-            this.cmbPublisher.Size = new System.Drawing.Size(280, 30);
+            this.cmbPublisher.Size = new System.Drawing.Size(211, 26);
             this.cmbPublisher.TabIndex = 3;
             // 
             // lblPublisher
@@ -267,10 +251,9 @@
             this.lblPublisher.AutoSize = true;
             this.lblPublisher.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPublisher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPublisher.Location = new System.Drawing.Point(0, 290);
-            this.lblPublisher.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPublisher.Location = new System.Drawing.Point(0, 236);
             this.lblPublisher.Name = "lblPublisher";
-            this.lblPublisher.Size = new System.Drawing.Size(89, 24);
+            this.lblPublisher.Size = new System.Drawing.Size(69, 18);
             this.lblPublisher.TabIndex = 8;
             this.lblPublisher.Text = "Publisher";
             // 
@@ -278,10 +261,9 @@
             // 
             this.txtISBN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtISBN.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtISBN.Location = new System.Drawing.Point(320, 240);
-            this.txtISBN.Margin = new System.Windows.Forms.Padding(4);
+            this.txtISBN.Location = new System.Drawing.Point(240, 195);
             this.txtISBN.Name = "txtISBN";
-            this.txtISBN.Size = new System.Drawing.Size(280, 28);
+            this.txtISBN.Size = new System.Drawing.Size(210, 24);
             this.txtISBN.TabIndex = 2;
             // 
             // lblISBN
@@ -289,10 +271,9 @@
             this.lblISBN.AutoSize = true;
             this.lblISBN.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblISBN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblISBN.Location = new System.Drawing.Point(320, 210);
-            this.lblISBN.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblISBN.Location = new System.Drawing.Point(240, 171);
             this.lblISBN.Name = "lblISBN";
-            this.lblISBN.Size = new System.Drawing.Size(52, 24);
+            this.lblISBN.Size = new System.Drawing.Size(42, 18);
             this.lblISBN.TabIndex = 6;
             this.lblISBN.Text = "ISBN";
             // 
@@ -300,10 +281,9 @@
             // 
             this.txtAccessionNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAccessionNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccessionNumber.Location = new System.Drawing.Point(0, 240);
-            this.txtAccessionNumber.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAccessionNumber.Location = new System.Drawing.Point(0, 195);
             this.txtAccessionNumber.Name = "txtAccessionNumber";
-            this.txtAccessionNumber.Size = new System.Drawing.Size(280, 28);
+            this.txtAccessionNumber.Size = new System.Drawing.Size(210, 24);
             this.txtAccessionNumber.TabIndex = 1;
             // 
             // lblAccessionNumber
@@ -311,10 +291,9 @@
             this.lblAccessionNumber.AutoSize = true;
             this.lblAccessionNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAccessionNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblAccessionNumber.Location = new System.Drawing.Point(0, 210);
-            this.lblAccessionNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAccessionNumber.Location = new System.Drawing.Point(0, 171);
             this.lblAccessionNumber.Name = "lblAccessionNumber";
-            this.lblAccessionNumber.Size = new System.Drawing.Size(172, 24);
+            this.lblAccessionNumber.Size = new System.Drawing.Size(134, 18);
             this.lblAccessionNumber.TabIndex = 4;
             this.lblAccessionNumber.Text = "Accession Number";
             // 
@@ -322,10 +301,9 @@
             // 
             this.txtAuthor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAuthor.Location = new System.Drawing.Point(0, 160);
-            this.txtAuthor.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAuthor.Location = new System.Drawing.Point(0, 130);
             this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.Size = new System.Drawing.Size(600, 28);
+            this.txtAuthor.Size = new System.Drawing.Size(450, 24);
             this.txtAuthor.TabIndex = 1;
             // 
             // lblAuthor
@@ -333,10 +311,9 @@
             this.lblAuthor.AutoSize = true;
             this.lblAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblAuthor.Location = new System.Drawing.Point(0, 130);
-            this.lblAuthor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAuthor.Location = new System.Drawing.Point(0, 106);
             this.lblAuthor.Name = "lblAuthor";
-            this.lblAuthor.Size = new System.Drawing.Size(66, 24);
+            this.lblAuthor.Size = new System.Drawing.Size(51, 18);
             this.lblAuthor.TabIndex = 2;
             this.lblAuthor.Text = "Author";
             // 
@@ -344,10 +321,9 @@
             // 
             this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTitle.Location = new System.Drawing.Point(0, 80);
-            this.txtTitle.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTitle.Location = new System.Drawing.Point(0, 65);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(600, 28);
+            this.txtTitle.Size = new System.Drawing.Size(450, 24);
             this.txtTitle.TabIndex = 0;
             // 
             // lblTitle
@@ -355,10 +331,9 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(0, 50);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Location = new System.Drawing.Point(0, 41);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(45, 24);
+            this.lblTitle.Size = new System.Drawing.Size(35, 18);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Title";
             // 
@@ -368,23 +343,21 @@
             this.lblFormTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblFormTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(40, 30);
-            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFormTitle.Location = new System.Drawing.Point(30, 24);
             this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
-            this.lblFormTitle.Size = new System.Drawing.Size(171, 56);
+            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.lblFormTitle.Size = new System.Drawing.Size(139, 45);
             this.lblFormTitle.TabIndex = 0;
             this.lblFormTitle.Text = "Add Books";
             // 
             // AddBookForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(700, 800);
+            this.ClientSize = new System.Drawing.Size(525, 650);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AddBookForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add Books";

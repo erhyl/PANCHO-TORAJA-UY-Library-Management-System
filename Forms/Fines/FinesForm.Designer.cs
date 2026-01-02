@@ -335,10 +335,8 @@
             this.cmbStatusFilter.FormattingEnabled = true;
             this.cmbStatusFilter.Items.AddRange(new object[] {
             "All Status",
-            "Pending",
-            "Paid",
-            "Active",
-            "Unpaid"});
+            "Unpaid",
+            "Paid"});
             this.cmbStatusFilter.Location = new System.Drawing.Point(700, 30);
             this.cmbStatusFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbStatusFilter.Name = "cmbStatusFilter";
