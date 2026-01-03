@@ -287,6 +287,7 @@
             this.btnCreateReservation.TabIndex = 20;
             this.btnCreateReservation.Text = "Create Reservation";
             this.btnCreateReservation.UseVisualStyleBackColor = true;
+            this.btnCreateReservation.Click += new System.EventHandler(this.btnCreateReservation_Click);
             // 
             // panel4
             // 
@@ -321,6 +322,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "ReservationForm";
+            this.Load += new System.EventHandler(this.ReservationForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

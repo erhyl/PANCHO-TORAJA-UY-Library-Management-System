@@ -86,11 +86,8 @@ namespace Project5LMS.Admin_Dashboard
 
                 if (row != null)
                 {
-                    string fullName = row["FullName"].ToString();
-                    string[] nameParts = fullName.Split(new char[] { ' ' }, 2);
-                    
-                    txtFirstName.Text = nameParts.Length > 0 ? nameParts[0] : "";
-                    txtLastName.Text = nameParts.Length > 1 ? nameParts[1] : "";
+                    txtFirstName.Text = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
+                    txtLastName.Text = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     txtEmail.Text = row["Email"].ToString();
                     
                     // Try to load Contact and Address if they exist
@@ -132,7 +129,6 @@ namespace Project5LMS.Admin_Dashboard
 
             string firstName = txtFirstName.Text.Trim();
             string lastName = txtLastName.Text.Trim();
-            string fullName = $"{firstName} {lastName}".Trim();
             string email = txtEmail.Text.Trim();
             string contact = txtContact.Text.Trim();
             string address = txtAddress.Text.Trim();
@@ -147,11 +143,11 @@ namespace Project5LMS.Admin_Dashboard
             {
                 if (memberId == 0)
                 {
-                    success = AddMemberWithOptionalFields(fullName, email, contact, address, type, regDate, expDate, status);
+                    success = AddMemberWithOptionalFields(firstName, lastName, email, contact, address, type, regDate, expDate, status);
                 }
                 else
                 {
-                    success = UpdateMemberWithOptionalFields(memberId, fullName, email, contact, address, type, regDate, expDate, status);
+                    success = UpdateMemberWithOptionalFields(memberId, firstName, lastName, email, contact, address, type, regDate, expDate, status);
                 }
 
                 if (success)
@@ -204,7 +200,7 @@ namespace Project5LMS.Admin_Dashboard
             return true;
         }
 
-        private bool AddMemberWithOptionalFields(string fullName, string email, string contact, string address, 
+        private bool AddMemberWithOptionalFields(string firstName, string lastName, string email, string contact, string address, 
             string type, DateTime regDate, DateTime expDate, string status)
         {
             try
@@ -220,23 +216,24 @@ namespace Project5LMS.Admin_Dashboard
                     string query;
                     if (hasContact && hasAddress)
                     {
-                        query = @"INSERT INTO Members (FullName, Email, Contact, Address, MemberType, RegistrationDate, ExpirationDate, Status)
-                                 VALUES (@Name, @Email, @Contact, @Address, @Type, @RegDate, @ExpDate, @Status)";
+                        query = @"INSERT INTO Members (FirstName, LastName, Email, Contact, Address, MemberType, RegistrationDate, ExpirationDate, Status)
+                                 VALUES (@FirstName, @LastName, @Email, @Contact, @Address, @Type, @RegDate, @ExpDate, @Status)";
                     }
                     else if (hasContact)
                     {
-                        query = @"INSERT INTO Members (FullName, Email, Contact, MemberType, RegistrationDate, ExpirationDate, Status)
-                                 VALUES (@Name, @Email, @Contact, @Type, @RegDate, @ExpDate, @Status)";
+                        query = @"INSERT INTO Members (FirstName, LastName, Email, Contact, MemberType, RegistrationDate, ExpirationDate, Status)
+                                 VALUES (@FirstName, @LastName, @Email, @Contact, @Type, @RegDate, @ExpDate, @Status)";
                     }
                     else
                     {
-                        query = @"INSERT INTO Members (FullName, Email, MemberType, RegistrationDate, ExpirationDate, Status)
-                                 VALUES (@Name, @Email, @Type, @RegDate, @ExpDate, @Status)";
+                        query = @"INSERT INTO Members (FirstName, LastName, Email, MemberType, RegistrationDate, ExpirationDate, Status)
+                                 VALUES (@FirstName, @LastName, @Email, @Type, @RegDate, @ExpDate, @Status)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Name", fullName);
+                        cmd.Parameters.AddWithValue("@FirstName", firstName);
+                        cmd.Parameters.AddWithValue("@LastName", lastName);
                         cmd.Parameters.AddWithValue("@Email", email);
                         cmd.Parameters.AddWithValue("@Type", type);
                         cmd.Parameters.AddWithValue("@RegDate", regDate);
@@ -255,11 +252,11 @@ namespace Project5LMS.Admin_Dashboard
             catch
             {
                 // Fallback to basic method if optional fields fail
-                return membersController.AddMember(fullName, email, type, regDate, expDate, status);
+                return membersController.AddMember(firstName, lastName, email, type, regDate, expDate, status);
             }
         }
 
-        private bool UpdateMemberWithOptionalFields(int memberId, string fullName, string email, string contact, string address,
+        private bool UpdateMemberWithOptionalFields(int memberId, string firstName, string lastName, string email, string contact, string address,
             string type, DateTime regDate, DateTime expDate, string status)
         {
             try
@@ -275,21 +272,21 @@ namespace Project5LMS.Admin_Dashboard
                     if (hasContact && hasAddress)
                     {
                         query = @"UPDATE Members 
-                                 SET FullName=@Name, Email=@Email, Contact=@Contact, Address=@Address, 
+                                 SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Contact=@Contact, Address=@Address, 
                                      MemberType=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
                                  WHERE MemberID=@ID";
                     }
                     else if (hasContact)
                     {
                         query = @"UPDATE Members 
-                                 SET FullName=@Name, Email=@Email, Contact=@Contact, 
+                                 SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Contact=@Contact, 
                                      MemberType=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
                                  WHERE MemberID=@ID";
                     }
                     else
                     {
                         query = @"UPDATE Members 
-                                 SET FullName=@Name, Email=@Email, 
+                                 SET FirstName=@FirstName, LastName=@LastName, Email=@Email, 
                                      MemberType=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
                                  WHERE MemberID=@ID";
                     }
@@ -297,7 +294,8 @@ namespace Project5LMS.Admin_Dashboard
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@ID", memberId);
-                        cmd.Parameters.AddWithValue("@Name", fullName);
+                        cmd.Parameters.AddWithValue("@FirstName", firstName);
+                        cmd.Parameters.AddWithValue("@LastName", lastName);
                         cmd.Parameters.AddWithValue("@Email", email);
                         cmd.Parameters.AddWithValue("@Type", type);
                         cmd.Parameters.AddWithValue("@RegDate", regDate);
@@ -316,7 +314,7 @@ namespace Project5LMS.Admin_Dashboard
             catch
             {
                 // Fallback to basic method
-                return membersController.UpdateMember(memberId, fullName, email, type, regDate, expDate, status);
+                return membersController.UpdateMember(memberId, firstName, lastName, email, type, regDate, expDate, status);
             }
         }
 

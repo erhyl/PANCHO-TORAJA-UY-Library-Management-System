@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Project5LMS.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +11,12 @@ namespace Project5LMS.Data
 {
     public class DatabaseContext
     {
-        public readonly string connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
+        private readonly string connectionString;
+
+        public DatabaseContext()
+        {
+            connectionString = DatabaseHelper.GetConnectionString();
+        }
 
         public MySqlConnection GetConnection()
         {
@@ -21,6 +27,7 @@ namespace Project5LMS.Data
         {
             using (var con = GetConnection())
             {
+                con.Open();
                 using (var cmd = new MySqlCommand(query, con))
                 {
                     using (var adapter = new MySqlDataAdapter(cmd))

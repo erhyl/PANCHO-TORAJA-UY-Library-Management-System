@@ -42,13 +42,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.cmbCategory = new System.Windows.Forms.ComboBox();
-            this.btnAddStock = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnAddStock = new System.Windows.Forms.Button();
+            this.cmbCategory = new System.Windows.Forms.ComboBox();
+            this.cmbStatus = new System.Windows.Forms.ComboBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.dtaGridInventory = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -196,64 +196,8 @@
             this.panel5.Controls.Add(this.label9);
             this.panel5.Location = new System.Drawing.Point(12, 172);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(262, 431);
+            this.panel5.Size = new System.Drawing.Size(240, 431);
             this.panel5.TabIndex = 5;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(16, 68);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(70, 24);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "Search";
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.Location = new System.Drawing.Point(20, 95);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(205, 20);
-            this.txtSearch.TabIndex = 4;
-            this.txtSearch.Text = "search books";
-            this.txtSearch.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // cmbStatus
-            // 
-            this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(20, 157);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(205, 21);
-            this.cmbStatus.TabIndex = 5;
-            // 
-            // cmbCategory
-            // 
-            this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(20, 217);
-            this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(205, 21);
-            this.cmbCategory.TabIndex = 6;
-            // 
-            // btnAddStock
-            // 
-            this.btnAddStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddStock.Location = new System.Drawing.Point(20, 283);
-            this.btnAddStock.Name = "btnAddStock";
-            this.btnAddStock.Size = new System.Drawing.Size(205, 34);
-            this.btnAddStock.TabIndex = 7;
-            this.btnAddStock.Text = "Add Stock";
-            this.btnAddStock.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(16, 130);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(60, 24);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Status";
             // 
             // label12
             // 
@@ -265,13 +209,72 @@
             this.label12.TabIndex = 9;
             this.label12.Text = "Category";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(16, 130);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(60, 24);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "Status";
+            // 
+            // btnAddStock
+            // 
+            this.btnAddStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddStock.Location = new System.Drawing.Point(20, 283);
+            this.btnAddStock.Name = "btnAddStock";
+            this.btnAddStock.Size = new System.Drawing.Size(205, 34);
+            this.btnAddStock.TabIndex = 7;
+            this.btnAddStock.Text = "Add Stock";
+            this.btnAddStock.UseVisualStyleBackColor = true;
+            this.btnAddStock.Click += new System.EventHandler(this.btnAddStock_Click);
+            // 
+            // cmbCategory
+            // 
+            this.cmbCategory.FormattingEnabled = true;
+            this.cmbCategory.Location = new System.Drawing.Point(20, 217);
+            this.cmbCategory.Name = "cmbCategory";
+            this.cmbCategory.Size = new System.Drawing.Size(205, 21);
+            this.cmbCategory.TabIndex = 6;
+            this.cmbCategory.SelectedIndexChanged += new System.EventHandler(this.cmbCategory_SelectedIndexChanged);
+            // 
+            // cmbStatus
+            // 
+            this.cmbStatus.FormattingEnabled = true;
+            this.cmbStatus.Location = new System.Drawing.Point(20, 157);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Size = new System.Drawing.Size(205, 21);
+            this.cmbStatus.TabIndex = 5;
+            this.cmbStatus.SelectedIndexChanged += new System.EventHandler(this.cmbStatus_SelectedIndexChanged);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.Location = new System.Drawing.Point(20, 95);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(205, 20);
+            this.txtSearch.TabIndex = 4;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(16, 68);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(70, 24);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Search";
+            // 
             // dtaGridInventory
             // 
             this.dtaGridInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtaGridInventory.Location = new System.Drawing.Point(280, 172);
+            this.dtaGridInventory.Location = new System.Drawing.Point(258, 172);
             this.dtaGridInventory.Name = "dtaGridInventory";
-            this.dtaGridInventory.Size = new System.Drawing.Size(996, 431);
+            this.dtaGridInventory.Size = new System.Drawing.Size(1018, 431);
             this.dtaGridInventory.TabIndex = 6;
+            this.dtaGridInventory.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtaGridInventory_CellContentClick);
             // 
             // InventoryForm
             // 

@@ -246,21 +246,21 @@ namespace Project5LMS
                     }
                 case "LibraryStaff":
                     {
-                        var staffForm = new User_Dashboard();
+                        var staffForm = new MemberDashboard();
                         staffForm.Show();
                         this.Hide();
                         break;
                     }
                 case "Member":
                     {
-                        var memberForm = new User_Dashboard();
+                        var memberForm = new MemberDashboard();
                         memberForm.Show();
                         this.Hide();
                         break;
                     }
                 case "Librarian": // Backward compatibility
                     {
-                        var staffForm = new User_Dashboard();
+                        var staffForm = new MemberDashboard();
                         staffForm.Show();
                         this.Hide();
                         break;

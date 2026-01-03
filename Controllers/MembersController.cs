@@ -21,14 +21,15 @@ namespace Project5LMS.Controllers
         {
             string query = @"SELECT 
                                 MemberID,
-                                FullName,
+                                FirstName,
+                                LastName,
                                 MemberType,
                                 Email,
                                 RegistrationDate,
                                 ExpirationDate,
                                 Status
                              FROM Members
-                             ORDER BY FullName";
+                             ORDER BY LastName, FirstName";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -41,18 +42,19 @@ namespace Project5LMS.Controllers
         }
 
         // 🔹 ADD MEMBER
-        public bool AddMember(string fullName, string email, string type,
+        public bool AddMember(string firstName, string lastName, string email, string type,
                               DateTime regDate, DateTime expDate, string status)
         {
             string query = @"INSERT INTO Members
-                            (FullName, Email, MemberType, RegistrationDate, ExpirationDate, Status)
+                            (FirstName, LastName, Email, MemberType, RegistrationDate, ExpirationDate, Status)
                              VALUES
-                            (@Name, @Email, @Type, @RegDate, @ExpDate, @Status)";
+                            (@FirstName, @LastName, @Email, @Type, @RegDate, @ExpDate, @Status)";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@Name", fullName);
+                cmd.Parameters.AddWithValue("@FirstName", firstName);
+                cmd.Parameters.AddWithValue("@LastName", lastName);
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@Type", type);
                 cmd.Parameters.AddWithValue("@RegDate", regDate);
@@ -69,7 +71,8 @@ namespace Project5LMS.Controllers
         {
             string query = @"SELECT 
                         MemberID,
-                        FullName,
+                        FirstName,
+                        LastName,
                         MemberType,
                         Email,
                         RegistrationDate,
@@ -77,10 +80,10 @@ namespace Project5LMS.Controllers
                         Status
                      FROM Members
                      WHERE
-                        (FullName LIKE @Keyword OR Email LIKE @Keyword)
+                        (FirstName LIKE @Keyword OR LastName LIKE @Keyword OR Email LIKE @Keyword)
                         AND (@Type = 'All' OR MemberType = @Type)
                         AND (@Status = 'All' OR Status = @Status)
-                     ORDER BY FullName";
+                     ORDER BY LastName, FirstName";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -97,11 +100,11 @@ namespace Project5LMS.Controllers
         }
 
         // 🔹 UPDATE MEMBER
-        public bool UpdateMember(int memberId, string fullName, string email, string type,
+        public bool UpdateMember(int memberId, string firstName, string lastName, string email, string type,
                                  DateTime regDate, DateTime expDate, string status)
         {
             string query = @"UPDATE Members
-                             SET FullName=@Name, Email=@Email, MemberType=@Type,
+                             SET FirstName=@FirstName, LastName=@LastName, Email=@Email, MemberType=@Type,
                                  RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
                              WHERE MemberID=@ID";
 
@@ -109,7 +112,8 @@ namespace Project5LMS.Controllers
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@ID", memberId);
-                cmd.Parameters.AddWithValue("@Name", fullName);
+                cmd.Parameters.AddWithValue("@FirstName", firstName);
+                cmd.Parameters.AddWithValue("@LastName", lastName);
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@Type", type);
                 cmd.Parameters.AddWithValue("@RegDate", regDate);

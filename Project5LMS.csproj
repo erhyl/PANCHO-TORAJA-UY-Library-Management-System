@@ -171,11 +171,17 @@
     <Compile Include="Forms\Dashboard\AdminMainForm.Designer.cs">
       <DependentUpon>AdminMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Dashboard\User_Dashboard.cs">
+    <Compile Include="Forms\Dashboard\LibraryStaffDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dashboard\User_Dashboard.Designer.cs">
-      <DependentUpon>User_Dashboard.cs</DependentUpon>
+    <Compile Include="Forms\Dashboard\LibraryStaffDashboard.Designer.cs">
+      <DependentUpon>LibraryStaffDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dashboard\MemberDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dashboard\MemberDashboard.Designer.cs">
+      <DependentUpon>MemberDashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Fines\FinesForm.cs">
       <SubType>Form</SubType>
@@ -314,6 +320,9 @@
     <EmbeddedResource Include="Forms\Dashboard\AdminMainForm.resx">
       <DependentUpon>AdminMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dashboard\MemberDashboard.resx">
+      <DependentUpon>MemberDashboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Fines\FinesForm.resx">
       <DependentUpon>FinesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Members\MembersForm.resx">
       <DependentUpon>MembersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Reports\ReportsForm.resx">
+      <DependentUpon>ReportsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Reservation\ReservationForm.resx">
       <DependentUpon>ReservationForm.cs</DependentUpon>

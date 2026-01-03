@@ -179,14 +179,15 @@ namespace Project5LMS.Admin_Dashboard
                                     f.Paid,
                                     cr.DueDate,
                                     cr.BorrowDate,
-                                    m.FullName as MemberName,
+                                    CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
                                     b.Title as BookTitle
                                 FROM Fines f
                                 INNER JOIN Members m ON f.MemberID = m.MemberID
                                 LEFT JOIN CirculationRecords cr ON f.RecordID = cr.RecordID
                                 LEFT JOIN Books b ON cr.BookID = b.BookID
                                 WHERE (@Keyword = '' 
-                                       OR m.FullName LIKE @Keyword 
+                                       OR m.FirstName LIKE @Keyword 
+                                       OR m.LastName LIKE @Keyword
                                        OR COALESCE(b.Title, '') LIKE @Keyword
                                        OR CAST(f.FineID AS CHAR) LIKE @Keyword)
                                 AND (@Status = '' OR 

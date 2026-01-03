@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Project5LMS.Forms.Search
+namespace Project5LMS.Forms.Dashboard
 {
-    public partial class MemberSearchForm : Form
+    public partial class MemberDashboard : Form
     {
-        public MemberSearchForm()
+        public MemberDashboard()
         {
             InitializeComponent();
+        }
+
+        private void MemberDashboard_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

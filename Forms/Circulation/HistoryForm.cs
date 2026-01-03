@@ -66,10 +66,55 @@ namespace Project5LMS.Admin_Dashboard
             dta_History.Columns["Status"].Width = 120;
         }
 
+        private void EnsureTransactionsTableExists()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Check if table exists
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                              WHERE TABLE_SCHEMA = DATABASE() 
+                                              AND TABLE_NAME = 'Transactions'";
+                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    {
+                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        if (tableExists == 0)
+                        {
+                            // Create Transactions table
+                            string createTableQuery = @"CREATE TABLE IF NOT EXISTS Transactions (
+                                                        TransactionID INT AUTO_INCREMENT PRIMARY KEY,
+                                                        MemberID INT NOT NULL,
+                                                        BookID INT NOT NULL,
+                                                        BorrowDate DATETIME NOT NULL,
+                                                        DueDate DATETIME NOT NULL,
+                                                        ReturnDate DATETIME NULL,
+                                                        Status VARCHAR(50) DEFAULT 'Borrowed',
+                                                        FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
+                                                        FOREIGN KEY (BookID) REFERENCES Books(BookID)
+                                                        )";
+                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
+                            {
+                                createCmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error ensuring Transactions table exists: {ex.Message}");
+            }
+        }
+
         private void LoadTransactionHistory()
         {
             try
             {
+                EnsureTransactionsTableExists();
+                
                 dta_History.Rows.Clear();
 
                 string keyword = txtSearch.Text.Trim();
@@ -83,7 +128,7 @@ namespace Project5LMS.Admin_Dashboard
                                     t.ReturnDate,
                                     b.Title as BookTitle,
                                     b.ISBN,
-                                    m.FullName as MemberName,
+                                    CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
                                     m.MemberID
                                 FROM Transactions t
                                 INNER JOIN Books b ON t.BookID = b.BookID
@@ -91,7 +136,8 @@ namespace Project5LMS.Admin_Dashboard
                                 WHERE (@Keyword = '' 
                                        OR b.Title LIKE @Keyword 
                                        OR b.ISBN LIKE @Keyword
-                                       OR m.FullName LIKE @Keyword
+                                       OR m.FirstName LIKE @Keyword
+                                       OR m.LastName LIKE @Keyword
                                        OR CAST(t.TransactionID AS CHAR) LIKE @Keyword)
                                 ORDER BY t.BorrowDate DESC, t.TransactionID DESC
                                 LIMIT 500";

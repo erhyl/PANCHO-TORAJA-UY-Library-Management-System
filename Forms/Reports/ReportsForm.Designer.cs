@@ -45,14 +45,15 @@
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.btnExportPDF = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
-            this.dta_ReportDetails = new System.Windows.Forms.TabControl();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSummary = new System.Windows.Forms.TabPage();
             this.tabDetailed = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabCharts = new System.Windows.Forms.TabPage();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.dta_ReportDetails.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.tabSummary.SuspendLayout();
             this.tabDetailed.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -74,6 +75,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButton1.Location = new System.Drawing.Point(24, 30);
             this.radioButton1.Name = "radioButton1";
@@ -91,7 +93,6 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(138, 24);
             this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Member Report";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
@@ -103,7 +104,6 @@
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(117, 24);
             this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Book Report";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
@@ -115,7 +115,6 @@
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(111, 24);
             this.radioButton4.TabIndex = 3;
-            this.radioButton4.TabStop = true;
             this.radioButton4.Text = "Fine Report";
             this.radioButton4.UseVisualStyleBackColor = true;
             // 
@@ -127,7 +126,6 @@
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(145, 24);
             this.radioButton5.TabIndex = 4;
-            this.radioButton5.TabStop = true;
             this.radioButton5.Text = "Inventory Report";
             this.radioButton5.UseVisualStyleBackColor = true;
             // 
@@ -241,16 +239,17 @@
             this.btnPrint.Text = "Print";
             this.btnPrint.UseVisualStyleBackColor = true;
             // 
-            // dta_ReportDetails
+            // tabControl1
             // 
-            this.dta_ReportDetails.Controls.Add(this.tabSummary);
-            this.dta_ReportDetails.Controls.Add(this.tabDetailed);
-            this.dta_ReportDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dta_ReportDetails.Location = new System.Drawing.Point(0, 193);
-            this.dta_ReportDetails.Name = "dta_ReportDetails";
-            this.dta_ReportDetails.SelectedIndex = 0;
-            this.dta_ReportDetails.Size = new System.Drawing.Size(1275, 445);
-            this.dta_ReportDetails.TabIndex = 2;
+            this.tabControl1.Controls.Add(this.tabSummary);
+            this.tabControl1.Controls.Add(this.tabDetailed);
+            this.tabControl1.Controls.Add(this.tabCharts);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 193);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1275, 445);
+            this.tabControl1.TabIndex = 2;
             // 
             // tabSummary
             // 
@@ -284,17 +283,27 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 6);
+            this.dataGridView1.Location = new System.Drawing.Point(242, 104);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1264, 410);
+            this.dataGridView1.Size = new System.Drawing.Size(308, 160);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // tabCharts
+            // 
+            this.tabCharts.Location = new System.Drawing.Point(4, 22);
+            this.tabCharts.Name = "tabCharts";
+            this.tabCharts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCharts.Size = new System.Drawing.Size(1267, 419);
+            this.tabCharts.TabIndex = 2;
+            this.tabCharts.Text = "Charts";
+            this.tabCharts.UseVisualStyleBackColor = true;
             // 
             // ReportsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 638);
-            this.Controls.Add(this.dta_ReportDetails);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "ReportsForm";
@@ -303,7 +312,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.dta_ReportDetails.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
             this.tabSummary.ResumeLayout(false);
             this.tabDetailed.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -330,10 +339,11 @@
         private System.Windows.Forms.DateTimePicker dtpToDate;
         private System.Windows.Forms.ComboBox cmbCategoryFilter;
         private System.Windows.Forms.DateTimePicker dtpFromDate;
-        private System.Windows.Forms.TabControl dta_ReportDetails;
+        private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabSummary;
         private System.Windows.Forms.TabPage tabDetailed;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TabPage tabCharts;
     }
 }

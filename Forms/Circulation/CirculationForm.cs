@@ -25,6 +25,49 @@ namespace Project5LMS.Admin_Dashboard
             LoadMetrics();
         }
 
+        private void EnsureTransactionsTableExists()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Check if table exists
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                              WHERE TABLE_SCHEMA = DATABASE() 
+                                              AND TABLE_NAME = 'Transactions'";
+                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    {
+                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        if (tableExists == 0)
+                        {
+                            // Create Transactions table
+                            string createTableQuery = @"CREATE TABLE IF NOT EXISTS Transactions (
+                                                        TransactionID INT AUTO_INCREMENT PRIMARY KEY,
+                                                        MemberID INT NOT NULL,
+                                                        BookID INT NOT NULL,
+                                                        BorrowDate DATETIME NOT NULL,
+                                                        DueDate DATETIME NOT NULL,
+                                                        ReturnDate DATETIME NULL,
+                                                        Status VARCHAR(50) DEFAULT 'Borrowed',
+                                                        FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
+                                                        FOREIGN KEY (BookID) REFERENCES Books(BookID)
+                                                        )";
+                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
+                            {
+                                createCmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error ensuring Transactions table exists: {ex.Message}");
+            }
+        }
+
         private void LoadMetrics()
         {
             lblMetricValue1.Text = "0";
@@ -34,6 +77,8 @@ namespace Project5LMS.Admin_Dashboard
 
             try
             {
+                EnsureTransactionsTableExists();
+                
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
@@ -134,9 +179,11 @@ namespace Project5LMS.Admin_Dashboard
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = @"SELECT MemberID, FullName, MemberType, Status, ExpirationDate 
+                    string query = @"SELECT MemberID, FirstName, LastName, MemberType, Status, ExpirationDate 
                                    FROM Members 
-                                   WHERE MemberID = @Search OR FullName LIKE @Search 
+                                   WHERE MemberID = @Search 
+                                   OR FirstName LIKE @Search 
+                                   OR LastName LIKE @Search
                                    OR Email LIKE @Search
                                    LIMIT 1";
                     
@@ -293,6 +340,8 @@ namespace Project5LMS.Admin_Dashboard
             // Check if member has reached max books limit
             try
             {
+                EnsureTransactionsTableExists();
+                
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();

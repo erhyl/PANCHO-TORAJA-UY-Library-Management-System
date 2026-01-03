@@ -32,6 +32,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "SettingsForm";
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
         }
 
         #endregion

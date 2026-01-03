@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Project5LMS.Forms.Circulation
+namespace Project5LMS.Forms.Dashboard
 {
-    public partial class BorrowReturnForm : Form
+    public partial class LibraryStaffDashboard : Form
     {
-        public BorrowReturnForm()
+        public LibraryStaffDashboard()
         {
             InitializeComponent();
         }

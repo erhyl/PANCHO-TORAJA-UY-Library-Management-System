@@ -30,15 +30,17 @@ namespace Project5LMS.Admin_Dashboard
 
         private void SetupDataGridView()
         {
-            dta_Grid1.AutoGenerateColumns = false;
-            dta_Grid1.Columns.Clear();
-            dta_Grid1.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 11F);
-            dta_Grid1.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Bold);
-            dta_Grid1.RowTemplate.Height = 40;
-            dta_Grid1.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
-            dta_Grid1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
-            dta_Grid1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
-            dta_Grid1.EnableHeadersVisualStyles = false;
+            dta_GridCatalog.AutoGenerateColumns = false; // Changed to false to manually add columns like InventoryForm
+            dta_GridCatalog.Columns.Clear();
+            dta_GridCatalog.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 11F);
+            dta_GridCatalog.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Bold);
+            dta_GridCatalog.RowTemplate.Height = 40;
+            dta_GridCatalog.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
+            dta_GridCatalog.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            dta_GridCatalog.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            dta_GridCatalog.EnableHeadersVisualStyles = false;
+            dta_GridCatalog.AllowUserToAddRows = false;
+            dta_GridCatalog.ReadOnly = true;
         }
 
         private void EnsureAccessionNumberColumnExists()
@@ -140,58 +142,127 @@ namespace Project5LMS.Admin_Dashboard
         {
             try
             {
-                string keyword = txtSearch.Text.Trim();
-                if (keyword == "Search by name, ID, or email") keyword = "";
-                
-                string type = cmbTypes.Text == "All Types" ? "All" : cmbTypes.Text;
-                string status = cmbStatus.Text == "All Status" ? "All" : cmbStatus.Text;
+                dta_GridCatalog.Rows.Clear();
+                dta_GridCatalog.Columns.Clear();
 
-                string query = @"SELECT 
-                                    BookID,
-                                    Title,
-                                    Author,
-                                    ISBN,
-                                    Publisher,
-                                    Category,
-                                    YearPublished as Year,
-                                    Copies,
-                                    AccessionNumber as Accession,
-                                    Available
-                                FROM Books
-                                WHERE 
-                                    (@Keyword = '' OR Title LIKE @Keyword OR Author LIKE @Keyword OR ISBN LIKE @Keyword OR AccessionNumber LIKE @Keyword)
-                                    AND (@Type = 'All' OR Category = @Type)
-                                    AND (@Status = 'All' OR 
-                                        (@Status = 'Available' AND Available > 0) OR 
-                                        (@Status = 'Unavailable' AND Available = 0))
-                                ORDER BY BookID";
+                // Add columns manually (like InventoryForm does)
+                dta_GridCatalog.Columns.Add("BookID", "BookID");
+                dta_GridCatalog.Columns["BookID"].Visible = false;
+                dta_GridCatalog.Columns.Add("Accession", "Accession#");
+                dta_GridCatalog.Columns["Accession"].Width = 120;
+                dta_GridCatalog.Columns.Add("Title", "Title");
+                dta_GridCatalog.Columns["Title"].Width = 300;
+                dta_GridCatalog.Columns.Add("Author", "Author");
+                dta_GridCatalog.Columns["Author"].Width = 200;
+                dta_GridCatalog.Columns.Add("ISBN", "ISBN");
+                dta_GridCatalog.Columns["ISBN"].Width = 150;
+                dta_GridCatalog.Columns.Add("Publisher", "Publisher");
+                dta_GridCatalog.Columns["Publisher"].Width = 150;
+                dta_GridCatalog.Columns.Add("Category", "Category");
+                dta_GridCatalog.Columns["Category"].Width = 120;
+                dta_GridCatalog.Columns.Add("Year", "Year");
+                dta_GridCatalog.Columns["Year"].Width = 80;
+                dta_GridCatalog.Columns.Add("Copies", "Copies");
+                dta_GridCatalog.Columns["Copies"].Width = 80;
+                dta_GridCatalog.Columns.Add("Available", "Available");
+                dta_GridCatalog.Columns["Available"].Width = 100;
+
+                string keyword = txtSearch.Text.Trim();
+                // Clear placeholder text - check for common placeholder patterns
+                if (keyword.StartsWith("Search by") || keyword == "Search by name, ID, or email" || keyword == "Search by Accession or Title")
+                {
+                    keyword = "";
+                }
+                
+                string category = cmbTypes.Text == "All Types" ? "" : cmbTypes.Text;
+                string status = cmbStatus.Text == "All Status" ? "" : cmbStatus.Text;
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Keyword", "%" + keyword + "%");
-                    cmd.Parameters.AddWithValue("@Type", type);
-                    cmd.Parameters.AddWithValue("@Status", status);
-                    
                     conn.Open();
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    
+                    // First test: Count total books
+                    int totalBooks = 0;
+                    string countQuery = "SELECT COUNT(*) FROM Books";
+                    using (MySqlCommand countCmd = new MySqlCommand(countQuery, conn))
                     {
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        dta_Grid1.DataSource = dt;
+                        totalBooks = Convert.ToInt32(countCmd.ExecuteScalar());
+                        System.Diagnostics.Debug.WriteLine($"Total books in database: {totalBooks}");
+                        
+                        if (totalBooks == 0)
+                        {
+                            MessageBox.Show("There are no books in the database.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                    
+                    string query = @"SELECT 
+                                    b.BookID,
+                                    b.Title,
+                                    b.Author,
+                                    b.ISBN,
+                                    b.Publisher,
+                                    b.Category,
+                                    b.YearPublished as Year,
+                                    b.Copies,
+                                    b.Available
+                                FROM Books b
+                                WHERE (@Keyword = '' 
+                                       OR b.Title LIKE @Keyword 
+                                       OR b.Author LIKE @Keyword
+                                       OR b.ISBN LIKE @Keyword
+                                       OR CAST(b.BookID AS CHAR) LIKE @Keyword)
+                                AND (@Category = '' OR b.Category = @Category)
+                                AND (@Status = '' OR 
+                                     (@Status = 'Available' AND b.Available > 0) OR
+                                     (@Status = 'Unavailable' AND b.Available = 0))
+                                ORDER BY b.BookID
+                                LIMIT 500";
 
-                        if (dta_Grid1.Columns["BookID"] != null)
-                            dta_Grid1.Columns["BookID"].Visible = false;
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Keyword", "%" + keyword + "%");
+                        cmd.Parameters.AddWithValue("@Category", category);
+                        cmd.Parameters.AddWithValue("@Status", status);
 
-                        // Set column headers
-                        if (dta_Grid1.Columns["Accession"] != null)
-                            dta_Grid1.Columns["Accession"].HeaderText = "Accession#";
+                        int rowCount = 0;
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                dta_GridCatalog.Rows.Add(
+                                    reader["BookID"],
+                                    reader["BookID"],  // Accession = BookID
+                                    reader["Title"] != DBNull.Value ? reader["Title"] : "",
+                                    reader["Author"] != DBNull.Value ? reader["Author"] : "",
+                                    reader["ISBN"] != DBNull.Value ? reader["ISBN"] : "",
+                                    reader["Publisher"] != DBNull.Value ? reader["Publisher"] : "",
+                                    reader["Category"] != DBNull.Value ? reader["Category"] : "",
+                                    reader["Year"] != DBNull.Value ? reader["Year"] : "",
+                                    reader["Copies"] != DBNull.Value ? reader["Copies"] : 0,
+                                    reader["Available"] != DBNull.Value ? reader["Available"] : 0
+                                );
+                                rowCount++;
+                            }
+                        }
+                        
+                        System.Diagnostics.Debug.WriteLine($"Added {rowCount} rows to DataGridView");
+                        System.Diagnostics.Debug.WriteLine($"DataGridView now has {dta_GridCatalog.Rows.Count} rows");
+                        
+                        // Temporary debug message - remove after testing
+                        if (rowCount == 0)
+                        {
+                            MessageBox.Show($"Query returned 0 rows.\n\nTotal books in database: {totalBooks}\n\nFilters applied:\nCategory: '{category}' (empty = All)\nStatus: '{status}' (empty = All)\nKeyword: '{keyword}' (empty = All)", 
+                                "Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading catalog: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Error loading catalog: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                MessageBox.Show($"Error loading catalog: {ex.Message}\n\nStack trace: {ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -206,14 +277,14 @@ namespace Project5LMS.Admin_Dashboard
 
         private void btnAddCopies_Click(object sender, EventArgs e)
         {
-            if (dta_Grid1.SelectedRows.Count == 0)
+            if (dta_GridCatalog.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a book to add copies.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            int bookId = Convert.ToInt32(dta_Grid1.SelectedRows[0].Cells["BookID"].Value);
-            string title = dta_Grid1.SelectedRows[0].Cells["Title"].Value?.ToString() ?? "";
+            int bookId = Convert.ToInt32(dta_GridCatalog.SelectedRows[0].Cells["BookID"].Value);
+            string title = dta_GridCatalog.SelectedRows[0].Cells["Title"].Value?.ToString() ?? "";
 
             using (var inputForm = new Form())
             {
@@ -261,13 +332,13 @@ namespace Project5LMS.Admin_Dashboard
 
         private void btnEditBook_Click(object sender, EventArgs e)
         {
-            if (dta_Grid1.SelectedRows.Count == 0)
+            if (dta_GridCatalog.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a book to edit.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            int bookId = Convert.ToInt32(dta_Grid1.SelectedRows[0].Cells["BookID"].Value);
+            int bookId = Convert.ToInt32(dta_GridCatalog.SelectedRows[0].Cells["BookID"].Value);
             EditBookForm editForm = new EditBookForm(bookId, connectionString);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
@@ -277,14 +348,14 @@ namespace Project5LMS.Admin_Dashboard
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dta_Grid1.SelectedRows.Count == 0)
+            if (dta_GridCatalog.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a book to delete.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            int bookId = Convert.ToInt32(dta_Grid1.SelectedRows[0].Cells["BookID"].Value);
-            string title = dta_Grid1.SelectedRows[0].Cells["Title"].Value?.ToString() ?? "";
+            int bookId = Convert.ToInt32(dta_GridCatalog.SelectedRows[0].Cells["BookID"].Value);
+            string title = dta_GridCatalog.SelectedRows[0].Cells["Title"].Value?.ToString() ?? "";
 
             DialogResult result = MessageBox.Show($"Are you sure you want to delete '{title}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             
@@ -345,7 +416,8 @@ namespace Project5LMS.Admin_Dashboard
 
         private void txtSearch_Enter(object sender, EventArgs e)
         {
-            if (txtSearch.Text == "Search by name, ID, or email")
+            string searchText = txtSearch.Text.Trim();
+            if (searchText == "Search by name, ID, or email" || searchText.StartsWith("Search by Accession or Title"))
             {
                 txtSearch.Text = "";
                 txtSearch.ForeColor = Color.Black;
@@ -356,14 +428,15 @@ namespace Project5LMS.Admin_Dashboard
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                txtSearch.Text = "Search by name, ID, or email";
+                txtSearch.Text = "Search by Accession or Title ";
                 txtSearch.ForeColor = Color.Gray;
             }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            if (txtSearch.Text != "Search by name, ID, or email")
+            string searchText = txtSearch.Text.Trim();
+            if (searchText != "Search by name, ID, or email" && searchText != "Search by Accession or Title" && !string.IsNullOrEmpty(searchText))
             {
                 LoadCatalog();
             }
@@ -381,7 +454,17 @@ namespace Project5LMS.Admin_Dashboard
 
         private void dta_Grid1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Handle cell clicks if needed
+
+        }
+
+        private void dta_GridCatalog_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panelMainContainer_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

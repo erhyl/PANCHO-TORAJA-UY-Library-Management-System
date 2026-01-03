@@ -1,6 +1,6 @@
-﻿namespace Project5LMS.Forms.Catalog
+﻿namespace Project5LMS.Forms.Dashboard
 {
-    partial class ImportBooksForm
+    partial class MemberDashboard
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MemberDashboard
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ImportBooksForm";
+            this.Name = "MemberDashboard";
+            this.Text = "Members_Dashboard";
+            this.Load += new System.EventHandler(this.MemberDashboard_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

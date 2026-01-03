@@ -188,7 +188,8 @@ namespace Project5LMS.Admin_Dashboard
                 // Query using CirculationRecords table (correct table name)
                 string query = @"SELECT 
                                     m.MemberID,
-                                    m.FullName,
+                                    m.FirstName,
+                                    m.LastName,
                                     m.MemberType,
                                     m.Email,
                                     m.Status,
@@ -200,11 +201,11 @@ namespace Project5LMS.Admin_Dashboard
                                 LEFT JOIN CirculationRecords cr ON m.MemberID = cr.MemberID
                                 LEFT JOIN Fines f ON m.MemberID = f.MemberID
                                 WHERE 
-                                    (@Keyword = '' OR m.Email LIKE @Keyword OR CAST(m.MemberID AS CHAR) LIKE @Keyword)
+                                    (@Keyword = '' OR m.Email LIKE @Keyword OR CAST(m.MemberID AS CHAR) LIKE @Keyword OR m.FirstName LIKE @Keyword OR m.LastName LIKE @Keyword)
                                     AND (@Type = 'All' OR m.MemberType = @Type)
                                     AND (@Status = 'All' OR m.Status = @Status)
-                                GROUP BY m.MemberID, m.FullName, m.MemberType, m.Email, m.Status, m.RegistrationDate, m.ExpirationDate
-                                ORDER BY m.FullName";
+                                GROUP BY m.MemberID, m.FirstName, m.LastName, m.MemberType, m.Email, m.Status, m.RegistrationDate, m.ExpirationDate
+                                ORDER BY m.LastName, m.FirstName";
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -219,7 +220,9 @@ namespace Project5LMS.Admin_Dashboard
                         while (reader.Read())
                         {
                             int memberId = reader.GetInt32("MemberID");
-                            string fullName = reader["FullName"].ToString();
+                            string firstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : "";
+                            string lastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : "";
+                            string fullName = $"{firstName} {lastName}".Trim();
                             string memberType = reader["MemberType"].ToString();
                             string email = reader["Email"].ToString();
                             string statusValue = reader["Status"].ToString();
@@ -229,10 +232,15 @@ namespace Project5LMS.Admin_Dashboard
                             decimal totalFines = Convert.ToDecimal(reader["TotalFines"]);
 
                             // Get initials
-                            string[] nameParts = fullName.Split(' ');
-                            string initials = nameParts.Length >= 2 
-                                ? (nameParts[0][0].ToString() + nameParts[nameParts.Length - 1][0].ToString()).ToUpper()
-                                : fullName.Substring(0, Math.Min(2, fullName.Length)).ToUpper();
+                            string initials = "";
+                            if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+                            {
+                                initials = (firstName[0].ToString() + lastName[0].ToString()).ToUpper();
+                            }
+                            else if (!string.IsNullOrEmpty(fullName))
+                            {
+                                initials = fullName.Substring(0, Math.Min(2, fullName.Length)).ToUpper();
+                            }
 
                             // Format member display: Initials, Name, ID
                             string memberDisplay = $"{initials}\n{fullName}\nID: {memberId:D5}";
