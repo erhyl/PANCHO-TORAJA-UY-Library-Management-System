@@ -177,11 +177,11 @@
     <Compile Include="Forms\Dashboard\LibraryStaffDashboard.Designer.cs">
       <DependentUpon>LibraryStaffDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Dashboard\MemberDashboard.cs">
+    <Compile Include="Forms\Dashboard\MemberMainDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dashboard\MemberDashboard.Designer.cs">
-      <DependentUpon>MemberDashboard.cs</DependentUpon>
+    <Compile Include="Forms\Dashboard\MemberMainDashboard.Designer.cs">
+      <DependentUpon>MemberMainDashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Fines\FinesForm.cs">
       <SubType>Form</SubType>
@@ -320,8 +320,8 @@
     <EmbeddedResource Include="Forms\Dashboard\AdminMainForm.resx">
       <DependentUpon>AdminMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Dashboard\MemberDashboard.resx">
-      <DependentUpon>MemberDashboard.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Dashboard\MemberMainDashboard.resx">
+      <DependentUpon>MemberMainDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Fines\FinesForm.resx">
       <DependentUpon>FinesForm.cs</DependentUpon>

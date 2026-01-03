@@ -1,6 +1,6 @@
-﻿namespace Project5LMS.Forms.Dashboard
+﻿namespace Project5LMS.Forms.MemberRoleForms
 {
-    partial class MemberDashboard
+    partial class MembersBrowseBooksForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // MemberDashboard
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "MemberDashboard";
-            this.Text = "Members_Dashboard";
-            this.Load += new System.EventHandler(this.MemberDashboard_Load);
-            this.ResumeLayout(false);
-
+            this.Text = "MembersBrowseBooksForm";
         }
 
         #endregion

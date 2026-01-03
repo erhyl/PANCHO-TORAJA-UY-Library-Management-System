@@ -43,10 +43,9 @@
             this.panelMainContainer.Controls.Add(this.panelLeftSection);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1942, 1102);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelRightSection
@@ -59,11 +58,10 @@
             this.panelRightSection.Controls.Add(this.lblRegularFine);
             this.panelRightSection.Controls.Add(this.lblOverdueFinesTitle);
             this.panelRightSection.Controls.Add(this.lblFineCirculationTitle);
-            this.panelRightSection.Location = new System.Drawing.Point(1000, 30);
-            this.panelRightSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelRightSection.Location = new System.Drawing.Point(1047, 24);
             this.panelRightSection.Name = "panelRightSection";
-            this.panelRightSection.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelRightSection.Size = new System.Drawing.Size(912, 1042);
+            this.panelRightSection.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelRightSection.Size = new System.Drawing.Size(300, 846);
             this.panelRightSection.TabIndex = 1;
             // 
             // lblMaxFine
@@ -71,10 +69,9 @@
             this.lblMaxFine.AutoSize = true;
             this.lblMaxFine.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxFine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMaxFine.Location = new System.Drawing.Point(50, 200);
-            this.lblMaxFine.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMaxFine.Location = new System.Drawing.Point(38, 162);
             this.lblMaxFine.Name = "lblMaxFine";
-            this.lblMaxFine.Size = new System.Drawing.Size(240, 24);
+            this.lblMaxFine.Size = new System.Drawing.Size(197, 18);
             this.lblMaxFine.TabIndex = 4;
             this.lblMaxFine.Text = "• Maximum fine: ₱* per book";
             // 
@@ -83,10 +80,9 @@
             this.lblReferenceFine.AutoSize = true;
             this.lblReferenceFine.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReferenceFine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReferenceFine.Location = new System.Drawing.Point(50, 160);
-            this.lblReferenceFine.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReferenceFine.Location = new System.Drawing.Point(38, 130);
             this.lblReferenceFine.Name = "lblReferenceFine";
-            this.lblReferenceFine.Size = new System.Drawing.Size(240, 24);
+            this.lblReferenceFine.Size = new System.Drawing.Size(205, 18);
             this.lblReferenceFine.TabIndex = 3;
             this.lblReferenceFine.Text = "• Reference Books: ₱* / a day";
             // 
@@ -95,10 +91,9 @@
             this.lblRegularFine.AutoSize = true;
             this.lblRegularFine.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRegularFine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRegularFine.Location = new System.Drawing.Point(50, 120);
-            this.lblRegularFine.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRegularFine.Location = new System.Drawing.Point(38, 98);
             this.lblRegularFine.Name = "lblRegularFine";
-            this.lblRegularFine.Size = new System.Drawing.Size(200, 24);
+            this.lblRegularFine.Size = new System.Drawing.Size(188, 18);
             this.lblRegularFine.TabIndex = 2;
             this.lblRegularFine.Text = "• Regular Books: ₱* / a day";
             // 
@@ -107,10 +102,9 @@
             this.lblOverdueFinesTitle.AutoSize = true;
             this.lblOverdueFinesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOverdueFinesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblOverdueFinesTitle.Location = new System.Drawing.Point(30, 80);
-            this.lblOverdueFinesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblOverdueFinesTitle.Location = new System.Drawing.Point(22, 65);
             this.lblOverdueFinesTitle.Name = "lblOverdueFinesTitle";
-            this.lblOverdueFinesTitle.Size = new System.Drawing.Size(140, 25);
+            this.lblOverdueFinesTitle.Size = new System.Drawing.Size(125, 20);
             this.lblOverdueFinesTitle.TabIndex = 1;
             this.lblOverdueFinesTitle.Text = "Overdue Fines";
             // 
@@ -119,10 +113,9 @@
             this.lblFineCirculationTitle.AutoSize = true;
             this.lblFineCirculationTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFineCirculationTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFineCirculationTitle.Location = new System.Drawing.Point(30, 30);
-            this.lblFineCirculationTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFineCirculationTitle.Location = new System.Drawing.Point(22, 24);
             this.lblFineCirculationTitle.Name = "lblFineCirculationTitle";
-            this.lblFineCirculationTitle.Size = new System.Drawing.Size(220, 31);
+            this.lblFineCirculationTitle.Size = new System.Drawing.Size(179, 26);
             this.lblFineCirculationTitle.TabIndex = 0;
             this.lblFineCirculationTitle.Text = "Fine Circulation";
             // 
@@ -137,11 +130,10 @@
             this.panelLeftSection.Controls.Add(this.lblBookISBNBarcode);
             this.panelLeftSection.Controls.Add(this.lblReturnSubtitle);
             this.panelLeftSection.Controls.Add(this.lblReturnTitle);
-            this.panelLeftSection.Location = new System.Drawing.Point(30, 30);
-            this.panelLeftSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelLeftSection.Location = new System.Drawing.Point(22, 24);
             this.panelLeftSection.Name = "panelLeftSection";
-            this.panelLeftSection.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelLeftSection.Size = new System.Drawing.Size(950, 1042);
+            this.panelLeftSection.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelLeftSection.Size = new System.Drawing.Size(712, 846);
             this.panelLeftSection.TabIndex = 0;
             // 
             // btnProcessReturn
@@ -151,10 +143,9 @@
             this.btnProcessReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcessReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProcessReturn.ForeColor = System.Drawing.Color.White;
-            this.btnProcessReturn.Location = new System.Drawing.Point(30, 300);
-            this.btnProcessReturn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnProcessReturn.Location = new System.Drawing.Point(22, 244);
             this.btnProcessReturn.Name = "btnProcessReturn";
-            this.btnProcessReturn.Size = new System.Drawing.Size(890, 50);
+            this.btnProcessReturn.Size = new System.Drawing.Size(668, 41);
             this.btnProcessReturn.TabIndex = 5;
             this.btnProcessReturn.Text = "Process Return";
             this.btnProcessReturn.UseVisualStyleBackColor = false;
@@ -165,10 +156,9 @@
             this.lblFineMessage.AutoSize = true;
             this.lblFineMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFineMessage.ForeColor = System.Drawing.Color.Gray;
-            this.lblFineMessage.Location = new System.Drawing.Point(30, 250);
-            this.lblFineMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFineMessage.Location = new System.Drawing.Point(22, 203);
             this.lblFineMessage.Name = "lblFineMessage";
-            this.lblFineMessage.Size = new System.Drawing.Size(220, 24);
+            this.lblFineMessage.Size = new System.Drawing.Size(180, 18);
             this.lblFineMessage.TabIndex = 4;
             this.lblFineMessage.Text = "No overdue fines detected";
             // 
@@ -177,25 +167,23 @@
             this.txtBookISBNBarcode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBookISBNBarcode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBookISBNBarcode.ForeColor = System.Drawing.Color.Gray;
-            this.txtBookISBNBarcode.Location = new System.Drawing.Point(30, 200);
-            this.txtBookISBNBarcode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBookISBNBarcode.Location = new System.Drawing.Point(22, 162);
             this.txtBookISBNBarcode.Name = "txtBookISBNBarcode";
-            this.txtBookISBNBarcode.Size = new System.Drawing.Size(890, 28);
+            this.txtBookISBNBarcode.Size = new System.Drawing.Size(668, 24);
             this.txtBookISBNBarcode.TabIndex = 3;
             this.txtBookISBNBarcode.Text = "Scan or enter ISBN";
+            this.txtBookISBNBarcode.TextChanged += new System.EventHandler(this.txtBookISBNBarcode_TextChanged);
             this.txtBookISBNBarcode.Enter += new System.EventHandler(this.txtBookISBNBarcode_Enter);
             this.txtBookISBNBarcode.Leave += new System.EventHandler(this.txtBookISBNBarcode_Leave);
-            this.txtBookISBNBarcode.TextChanged += new System.EventHandler(this.txtBookISBNBarcode_TextChanged);
             // 
             // lblBookISBNBarcode
             // 
             this.lblBookISBNBarcode.AutoSize = true;
             this.lblBookISBNBarcode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBookISBNBarcode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBookISBNBarcode.Location = new System.Drawing.Point(30, 170);
-            this.lblBookISBNBarcode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBookISBNBarcode.Location = new System.Drawing.Point(22, 138);
             this.lblBookISBNBarcode.Name = "lblBookISBNBarcode";
-            this.lblBookISBNBarcode.Size = new System.Drawing.Size(200, 24);
+            this.lblBookISBNBarcode.Size = new System.Drawing.Size(160, 18);
             this.lblBookISBNBarcode.TabIndex = 2;
             this.lblBookISBNBarcode.Text = "Book ISBN or Barcode";
             // 
@@ -204,10 +192,9 @@
             this.lblReturnSubtitle.AutoSize = true;
             this.lblReturnSubtitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnSubtitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblReturnSubtitle.Location = new System.Drawing.Point(30, 80);
-            this.lblReturnSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReturnSubtitle.Location = new System.Drawing.Point(22, 65);
             this.lblReturnSubtitle.Name = "lblReturnSubtitle";
-            this.lblReturnSubtitle.Size = new System.Drawing.Size(200, 24);
+            this.lblReturnSubtitle.Size = new System.Drawing.Size(156, 18);
             this.lblReturnSubtitle.TabIndex = 1;
             this.lblReturnSubtitle.Text = "Process a book return";
             // 
@@ -216,22 +203,20 @@
             this.lblReturnTitle.AutoSize = true;
             this.lblReturnTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReturnTitle.Location = new System.Drawing.Point(30, 30);
-            this.lblReturnTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReturnTitle.Location = new System.Drawing.Point(22, 24);
             this.lblReturnTitle.Name = "lblReturnTitle";
-            this.lblReturnTitle.Size = new System.Drawing.Size(150, 31);
+            this.lblReturnTitle.Size = new System.Drawing.Size(144, 26);
             this.lblReturnTitle.TabIndex = 0;
             this.lblReturnTitle.Text = "Return Book";
             // 
             // ReturnForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
+            this.ClientSize = new System.Drawing.Size(1455, 894);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ReturnForm";
             this.Text = "Return Book";
             this.Load += new System.EventHandler(this.ReturnForm_Load);

@@ -25,7 +25,6 @@
             this.lblCondition2 = new System.Windows.Forms.Label();
             this.lblCondition1 = new System.Windows.Forms.Label();
             this.lblConditionsTitle = new System.Windows.Forms.Label();
-            this.lblCheckoutGuidelinesTitle = new System.Windows.Forms.Label();
             this.panelLeftSection = new System.Windows.Forms.Panel();
             this.btnProcessRenewal = new System.Windows.Forms.Button();
             this.lblRenewalPolicy = new System.Windows.Forms.Label();
@@ -47,10 +46,9 @@
             this.panelMainContainer.Controls.Add(this.panelLeftSection);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1942, 1102);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelRightSection
@@ -59,12 +57,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelRightSection.BackColor = System.Drawing.Color.White;
             this.panelRightSection.Controls.Add(this.panelConditionsBox);
-            this.panelRightSection.Controls.Add(this.lblCheckoutGuidelinesTitle);
-            this.panelRightSection.Location = new System.Drawing.Point(1000, 30);
-            this.panelRightSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelRightSection.Location = new System.Drawing.Point(1111, 27);
             this.panelRightSection.Name = "panelRightSection";
-            this.panelRightSection.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelRightSection.Size = new System.Drawing.Size(912, 1042);
+            this.panelRightSection.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelRightSection.Size = new System.Drawing.Size(344, 846);
             this.panelRightSection.TabIndex = 1;
             // 
             // panelConditionsBox
@@ -75,11 +71,10 @@
             this.panelConditionsBox.Controls.Add(this.lblCondition2);
             this.panelConditionsBox.Controls.Add(this.lblCondition1);
             this.panelConditionsBox.Controls.Add(this.lblConditionsTitle);
-            this.panelConditionsBox.Location = new System.Drawing.Point(30, 100);
-            this.panelConditionsBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelConditionsBox.Location = new System.Drawing.Point(9, 21);
             this.panelConditionsBox.Name = "panelConditionsBox";
-            this.panelConditionsBox.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
-            this.panelConditionsBox.Size = new System.Drawing.Size(852, 300);
+            this.panelConditionsBox.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelConditionsBox.Size = new System.Drawing.Size(326, 244);
             this.panelConditionsBox.TabIndex = 1;
             // 
             // lblCondition4
@@ -87,10 +82,9 @@
             this.lblCondition4.AutoSize = true;
             this.lblCondition4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCondition4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCondition4.Location = new System.Drawing.Point(40, 240);
-            this.lblCondition4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCondition4.Location = new System.Drawing.Point(30, 195);
             this.lblCondition4.Name = "lblCondition4";
-            this.lblCondition4.Size = new System.Drawing.Size(200, 24);
+            this.lblCondition4.Size = new System.Drawing.Size(185, 18);
             this.lblCondition4.TabIndex = 4;
             this.lblCondition4.Text = "• Member in good standing";
             // 
@@ -99,10 +93,9 @@
             this.lblCondition3.AutoSize = true;
             this.lblCondition3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCondition3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCondition3.Location = new System.Drawing.Point(40, 200);
-            this.lblCondition3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCondition3.Location = new System.Drawing.Point(30, 162);
             this.lblCondition3.Name = "lblCondition3";
-            this.lblCondition3.Size = new System.Drawing.Size(250, 24);
+            this.lblCondition3.Size = new System.Drawing.Size(222, 18);
             this.lblCondition3.TabIndex = 3;
             this.lblCondition3.Text = "• No overdue status on the book";
             // 
@@ -111,10 +104,9 @@
             this.lblCondition2.AutoSize = true;
             this.lblCondition2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCondition2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCondition2.Location = new System.Drawing.Point(40, 160);
-            this.lblCondition2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCondition2.Location = new System.Drawing.Point(30, 130);
             this.lblCondition2.Name = "lblCondition2";
-            this.lblCondition2.Size = new System.Drawing.Size(250, 24);
+            this.lblCondition2.Size = new System.Drawing.Size(210, 18);
             this.lblCondition2.TabIndex = 2;
             this.lblCondition2.Text = "• Maximum * renewals allowed";
             // 
@@ -123,10 +115,9 @@
             this.lblCondition1.AutoSize = true;
             this.lblCondition1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCondition1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCondition1.Location = new System.Drawing.Point(40, 120);
-            this.lblCondition1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCondition1.Location = new System.Drawing.Point(30, 98);
             this.lblCondition1.Name = "lblCondition1";
-            this.lblCondition1.Size = new System.Drawing.Size(350, 24);
+            this.lblCondition1.Size = new System.Drawing.Size(287, 18);
             this.lblCondition1.TabIndex = 1;
             this.lblCondition1.Text = "• Book is not reserved by another member";
             // 
@@ -135,24 +126,11 @@
             this.lblConditionsTitle.AutoSize = true;
             this.lblConditionsTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConditionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblConditionsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblConditionsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblConditionsTitle.Location = new System.Drawing.Point(15, 16);
             this.lblConditionsTitle.Name = "lblConditionsTitle";
-            this.lblConditionsTitle.Size = new System.Drawing.Size(200, 25);
+            this.lblConditionsTitle.Size = new System.Drawing.Size(195, 20);
             this.lblConditionsTitle.TabIndex = 0;
             this.lblConditionsTitle.Text = "Conditions for Renewal";
-            // 
-            // lblCheckoutGuidelinesTitle
-            // 
-            this.lblCheckoutGuidelinesTitle.AutoSize = true;
-            this.lblCheckoutGuidelinesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheckoutGuidelinesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCheckoutGuidelinesTitle.Location = new System.Drawing.Point(30, 30);
-            this.lblCheckoutGuidelinesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblCheckoutGuidelinesTitle.Name = "lblCheckoutGuidelinesTitle";
-            this.lblCheckoutGuidelinesTitle.Size = new System.Drawing.Size(250, 31);
-            this.lblCheckoutGuidelinesTitle.TabIndex = 0;
-            this.lblCheckoutGuidelinesTitle.Text = "Checkout Guidelines";
             // 
             // panelLeftSection
             // 
@@ -166,11 +144,10 @@
             this.panelLeftSection.Controls.Add(this.lblTransactionID);
             this.panelLeftSection.Controls.Add(this.lblRenewSubtitle);
             this.panelLeftSection.Controls.Add(this.lblRenewTitle);
-            this.panelLeftSection.Location = new System.Drawing.Point(30, 30);
-            this.panelLeftSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelLeftSection.Location = new System.Drawing.Point(22, 24);
             this.panelLeftSection.Name = "panelLeftSection";
-            this.panelLeftSection.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelLeftSection.Size = new System.Drawing.Size(950, 1042);
+            this.panelLeftSection.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelLeftSection.Size = new System.Drawing.Size(712, 846);
             this.panelLeftSection.TabIndex = 0;
             // 
             // btnProcessRenewal
@@ -180,10 +157,9 @@
             this.btnProcessRenewal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcessRenewal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProcessRenewal.ForeColor = System.Drawing.Color.White;
-            this.btnProcessRenewal.Location = new System.Drawing.Point(30, 350);
-            this.btnProcessRenewal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnProcessRenewal.Location = new System.Drawing.Point(22, 284);
             this.btnProcessRenewal.Name = "btnProcessRenewal";
-            this.btnProcessRenewal.Size = new System.Drawing.Size(890, 50);
+            this.btnProcessRenewal.Size = new System.Drawing.Size(668, 41);
             this.btnProcessRenewal.TabIndex = 6;
             this.btnProcessRenewal.Text = "Process Renewal";
             this.btnProcessRenewal.UseVisualStyleBackColor = false;
@@ -194,10 +170,9 @@
             this.lblRenewalPolicy.AutoSize = true;
             this.lblRenewalPolicy.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRenewalPolicy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRenewalPolicy.Location = new System.Drawing.Point(30, 280);
-            this.lblRenewalPolicy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRenewalPolicy.Location = new System.Drawing.Point(22, 228);
             this.lblRenewalPolicy.Name = "lblRenewalPolicy";
-            this.lblRenewalPolicy.Size = new System.Drawing.Size(300, 24);
+            this.lblRenewalPolicy.Size = new System.Drawing.Size(262, 18);
             this.lblRenewalPolicy.TabIndex = 5;
             this.lblRenewalPolicy.Text = "Max * renewals per loan *+* days each";
             // 
@@ -206,10 +181,9 @@
             this.lblRenewalPolicyTitle.AutoSize = true;
             this.lblRenewalPolicyTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRenewalPolicyTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRenewalPolicyTitle.Location = new System.Drawing.Point(30, 250);
-            this.lblRenewalPolicyTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRenewalPolicyTitle.Location = new System.Drawing.Point(22, 203);
             this.lblRenewalPolicyTitle.Name = "lblRenewalPolicyTitle";
-            this.lblRenewalPolicyTitle.Size = new System.Drawing.Size(150, 24);
+            this.lblRenewalPolicyTitle.Size = new System.Drawing.Size(128, 18);
             this.lblRenewalPolicyTitle.TabIndex = 4;
             this.lblRenewalPolicyTitle.Text = "Renewal Policy:";
             // 
@@ -218,25 +192,23 @@
             this.txtTransactionID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTransactionID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTransactionID.ForeColor = System.Drawing.Color.Gray;
-            this.txtTransactionID.Location = new System.Drawing.Point(30, 200);
-            this.txtTransactionID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTransactionID.Location = new System.Drawing.Point(22, 162);
             this.txtTransactionID.Name = "txtTransactionID";
-            this.txtTransactionID.Size = new System.Drawing.Size(890, 28);
+            this.txtTransactionID.Size = new System.Drawing.Size(668, 24);
             this.txtTransactionID.TabIndex = 3;
             this.txtTransactionID.Text = "Enter Transaction ID...";
+            this.txtTransactionID.TextChanged += new System.EventHandler(this.txtTransactionID_TextChanged);
             this.txtTransactionID.Enter += new System.EventHandler(this.txtTransactionID_Enter);
             this.txtTransactionID.Leave += new System.EventHandler(this.txtTransactionID_Leave);
-            this.txtTransactionID.TextChanged += new System.EventHandler(this.txtTransactionID_TextChanged);
             // 
             // lblTransactionID
             // 
             this.lblTransactionID.AutoSize = true;
             this.lblTransactionID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTransactionID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTransactionID.Location = new System.Drawing.Point(30, 170);
-            this.lblTransactionID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTransactionID.Location = new System.Drawing.Point(22, 138);
             this.lblTransactionID.Name = "lblTransactionID";
-            this.lblTransactionID.Size = new System.Drawing.Size(250, 24);
+            this.lblTransactionID.Size = new System.Drawing.Size(200, 18);
             this.lblTransactionID.TabIndex = 2;
             this.lblTransactionID.Text = "Transaction ID or Book ISBN";
             // 
@@ -245,10 +217,9 @@
             this.lblRenewSubtitle.AutoSize = true;
             this.lblRenewSubtitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRenewSubtitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblRenewSubtitle.Location = new System.Drawing.Point(30, 80);
-            this.lblRenewSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRenewSubtitle.Location = new System.Drawing.Point(22, 65);
             this.lblRenewSubtitle.Name = "lblRenewSubtitle";
-            this.lblRenewSubtitle.Size = new System.Drawing.Size(250, 24);
+            this.lblRenewSubtitle.Size = new System.Drawing.Size(203, 18);
             this.lblRenewSubtitle.TabIndex = 1;
             this.lblRenewSubtitle.Text = "Extend the due date for a loan";
             // 
@@ -257,28 +228,25 @@
             this.lblRenewTitle.AutoSize = true;
             this.lblRenewTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRenewTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRenewTitle.Location = new System.Drawing.Point(30, 30);
-            this.lblRenewTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRenewTitle.Location = new System.Drawing.Point(22, 24);
             this.lblRenewTitle.Name = "lblRenewTitle";
-            this.lblRenewTitle.Size = new System.Drawing.Size(150, 31);
+            this.lblRenewTitle.Size = new System.Drawing.Size(146, 26);
             this.lblRenewTitle.TabIndex = 0;
             this.lblRenewTitle.Text = "Renew Book";
             // 
             // RenewForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
+            this.ClientSize = new System.Drawing.Size(1455, 894);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "RenewForm";
             this.Text = "Renew Book";
             this.Load += new System.EventHandler(this.RenewForm_Load);
             this.panelMainContainer.ResumeLayout(false);
             this.panelRightSection.ResumeLayout(false);
-            this.panelRightSection.PerformLayout();
             this.panelConditionsBox.ResumeLayout(false);
             this.panelConditionsBox.PerformLayout();
             this.panelLeftSection.ResumeLayout(false);
@@ -299,7 +267,6 @@
         private System.Windows.Forms.Label lblRenewalPolicy;
         private System.Windows.Forms.Button btnProcessRenewal;
         private System.Windows.Forms.Panel panelRightSection;
-        private System.Windows.Forms.Label lblCheckoutGuidelinesTitle;
         private System.Windows.Forms.Panel panelConditionsBox;
         private System.Windows.Forms.Label lblConditionsTitle;
         private System.Windows.Forms.Label lblCondition1;

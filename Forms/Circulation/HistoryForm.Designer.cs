@@ -38,10 +38,9 @@
             this.panelMainContainer.Controls.Add(this.panelTopSection);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30, 30, 30, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1942, 1102);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelBottomSection
@@ -49,11 +48,10 @@
             this.panelBottomSection.BackColor = System.Drawing.Color.White;
             this.panelBottomSection.Controls.Add(this.dta_History);
             this.panelBottomSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBottomSection.Location = new System.Drawing.Point(30, 100);
-            this.panelBottomSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelBottomSection.Location = new System.Drawing.Point(22, 81);
             this.panelBottomSection.Name = "panelBottomSection";
-            this.panelBottomSection.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
-            this.panelBottomSection.Size = new System.Drawing.Size(1882, 972);
+            this.panelBottomSection.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelBottomSection.Size = new System.Drawing.Size(1411, 789);
             this.panelBottomSection.TabIndex = 1;
             // 
             // dta_History
@@ -66,15 +64,14 @@
             this.dta_History.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dta_History.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dta_History.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dta_History.Location = new System.Drawing.Point(20, 20);
-            this.dta_History.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dta_History.Location = new System.Drawing.Point(15, 16);
             this.dta_History.MultiSelect = false;
             this.dta_History.Name = "dta_History";
             this.dta_History.ReadOnly = true;
             this.dta_History.RowHeadersVisible = false;
             this.dta_History.RowTemplate.Height = 50;
             this.dta_History.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dta_History.Size = new System.Drawing.Size(1842, 932);
+            this.dta_History.Size = new System.Drawing.Size(1381, 757);
             this.dta_History.TabIndex = 0;
             // 
             // panelTopSection
@@ -84,11 +81,10 @@
             this.panelTopSection.Controls.Add(this.picSearchIcon);
             this.panelTopSection.Controls.Add(this.lblHistoryTitle);
             this.panelTopSection.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTopSection.Location = new System.Drawing.Point(30, 30);
-            this.panelTopSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTopSection.Location = new System.Drawing.Point(22, 24);
             this.panelTopSection.Name = "panelTopSection";
-            this.panelTopSection.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
-            this.panelTopSection.Size = new System.Drawing.Size(1882, 70);
+            this.panelTopSection.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelTopSection.Size = new System.Drawing.Size(1411, 57);
             this.panelTopSection.TabIndex = 0;
             // 
             // txtSearch
@@ -97,24 +93,22 @@
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(1500, 20);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSearch.Location = new System.Drawing.Point(1124, 16);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(362, 28);
+            this.txtSearch.Size = new System.Drawing.Size(272, 24);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.Text = "Search transactions...";
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // picSearchIcon
             // 
             this.picSearchIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picSearchIcon.BackColor = System.Drawing.Color.Transparent;
-            this.picSearchIcon.Location = new System.Drawing.Point(1470, 20);
-            this.picSearchIcon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picSearchIcon.Location = new System.Drawing.Point(1101, 16);
             this.picSearchIcon.Name = "picSearchIcon";
-            this.picSearchIcon.Size = new System.Drawing.Size(30, 30);
+            this.picSearchIcon.Size = new System.Drawing.Size(22, 24);
             this.picSearchIcon.TabIndex = 1;
             this.picSearchIcon.TabStop = false;
             // 
@@ -123,22 +117,20 @@
             this.lblHistoryTitle.AutoSize = true;
             this.lblHistoryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHistoryTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblHistoryTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblHistoryTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHistoryTitle.Location = new System.Drawing.Point(15, 16);
             this.lblHistoryTitle.Name = "lblHistoryTitle";
-            this.lblHistoryTitle.Size = new System.Drawing.Size(250, 31);
+            this.lblHistoryTitle.Size = new System.Drawing.Size(217, 26);
             this.lblHistoryTitle.TabIndex = 0;
             this.lblHistoryTitle.Text = "Transaction History";
             // 
             // HistoryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
+            this.ClientSize = new System.Drawing.Size(1455, 894);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "HistoryForm";
             this.Text = "Transaction History";
             this.Load += new System.EventHandler(this.HistoryForm_Load);

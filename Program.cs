@@ -18,7 +18,7 @@ namespace Project5LMS
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             // TEMPORARY: Skip login and go directly to AdminMainForm
-            Application.Run(new AdminMainForm());
+            Application.Run(new LoginForm());
             // Original: Application.Run(new LoginForm());
         }
     }

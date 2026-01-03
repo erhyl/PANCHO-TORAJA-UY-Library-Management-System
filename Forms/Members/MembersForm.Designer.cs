@@ -73,20 +73,18 @@
             this.panelMainContainer.Controls.Add(this.panelMetricsContainer);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1942, 1102);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelBottomSection
             // 
             this.panelBottomSection.Controls.Add(this.dta_Members);
             this.panelBottomSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBottomSection.Location = new System.Drawing.Point(30, 250);
-            this.panelBottomSection.Margin = new System.Windows.Forms.Padding(4);
+            this.panelBottomSection.Location = new System.Drawing.Point(22, 203);
             this.panelBottomSection.Name = "panelBottomSection";
-            this.panelBottomSection.Size = new System.Drawing.Size(1882, 822);
+            this.panelBottomSection.Size = new System.Drawing.Size(1411, 667);
             this.panelBottomSection.TabIndex = 2;
             // 
             // dta_Members
@@ -100,7 +98,6 @@
             this.dta_Members.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dta_Members.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dta_Members.Location = new System.Drawing.Point(0, 0);
-            this.dta_Members.Margin = new System.Windows.Forms.Padding(4);
             this.dta_Members.MultiSelect = false;
             this.dta_Members.Name = "dta_Members";
             this.dta_Members.ReadOnly = true;
@@ -108,7 +105,7 @@
             this.dta_Members.RowHeadersWidth = 51;
             this.dta_Members.RowTemplate.Height = 60;
             this.dta_Members.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dta_Members.Size = new System.Drawing.Size(1882, 822);
+            this.dta_Members.Size = new System.Drawing.Size(1411, 667);
             this.dta_Members.TabIndex = 0;
             this.dta_Members.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dta_Members_CellContentClick);
             this.dta_Members.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dta_Members_CellDoubleClick);
@@ -120,10 +117,9 @@
             this.panelSearchFilters.Controls.Add(this.cmbTypes);
             this.panelSearchFilters.Controls.Add(this.panelSearchBox);
             this.panelSearchFilters.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSearchFilters.Location = new System.Drawing.Point(30, 190);
-            this.panelSearchFilters.Margin = new System.Windows.Forms.Padding(4);
+            this.panelSearchFilters.Location = new System.Drawing.Point(22, 154);
             this.panelSearchFilters.Name = "panelSearchFilters";
-            this.panelSearchFilters.Size = new System.Drawing.Size(1882, 60);
+            this.panelSearchFilters.Size = new System.Drawing.Size(1411, 49);
             this.panelSearchFilters.TabIndex = 1;
             // 
             // btnAddMember
@@ -134,10 +130,9 @@
             this.btnAddMember.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddMember.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddMember.ForeColor = System.Drawing.Color.White;
-            this.btnAddMember.Location = new System.Drawing.Point(1680, 10);
-            this.btnAddMember.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAddMember.Location = new System.Drawing.Point(1259, 8);
             this.btnAddMember.Name = "btnAddMember";
-            this.btnAddMember.Size = new System.Drawing.Size(200, 40);
+            this.btnAddMember.Size = new System.Drawing.Size(150, 32);
             this.btnAddMember.TabIndex = 3;
             this.btnAddMember.Text = "+ Add New Member";
             this.btnAddMember.UseVisualStyleBackColor = false;
@@ -149,10 +144,9 @@
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(1520, 15);
-            this.cmbStatus.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbStatus.Location = new System.Drawing.Point(1139, 12);
             this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(150, 30);
+            this.cmbStatus.Size = new System.Drawing.Size(114, 26);
             this.cmbStatus.TabIndex = 2;
             this.cmbStatus.SelectedIndexChanged += new System.EventHandler(this.cmbStatus_SelectedIndexChanged);
             // 
@@ -162,10 +156,9 @@
             this.cmbTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbTypes.FormattingEnabled = true;
-            this.cmbTypes.Location = new System.Drawing.Point(1362, 15);
-            this.cmbTypes.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbTypes.Location = new System.Drawing.Point(1021, 12);
             this.cmbTypes.Name = "cmbTypes";
-            this.cmbTypes.Size = new System.Drawing.Size(150, 30);
+            this.cmbTypes.Size = new System.Drawing.Size(114, 26);
             this.cmbTypes.TabIndex = 1;
             this.cmbTypes.SelectedIndexChanged += new System.EventHandler(this.cmbTypes_SelectedIndexChanged);
             // 
@@ -177,19 +170,17 @@
             this.panelSearchBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelSearchBox.Controls.Add(this.picSearchIcon);
             this.panelSearchBox.Controls.Add(this.txtSearch);
-            this.panelSearchBox.Location = new System.Drawing.Point(0, 15);
-            this.panelSearchBox.Margin = new System.Windows.Forms.Padding(4);
+            this.panelSearchBox.Location = new System.Drawing.Point(0, 12);
             this.panelSearchBox.Name = "panelSearchBox";
-            this.panelSearchBox.Size = new System.Drawing.Size(1350, 40);
+            this.panelSearchBox.Size = new System.Drawing.Size(1012, 33);
             this.panelSearchBox.TabIndex = 4;
             // 
             // picSearchIcon
             // 
             this.picSearchIcon.BackColor = System.Drawing.Color.Transparent;
-            this.picSearchIcon.Location = new System.Drawing.Point(10, 8);
-            this.picSearchIcon.Margin = new System.Windows.Forms.Padding(4);
+            this.picSearchIcon.Location = new System.Drawing.Point(8, 6);
             this.picSearchIcon.Name = "picSearchIcon";
-            this.picSearchIcon.Size = new System.Drawing.Size(24, 24);
+            this.picSearchIcon.Size = new System.Drawing.Size(18, 20);
             this.picSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picSearchIcon.TabIndex = 1;
             this.picSearchIcon.TabStop = false;
@@ -199,10 +190,9 @@
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(45, 8);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSearch.Location = new System.Drawing.Point(34, 6);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(1300, 21);
+            this.txtSearch.Size = new System.Drawing.Size(975, 17);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.Text = "Search by MemberID or email";
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
@@ -216,10 +206,9 @@
             this.panelMetricsContainer.Controls.Add(this.panelMetricCard2);
             this.panelMetricsContainer.Controls.Add(this.panelMetricCard1);
             this.panelMetricsContainer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMetricsContainer.Location = new System.Drawing.Point(30, 30);
-            this.panelMetricsContainer.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricsContainer.Location = new System.Drawing.Point(22, 24);
             this.panelMetricsContainer.Name = "panelMetricsContainer";
-            this.panelMetricsContainer.Size = new System.Drawing.Size(1882, 160);
+            this.panelMetricsContainer.Size = new System.Drawing.Size(1411, 130);
             this.panelMetricsContainer.TabIndex = 0;
             // 
             // panelMetricCard4
@@ -228,10 +217,9 @@
             this.panelMetricCard4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard4.Controls.Add(this.lblMetricValue4);
             this.panelMetricCard4.Controls.Add(this.lblMetricTitle4);
-            this.panelMetricCard4.Location = new System.Drawing.Point(1410, 0);
-            this.panelMetricCard4.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard4.Location = new System.Drawing.Point(1058, 0);
             this.panelMetricCard4.Name = "panelMetricCard4";
-            this.panelMetricCard4.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard4.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard4.TabIndex = 3;
             // 
             // lblMetricValue4
@@ -239,10 +227,9 @@
             this.lblMetricValue4.AutoSize = true;
             this.lblMetricValue4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue4.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue4.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue4.Name = "lblMetricValue4";
-            this.lblMetricValue4.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue4.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue4.TabIndex = 1;
             this.lblMetricValue4.Text = "0";
             // 
@@ -251,10 +238,9 @@
             this.lblMetricTitle4.AutoSize = true;
             this.lblMetricTitle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle4.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle4.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle4.Name = "lblMetricTitle4";
-            this.lblMetricTitle4.Size = new System.Drawing.Size(108, 24);
+            this.lblMetricTitle4.Size = new System.Drawing.Size(82, 18);
             this.lblMetricTitle4.TabIndex = 0;
             this.lblMetricTitle4.Text = "Suspended";
             // 
@@ -264,10 +250,9 @@
             this.panelMetricCard3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard3.Controls.Add(this.lblMetricValue3);
             this.panelMetricCard3.Controls.Add(this.lblMetricTitle3);
-            this.panelMetricCard3.Location = new System.Drawing.Point(940, 0);
-            this.panelMetricCard3.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard3.Location = new System.Drawing.Point(705, 0);
             this.panelMetricCard3.Name = "panelMetricCard3";
-            this.panelMetricCard3.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard3.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard3.TabIndex = 2;
             // 
             // lblMetricValue3
@@ -275,10 +260,9 @@
             this.lblMetricValue3.AutoSize = true;
             this.lblMetricValue3.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue3.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue3.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue3.Name = "lblMetricValue3";
-            this.lblMetricValue3.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue3.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue3.TabIndex = 1;
             this.lblMetricValue3.Text = "0";
             // 
@@ -287,10 +271,9 @@
             this.lblMetricTitle3.AutoSize = true;
             this.lblMetricTitle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle3.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle3.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle3.Name = "lblMetricTitle3";
-            this.lblMetricTitle3.Size = new System.Drawing.Size(73, 24);
+            this.lblMetricTitle3.Size = new System.Drawing.Size(57, 18);
             this.lblMetricTitle3.TabIndex = 0;
             this.lblMetricTitle3.Text = "Inactive";
             // 
@@ -300,10 +283,9 @@
             this.panelMetricCard2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard2.Controls.Add(this.lblMetricValue2);
             this.panelMetricCard2.Controls.Add(this.lblMetricTitle2);
-            this.panelMetricCard2.Location = new System.Drawing.Point(470, 0);
-            this.panelMetricCard2.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard2.Location = new System.Drawing.Point(352, 0);
             this.panelMetricCard2.Name = "panelMetricCard2";
-            this.panelMetricCard2.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard2.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard2.TabIndex = 1;
             // 
             // lblMetricValue2
@@ -311,10 +293,9 @@
             this.lblMetricValue2.AutoSize = true;
             this.lblMetricValue2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue2.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue2.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue2.Name = "lblMetricValue2";
-            this.lblMetricValue2.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue2.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue2.TabIndex = 1;
             this.lblMetricValue2.Text = "0";
             // 
@@ -323,10 +304,9 @@
             this.lblMetricTitle2.AutoSize = true;
             this.lblMetricTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle2.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle2.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle2.Name = "lblMetricTitle2";
-            this.lblMetricTitle2.Size = new System.Drawing.Size(61, 24);
+            this.lblMetricTitle2.Size = new System.Drawing.Size(47, 18);
             this.lblMetricTitle2.TabIndex = 0;
             this.lblMetricTitle2.Text = "Active";
             // 
@@ -337,9 +317,8 @@
             this.panelMetricCard1.Controls.Add(this.lblMetricValue1);
             this.panelMetricCard1.Controls.Add(this.lblMetricTitle1);
             this.panelMetricCard1.Location = new System.Drawing.Point(0, 0);
-            this.panelMetricCard1.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricCard1.Name = "panelMetricCard1";
-            this.panelMetricCard1.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard1.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard1.TabIndex = 0;
             // 
             // lblMetricValue1
@@ -347,10 +326,9 @@
             this.lblMetricValue1.AutoSize = true;
             this.lblMetricValue1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue1.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue1.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue1.Name = "lblMetricValue1";
-            this.lblMetricValue1.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue1.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue1.TabIndex = 1;
             this.lblMetricValue1.Text = "0";
             // 
@@ -359,22 +337,20 @@
             this.lblMetricTitle1.AutoSize = true;
             this.lblMetricTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle1.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle1.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle1.Name = "lblMetricTitle1";
-            this.lblMetricTitle1.Size = new System.Drawing.Size(136, 24);
+            this.lblMetricTitle1.Size = new System.Drawing.Size(108, 18);
             this.lblMetricTitle1.TabIndex = 0;
             this.lblMetricTitle1.Text = "Total Members";
             // 
             // MembersForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
+            this.ClientSize = new System.Drawing.Size(1455, 894);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MembersForm";
             this.Text = "Members";
             this.Load += new System.EventHandler(this.MembersForm_Load);

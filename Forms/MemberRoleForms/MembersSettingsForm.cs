@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Project5LMS.Forms.Dashboard
+namespace Project5LMS.Forms.MemberRoleForms
 {
-    public partial class MemberDashboard : Form
+    public partial class MembersSettingsForm : Form
     {
-        public MemberDashboard()
+        public MembersSettingsForm()
         {
             InitializeComponent();
-        }
-
-        private void MemberDashboard_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

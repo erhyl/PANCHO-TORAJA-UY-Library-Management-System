@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using Project5LMS.Forms.Reports;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Project5LMS.Admin_Dashboard
 {
@@ -476,6 +477,16 @@ namespace Project5LMS.Admin_Dashboard
             historyForm.Dock = DockStyle.Fill;
             tabHistory.Controls.Add(historyForm);
             historyForm.Show();
+        }
+
+        private void panelBottomSection_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tabCheckout_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
