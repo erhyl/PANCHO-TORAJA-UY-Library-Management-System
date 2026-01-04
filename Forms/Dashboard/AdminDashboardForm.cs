@@ -473,5 +473,10 @@ namespace Project5LMS.Admin_Dashboard
             else
                 return $"{(int)timeSpan.TotalDays} days ago";
         }
+
+        private void panelMetricsContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -249,8 +249,8 @@ namespace Project5LMS.Forms.Reports
                         CONCAT(m.FirstName, ' ', m.LastName) as 'Member Name',
                         b.Title as 'Book Title',
                         f.FineAmount as 'Amount',
-                        f.Paid,
-                        cr.BorrowDate as 'Borrow Date',
+                        f.Status as 'Status',
+                        cr.CheckoutDate as 'Borrow Date',
                         cr.DueDate as 'Due Date'
                     FROM Fines f
                     INNER JOIN Members m ON f.MemberID = m.MemberID

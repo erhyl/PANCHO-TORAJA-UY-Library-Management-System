@@ -198,79 +198,90 @@ namespace Project5LMS
                 }
             }
 
-            UserService userService = new UserService();
-            var user = userService.Login(email, password);
-
-            if (user == null)
+            try
             {
-                MessageBox.Show("Invalid email or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                UserService userService = new UserService();
+                var user = userService.Login(email, password);
 
-            // Verify that the user's role matches the selected role
-            if (!user.Role.Equals(selectedRole, StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show($"The selected role '{selectedRole}' does not match your account role '{user.Role}'.\n\nPlease select the correct role and try again.", 
-                    "Role Mismatch", 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Additional validation: Ensure Admin role has correct email domain
-            if (user.Role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
-            {
-                const string adminEmailDomain = "@admin.umindanao.edu.ph";
-                if (!user.Email.EndsWith(adminEmailDomain, StringComparison.OrdinalIgnoreCase))
+                if (user == null)
                 {
-                    MessageBox.Show($"Admin accounts must use an email ending with '{adminEmailDomain}'.\n\nYour account email: {user.Email}", 
-                        "Invalid Admin Account", 
-                        MessageBoxButtons.OK, 
-                        MessageBoxIcon.Error);
+                    MessageBox.Show("Invalid email or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                // Verify that the user's role matches the selected role
+                if (!user.Role.Equals(selectedRole, StringComparison.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show($"The selected role '{selectedRole}' does not match your account role '{user.Role}'.\n\nPlease select the correct role and try again.",
+                        "Role Mismatch",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Additional validation: Ensure Admin role has correct email domain
+                if (user.Role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    const string adminEmailDomain = "@admin.umindanao.edu.ph";
+                    if (!user.Email.EndsWith(adminEmailDomain, StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show($"Admin accounts must use an email ending with '{adminEmailDomain}'.\n\nYour account email: {user.Email}",
+                            "Invalid Admin Account",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                // Set session
+                CurrentUser.Set(user);
+
+                // Role-based redirection (explicit and non-overlapping)
+                switch (user.Role)
+                {
+                    case "Admin":
+                        {
+                            var adminForm = new AdminMainForm();
+                            adminForm.Show();
+                            this.Hide();
+                            break;
+                        }
+                    case "LibraryStaff":
+                        {
+                            var staffForm = new MemberMainDashboard();
+                            staffForm.Show();
+                            this.Hide();
+                            break;
+                        }
+                    case "Member":
+                        {
+                            var memberForm = new MemberMainDashboard();
+                            memberForm.Show();
+                            this.Hide();
+                            break;
+                        }
+                    case "Librarian": // Backward compatibility
+                        {
+                            var staffForm = new MemberMainDashboard();
+                            staffForm.Show();
+                            this.Hide();
+                            break;
+                        }
+                    default:
+                        {
+                            MessageBox.Show("Your account role is not recognized. Contact an administrator.", "Access Denied",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            break;
+                        }
+                }
             }
-
-            // Set session
-            CurrentUser.Set(user);
-
-            // Role-based redirection (explicit and non-overlapping)
-            switch (user.Role)
+            catch (Exception ex)
             {
-                case "Admin":
-                    {
-                        var adminForm = new AdminMainForm();
-                        adminForm.Show();
-                        this.Hide();
-                        break;
-                    }
-                case "LibraryStaff":
-                    {
-                        var staffForm = new MemberMainDashboard();
-                        staffForm.Show();
-                        this.Hide();
-                        break;
-                    }
-                case "Member":
-                    {
-                        var memberForm = new MemberMainDashboard();
-                        memberForm.Show();
-                        this.Hide();
-                        break;
-                    }
-                case "Librarian": // Backward compatibility
-                    {
-                        var staffForm = new MemberMainDashboard();
-                        staffForm.Show();
-                        this.Hide();
-                        break;
-                    }
-                default:
-                    {
-                        MessageBox.Show("Your account role is not recognized. Contact an administrator.", "Access Denied",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        break;
-                    }
+                MessageBox.Show($"An error occurred during login: {ex.Message}\n\nPlease check your database connection and try again.",
+                    "Login Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Login exception: {ex}");
             }
         }
 

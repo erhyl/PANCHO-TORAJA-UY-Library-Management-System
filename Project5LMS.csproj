@@ -195,6 +195,30 @@
     <Compile Include="Forms\Inventory\InventoryForm.Designer.cs">
       <DependentUpon>InventoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersBrowseBooksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersBrowseBooksForm.Designer.cs">
+      <DependentUpon>MembersBrowseBooksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersDashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersDashboardForm.Designer.cs">
+      <DependentUpon>MembersDashboardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersMyBooksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersMyBooksForm.Designer.cs">
+      <DependentUpon>MembersMyBooksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MemberRoleForms\MembersSettingsForm.Designer.cs">
+      <DependentUpon>MembersSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Members\MembersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -328,6 +352,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inventory\InventoryForm.resx">
       <DependentUpon>InventoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MemberRoleForms\MembersBrowseBooksForm.resx">
+      <DependentUpon>MembersBrowseBooksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MemberRoleForms\MembersDashboardForm.resx">
+      <DependentUpon>MembersDashboardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MemberRoleForms\MembersMyBooksForm.resx">
+      <DependentUpon>MembersMyBooksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MemberRoleForms\MembersSettingsForm.resx">
+      <DependentUpon>MembersSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Members\AddMemberForm.resx">
       <DependentUpon>AddMemberForm.cs</DependentUpon>

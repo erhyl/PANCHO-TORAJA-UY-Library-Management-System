@@ -85,10 +85,9 @@
             this.panelMainContainer.Controls.Add(this.panelMetricsContainer);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1942, 1102);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelBottomSection
@@ -96,10 +95,9 @@
             this.panelBottomSection.Controls.Add(this.panelRecentActivity);
             this.panelBottomSection.Controls.Add(this.panelActiveTransactions);
             this.panelBottomSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBottomSection.Location = new System.Drawing.Point(30, 280);
-            this.panelBottomSection.Margin = new System.Windows.Forms.Padding(4);
+            this.panelBottomSection.Location = new System.Drawing.Point(22, 227);
             this.panelBottomSection.Name = "panelBottomSection";
-            this.panelBottomSection.Size = new System.Drawing.Size(1882, 792);
+            this.panelBottomSection.Size = new System.Drawing.Size(1411, 643);
             this.panelBottomSection.TabIndex = 1;
             // 
             // panelRecentActivity
@@ -109,11 +107,10 @@
             this.panelRecentActivity.Controls.Add(this.lblRecentActivityTitle);
             this.panelRecentActivity.Controls.Add(this.listViewRecentActivity);
             this.panelRecentActivity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRecentActivity.Location = new System.Drawing.Point(952, 0);
-            this.panelRecentActivity.Margin = new System.Windows.Forms.Padding(4);
+            this.panelRecentActivity.Location = new System.Drawing.Point(714, 0);
             this.panelRecentActivity.Name = "panelRecentActivity";
-            this.panelRecentActivity.Padding = new System.Windows.Forms.Padding(20);
-            this.panelRecentActivity.Size = new System.Drawing.Size(930, 792);
+            this.panelRecentActivity.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelRecentActivity.Size = new System.Drawing.Size(697, 643);
             this.panelRecentActivity.TabIndex = 1;
             // 
             // lblRecentActivityTitle
@@ -121,10 +118,9 @@
             this.lblRecentActivityTitle.AutoSize = true;
             this.lblRecentActivityTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRecentActivityTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblRecentActivityTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRecentActivityTitle.Location = new System.Drawing.Point(15, 16);
             this.lblRecentActivityTitle.Name = "lblRecentActivityTitle";
-            this.lblRecentActivityTitle.Size = new System.Drawing.Size(183, 29);
+            this.lblRecentActivityTitle.Size = new System.Drawing.Size(147, 24);
             this.lblRecentActivityTitle.TabIndex = 1;
             this.lblRecentActivityTitle.Text = "Recent Activity";
             // 
@@ -135,12 +131,11 @@
             this.listViewRecentActivity.FullRowSelect = true;
             this.listViewRecentActivity.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewRecentActivity.HideSelection = false;
-            this.listViewRecentActivity.Location = new System.Drawing.Point(20, 60);
-            this.listViewRecentActivity.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewRecentActivity.Location = new System.Drawing.Point(15, 49);
             this.listViewRecentActivity.MultiSelect = false;
             this.listViewRecentActivity.Name = "listViewRecentActivity";
             this.listViewRecentActivity.OwnerDraw = true;
-            this.listViewRecentActivity.Size = new System.Drawing.Size(890, 710);
+            this.listViewRecentActivity.Size = new System.Drawing.Size(668, 577);
             this.listViewRecentActivity.TabIndex = 0;
             this.listViewRecentActivity.UseCompatibleStateImageBehavior = false;
             this.listViewRecentActivity.View = System.Windows.Forms.View.Details;
@@ -153,10 +148,9 @@
             this.panelActiveTransactions.Controls.Add(this.dataGridViewActiveTransactions);
             this.panelActiveTransactions.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelActiveTransactions.Location = new System.Drawing.Point(0, 0);
-            this.panelActiveTransactions.Margin = new System.Windows.Forms.Padding(4);
             this.panelActiveTransactions.Name = "panelActiveTransactions";
-            this.panelActiveTransactions.Padding = new System.Windows.Forms.Padding(20);
-            this.panelActiveTransactions.Size = new System.Drawing.Size(952, 792);
+            this.panelActiveTransactions.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelActiveTransactions.Size = new System.Drawing.Size(714, 643);
             this.panelActiveTransactions.TabIndex = 0;
             // 
             // lblActiveTransactionsTitle
@@ -164,10 +158,9 @@
             this.lblActiveTransactionsTitle.AutoSize = true;
             this.lblActiveTransactionsTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveTransactionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblActiveTransactionsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblActiveTransactionsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblActiveTransactionsTitle.Location = new System.Drawing.Point(15, 16);
             this.lblActiveTransactionsTitle.Name = "lblActiveTransactionsTitle";
-            this.lblActiveTransactionsTitle.Size = new System.Drawing.Size(240, 29);
+            this.lblActiveTransactionsTitle.Size = new System.Drawing.Size(192, 24);
             this.lblActiveTransactionsTitle.TabIndex = 1;
             this.lblActiveTransactionsTitle.Text = "Active Transactions";
             // 
@@ -180,15 +173,14 @@
             this.dataGridViewActiveTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewActiveTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewActiveTransactions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dataGridViewActiveTransactions.Location = new System.Drawing.Point(20, 60);
-            this.dataGridViewActiveTransactions.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridViewActiveTransactions.Location = new System.Drawing.Point(15, 49);
             this.dataGridViewActiveTransactions.MultiSelect = false;
             this.dataGridViewActiveTransactions.Name = "dataGridViewActiveTransactions";
             this.dataGridViewActiveTransactions.ReadOnly = true;
             this.dataGridViewActiveTransactions.RowHeadersVisible = false;
             this.dataGridViewActiveTransactions.RowHeadersWidth = 51;
             this.dataGridViewActiveTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewActiveTransactions.Size = new System.Drawing.Size(908, 710);
+            this.dataGridViewActiveTransactions.Size = new System.Drawing.Size(681, 577);
             this.dataGridViewActiveTransactions.TabIndex = 0;
             // 
             // panelMetricsContainer
@@ -202,11 +194,11 @@
             this.panelMetricsContainer.Controls.Add(this.panelMetricCard2);
             this.panelMetricsContainer.Controls.Add(this.panelMetricCard1);
             this.panelMetricsContainer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMetricsContainer.Location = new System.Drawing.Point(30, 30);
-            this.panelMetricsContainer.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricsContainer.Location = new System.Drawing.Point(22, 24);
             this.panelMetricsContainer.Name = "panelMetricsContainer";
-            this.panelMetricsContainer.Size = new System.Drawing.Size(1882, 250);
+            this.panelMetricsContainer.Size = new System.Drawing.Size(1411, 203);
             this.panelMetricsContainer.TabIndex = 0;
+            this.panelMetricsContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMetricsContainer_Paint);
             // 
             // panelMetricCard8
             // 
@@ -214,10 +206,9 @@
             this.panelMetricCard8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard8.Controls.Add(this.lblMetricValue8);
             this.panelMetricCard8.Controls.Add(this.lblMetricTitle8);
-            this.panelMetricCard8.Location = new System.Drawing.Point(1410, 130);
-            this.panelMetricCard8.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard8.Location = new System.Drawing.Point(1058, 106);
             this.panelMetricCard8.Name = "panelMetricCard8";
-            this.panelMetricCard8.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard8.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard8.TabIndex = 7;
             // 
             // lblMetricValue8
@@ -225,10 +216,9 @@
             this.lblMetricValue8.AutoSize = true;
             this.lblMetricValue8.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue8.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue8.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue8.Name = "lblMetricValue8";
-            this.lblMetricValue8.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue8.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue8.TabIndex = 1;
             this.lblMetricValue8.Text = "4";
             // 
@@ -237,10 +227,9 @@
             this.lblMetricTitle8.AutoSize = true;
             this.lblMetricTitle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle8.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle8.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle8.Name = "lblMetricTitle8";
-            this.lblMetricTitle8.Size = new System.Drawing.Size(154, 24);
+            this.lblMetricTitle8.Size = new System.Drawing.Size(120, 18);
             this.lblMetricTitle8.TabIndex = 0;
             this.lblMetricTitle8.Text = "Overdue Returns";
             // 
@@ -250,10 +239,9 @@
             this.panelMetricCard7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard7.Controls.Add(this.lblMetricValue7);
             this.panelMetricCard7.Controls.Add(this.lblMetricTitle7);
-            this.panelMetricCard7.Location = new System.Drawing.Point(950, 130);
-            this.panelMetricCard7.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard7.Location = new System.Drawing.Point(712, 106);
             this.panelMetricCard7.Name = "panelMetricCard7";
-            this.panelMetricCard7.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard7.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard7.TabIndex = 6;
             // 
             // lblMetricValue7
@@ -261,10 +249,9 @@
             this.lblMetricValue7.AutoSize = true;
             this.lblMetricValue7.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue7.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue7.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue7.Name = "lblMetricValue7";
-            this.lblMetricValue7.Size = new System.Drawing.Size(94, 46);
+            this.lblMetricValue7.Size = new System.Drawing.Size(77, 37);
             this.lblMetricValue7.TabIndex = 1;
             this.lblMetricValue7.Text = "P50";
             // 
@@ -273,10 +260,9 @@
             this.lblMetricTitle7.AutoSize = true;
             this.lblMetricTitle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle7.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle7.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle7.Name = "lblMetricTitle7";
-            this.lblMetricTitle7.Size = new System.Drawing.Size(133, 24);
+            this.lblMetricTitle7.Size = new System.Drawing.Size(101, 18);
             this.lblMetricTitle7.TabIndex = 0;
             this.lblMetricTitle7.Text = "Pending Fines";
             // 
@@ -286,10 +272,9 @@
             this.panelMetricCard6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard6.Controls.Add(this.lblMetricValue6);
             this.panelMetricCard6.Controls.Add(this.lblMetricTitle6);
-            this.panelMetricCard6.Location = new System.Drawing.Point(470, 130);
-            this.panelMetricCard6.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard6.Location = new System.Drawing.Point(352, 106);
             this.panelMetricCard6.Name = "panelMetricCard6";
-            this.panelMetricCard6.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard6.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard6.TabIndex = 5;
             // 
             // lblMetricValue6
@@ -297,10 +282,9 @@
             this.lblMetricValue6.AutoSize = true;
             this.lblMetricValue6.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue6.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue6.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue6.Name = "lblMetricValue6";
-            this.lblMetricValue6.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue6.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue6.TabIndex = 1;
             this.lblMetricValue6.Text = "8";
             // 
@@ -309,10 +293,9 @@
             this.lblMetricTitle6.AutoSize = true;
             this.lblMetricTitle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle6.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle6.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle6.Name = "lblMetricTitle6";
-            this.lblMetricTitle6.Size = new System.Drawing.Size(146, 24);
+            this.lblMetricTitle6.Size = new System.Drawing.Size(116, 18);
             this.lblMetricTitle6.TabIndex = 0;
             this.lblMetricTitle6.Text = "Today\'s Returns";
             // 
@@ -322,10 +305,9 @@
             this.panelMetricCard5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard5.Controls.Add(this.lblMetricValue5);
             this.panelMetricCard5.Controls.Add(this.lblMetricTitle5);
-            this.panelMetricCard5.Location = new System.Drawing.Point(0, 130);
-            this.panelMetricCard5.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard5.Location = new System.Drawing.Point(0, 106);
             this.panelMetricCard5.Name = "panelMetricCard5";
-            this.panelMetricCard5.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard5.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard5.TabIndex = 4;
             // 
             // lblMetricValue5
@@ -333,10 +315,9 @@
             this.lblMetricValue5.AutoSize = true;
             this.lblMetricValue5.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue5.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue5.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue5.Name = "lblMetricValue5";
-            this.lblMetricValue5.Size = new System.Drawing.Size(66, 46);
+            this.lblMetricValue5.Size = new System.Drawing.Size(53, 37);
             this.lblMetricValue5.TabIndex = 1;
             this.lblMetricValue5.Text = "10";
             // 
@@ -345,10 +326,9 @@
             this.lblMetricTitle5.AutoSize = true;
             this.lblMetricTitle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle5.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle5.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle5.Name = "lblMetricTitle5";
-            this.lblMetricTitle5.Size = new System.Drawing.Size(170, 24);
+            this.lblMetricTitle5.Size = new System.Drawing.Size(136, 18);
             this.lblMetricTitle5.TabIndex = 0;
             this.lblMetricTitle5.Text = "Today\'s Checkouts";
             // 
@@ -358,10 +338,9 @@
             this.panelMetricCard4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard4.Controls.Add(this.lblMetricValue4);
             this.panelMetricCard4.Controls.Add(this.lblMetricTitle4);
-            this.panelMetricCard4.Location = new System.Drawing.Point(1410, 0);
-            this.panelMetricCard4.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard4.Location = new System.Drawing.Point(1058, 0);
             this.panelMetricCard4.Name = "panelMetricCard4";
-            this.panelMetricCard4.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard4.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard4.TabIndex = 3;
             // 
             // lblMetricValue4
@@ -369,10 +348,9 @@
             this.lblMetricValue4.AutoSize = true;
             this.lblMetricValue4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue4.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue4.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue4.Name = "lblMetricValue4";
-            this.lblMetricValue4.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue4.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue4.TabIndex = 1;
             this.lblMetricValue4.Text = "2";
             // 
@@ -381,10 +359,9 @@
             this.lblMetricTitle4.AutoSize = true;
             this.lblMetricTitle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle4.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle4.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle4.Name = "lblMetricTitle4";
-            this.lblMetricTitle4.Size = new System.Drawing.Size(141, 24);
+            this.lblMetricTitle4.Size = new System.Drawing.Size(112, 18);
             this.lblMetricTitle4.TabIndex = 0;
             this.lblMetricTitle4.Text = "Overdue Books";
             // 
@@ -394,10 +371,9 @@
             this.panelMetricCard3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard3.Controls.Add(this.lblMetricValue3);
             this.panelMetricCard3.Controls.Add(this.lblMetricTitle3);
-            this.panelMetricCard3.Location = new System.Drawing.Point(950, 0);
-            this.panelMetricCard3.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard3.Location = new System.Drawing.Point(712, 0);
             this.panelMetricCard3.Name = "panelMetricCard3";
-            this.panelMetricCard3.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard3.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard3.TabIndex = 2;
             // 
             // lblMetricValue3
@@ -405,10 +381,9 @@
             this.lblMetricValue3.AutoSize = true;
             this.lblMetricValue3.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue3.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue3.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue3.Name = "lblMetricValue3";
-            this.lblMetricValue3.Size = new System.Drawing.Size(43, 46);
+            this.lblMetricValue3.Size = new System.Drawing.Size(36, 37);
             this.lblMetricValue3.TabIndex = 1;
             this.lblMetricValue3.Text = "5";
             // 
@@ -417,10 +392,9 @@
             this.lblMetricTitle3.AutoSize = true;
             this.lblMetricTitle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle3.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle3.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle3.Name = "lblMetricTitle3";
-            this.lblMetricTitle3.Size = new System.Drawing.Size(149, 24);
+            this.lblMetricTitle3.Size = new System.Drawing.Size(121, 18);
             this.lblMetricTitle3.TabIndex = 0;
             this.lblMetricTitle3.Text = "Borrowed Books";
             // 
@@ -430,10 +404,9 @@
             this.panelMetricCard2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricCard2.Controls.Add(this.lblMetricValue2);
             this.panelMetricCard2.Controls.Add(this.lblMetricTitle2);
-            this.panelMetricCard2.Location = new System.Drawing.Point(470, 0);
-            this.panelMetricCard2.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricCard2.Location = new System.Drawing.Point(352, 0);
             this.panelMetricCard2.Name = "panelMetricCard2";
-            this.panelMetricCard2.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard2.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard2.TabIndex = 1;
             // 
             // lblMetricValue2
@@ -441,10 +414,9 @@
             this.lblMetricValue2.AutoSize = true;
             this.lblMetricValue2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue2.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue2.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue2.Name = "lblMetricValue2";
-            this.lblMetricValue2.Size = new System.Drawing.Size(66, 46);
+            this.lblMetricValue2.Size = new System.Drawing.Size(53, 37);
             this.lblMetricValue2.TabIndex = 1;
             this.lblMetricValue2.Text = "16";
             // 
@@ -453,10 +425,9 @@
             this.lblMetricTitle2.AutoSize = true;
             this.lblMetricTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle2.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle2.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle2.Name = "lblMetricTitle2";
-            this.lblMetricTitle2.Size = new System.Drawing.Size(136, 24);
+            this.lblMetricTitle2.Size = new System.Drawing.Size(108, 18);
             this.lblMetricTitle2.TabIndex = 0;
             this.lblMetricTitle2.Text = "Total Members";
             // 
@@ -467,9 +438,8 @@
             this.panelMetricCard1.Controls.Add(this.lblMetricValue1);
             this.panelMetricCard1.Controls.Add(this.lblMetricTitle1);
             this.panelMetricCard1.Location = new System.Drawing.Point(0, 0);
-            this.panelMetricCard1.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricCard1.Name = "panelMetricCard1";
-            this.panelMetricCard1.Size = new System.Drawing.Size(220, 120);
+            this.panelMetricCard1.Size = new System.Drawing.Size(166, 98);
             this.panelMetricCard1.TabIndex = 0;
             // 
             // lblMetricValue1
@@ -477,10 +447,9 @@
             this.lblMetricValue1.AutoSize = true;
             this.lblMetricValue1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricValue1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricValue1.Location = new System.Drawing.Point(15, 60);
-            this.lblMetricValue1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricValue1.Location = new System.Drawing.Point(11, 49);
             this.lblMetricValue1.Name = "lblMetricValue1";
-            this.lblMetricValue1.Size = new System.Drawing.Size(66, 46);
+            this.lblMetricValue1.Size = new System.Drawing.Size(55, 37);
             this.lblMetricValue1.TabIndex = 1;
             this.lblMetricValue1.Text = "20";
             // 
@@ -489,22 +458,20 @@
             this.lblMetricTitle1.AutoSize = true;
             this.lblMetricTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTitle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTitle1.Location = new System.Drawing.Point(15, 20);
-            this.lblMetricTitle1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTitle1.Location = new System.Drawing.Point(11, 16);
             this.lblMetricTitle1.Name = "lblMetricTitle1";
-            this.lblMetricTitle1.Size = new System.Drawing.Size(108, 24);
+            this.lblMetricTitle1.Size = new System.Drawing.Size(89, 18);
             this.lblMetricTitle1.TabIndex = 0;
             this.lblMetricTitle1.Text = "Total Books";
             // 
             // Dashboard_Home
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
+            this.ClientSize = new System.Drawing.Size(1455, 894);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Dashboard_Home";
             this.Text = "Dashboard_Home";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

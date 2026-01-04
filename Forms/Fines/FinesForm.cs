@@ -102,10 +102,10 @@ namespace Project5LMS.Admin_Dashboard
                 {
                     conn.Open();
 
-                    // Pending Fines (sum of unpaid fines) - Fines table uses Paid (boolean)
+                    // Pending Fines (sum of unpaid fines) - Fines table uses Status enum
                     try
                     {
-                        string query = @"SELECT COALESCE(SUM(FineAmount), 0) FROM Fines WHERE Paid = FALSE";
+                        string query = @"SELECT COALESCE(SUM(FineAmount), 0) FROM Fines WHERE Status = 'Pending'";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             object result = cmd.ExecuteScalar();
@@ -118,7 +118,7 @@ namespace Project5LMS.Admin_Dashboard
                     // Collected (sum of paid fines)
                     try
                     {
-                        string query = "SELECT COALESCE(SUM(FineAmount), 0) FROM Fines WHERE Paid = TRUE";
+                        string query = "SELECT COALESCE(SUM(FineAmount), 0) FROM Fines WHERE Status = 'Paid'";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             object result = cmd.ExecuteScalar();
@@ -131,7 +131,7 @@ namespace Project5LMS.Admin_Dashboard
                     // Unpaid Fines (count)
                     try
                     {
-                        string query = "SELECT COUNT(*) FROM Fines WHERE Paid = FALSE";
+                        string query = "SELECT COUNT(*) FROM Fines WHERE Status = 'Pending'";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             int count = Convert.ToInt32(cmd.ExecuteScalar());
@@ -172,13 +172,13 @@ namespace Project5LMS.Admin_Dashboard
                 if (statusFilter == "All Status") statusFilter = "";
 
                 // Query using CirculationRecords table (correct table name)
-                // Fines table uses FineAmount (not Amount), Paid (boolean, not Status), and RecordID (not TransactionID)
+                // Fines table uses FineAmount, Status (enum: 'Pending', 'Paid', 'Waived'), and RecordID
                 string query = @"SELECT 
                                     f.FineID,
                                     f.FineAmount as Amount,
-                                    f.Paid,
+                                    f.Status,
                                     cr.DueDate,
-                                    cr.BorrowDate,
+                                    cr.CheckoutDate,
                                     CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
                                     b.Title as BookTitle
                                 FROM Fines f
@@ -191,9 +191,9 @@ namespace Project5LMS.Admin_Dashboard
                                        OR COALESCE(b.Title, '') LIKE @Keyword
                                        OR CAST(f.FineID AS CHAR) LIKE @Keyword)
                                 AND (@Status = '' OR 
-                                     (@Status = 'Unpaid' AND f.Paid = FALSE) OR
-                                     (@Status = 'Paid' AND f.Paid = TRUE))
-                                ORDER BY cr.BorrowDate DESC, f.FineID DESC
+                                     (@Status = 'Unpaid' AND f.Status = 'Pending') OR
+                                     (@Status = 'Paid' AND f.Status = 'Paid'))
+                                ORDER BY cr.CheckoutDate DESC, f.FineID DESC
                                 LIMIT 500";
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -208,16 +208,17 @@ namespace Project5LMS.Admin_Dashboard
                         {
                             int fineId = reader.GetInt32("FineID");
                             decimal amount = reader["Amount"] != DBNull.Value ? Convert.ToDecimal(reader["Amount"]) : 0;
-                            bool paid = reader["Paid"] != DBNull.Value ? Convert.ToBoolean(reader["Paid"]) : false;
-                            string status = paid ? "Paid" : "Unpaid";
+                            string statusValue = reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "Pending";
+                            // Map Status enum to display: 'Pending' -> 'Unpaid', 'Paid' -> 'Paid', 'Waived' -> 'Waived'
+                            string status = statusValue == "Paid" ? "Paid" : (statusValue == "Waived" ? "Waived" : "Unpaid");
                             DateTime? dueDate = reader["DueDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["DueDate"]) : null;
-                            DateTime? borrowDate = reader["BorrowDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["BorrowDate"]) : null;
+                            DateTime? checkoutDate = reader["CheckoutDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["CheckoutDate"]) : null;
                             string memberName = reader["MemberName"].ToString();
                             string bookTitle = reader["BookTitle"] != DBNull.Value ? reader["BookTitle"].ToString() : "N/A";
 
                             // Calculate reason (days overdue)
                             string reason = "Overdue";
-                            if (dueDate.HasValue && borrowDate.HasValue)
+                            if (dueDate.HasValue && checkoutDate.HasValue)
                             {
                                 int daysOverdue = (DateTime.Now - dueDate.Value).Days;
                                 if (daysOverdue > 0)
@@ -226,7 +227,7 @@ namespace Project5LMS.Admin_Dashboard
                                 }
                             }
                             
-                            DateTime createdDate = borrowDate ?? DateTime.Now;
+                            DateTime createdDate = checkoutDate ?? DateTime.Now;
 
                             string dateDisplay = createdDate != DateTime.MinValue ? createdDate.ToString("yyyy-MM-dd") : "N/A";
                             string amountDisplay = $"₱{amount:F0}";
@@ -328,8 +329,8 @@ namespace Project5LMS.Admin_Dashboard
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    // Fines table uses Paid (boolean) instead of Status
-                    string query = "UPDATE Fines SET Paid = TRUE WHERE FineID = @FineID";
+                    // Fines table uses Status enum ('Pending', 'Paid', 'Waived')
+                    string query = "UPDATE Fines SET Status = 'Paid', PaidDate = NOW() WHERE FineID = @FineID";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);

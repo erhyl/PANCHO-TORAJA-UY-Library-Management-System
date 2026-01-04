@@ -196,7 +196,7 @@ namespace Project5LMS.Admin_Dashboard
                                     m.RegistrationDate,
                                     m.ExpirationDate,
                                     COALESCE(COUNT(DISTINCT CASE WHEN cr.ReturnDate IS NULL THEN cr.RecordID END), 0) as BooksBorrowed,
-                                    COALESCE(SUM(CASE WHEN f.Paid = FALSE THEN f.FineAmount ELSE 0 END), 0) as TotalFines
+                                    COALESCE(SUM(CASE WHEN f.Status = 'Pending' THEN f.FineAmount ELSE 0 END), 0) as TotalFines
                                 FROM Members m
                                 LEFT JOIN CirculationRecords cr ON m.MemberID = cr.MemberID
                                 LEFT JOIN Fines f ON m.MemberID = f.MemberID

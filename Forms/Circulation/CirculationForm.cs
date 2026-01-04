@@ -26,48 +26,7 @@ namespace Project5LMS.Admin_Dashboard
             LoadMetrics();
         }
 
-        private void EnsureTransactionsTableExists()
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    // Check if table exists
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
-                                              AND TABLE_NAME = 'Transactions'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
-                    {
-                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
-                        if (tableExists == 0)
-                        {
-                            // Create Transactions table
-                            string createTableQuery = @"CREATE TABLE IF NOT EXISTS Transactions (
-                                                        TransactionID INT AUTO_INCREMENT PRIMARY KEY,
-                                                        MemberID INT NOT NULL,
-                                                        BookID INT NOT NULL,
-                                                        BorrowDate DATETIME NOT NULL,
-                                                        DueDate DATETIME NOT NULL,
-                                                        ReturnDate DATETIME NULL,
-                                                        Status VARCHAR(50) DEFAULT 'Borrowed',
-                                                        FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
-                                                        FOREIGN KEY (BookID) REFERENCES Books(BookID)
-                                                        )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error ensuring Transactions table exists: {ex.Message}");
-            }
-        }
+        // Removed EnsureTransactionsTableExists - using CirculationRecords table from schema
 
         private void LoadMetrics()
         {
@@ -78,17 +37,15 @@ namespace Project5LMS.Admin_Dashboard
 
             try
             {
-                EnsureTransactionsTableExists();
-                
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    // Active Loans
+                    // Active Loans - Use CirculationRecords table
                     try
                     {
-                        string query = @"SELECT COUNT(*) FROM Transactions 
-                                       WHERE Status = 'Borrowed' OR Status = 'Active'";
+                        string query = @"SELECT COUNT(*) FROM CirculationRecords 
+                                       WHERE Status = 'CheckedOut'";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             int count = Convert.ToInt32(cmd.ExecuteScalar());
@@ -97,11 +54,11 @@ namespace Project5LMS.Admin_Dashboard
                     }
                     catch { }
 
-                    // Overdue
+                    // Overdue - Use CirculationRecords table
                     try
                     {
-                        string query = @"SELECT COUNT(*) FROM Transactions 
-                                       WHERE (Status = 'Borrowed' OR Status = 'Active') 
+                        string query = @"SELECT COUNT(*) FROM CirculationRecords 
+                                       WHERE Status = 'CheckedOut' 
                                        AND DueDate < CURDATE()";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
@@ -180,44 +137,86 @@ namespace Project5LMS.Admin_Dashboard
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = @"SELECT MemberID, FirstName, LastName, MemberType, Status, ExpirationDate 
-                                   FROM Members 
-                                   WHERE MemberID = @Search 
-                                   OR FirstName LIKE @Search 
-                                   OR LastName LIKE @Search
-                                   OR Email LIKE @Search
-                                   LIMIT 1";
                     
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    string searchText = txtMemberID.Text.Trim();
+                    string query;
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd.Connection = conn;
+                    
+                    // Check if input is numeric (MemberID) or text (Name/Email)
+                    int memberIdSearch = 0;
+                    bool isNumeric = int.TryParse(searchText, out memberIdSearch);
+                    
+                    if (isNumeric)
                     {
-                        cmd.Parameters.AddWithValue("@Search", "%" + txtMemberID.Text.Trim() + "%");
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        // Search by exact MemberID
+                        query = @"SELECT MemberID, FirstName, LastName, MemberType, Status, ExpirationDate 
+                                 FROM Members 
+                                 WHERE MemberID = @MemberID
+                                 LIMIT 1";
+                        cmd.CommandText = query;
+                        cmd.Parameters.AddWithValue("@MemberID", memberIdSearch);
+                    }
+                    else
+                    {
+                        // Search by Name or Email with LIKE
+                        query = @"SELECT MemberID, FirstName, LastName, MemberType, Status, ExpirationDate 
+                                 FROM Members 
+                                 WHERE FirstName LIKE @Search 
+                                 OR LastName LIKE @Search
+                                 OR Email LIKE @Search
+                                 OR CONCAT(FirstName, ' ', LastName) LIKE @Search
+                                 LIMIT 1";
+                        cmd.CommandText = query;
+                        cmd.Parameters.AddWithValue("@Search", "%" + searchText + "%");
+                    }
+                    
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                selectedMemberId = reader.GetInt32("MemberID");
-                                selectedMemberType = reader["MemberType"] != DBNull.Value ? reader["MemberType"].ToString() : "";
-                                string status = reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "";
-                                DateTime expirationDate = reader["ExpirationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ExpirationDate"]) : DateTime.MinValue;
+                            selectedMemberId = reader.GetInt32("MemberID");
+                            selectedMemberType = reader["MemberType"] != DBNull.Value ? reader["MemberType"].ToString() : "";
+                            string status = reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "";
+                            DateTime expirationDate = reader["ExpirationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ExpirationDate"]) : DateTime.MinValue;
 
-                                if (status != "Active" || expirationDate < DateTime.Now)
-                                {
-                                    MessageBox.Show("Member is not active or membership has expired.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    selectedMemberId = 0;
-                                    return;
-                                }
-                            }
-                            else
+                            // Check if member is active
+                            if (status != "Active")
                             {
-                                MessageBox.Show("Member not found.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show($"Member status is '{status}'. Only active members can checkout books.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                selectedMemberId = 0;
+                                selectedMemberType = "";
+                                return;
                             }
+
+                            // Check if membership has expired (if ExpirationDate is set)
+                            if (expirationDate != DateTime.MinValue && expirationDate < DateTime.Now.Date)
+                            {
+                                MessageBox.Show($"Member's membership expired on {expirationDate:MM/dd/yyyy}. Please renew membership.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                selectedMemberId = 0;
+                                selectedMemberType = "";
+                                return;
+                            }
+
+                            // Show member found confirmation
+                            string memberName = $"{reader["FirstName"]} {reader["LastName"]}".Trim();
+                            System.Diagnostics.Debug.WriteLine($"Member found: {memberName} (ID: {selectedMemberId}, Type: {selectedMemberType})");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Member not found. Please check the Member ID, Name, or Email.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            selectedMemberId = 0;
+                            selectedMemberType = "";
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show($"Error validating member: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Diagnostics.Debug.WriteLine($"Error validating member: {ex.Message}");
+                selectedMemberId = 0;
+                selectedMemberType = "";
             }
 
             UpdateDueDate();
@@ -338,35 +337,34 @@ namespace Project5LMS.Admin_Dashboard
                 return;
             }
 
-            // Check if member has reached max books limit
-            try
-            {
-                EnsureTransactionsTableExists();
-                
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"SELECT COUNT(*) FROM Transactions 
-                                   WHERE MemberID = @MemberID 
-                                   AND (Status = 'Borrowed' OR Status = 'Active')";
-                    
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    // Check if member has reached max books limit
+                    try
                     {
-                        cmd.Parameters.AddWithValue("@MemberID", selectedMemberId);
-                        int currentBooks = Convert.ToInt32(cmd.ExecuteScalar());
-                        int maxBooks = GetMaxBooks(selectedMemberType);
-
-                        if (currentBooks >= maxBooks)
+                        using (MySqlConnection conn = new MySqlConnection(connectionString))
                         {
-                            MessageBox.Show($"Member has reached the maximum limit of {maxBooks} books.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
+                            conn.Open();
+                            // Use CirculationRecords table with correct Status values
+                            string query = @"SELECT COUNT(*) FROM CirculationRecords 
+                                           WHERE MemberID = @MemberID 
+                                           AND Status = 'CheckedOut'";
+                            
+                            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@MemberID", selectedMemberId);
+                                int currentBooks = Convert.ToInt32(cmd.ExecuteScalar());
+                                int maxBooks = GetMaxBooks(selectedMemberType);
+
+                                if (currentBooks >= maxBooks)
+                                {
+                                    MessageBox.Show($"Member has reached the maximum limit of {maxBooks} books. Please return some books first.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                            }
 
                     // Check for outstanding fines
-                    string finesQuery = @"SELECT SUM(Amount) FROM Fines 
+                    string finesQuery = @"SELECT SUM(FineAmount) FROM Fines 
                                         WHERE MemberID = @MemberID 
-                                        AND (Status = 'Pending' OR Status = 'Unpaid')";
+                                        AND Status = 'Pending'";
                     
                     using (MySqlCommand cmd = new MySqlCommand(finesQuery, conn))
                     {
@@ -384,20 +382,20 @@ namespace Project5LMS.Admin_Dashboard
                         }
                     }
 
-                    // Process checkout
+                    // Process checkout - Use CirculationRecords table (correct table name)
                     int loanDays = GetLoanPeriod(selectedMemberType);
                     DateTime dueDate = DateTime.Now.AddDays(loanDays);
 
-                    string insertQuery = @"INSERT INTO Transactions 
-                                         (MemberID, BookID, BorrowDate, DueDate, Status) 
+                    string insertQuery = @"INSERT INTO CirculationRecords 
+                                         (MemberID, BookID, CheckoutDate, DueDate, Status) 
                                          VALUES 
-                                         (@MemberID, @BookID, @BorrowDate, @DueDate, 'Borrowed')";
+                                         (@MemberID, @BookID, @CheckoutDate, @DueDate, 'CheckedOut')";
                     
                     using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@MemberID", selectedMemberId);
                         cmd.Parameters.AddWithValue("@BookID", selectedBookId);
-                        cmd.Parameters.AddWithValue("@BorrowDate", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@CheckoutDate", DateTime.Now);
                         cmd.Parameters.AddWithValue("@DueDate", dueDate);
                         cmd.ExecuteNonQuery();
                     }
