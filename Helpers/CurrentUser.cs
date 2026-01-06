@@ -1,9 +1,6 @@
-﻿using Project5LMS.Models;
+using Project5LMS.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Configuration;
 
@@ -17,7 +14,6 @@ namespace Project5LMS.Helpers
         public static string Email { get; set; }
         public static string Role { get; set; }
 
-        // Read-only full name for compatibility. Prefer using FirstName/LastName.
         public static string FullName => string.Join(" ", new[] { FirstName, LastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
 
         public static void Set(User user)
@@ -38,9 +34,6 @@ namespace Project5LMS.Helpers
             Role = null;
         }
 
-        /// <summary>
-        /// Gets the MemberID for the current logged-in user by matching email with Members table
-        /// </summary>
         public static int GetMemberID()
         {
             if (string.IsNullOrWhiteSpace(Email))

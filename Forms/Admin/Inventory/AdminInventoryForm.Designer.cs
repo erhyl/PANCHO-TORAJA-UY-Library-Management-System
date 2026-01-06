@@ -1,0 +1,432 @@
+﻿namespace Project5LMS.Forms.Admin.Inventory
+{
+    partial class AdminInventoryForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.panelMainContainer = new System.Windows.Forms.Panel();
+            this.panelTableContainer = new System.Windows.Forms.Panel();
+            this.dataGridViewInventory = new System.Windows.Forms.DataGridView();
+            this.panelSearchFilter = new System.Windows.Forms.Panel();
+            this.btnFilterStatus = new System.Windows.Forms.Button();
+            this.btnFilterCondition = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.panelMetrics = new System.Windows.Forms.Panel();
+            this.panelMetricLost = new System.Windows.Forms.Panel();
+            this.lblMetricLostValue = new System.Windows.Forms.Label();
+            this.lblMetricLostTitle = new System.Windows.Forms.Label();
+            this.panelMetricDamaged = new System.Windows.Forms.Panel();
+            this.lblMetricDamagedValue = new System.Windows.Forms.Label();
+            this.lblMetricDamagedTitle = new System.Windows.Forms.Label();
+            this.panelMetricNeedsRepair = new System.Windows.Forms.Panel();
+            this.lblMetricNeedsRepairValue = new System.Windows.Forms.Label();
+            this.lblMetricNeedsRepairTitle = new System.Windows.Forms.Label();
+            this.panelMetricTotal = new System.Windows.Forms.Panel();
+            this.lblMetricTotalValue = new System.Windows.Forms.Label();
+            this.lblMetricTotalTitle = new System.Windows.Forms.Label();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.panelMainContainer.SuspendLayout();
+            this.panelTableContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInventory)).BeginInit();
+            this.panelSearchFilter.SuspendLayout();
+            this.panelMetrics.SuspendLayout();
+            this.panelMetricLost.SuspendLayout();
+            this.panelMetricDamaged.SuspendLayout();
+            this.panelMetricNeedsRepair.SuspendLayout();
+            this.panelMetricTotal.SuspendLayout();
+            this.panelHeader.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelMainContainer
+            // 
+            this.panelMainContainer.AutoScroll = true;
+            this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.panelMainContainer.Controls.Add(this.panelTableContainer);
+            this.panelMainContainer.Controls.Add(this.panelSearchFilter);
+            this.panelMainContainer.Controls.Add(this.panelMetrics);
+            this.panelMainContainer.Controls.Add(this.panelHeader);
+            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMainContainer.Name = "panelMainContainer";
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
+            this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
+            this.panelMainContainer.TabIndex = 0;
+            // 
+            // panelTableContainer
+            // 
+            this.panelTableContainer.BackColor = System.Drawing.Color.White;
+            this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTableContainer.Controls.Add(this.dataGridViewInventory);
+            this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTableContainer.Location = new System.Drawing.Point(32, 241);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4);
+            this.panelTableContainer.Name = "panelTableContainer";
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelTableContainer.Size = new System.Drawing.Size(1536, 714);
+            this.panelTableContainer.TabIndex = 3;
+            // 
+            // dataGridViewInventory
+            // 
+            this.dataGridViewInventory.AllowUserToAddRows = false;
+            this.dataGridViewInventory.AllowUserToDeleteRows = false;
+            this.dataGridViewInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewInventory.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewInventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewInventory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewInventory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.dataGridViewInventory.Location = new System.Drawing.Point(21, 20);
+            this.dataGridViewInventory.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridViewInventory.MultiSelect = false;
+            this.dataGridViewInventory.Name = "dataGridViewInventory";
+            this.dataGridViewInventory.ReadOnly = true;
+            this.dataGridViewInventory.RowHeadersVisible = false;
+            this.dataGridViewInventory.RowHeadersWidth = 51;
+            this.dataGridViewInventory.RowTemplate.Height = 60;
+            this.dataGridViewInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewInventory.Size = new System.Drawing.Size(1492, 672);
+            this.dataGridViewInventory.TabIndex = 0;
+            // 
+            // panelSearchFilter
+            // 
+            this.panelSearchFilter.Controls.Add(this.btnFilterStatus);
+            this.panelSearchFilter.Controls.Add(this.btnFilterCondition);
+            this.panelSearchFilter.Controls.Add(this.txtSearch);
+            this.panelSearchFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSearchFilter.Location = new System.Drawing.Point(32, 198);
+            this.panelSearchFilter.Margin = new System.Windows.Forms.Padding(4);
+            this.panelSearchFilter.Name = "panelSearchFilter";
+            this.panelSearchFilter.Size = new System.Drawing.Size(1536, 43);
+            this.panelSearchFilter.TabIndex = 2;
+            // 
+            // btnFilterStatus
+            // 
+            this.btnFilterStatus.BackColor = System.Drawing.Color.White;
+            this.btnFilterStatus.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnFilterStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterStatus.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilterStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnFilterStatus.Location = new System.Drawing.Point(1380, 0);
+            this.btnFilterStatus.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFilterStatus.Name = "btnFilterStatus";
+            this.btnFilterStatus.Size = new System.Drawing.Size(156, 43);
+            this.btnFilterStatus.TabIndex = 2;
+            this.btnFilterStatus.Text = "🔽 All Status";
+            this.btnFilterStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFilterStatus.UseVisualStyleBackColor = false;
+            this.btnFilterStatus.Click += new System.EventHandler(this.btnFilterStatus_Click);
+            // 
+            // btnFilterCondition
+            // 
+            this.btnFilterCondition.BackColor = System.Drawing.Color.White;
+            this.btnFilterCondition.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnFilterCondition.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterCondition.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilterCondition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnFilterCondition.Location = new System.Drawing.Point(1224, 0);
+            this.btnFilterCondition.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFilterCondition.Name = "btnFilterCondition";
+            this.btnFilterCondition.Size = new System.Drawing.Size(162, 43);
+            this.btnFilterCondition.TabIndex = 1;
+            this.btnFilterCondition.Text = "🔽 All Conditions";
+            this.btnFilterCondition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFilterCondition.UseVisualStyleBackColor = false;
+            this.btnFilterCondition.Click += new System.EventHandler(this.btnFilterCondition_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.ForeColor = System.Drawing.Color.Gray;
+            this.txtSearch.Location = new System.Drawing.Point(8, 5);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(723, 30);
+            this.txtSearch.TabIndex = 0;
+            this.txtSearch.Text = "🔍 Search inventory...";
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
+            this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
+            // 
+            // panelMetrics
+            // 
+            this.panelMetrics.Controls.Add(this.panelMetricLost);
+            this.panelMetrics.Controls.Add(this.panelMetricDamaged);
+            this.panelMetrics.Controls.Add(this.panelMetricNeedsRepair);
+            this.panelMetrics.Controls.Add(this.panelMetricTotal);
+            this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelMetrics.Location = new System.Drawing.Point(32, 121);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetrics.Name = "panelMetrics";
+            this.panelMetrics.Size = new System.Drawing.Size(1536, 77);
+            this.panelMetrics.TabIndex = 1;
+            // 
+            // panelMetricLost
+            // 
+            this.panelMetricLost.BackColor = System.Drawing.Color.White;
+            this.panelMetricLost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMetricLost.Controls.Add(this.lblMetricLostValue);
+            this.panelMetricLost.Controls.Add(this.lblMetricLostTitle);
+            this.panelMetricLost.Location = new System.Drawing.Point(1224, 1);
+            this.panelMetricLost.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricLost.Name = "panelMetricLost";
+            this.panelMetricLost.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricLost.Size = new System.Drawing.Size(312, 77);
+            this.panelMetricLost.TabIndex = 3;
+            // 
+            // lblMetricLostValue
+            // 
+            this.lblMetricLostValue.AutoSize = true;
+            this.lblMetricLostValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricLostValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricLostValue.Location = new System.Drawing.Point(25, 30);
+            this.lblMetricLostValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricLostValue.Name = "lblMetricLostValue";
+            this.lblMetricLostValue.Size = new System.Drawing.Size(40, 46);
+            this.lblMetricLostValue.TabIndex = 2;
+            this.lblMetricLostValue.Text = "0";
+            // 
+            // lblMetricLostTitle
+            // 
+            this.lblMetricLostTitle.AutoSize = true;
+            this.lblMetricLostTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricLostTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricLostTitle.Location = new System.Drawing.Point(15, 10);
+            this.lblMetricLostTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricLostTitle.Name = "lblMetricLostTitle";
+            this.lblMetricLostTitle.Size = new System.Drawing.Size(76, 20);
+            this.lblMetricLostTitle.TabIndex = 1;
+            this.lblMetricLostTitle.Text = "Lost Items";
+            // 
+            // panelMetricDamaged
+            // 
+            this.panelMetricDamaged.BackColor = System.Drawing.Color.White;
+            this.panelMetricDamaged.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMetricDamaged.Controls.Add(this.lblMetricDamagedValue);
+            this.panelMetricDamaged.Controls.Add(this.lblMetricDamagedTitle);
+            this.panelMetricDamaged.Location = new System.Drawing.Point(826, 0);
+            this.panelMetricDamaged.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricDamaged.Name = "panelMetricDamaged";
+            this.panelMetricDamaged.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricDamaged.Size = new System.Drawing.Size(312, 77);
+            this.panelMetricDamaged.TabIndex = 2;
+            // 
+            // lblMetricDamagedValue
+            // 
+            this.lblMetricDamagedValue.AutoSize = true;
+            this.lblMetricDamagedValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricDamagedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricDamagedValue.Location = new System.Drawing.Point(17, 30);
+            this.lblMetricDamagedValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricDamagedValue.Name = "lblMetricDamagedValue";
+            this.lblMetricDamagedValue.Size = new System.Drawing.Size(40, 46);
+            this.lblMetricDamagedValue.TabIndex = 2;
+            this.lblMetricDamagedValue.Text = "0";
+            // 
+            // lblMetricDamagedTitle
+            // 
+            this.lblMetricDamagedTitle.AutoSize = true;
+            this.lblMetricDamagedTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricDamagedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricDamagedTitle.Location = new System.Drawing.Point(21, 10);
+            this.lblMetricDamagedTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricDamagedTitle.Name = "lblMetricDamagedTitle";
+            this.lblMetricDamagedTitle.Size = new System.Drawing.Size(75, 20);
+            this.lblMetricDamagedTitle.TabIndex = 1;
+            this.lblMetricDamagedTitle.Text = "Damaged";
+            // 
+            // panelMetricNeedsRepair
+            // 
+            this.panelMetricNeedsRepair.BackColor = System.Drawing.Color.White;
+            this.panelMetricNeedsRepair.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMetricNeedsRepair.Controls.Add(this.lblMetricNeedsRepairValue);
+            this.panelMetricNeedsRepair.Controls.Add(this.lblMetricNeedsRepairTitle);
+            this.panelMetricNeedsRepair.Location = new System.Drawing.Point(419, 1);
+            this.panelMetricNeedsRepair.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricNeedsRepair.Name = "panelMetricNeedsRepair";
+            this.panelMetricNeedsRepair.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricNeedsRepair.Size = new System.Drawing.Size(312, 76);
+            this.panelMetricNeedsRepair.TabIndex = 1;
+            // 
+            // lblMetricNeedsRepairValue
+            // 
+            this.lblMetricNeedsRepairValue.AutoSize = true;
+            this.lblMetricNeedsRepairValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricNeedsRepairValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricNeedsRepairValue.Location = new System.Drawing.Point(17, 30);
+            this.lblMetricNeedsRepairValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricNeedsRepairValue.Name = "lblMetricNeedsRepairValue";
+            this.lblMetricNeedsRepairValue.Size = new System.Drawing.Size(40, 46);
+            this.lblMetricNeedsRepairValue.TabIndex = 2;
+            this.lblMetricNeedsRepairValue.Text = "0";
+            // 
+            // lblMetricNeedsRepairTitle
+            // 
+            this.lblMetricNeedsRepairTitle.AutoSize = true;
+            this.lblMetricNeedsRepairTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricNeedsRepairTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricNeedsRepairTitle.Location = new System.Drawing.Point(21, 10);
+            this.lblMetricNeedsRepairTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricNeedsRepairTitle.Name = "lblMetricNeedsRepairTitle";
+            this.lblMetricNeedsRepairTitle.Size = new System.Drawing.Size(98, 20);
+            this.lblMetricNeedsRepairTitle.TabIndex = 1;
+            this.lblMetricNeedsRepairTitle.Text = "Needs Repair";
+            // 
+            // panelMetricTotal
+            // 
+            this.panelMetricTotal.BackColor = System.Drawing.Color.White;
+            this.panelMetricTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMetricTotal.Controls.Add(this.lblMetricTotalValue);
+            this.panelMetricTotal.Controls.Add(this.lblMetricTotalTitle);
+            this.panelMetricTotal.Location = new System.Drawing.Point(0, 0);
+            this.panelMetricTotal.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricTotal.Name = "panelMetricTotal";
+            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricTotal.Size = new System.Drawing.Size(312, 77);
+            this.panelMetricTotal.TabIndex = 0;
+            // 
+            // lblMetricTotalValue
+            // 
+            this.lblMetricTotalValue.AutoSize = true;
+            this.lblMetricTotalValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTotalValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricTotalValue.Location = new System.Drawing.Point(21, 30);
+            this.lblMetricTotalValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalValue.Name = "lblMetricTotalValue";
+            this.lblMetricTotalValue.Size = new System.Drawing.Size(40, 46);
+            this.lblMetricTotalValue.TabIndex = 2;
+            this.lblMetricTotalValue.Text = "0";
+            // 
+            // lblMetricTotalTitle
+            // 
+            this.lblMetricTotalTitle.AutoSize = true;
+            this.lblMetricTotalTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTotalTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricTotalTitle.Location = new System.Drawing.Point(17, 10);
+            this.lblMetricTotalTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalTitle.Name = "lblMetricTotalTitle";
+            this.lblMetricTotalTitle.Size = new System.Drawing.Size(82, 20);
+            this.lblMetricTotalTitle.TabIndex = 1;
+            this.lblMetricTotalTitle.Text = "Total Items";
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.Controls.Add(this.lblSubtitle);
+            this.panelHeader.Controls.Add(this.lblTitle);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(32, 30);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1536, 91);
+            this.panelHeader.TabIndex = 0;
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(4, 54);
+            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(432, 23);
+            this.lblSubtitle.TabIndex = 1;
+            this.lblSubtitle.Text = "Track and manage library book inventory and condition";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblTitle.Location = new System.Drawing.Point(4, 0);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(471, 54);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Inventory Management";
+            // 
+            // AdminInventoryForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1600, 985);
+            this.Controls.Add(this.panelMainContainer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "AdminInventoryForm";
+            this.Text = "Inventory Management";
+            this.Load += new System.EventHandler(this.AdminInventoryForm_Load);
+            this.panelMainContainer.ResumeLayout(false);
+            this.panelTableContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInventory)).EndInit();
+            this.panelSearchFilter.ResumeLayout(false);
+            this.panelSearchFilter.PerformLayout();
+            this.panelMetrics.ResumeLayout(false);
+            this.panelMetricLost.ResumeLayout(false);
+            this.panelMetricLost.PerformLayout();
+            this.panelMetricDamaged.ResumeLayout(false);
+            this.panelMetricDamaged.PerformLayout();
+            this.panelMetricNeedsRepair.ResumeLayout(false);
+            this.panelMetricNeedsRepair.PerformLayout();
+            this.panelMetricTotal.ResumeLayout(false);
+            this.panelMetricTotal.PerformLayout();
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panelMainContainer;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.Panel panelMetrics;
+        private System.Windows.Forms.Panel panelMetricTotal;
+        private System.Windows.Forms.Label lblMetricTotalValue;
+        private System.Windows.Forms.Label lblMetricTotalTitle;
+        private System.Windows.Forms.Panel panelMetricNeedsRepair;
+        private System.Windows.Forms.Label lblMetricNeedsRepairValue;
+        private System.Windows.Forms.Label lblMetricNeedsRepairTitle;
+        private System.Windows.Forms.Panel panelMetricDamaged;
+        private System.Windows.Forms.Label lblMetricDamagedValue;
+        private System.Windows.Forms.Label lblMetricDamagedTitle;
+        private System.Windows.Forms.Panel panelMetricLost;
+        private System.Windows.Forms.Label lblMetricLostValue;
+        private System.Windows.Forms.Label lblMetricLostTitle;
+        private System.Windows.Forms.Panel panelSearchFilter;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnFilterCondition;
+        private System.Windows.Forms.Button btnFilterStatus;
+        private System.Windows.Forms.Panel panelTableContainer;
+        private System.Windows.Forms.DataGridView dataGridViewInventory;
+    }
+}

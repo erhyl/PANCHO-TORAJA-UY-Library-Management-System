@@ -1,22 +1,20 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Configuration;
 using System.Data;
 
 namespace Project5LMS.Controllers
 {
-    internal class MembersController
+    public class MembersController
     {
         private string connectionString;
 
-        // ✅ Parameterless constructor: automatically reads connection string
         public MembersController()
         {
             connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"]?.ConnectionString
                 ?? throw new InvalidOperationException("Connection string 'MySqlConnectionString' not found.");
         }
 
-        // 🔹 GET ALL MEMBERS
         public DataTable GetMembers()
         {
             string query = @"SELECT 
@@ -41,7 +39,6 @@ namespace Project5LMS.Controllers
             }
         }
 
-        // 🔹 ADD MEMBER
         public bool AddMember(string firstName, string lastName, string email, string type,
                               DateTime regDate, DateTime expDate, string status)
         {
@@ -66,7 +63,6 @@ namespace Project5LMS.Controllers
             }
         }
 
-        // 🔹 SEARCH MEMBERS
         public DataTable SearchMembers(string keyword, string type, string status)
         {
             string query = @"SELECT 
@@ -99,7 +95,6 @@ namespace Project5LMS.Controllers
             }
         }
 
-        // 🔹 UPDATE MEMBER
         public bool UpdateMember(int memberId, string firstName, string lastName, string email, string type,
                                  DateTime regDate, DateTime expDate, string status)
         {

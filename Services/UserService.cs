@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Project5LMS.Models;
 using Project5LMS.Data;
 using Project5LMS.Helpers;
@@ -16,12 +16,6 @@ namespace Project5LMS.Services
             _db = new DatabaseContext();
         }
 
-        /// <summary>
-        /// Authenticates a user by email and password
-        /// </summary>
-        /// <param name="email">User's email address</param>
-        /// <param name="password">Plain text password</param>
-        /// <returns>User object if authentication succeeds, null otherwise</returns>
         public User Login(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
@@ -32,7 +26,7 @@ namespace Project5LMS.Services
                 using (var conn = _db.GetConnection())
                 {
                     conn.Open();
-                    // First, get the user by email (don't compare password in SQL)
+
                     string query = "SELECT UserID, Email, PasswordHash, FirstName, LastName, Role FROM Users WHERE Email = @email LIMIT 1";
 
                     using (var cmd = new MySqlCommand(query, conn))
@@ -43,7 +37,7 @@ namespace Project5LMS.Services
                         {
                             if (reader.Read())
                             {
-                                // Get the stored password hash
+
                                 string storedHash = string.Empty;
                                 try
                                 {
@@ -55,21 +49,19 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-                                    // PasswordHash column doesn't exist
+
                                     return null;
                                 }
 
-                                // Verify the password using PasswordHasher
                                 if (!PasswordHasher.Verify(password, storedHash))
                                 {
-                                    // Password doesn't match
+
                                     return null;
                                 }
 
-                                // Password is correct, build and return User object
                                 string firstName = string.Empty;
                                 string lastName = string.Empty;
-                                
+
                                 try
                                 {
                                     int firstNameOrdinal = reader.GetOrdinal("FirstName");
@@ -80,7 +72,7 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-                                    // FirstName column doesn't exist, leave empty
+
                                 }
 
                                 try
@@ -93,10 +85,9 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-                                    // LastName column doesn't exist, leave empty
+
                                 }
 
-                                // Get Email
                                 string emailValue = string.Empty;
                                 try
                                 {
@@ -104,19 +95,18 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-                                    // If Email column doesn't exist, try Username
+
                                     try
                                     {
                                         emailValue = reader.GetString("Username");
                                     }
                                     catch 
                                     { 
-                                        // Neither Email nor Username found
+
                                         return null;
                                     }
                                 }
 
-                                // Get Role
                                 string role = string.Empty;
                                 try
                                 {
@@ -124,7 +114,7 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-                                    // Role column doesn't exist
+
                                     return null;
                                 }
 
@@ -143,12 +133,13 @@ namespace Project5LMS.Services
             }
             catch (Exception ex)
             {
-                // Log the exception (in production, use proper logging)
+
                 System.Diagnostics.Debug.WriteLine($"Login error: {ex.Message}");
                 return null;
             }
 
-            return null; // User not found or invalid credentials
+            return null;
         }
     }
 }
+

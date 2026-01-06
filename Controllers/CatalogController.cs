@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
@@ -58,3 +58,4 @@ namespace Project5LMS.Controller
         public string CoverImagePath { get; set; }
     }
 }
+

@@ -1,0 +1,34 @@
+using System;
+using System.Windows.Forms;
+using Project5LMS.Helpers;
+
+namespace Project5LMS.Base
+{
+    public abstract class BaseStaffForm : BaseForm
+    {
+        protected BaseStaffForm()
+        {
+            ValidateAccess();
+        }
+
+        protected override void ValidateAccess()
+        {
+            try
+            {
+                AccessControlHelper.RequireAnyRole("Admin", "LibraryStaff");
+                AuditLogger.LogAccessControl($"{GetType().Name} accessed", $"User: {CurrentUser.Email}", "Success");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                AuditLogger.LogAccessControl($"{GetType().Name} access denied", $"User: {CurrentUser.Email}", "Failed");
+                this.Close();
+            }
+        }
+
+        protected override string[] GetRequiredRoles()
+        {
+            return new[] { "Admin", "LibraryStaff" };
+        }
+    }
+}

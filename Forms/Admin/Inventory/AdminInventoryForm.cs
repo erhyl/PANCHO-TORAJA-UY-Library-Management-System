@@ -1,0 +1,978 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using Project5LMS.Helpers;
+
+namespace Project5LMS.Forms.Admin.Inventory
+{
+    public partial class AdminInventoryForm : Form
+    {
+        private string connectionString;
+        private DataTable allInventoryData;
+        private string currentConditionFilter = "All Conditions";
+        private string currentStatusFilter = "All Status";
+
+        public AdminInventoryForm()
+        {
+            InitializeComponent();
+            try
+            {
+                connectionString = DatabaseHelper.GetConnectionString();
+            }
+            catch
+            {
+                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
+            }
+        }
+
+        private void AdminInventoryForm_Load(object sender, EventArgs e)
+        {
+            EnsureInventoryTableExists();
+            SetupDataGridView();
+            LoadMetrics();
+            LoadInventory();
+        }
+
+        private void EnsureInventoryTableExists()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                              WHERE TABLE_SCHEMA = DATABASE() 
+                                              AND TABLE_NAME = 'Inventory'";
+                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    {
+                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        if (tableExists == 0)
+                        {
+                            string createTableQuery = @"CREATE TABLE IF NOT EXISTS Inventory (
+                                                        InventoryID INT AUTO_INCREMENT PRIMARY KEY,
+                                                        BookID INT NOT NULL,
+                                                        CopyNumber INT NOT NULL,
+                                                        Location VARCHAR(50) NULL,
+                                                        Condition VARCHAR(50) DEFAULT 'Good',
+                                                        Status VARCHAR(50) DEFAULT 'Available',
+                                                        LastVerified DATETIME NULL,
+                                                        Notes VARCHAR(255) NULL,
+                                                        FOREIGN KEY (BookID) REFERENCES Books(BookID)
+                                                        )";
+                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
+                            {
+                                createCmd.ExecuteNonQuery();
+                            }
+
+                            PopulateInventoryFromBooks(conn);
+                        }
+                        else
+                        {
+
+                            AddColumnIfNotExists(conn, "Inventory", "CopyNumber", "INT NOT NULL DEFAULT 1");
+                            AddColumnIfNotExists(conn, "Inventory", "LastVerified", "DATETIME NULL");
+                            AddColumnIfNotExists(conn, "Inventory", "Notes", "VARCHAR(255) NULL");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error ensuring Inventory table exists: {ex.Message}");
+            }
+        }
+
+        private void PopulateInventoryFromBooks(MySqlConnection conn)
+        {
+            try
+            {
+
+                string query = "SELECT BookID, Copies, Location FROM Books";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<Tuple<int, int, string>> books = new List<Tuple<int, int, string>>();
+                    while (reader.Read())
+                    {
+                        int bookId = Convert.ToInt32(reader["BookID"]);
+                        int copies = reader["Copies"] != DBNull.Value ? Convert.ToInt32(reader["Copies"]) : 1;
+                        string location = reader["Location"] != DBNull.Value ? reader["Location"].ToString() : "";
+                        books.Add(new Tuple<int, int, string>(bookId, copies, location));
+                    }
+                    reader.Close();
+
+                    foreach (var book in books)
+                    {
+                        for (int i = 1; i <= book.Item2; i++)
+                        {
+                            string insertQuery = @"INSERT INTO Inventory (BookID, CopyNumber, Location, Condition, Status, LastVerified)
+                                                  VALUES (@BookID, @CopyNumber, @Location, 'Good', 'Available', @LastVerified)";
+                            using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn))
+                            {
+                                insertCmd.Parameters.AddWithValue("@BookID", book.Item1);
+                                insertCmd.Parameters.AddWithValue("@CopyNumber", i);
+                                insertCmd.Parameters.AddWithValue("@Location", book.Item3);
+                                insertCmd.Parameters.AddWithValue("@LastVerified", DateTime.Now);
+                                insertCmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error populating inventory: {ex.Message}");
+            }
+        }
+
+        private void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
+        {
+            try
+            {
+                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
+                                          WHERE TABLE_SCHEMA = DATABASE() 
+                                          AND TABLE_NAME = @tableName 
+                                          AND COLUMN_NAME = @columnName";
+                using (MySqlCommand checkCmd = new MySqlCommand(checkColumnQuery, conn))
+                {
+                    checkCmd.Parameters.AddWithValue("@tableName", tableName);
+                    checkCmd.Parameters.AddWithValue("@columnName", columnName);
+                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                    if (count == 0)
+                    {
+                        string alterQuery = $"ALTER TABLE {tableName} ADD COLUMN {columnName} {columnDefinition}";
+                        using (MySqlCommand alterCmd = new MySqlCommand(alterQuery, conn))
+                        {
+                            alterCmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error adding column {columnName}: {ex.Message}");
+            }
+        }
+
+        private void DrawMetricIcon(Graphics g, Panel panel, string icon)
+        {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using (Font font = new Font("Segoe UI", 18, FontStyle.Bold))
+            using (Brush brush = new SolidBrush(Color.White))
+            {
+                SizeF textSize = g.MeasureString(icon, font);
+                float x = (panel.Width - textSize.Width) / 2;
+                float y = (panel.Height - textSize.Height) / 2;
+                g.DrawString(icon, font, brush, x, y);
+            }
+        }
+
+        private void SetupDataGridView()
+        {
+            dataGridViewInventory.Columns.Clear();
+            dataGridViewInventory.AutoGenerateColumns = false;
+
+            DataGridViewTextBoxColumn colInventoryID = new DataGridViewTextBoxColumn
+            {
+                Name = "InventoryID",
+                HeaderText = "INVENTORY ID",
+                DataPropertyName = "InventoryID",
+                Width = 120,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colInventoryID);
+
+            DataGridViewTextBoxColumn colBookDetails = new DataGridViewTextBoxColumn
+            {
+                Name = "BookDetails",
+                HeaderText = "BOOK DETAILS",
+                DataPropertyName = "BookDetails",
+                Width = 300,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colBookDetails);
+
+            DataGridViewTextBoxColumn colCategory = new DataGridViewTextBoxColumn
+            {
+                Name = "Category",
+                HeaderText = "CATEGORY",
+                DataPropertyName = "Category",
+                Width = 120,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colCategory);
+
+            DataGridViewTextBoxColumn colLocation = new DataGridViewTextBoxColumn
+            {
+                Name = "Location",
+                HeaderText = "LOCATION",
+                DataPropertyName = "Location",
+                Width = 100,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colLocation);
+
+            DataGridViewTextBoxColumn colCopy = new DataGridViewTextBoxColumn
+            {
+                Name = "Copy",
+                HeaderText = "COPY",
+                DataPropertyName = "Copy",
+                Width = 100,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colCopy);
+
+            DataGridViewColumn colCondition = new DataGridViewTextBoxColumn
+            {
+                Name = "Condition",
+                HeaderText = "CONDITION",
+                DataPropertyName = "Condition",
+                Width = 120,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colCondition);
+
+            DataGridViewColumn colStatus = new DataGridViewTextBoxColumn
+            {
+                Name = "Status",
+                HeaderText = "STATUS",
+                DataPropertyName = "Status",
+                Width = 120,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colStatus);
+
+            DataGridViewTextBoxColumn colLastVerified = new DataGridViewTextBoxColumn
+            {
+                Name = "LastVerified",
+                HeaderText = "LAST VERIFIED",
+                DataPropertyName = "LastVerified",
+                Width = 130,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colLastVerified);
+
+            DataGridViewColumn colActions = new DataGridViewTextBoxColumn
+            {
+                Name = "Actions",
+                HeaderText = "ACTIONS",
+                DataPropertyName = "Actions",
+                Width = 200,
+                ReadOnly = true
+            };
+            dataGridViewInventory.Columns.Add(colActions);
+
+            dataGridViewInventory.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dataGridViewInventory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridViewInventory.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewInventory.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewInventory.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            dataGridViewInventory.RowTemplate.Height = 60;
+            dataGridViewInventory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
+            dataGridViewInventory.CellFormatting += DataGridViewInventory_CellFormatting;
+            dataGridViewInventory.CellPainting += DataGridViewInventory_CellPainting;
+            dataGridViewInventory.CellContentClick += DataGridViewInventory_CellContentClick;
+        }
+
+        private void DataGridViewInventory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
+            string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
+
+            if (columnName == "InventoryID" && e.Value != null)
+            {
+                string inventoryIdStr = e.Value.ToString();
+                if (int.TryParse(inventoryIdStr, out int inventoryId))
+                {
+                    e.Value = $"INV-{inventoryIdStr.PadLeft(3, '0')}";
+                }
+                e.FormattingApplied = true;
+            }
+
+            if (columnName == "LastVerified" && e.Value != null && e.Value != DBNull.Value)
+            {
+                if (DateTime.TryParse(e.Value.ToString(), out DateTime date))
+                {
+                    e.Value = date.ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    e.Value = "N/A";
+                }
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void DataGridViewInventory_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
+            DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
+
+            if (columnName == "Condition")
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+
+                string value = e.Value?.ToString() ?? "";
+                Color bgColor = Color.LightGray;
+                Color textColor = Color.Black;
+
+                switch (value.ToLower())
+                {
+                    case "excellent":
+                        bgColor = Color.FromArgb(40, 167, 69);
+                        textColor = Color.White;
+                        break;
+                    case "good":
+                        bgColor = Color.FromArgb(13, 110, 253);
+                        textColor = Color.White;
+                        break;
+                    case "fair":
+                        bgColor = Color.FromArgb(255, 193, 7);
+                        textColor = Color.Black;
+                        break;
+                    case "damaged":
+                        bgColor = Color.FromArgb(220, 53, 69);
+                        textColor = Color.White;
+                        break;
+                }
+
+                Rectangle badgeRect = new Rectangle(
+                    e.CellBounds.X + 5,
+                    e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
+                    Math.Min(100, e.CellBounds.Width - 10),
+                    25
+                );
+
+                using (GraphicsPath path = new GraphicsPath())
+                {
+                    int radius = 12;
+                    path.AddArc(badgeRect.X, badgeRect.Y, radius, radius, 180, 90);
+                    path.AddArc(badgeRect.Right - radius, badgeRect.Y, radius, radius, 270, 90);
+                    path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
+                    path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
+                    path.CloseAllFigures();
+
+                    using (SolidBrush brush = new SolidBrush(bgColor))
+                    {
+                        e.Graphics.FillPath(brush, path);
+                    }
+                }
+
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    value,
+                    dataGridViewInventory.DefaultCellStyle.Font,
+                    badgeRect,
+                    textColor,
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
+                );
+
+                e.Handled = true;
+            }
+
+            if (columnName == "Status")
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+
+                string value = e.Value?.ToString() ?? "";
+                Color bgColor = Color.LightGray;
+                Color textColor = Color.Black;
+
+                switch (value.ToLower())
+                {
+                    case "available":
+                        bgColor = Color.FromArgb(212, 237, 218);
+                        textColor = Color.FromArgb(25, 135, 84);
+                        break;
+                    case "borrowed":
+                        bgColor = Color.FromArgb(207, 226, 255);
+                        textColor = Color.FromArgb(13, 110, 253);
+                        break;
+                    case "for repair":
+                        bgColor = Color.FromArgb(220, 53, 69);
+                        textColor = Color.White;
+                        break;
+                    case "lost":
+                        bgColor = Color.FromArgb(220, 53, 69);
+                        textColor = Color.White;
+                        break;
+                }
+
+                Rectangle badgeRect = new Rectangle(
+                    e.CellBounds.X + 5,
+                    e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
+                    Math.Min(100, e.CellBounds.Width - 10),
+                    25
+                );
+
+                using (GraphicsPath path = new GraphicsPath())
+                {
+                    int radius = 12;
+                    path.AddArc(badgeRect.X, badgeRect.Y, radius, radius, 180, 90);
+                    path.AddArc(badgeRect.Right - radius, badgeRect.Y, radius, radius, 270, 90);
+                    path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
+                    path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
+                    path.CloseAllFigures();
+
+                    using (SolidBrush brush = new SolidBrush(bgColor))
+                    {
+                        e.Graphics.FillPath(brush, path);
+                    }
+                }
+
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    value,
+                    dataGridViewInventory.DefaultCellStyle.Font,
+                    badgeRect,
+                    textColor,
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
+                );
+
+                e.Handled = true;
+            }
+
+            if (columnName == "Actions")
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+
+                int buttonY = e.CellBounds.Y + (e.CellBounds.Height - 30) / 2;
+                int buttonHeight = 30;
+                int buttonWidth = 80;
+                int spacing = 5;
+                int xOffset = e.CellBounds.X + 5;
+
+                Rectangle btnVerifyRect = new Rectangle(xOffset, buttonY, buttonWidth, buttonHeight);
+                DrawButton(e.Graphics, btnVerifyRect, "Verify", Color.FromArgb(13, 110, 253), Color.White);
+
+                Rectangle btnUpdateRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, buttonHeight);
+                DrawButton(e.Graphics, btnUpdateRect, "Update", Color.FromArgb(40, 167, 69), Color.White);
+
+                e.Handled = true;
+            }
+        }
+
+        private void DrawButton(Graphics g, Rectangle rect, string text, Color bgColor, Color textColor)
+        {
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                int radius = 5;
+                path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
+                path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90);
+                path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90);
+                path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90);
+                path.CloseAllFigures();
+
+                using (SolidBrush brush = new SolidBrush(bgColor))
+                {
+                    g.FillPath(brush, path);
+                }
+            }
+
+            TextRenderer.DrawText(
+                g,
+                text,
+                new Font("Segoe UI", 9, FontStyle.Bold),
+                rect,
+                textColor,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
+            );
+        }
+
+        private void DataGridViewInventory_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
+            if (columnName != "Actions") return;
+
+            DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
+
+            int inventoryId = 0;
+            if (row.DataBoundItem is DataRowView drv)
+            {
+                inventoryId = Convert.ToInt32(drv["InventoryID"]);
+            }
+            else if (row.DataBoundItem is DataRow dr)
+            {
+                inventoryId = Convert.ToInt32(dr["InventoryID"]);
+            }
+            else
+            {
+                object inventoryIdObj = row.Cells["InventoryID"].Value;
+                if (inventoryIdObj != null)
+                {
+                    string inventoryIdStr = inventoryIdObj.ToString().Replace("INV-", "");
+                    int.TryParse(inventoryIdStr, out inventoryId);
+                }
+            }
+
+            Point clickPoint = dataGridViewInventory.PointToClient(Control.MousePosition);
+            Rectangle cellRect = dataGridViewInventory.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+            int buttonY = cellRect.Y + (cellRect.Height - 30) / 2;
+            int buttonWidth = 80;
+            int spacing = 5;
+            int xOffset = cellRect.X + 5;
+
+            Rectangle btnVerifyRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
+            Rectangle btnUpdateRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
+
+            if (btnVerifyRect.Contains(clickPoint))
+            {
+                VerifyInventory(inventoryId);
+            }
+            else if (btnUpdateRect.Contains(clickPoint))
+            {
+                UpdateInventory(inventoryId);
+            }
+        }
+
+        private void LoadMetrics()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string queryTotal = "SELECT COUNT(*) FROM Inventory";
+                    using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
+                    {
+                        int total = Convert.ToInt32(cmd.ExecuteScalar());
+                        lblMetricTotalValue.Text = total.ToString();
+                    }
+
+                    string queryNeedsRepair = "SELECT COUNT(*) FROM Inventory WHERE Status = 'For Repair'";
+                    using (MySqlCommand cmd = new MySqlCommand(queryNeedsRepair, conn))
+                    {
+                        int needsRepair = Convert.ToInt32(cmd.ExecuteScalar());
+                        lblMetricNeedsRepairValue.Text = needsRepair.ToString();
+                    }
+
+                    string queryDamaged = "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'";
+                    using (MySqlCommand cmd = new MySqlCommand(queryDamaged, conn))
+                    {
+                        int damaged = Convert.ToInt32(cmd.ExecuteScalar());
+                        lblMetricDamagedValue.Text = damaged.ToString();
+                    }
+
+                    string queryLost = "SELECT COUNT(*) FROM Inventory WHERE Status = 'Lost'";
+                    using (MySqlCommand cmd = new MySqlCommand(queryLost, conn))
+                    {
+                        int lost = Convert.ToInt32(cmd.ExecuteScalar());
+                        lblMetricLostValue.Text = lost.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
+            }
+        }
+
+        private void LoadInventory()
+        {
+            try
+            {
+                allInventoryData = GetInventoryData();
+
+                if (!allInventoryData.Columns.Contains("BookDetails"))
+                {
+                    allInventoryData.Columns.Add("BookDetails", typeof(string));
+                }
+                if (!allInventoryData.Columns.Contains("Copy"))
+                {
+                    allInventoryData.Columns.Add("Copy", typeof(string));
+                }
+
+                foreach (DataRow row in allInventoryData.Rows)
+                {
+
+                    string title = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
+                    string author = row["Author"] != DBNull.Value ? row["Author"].ToString() : "";
+                    int bookId = Convert.ToInt32(row["BookID"]);
+                    string barcode = row["Barcode"] != DBNull.Value ? row["Barcode"].ToString() : "";
+                    string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
+                    row["BookDetails"] = $"{title} by {author} ({accessionNo})";
+
+                    int copyNumber = Convert.ToInt32(row["CopyNumber"]);
+                    int totalCopies = row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 1;
+                    row["Copy"] = $"{copyNumber}/{totalCopies}";
+
+                    if (row["Location"] == DBNull.Value || string.IsNullOrEmpty(row["Location"].ToString()))
+                    {
+                        row["Location"] = GenerateLocation(bookId, copyNumber);
+                    }
+                }
+
+                ApplyFilters();
+
+                dataGridViewInventory.DataSource = allInventoryData;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading inventory: {ex.Message}");
+                MessageBox.Show($"Error loading inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private DataTable GetInventoryData()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                bool hasCopyNumber = CheckColumnExists(conn, "Inventory", "CopyNumber");
+                bool hasLastVerified = CheckColumnExists(conn, "Inventory", "LastVerified");
+
+                string query;
+                if (hasCopyNumber && hasLastVerified)
+                {
+                    query = @"SELECT 
+                                i.InventoryID,
+                                i.BookID,
+                                i.CopyNumber,
+                                i.Location,
+                                i.Condition,
+                                i.Status,
+                                i.LastVerified,
+                                b.Title,
+                                b.Author,
+                                b.Category,
+                                b.Copies,
+                                b.Barcode
+                             FROM Inventory i
+                             INNER JOIN Books b ON i.BookID = b.BookID
+                             ORDER BY i.InventoryID DESC";
+                }
+                else if (hasCopyNumber)
+                {
+                    query = @"SELECT 
+                                i.InventoryID,
+                                i.BookID,
+                                i.CopyNumber,
+                                i.Location,
+                                i.Condition,
+                                i.Status,
+                                NULL as LastVerified,
+                                b.Title,
+                                b.Author,
+                                b.Category,
+                                b.Copies,
+                                b.Barcode
+                             FROM Inventory i
+                             INNER JOIN Books b ON i.BookID = b.BookID
+                             ORDER BY i.InventoryID DESC";
+                }
+                else
+                {
+                    query = @"SELECT 
+                                i.InventoryID,
+                                i.BookID,
+                                1 as CopyNumber,
+                                i.Location,
+                                i.Condition,
+                                i.Status,
+                                NULL as LastVerified,
+                                b.Title,
+                                b.Author,
+                                b.Category,
+                                b.Copies,
+                                b.Barcode
+                             FROM Inventory i
+                             INNER JOIN Books b ON i.BookID = b.BookID
+                             ORDER BY i.InventoryID DESC";
+                }
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+        }
+
+        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
+        {
+            try
+            {
+                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
+                                WHERE TABLE_SCHEMA = DATABASE() 
+                                AND TABLE_NAME = @tableName 
+                                AND COLUMN_NAME = @columnName";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@tableName", tableName);
+                    cmd.Parameters.AddWithValue("@columnName", columnName);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private string GenerateLocation(int bookId, int copyNumber)
+        {
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT Category FROM Books WHERE BookID = @BookID";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            string category = result.ToString();
+                            string categoryPrefix = category.Length > 0 ? category.Substring(0, 1).ToUpper() : "A";
+                            return $"{categoryPrefix}-{bookId.ToString().PadLeft(2, '0')}-{copyNumber}";
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return $"A-{bookId.ToString().PadLeft(2, '0')}-{copyNumber}";
+        }
+
+        private void ApplyFilters()
+        {
+            if (allInventoryData == null) return;
+
+            DataView dv = allInventoryData.DefaultView;
+            string rowFilter = "";
+
+            if (currentConditionFilter != "All Conditions")
+            {
+                rowFilter = $"Condition = '{currentConditionFilter}'";
+            }
+            if (currentStatusFilter != "All Status")
+            {
+                if (!string.IsNullOrEmpty(rowFilter))
+                    rowFilter += " AND ";
+                rowFilter += $"Status = '{currentStatusFilter}'";
+            }
+
+            string searchText = txtSearch.Text.Trim();
+            if (!string.IsNullOrEmpty(searchText) && searchText != "?? Search inventory...")
+            {
+                if (!string.IsNullOrEmpty(rowFilter))
+                    rowFilter += " AND ";
+                rowFilter += $"(Title LIKE '%{searchText}%' OR Author LIKE '%{searchText}%' OR Barcode LIKE '%{searchText}%')";
+            }
+
+            dv.RowFilter = rowFilter;
+            allInventoryData = dv.ToTable();
+        }
+
+        private void txtSearch_Enter(object sender, EventArgs e)
+        {
+            if (txtSearch.Text == "?? Search inventory...")
+            {
+                txtSearch.Text = "";
+                txtSearch.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtSearch_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                txtSearch.Text = "?? Search inventory...";
+                txtSearch.ForeColor = Color.Gray;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            LoadInventory();
+        }
+
+        private void btnFilterCondition_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip filterMenu = new ContextMenuStrip();
+            filterMenu.Items.Add("All Conditions", null, (s, args) => { currentConditionFilter = "All Conditions"; btnFilterCondition.Text = "?? All Conditions"; LoadInventory(); });
+            filterMenu.Items.Add("Excellent", null, (s, args) => { currentConditionFilter = "Excellent"; btnFilterCondition.Text = "?? Excellent"; LoadInventory(); });
+            filterMenu.Items.Add("Good", null, (s, args) => { currentConditionFilter = "Good"; btnFilterCondition.Text = "?? Good"; LoadInventory(); });
+            filterMenu.Items.Add("Fair", null, (s, args) => { currentConditionFilter = "Fair"; btnFilterCondition.Text = "?? Fair"; LoadInventory(); });
+            filterMenu.Items.Add("Damaged", null, (s, args) => { currentConditionFilter = "Damaged"; btnFilterCondition.Text = "?? Damaged"; LoadInventory(); });
+
+            filterMenu.Show(btnFilterCondition, new Point(0, btnFilterCondition.Height));
+        }
+
+        private void btnFilterStatus_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip filterMenu = new ContextMenuStrip();
+            filterMenu.Items.Add("All Status", null, (s, args) => { currentStatusFilter = "All Status"; btnFilterStatus.Text = "?? All Status"; LoadInventory(); });
+            filterMenu.Items.Add("Available", null, (s, args) => { currentStatusFilter = "Available"; btnFilterStatus.Text = "?? Available"; LoadInventory(); });
+            filterMenu.Items.Add("Borrowed", null, (s, args) => { currentStatusFilter = "Borrowed"; btnFilterStatus.Text = "?? Borrowed"; LoadInventory(); });
+            filterMenu.Items.Add("For Repair", null, (s, args) => { currentStatusFilter = "For Repair"; btnFilterStatus.Text = "?? For Repair"; LoadInventory(); });
+            filterMenu.Items.Add("Lost", null, (s, args) => { currentStatusFilter = "Lost"; btnFilterStatus.Text = "?? Lost"; LoadInventory(); });
+
+            filterMenu.Show(btnFilterStatus, new Point(0, btnFilterStatus.Height));
+        }
+
+        private void VerifyInventory(int inventoryId)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    bool hasLastVerified = CheckColumnExists(conn, "Inventory", "LastVerified");
+                    string updateQuery;
+                    if (hasLastVerified)
+                    {
+                        updateQuery = "UPDATE Inventory SET LastVerified = @LastVerified WHERE InventoryID = @InventoryID";
+                    }
+                    else
+                    {
+
+                        AddColumnIfNotExists(conn, "Inventory", "LastVerified", "DATETIME NULL");
+                        updateQuery = "UPDATE Inventory SET LastVerified = @LastVerified WHERE InventoryID = @InventoryID";
+                    }
+
+                    using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@InventoryID", inventoryId);
+                        cmd.Parameters.AddWithValue("@LastVerified", DateTime.Now);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Inventory item verified successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadInventory();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error verifying inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateInventory(int inventoryId)
+        {
+            try
+            {
+
+                DataRow inventoryRow = null;
+                foreach (DataRow row in allInventoryData.Rows)
+                {
+                    if (Convert.ToInt32(row["InventoryID"]) == inventoryId)
+                    {
+                        inventoryRow = row;
+                        break;
+                    }
+                }
+
+                if (inventoryRow == null)
+                {
+                    MessageBox.Show("Inventory item not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (Form updateForm = new Form())
+                {
+                    updateForm.Text = "Update Inventory";
+                    updateForm.Size = new Size(400, 300);
+                    updateForm.StartPosition = FormStartPosition.CenterParent;
+                    updateForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    updateForm.MaximizeBox = false;
+                    updateForm.MinimizeBox = false;
+
+                    Label lblCondition = new Label { Text = "Condition:", Location = new Point(20, 20), AutoSize = true };
+                    ComboBox cmbCondition = new ComboBox
+                    {
+                        Location = new Point(120, 17),
+                        Size = new Size(200, 25),
+                        DropDownStyle = ComboBoxStyle.DropDownList
+                    };
+                    cmbCondition.Items.AddRange(new[] { "Excellent", "Good", "Fair", "Damaged" });
+                    cmbCondition.SelectedItem = inventoryRow["Condition"]?.ToString() ?? "Good";
+
+                    Label lblStatus = new Label { Text = "Status:", Location = new Point(20, 60), AutoSize = true };
+                    ComboBox cmbStatus = new ComboBox
+                    {
+                        Location = new Point(120, 57),
+                        Size = new Size(200, 25),
+                        DropDownStyle = ComboBoxStyle.DropDownList
+                    };
+                    cmbStatus.Items.AddRange(new[] { "Available", "Borrowed", "For Repair", "Lost" });
+                    cmbStatus.SelectedItem = inventoryRow["Status"]?.ToString() ?? "Available";
+
+                    Label lblLocation = new Label { Text = "Location:", Location = new Point(20, 100), AutoSize = true };
+                    TextBox txtLocation = new TextBox
+                    {
+                        Location = new Point(120, 97),
+                        Size = new Size(200, 25)
+                    };
+                    txtLocation.Text = inventoryRow["Location"]?.ToString() ?? "";
+
+                    Button btnSave = new Button
+                    {
+                        Text = "Save",
+                        Location = new Point(120, 140),
+                        Size = new Size(80, 30),
+                        DialogResult = DialogResult.OK
+                    };
+                    Button btnCancel = new Button
+                    {
+                        Text = "Cancel",
+                        Location = new Point(210, 140),
+                        Size = new Size(80, 30),
+                        DialogResult = DialogResult.Cancel
+                    };
+
+                    updateForm.Controls.AddRange(new Control[] { lblCondition, cmbCondition, lblStatus, cmbStatus, lblLocation, txtLocation, btnSave, btnCancel });
+                    updateForm.AcceptButton = btnSave;
+                    updateForm.CancelButton = btnCancel;
+
+                    if (updateForm.ShowDialog() == DialogResult.OK)
+                    {
+                        using (MySqlConnection conn = new MySqlConnection(connectionString))
+                        {
+                            conn.Open();
+                            string updateQuery = "UPDATE Inventory SET Condition = @Condition, Status = @Status, Location = @Location WHERE InventoryID = @InventoryID";
+                            using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@InventoryID", inventoryId);
+                                cmd.Parameters.AddWithValue("@Condition", cmbCondition.SelectedItem.ToString());
+                                cmd.Parameters.AddWithValue("@Status", cmbStatus.SelectedItem.ToString());
+                                cmd.Parameters.AddWithValue("@Location", txtLocation.Text);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        MessageBox.Show("Inventory item updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadMetrics();
+                        LoadInventory();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}

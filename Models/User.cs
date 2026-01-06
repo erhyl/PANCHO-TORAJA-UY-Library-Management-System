@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Project5LMS.Models
@@ -12,8 +12,7 @@ namespace Project5LMS.Models
         public string LastName { get; set; }
 
         public string Email { get; set; }
-        
-        // Backward compatibility - Username property maps to Email
+
         public string Username 
         { 
             get { return Email; } 
@@ -22,10 +21,8 @@ namespace Project5LMS.Models
 
         public string PasswordHash { get; set; }
 
-        public string Role { get; set; } // Admin, Librarian, LibraryStaff, Member
+        public string Role { get; set; }
 
-        // Convenience property for backward compatibility.
         public string FullName => string.Join(" ", new[] { FirstName, LastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
     }
 }
-
