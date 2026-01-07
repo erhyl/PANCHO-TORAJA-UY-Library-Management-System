@@ -2,30 +2,34 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
+using Project5LMS.Repositories;
 
 namespace Project5LMS.Forms.Admin.Fines
 {
     public partial class AdminFinesForm : Form
     {
-        private string connectionString;
         private DataTable allFinesData;
         private string currentStatusFilter = "All Status";
         private string currentTypeFilter = "All Types";
+        private readonly FinesService _finesService;
+        private readonly ITransactionRepository _transactionRepository;
+        private readonly MembersService _membersService;
+        private readonly BookService _bookService;
 
         public AdminFinesForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _finesService = ServiceFactory.CreateFinesService();
+            var dbContext = new DatabaseContext();
+            _transactionRepository = new TransactionRepository(dbContext);
+            _membersService = ServiceFactory.CreateMembersService();
+            _bookService = ServiceFactory.CreateBookService();
         }
 
         private void AdminFinesForm_Load(object sender, EventArgs e)
@@ -40,14 +44,15 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
 
                     string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
                                               WHERE TABLE_SCHEMA = DATABASE() 
                                               AND TABLE_NAME = 'Fines'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
                         int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (tableExists == 0)
@@ -70,21 +75,17 @@ namespace Project5LMS.Forms.Admin.Fines
                                                         FOREIGN KEY (BookID) REFERENCES Books(BookID),
                                                         FOREIGN KEY (TransactionID) REFERENCES Transactions(TransactionID)
                                                         )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
+                            dbContext.ExecuteNonQuery(createTableQuery);
                         }
                         else
                         {
-
-                            AddColumnIfNotExists(conn, "Fines", "FineType", "VARCHAR(50) DEFAULT 'Overdue'");
-                            AddColumnIfNotExists(conn, "Fines", "DaysOverdue", "INT DEFAULT 0");
-                            AddColumnIfNotExists(conn, "Fines", "CreatedDate", "DATETIME DEFAULT CURRENT_TIMESTAMP");
-                            AddColumnIfNotExists(conn, "Fines", "PaidDate", "DATETIME NULL");
-                            AddColumnIfNotExists(conn, "Fines", "WaivedDate", "DATETIME NULL");
-                            AddColumnIfNotExists(conn, "Fines", "Description", "VARCHAR(255) NULL");
-                            AddColumnIfNotExists(conn, "Fines", "TransactionID", "INT NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "FineType", "VARCHAR(50) DEFAULT 'Overdue'");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "DaysOverdue", "INT DEFAULT 0");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "CreatedDate", "DATETIME DEFAULT CURRENT_TIMESTAMP");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "PaidDate", "DATETIME NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "WaivedDate", "DATETIME NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "Description", "VARCHAR(255) NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Fines", "TransactionID", "INT NULL");
                         }
                     }
                 }
@@ -95,34 +96,6 @@ namespace Project5LMS.Forms.Admin.Fines
             }
         }
 
-        private void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
-        {
-            try
-            {
-                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                          WHERE TABLE_SCHEMA = DATABASE() 
-                                          AND TABLE_NAME = @tableName 
-                                          AND COLUMN_NAME = @columnName";
-                using (MySqlCommand checkCmd = new MySqlCommand(checkColumnQuery, conn))
-                {
-                    checkCmd.Parameters.AddWithValue("@tableName", tableName);
-                    checkCmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
-                    if (count == 0)
-                    {
-                        string alterQuery = $"ALTER TABLE {tableName} ADD COLUMN {columnName} {columnDefinition}";
-                        using (MySqlCommand alterCmd = new MySqlCommand(alterQuery, conn))
-                        {
-                            alterCmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error adding column {columnName}: {ex.Message}");
-            }
-        }
 
         private void DrawMetricIcon(Graphics g, Panel panel, string icon)
         {
@@ -553,41 +526,44 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                string queryPending = @"SELECT COALESCE(SUM(Amount - Paid), 0) FROM Fines 
+                                      WHERE Status = 'Pending' OR Status = 'Partial'";
+                var pendingResult = dbContext.ExecuteQuery(queryPending);
+                if (pendingResult.Rows.Count > 0)
                 {
-                    conn.Open();
-
-                    string queryPending = @"SELECT COALESCE(SUM(Amount - Paid), 0) FROM Fines 
-                                          WHERE Status = 'Pending' OR Status = 'Partial'";
-                    using (MySqlCommand cmd = new MySqlCommand(queryPending, conn))
-                    {
-                        decimal pending = Convert.ToDecimal(cmd.ExecuteScalar());
-                        lblMetricPendingValue.Text = $"${pending:F2}";
-                    }
-
-                    string queryCollected = @"SELECT COALESCE(SUM(Paid), 0) FROM Fines 
-                                             WHERE Status = 'Paid' OR Status = 'Partial'";
-                    using (MySqlCommand cmd = new MySqlCommand(queryCollected, conn))
-                    {
-                        decimal collected = Convert.ToDecimal(cmd.ExecuteScalar());
-                        lblMetricCollectedValue.Text = $"${collected:F2}";
-                    }
-
-                    string queryWaived = @"SELECT COALESCE(SUM(Amount), 0) FROM Fines 
-                                          WHERE Status = 'Waived'";
-                    using (MySqlCommand cmd = new MySqlCommand(queryWaived, conn))
-                    {
-                        decimal waived = Convert.ToDecimal(cmd.ExecuteScalar());
-                        lblMetricWaivedValue.Text = $"${waived:F2}";
-                    }
-
-                    string queryTotal = "SELECT COUNT(*) FROM Fines";
-                    using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
-                    {
-                        int total = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricTotalFinesValue.Text = total.ToString();
-                    }
+                    decimal pending = Convert.ToDecimal(pendingResult.Rows[0][0]);
+                    lblMetricPendingValue.Text = $"${pending:F2}";
                 }
+
+                string queryCollected = @"SELECT COALESCE(SUM(Paid), 0) FROM Fines 
+                                         WHERE Status = 'Paid' OR Status = 'Partial'";
+                var collectedResult = dbContext.ExecuteQuery(queryCollected);
+                if (collectedResult.Rows.Count > 0)
+                {
+                    decimal collected = Convert.ToDecimal(collectedResult.Rows[0][0]);
+                    lblMetricCollectedValue.Text = $"${collected:F2}";
+                }
+
+                string queryWaived = @"SELECT COALESCE(SUM(Amount), 0) FROM Fines 
+                                      WHERE Status = 'Waived'";
+                var waivedResult = dbContext.ExecuteQuery(queryWaived);
+                if (waivedResult.Rows.Count > 0)
+                {
+                    decimal waived = Convert.ToDecimal(waivedResult.Rows[0][0]);
+                    lblMetricWaivedValue.Text = $"${waived:F2}";
+                }
+
+                string queryTotal = "SELECT COUNT(*) FROM Fines";
+                var totalResult = dbContext.ExecuteQuery(queryTotal);
+                if (totalResult.Rows.Count > 0)
+                {
+                    int total = Convert.ToInt32(totalResult.Rows[0][0]);
+                    lblMetricTotalFinesValue.Text = total.ToString();
+                }
+
+                var overdueTransactions = _finesService.GetOverdueTransactions().ToList();
+                int overdueCount = overdueTransactions.Count;
             }
             catch (Exception ex)
             {
@@ -689,14 +665,15 @@ namespace Project5LMS.Forms.Admin.Fines
 
         private DataTable GetFinesData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            var dbContext = new DatabaseContext();
+            using (var conn = dbContext.GetConnection())
             {
                 conn.Open();
 
-                bool hasFineType = CheckColumnExists(conn, "Fines", "FineType");
-                bool hasDaysOverdue = CheckColumnExists(conn, "Fines", "DaysOverdue");
-                bool hasDescription = CheckColumnExists(conn, "Fines", "Description");
-                bool hasTransactionID = CheckColumnExists(conn, "Fines", "TransactionID");
+                bool hasFineType = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "FineType");
+                bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
+                bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
+                bool hasTransactionID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "TransactionID");
 
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasTransactionID)
@@ -744,35 +721,7 @@ namespace Project5LMS.Forms.Admin.Fines
                              ORDER BY f.FineID DESC";
                 }
 
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    return dt;
-                }
-            }
-        }
-
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @tableName 
-                                AND COLUMN_NAME = @columnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
-                    cmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
+                return dbContext.ExecuteQuery(query);
             }
         }
 
@@ -804,11 +753,12 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
 
-                    bool hasPaidDate = CheckColumnExists(conn, "Fines", "PaidDate");
+                    bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
                     string updateQuery;
                     if (hasPaidDate)
                     {
@@ -819,7 +769,7 @@ namespace Project5LMS.Forms.Admin.Fines
                         updateQuery = "UPDATE Fines SET Paid = Amount, Status = 'Paid' WHERE FineID = @FineID";
                     }
 
-                    using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                    using (var cmd = new MySqlCommand(updateQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);
                         if (hasPaidDate)
@@ -844,12 +794,13 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
 
                     decimal newPaid = paid + balance;
-                    bool hasPaidDate = CheckColumnExists(conn, "Fines", "PaidDate");
+                    bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
                     string updateQuery;
                     if (hasPaidDate)
                     {
@@ -860,7 +811,7 @@ namespace Project5LMS.Forms.Admin.Fines
                         updateQuery = "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid' WHERE FineID = @FineID";
                     }
 
-                    using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                    using (var cmd = new MySqlCommand(updateQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);
                         cmd.Parameters.AddWithValue("@NewPaid", newPaid);
@@ -889,11 +840,12 @@ namespace Project5LMS.Forms.Admin.Fines
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
 
-                    bool hasWaivedDate = CheckColumnExists(conn, "Fines", "WaivedDate");
+                    bool hasWaivedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "WaivedDate");
                     string updateQuery;
                     if (hasWaivedDate)
                     {

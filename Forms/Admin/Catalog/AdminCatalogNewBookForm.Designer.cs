@@ -85,7 +85,6 @@
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.lblBookDetails = new System.Windows.Forms.Label();
             this.panelBookIdentification = new System.Windows.Forms.Panel();
             this.txtCallNumber = new System.Windows.Forms.TextBox();
             this.lblCallNumber = new System.Windows.Forms.Label();
@@ -94,6 +93,7 @@
             this.txtAccessionNumber = new System.Windows.Forms.TextBox();
             this.lblAccessionNumber = new System.Windows.Forms.Label();
             this.lblBookIdentification = new System.Windows.Forms.Label();
+            this.lblBookDetails = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblFormTitle = new System.Windows.Forms.Label();
@@ -834,18 +834,6 @@
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Title *";
             // 
-            // lblBookDetails
-            // 
-            this.lblBookDetails.AutoSize = true;
-            this.lblBookDetails.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBookDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBookDetails.Location = new System.Drawing.Point(41, 135);
-            this.lblBookDetails.Margin = new System.Windows.Forms.Padding(0, 0, 0, 15);
-            this.lblBookDetails.Name = "lblBookDetails";
-            this.lblBookDetails.Size = new System.Drawing.Size(132, 28);
-            this.lblBookDetails.TabIndex = 0;
-            this.lblBookDetails.Text = "Book Details";
-            // 
             // panelBookIdentification
             // 
             this.panelBookIdentification.BackColor = System.Drawing.Color.White;
@@ -942,6 +930,18 @@
             this.lblBookIdentification.TabIndex = 0;
             this.lblBookIdentification.Text = "Book Identification";
             // 
+            // lblBookDetails
+            // 
+            this.lblBookDetails.AutoSize = true;
+            this.lblBookDetails.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookDetails.Location = new System.Drawing.Point(41, 135);
+            this.lblBookDetails.Margin = new System.Windows.Forms.Padding(0, 0, 0, 15);
+            this.lblBookDetails.Name = "lblBookDetails";
+            this.lblBookDetails.Size = new System.Drawing.Size(132, 28);
+            this.lblBookDetails.TabIndex = 0;
+            this.lblBookDetails.Text = "Book Details";
+            // 
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.White;
@@ -1021,10 +1021,10 @@
             this.btnAddBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddBook.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddBook.ForeColor = System.Drawing.Color.White;
-            this.btnAddBook.Location = new System.Drawing.Point(778, 0);
+            this.btnAddBook.Location = new System.Drawing.Point(752, 0);
             this.btnAddBook.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddBook.Name = "btnAddBook";
-            this.btnAddBook.Size = new System.Drawing.Size(200, 40);
+            this.btnAddBook.Size = new System.Drawing.Size(226, 40);
             this.btnAddBook.TabIndex = 1;
             this.btnAddBook.Text = "Add Book ";
             this.btnAddBook.UseVisualStyleBackColor = false;

@@ -2,28 +2,26 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.Admin.Catalog
 {
     public partial class AdminCatalogForm : Form
     {
-        private string connectionString;
         private DataTable allBooksData;
+        private readonly BookService _bookService;
+        private readonly DatabaseContext _dbContext;
 
         public AdminCatalogForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _bookService = ServiceFactory.CreateBookService();
+            _dbContext = new DatabaseContext();
         }
 
         private void AdminCatalogForm_Load(object sender, EventArgs e)
@@ -211,20 +209,18 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                cmbCategoryFilter.Items.Clear();
+                cmbCategoryFilter.Items.Add("All Categories");
+                
+                var categories = _bookService.GetAllBooks()
+                    .Where(b => !string.IsNullOrWhiteSpace(b.Category))
+                    .Select(b => b.Category)
+                    .Distinct()
+                    .OrderBy(c => c);
+                
+                foreach (var category in categories)
                 {
-                    conn.Open();
-                    string query = "SELECT DISTINCT Category FROM Books WHERE Category IS NOT NULL AND Category != '' ORDER BY Category";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        cmbCategoryFilter.Items.Clear();
-                        cmbCategoryFilter.Items.Add("All Categories");
-                        while (reader.Read())
-                        {
-                            cmbCategoryFilter.Items.Add(reader["Category"].ToString());
-                        }
-                    }
+                    cmbCategoryFilter.Items.Add(category);
                 }
             }
             catch (Exception ex)
@@ -237,7 +233,7 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -366,77 +362,8 @@ namespace Project5LMS.Forms.Admin.Catalog
 
         private DataTable GetBooksData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-
-                bool hasLocation = CheckColumnExists(conn, "Books", "Location");
-
-                string query;
-                if (hasLocation)
-                {
-                    query = @"SELECT 
-                                BookID,
-                                Title,
-                                Author,
-                                ISBN,
-                                Publisher,
-                                YearPublished,
-                                Category,
-                                Copies,
-                                Available,
-                                Barcode,
-                                Location
-                             FROM Books
-                             ORDER BY Title";
-                }
-                else
-                {
-                    query = @"SELECT 
-                                BookID,
-                                Title,
-                                Author,
-                                ISBN,
-                                Publisher,
-                                YearPublished,
-                                Category,
-                                Copies,
-                                Available,
-                                Barcode
-                             FROM Books
-                             ORDER BY Title";
-                }
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    return dt;
-                }
-            }
-        }
-
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @tableName 
-                                AND COLUMN_NAME = @columnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
-                    cmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
+            var books = _bookService.GetAllBooks();
+            return DataTableHelper.BooksToDataTable(books);
         }
 
         private string GenerateLocation(string category, int bookId)
@@ -650,7 +577,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             {
                 try
                 {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    using (var conn = _dbContext.GetConnection())
                     {
                         conn.Open();
                         string query = "DELETE FROM Books WHERE BookID = @bookId";

@@ -1,22 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using Project5LMS.Models;
 using Project5LMS.Repositories;
-using Project5LMS.Factories;
+using Project5LMS.Data;
 
 namespace Project5LMS.Services
 {
-
     public class BookService
     {
         private readonly IBookRepository _bookRepository;
 
-        public BookService() : this(RepositoryFactory.CreateBookRepository())
-        {
-        }
-
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository ?? throw new System.ArgumentNullException(nameof(bookRepository));
+        }
+
+        public BookService(DatabaseContext dbContext) : this(new BookRepository(dbContext))
+        {
         }
 
         public Book GetBook(int bookId)
@@ -89,6 +89,16 @@ namespace Project5LMS.Services
                 return false;
 
             return _bookRepository.UpdateAvailability(bookId, change);
+        }
+
+        public IEnumerable<string> GetAllCategories()
+        {
+            var books = _bookRepository.GetAll();
+            return books
+                .Where(b => !string.IsNullOrWhiteSpace(b.Category))
+                .Select(b => b.Category)
+                .Distinct()
+                .OrderBy(c => c);
         }
     }
 }

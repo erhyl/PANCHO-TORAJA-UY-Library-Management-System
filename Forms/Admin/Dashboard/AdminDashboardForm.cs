@@ -6,6 +6,8 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 using Project5LMS.Forms.Admin.UserManagement;
 using Project5LMS.Forms.Admin.Settings;
 using Project5LMS.Forms.Admin.Reports;
@@ -21,11 +23,14 @@ namespace Project5LMS.Forms.Admin.Dashboard
 {
     public partial class AdminDashboardForm : Form
     {
-        private string connectionString;
+        private readonly DashboardService _dashboardService;
+        private readonly FinesService _finesService;
+        private readonly DatabaseContext _dbContext;
 
         public AdminDashboardForm()
         {
             InitializeComponent();
+            _dbContext = new DatabaseContext();
 
             try
             {
@@ -40,14 +45,8 @@ namespace Project5LMS.Forms.Admin.Dashboard
                 return;
             }
 
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dashboardService = ServiceFactory.CreateDashboardService();
+            _finesService = ServiceFactory.CreateFinesService();
         }
 
         private void AdminDashboardForm_Load(object sender, EventArgs e)
@@ -172,41 +171,36 @@ namespace Project5LMS.Forms.Admin.Dashboard
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
+                int totalBooks = _dashboardService.GetTotalBooks();
+                lblBooksValue.Text = totalBooks.ToString("N0");
+                int booksThisMonth = 0;
+                lblBooksChange.Text = $"+{booksThisMonth} this month";
 
-                    int totalBooks = GetTotalBooks(conn);
-                    lblBooksValue.Text = totalBooks.ToString("N0");
-                    int booksThisMonth = GetBooksAddedThisMonth(conn);
-                    lblBooksChange.Text = $"+{booksThisMonth} this month";
+                int activeMembers = _dashboardService.GetActiveMembers();
+                lblMembersValue.Text = activeMembers.ToString("N0");
+                int membersThisWeek = _dashboardService.GetMembersAddedThisWeek();
+                lblMembersChange.Text = $"+{membersThisWeek} this week";
 
-                    int activeMembers = GetActiveMembers(conn);
-                    lblMembersValue.Text = activeMembers.ToString("N0");
-                    int membersThisWeek = GetMembersAddedThisWeek(conn);
-                    lblMembersChange.Text = $"+{membersThisWeek} this week";
+                int booksBorrowed = _dashboardService.GetActiveBorrowings();
+                lblBorrowedValue.Text = booksBorrowed.ToString("N0");
+                int borrowedToday = _dashboardService.GetBorrowedToday();
+                lblBorrowedChange.Text = $"+{borrowedToday} today";
 
-                    int booksBorrowed = GetActiveBorrowings(conn);
-                    lblBorrowedValue.Text = booksBorrowed.ToString("N0");
-                    int borrowedToday = GetBorrowedToday(conn);
-                    lblBorrowedChange.Text = $"+{borrowedToday} today";
+                int overdueBooks = _dashboardService.GetOverdueBooks();
+                lblOverdueValue.Text = overdueBooks.ToString();
+                int overdueLastWeek = 0;
+                int overdueChange = overdueBooks - overdueLastWeek;
+                lblOverdueChange.Text = overdueChange >= 0 ? $"+{overdueChange} from last week" : $"{overdueChange} from last week";
 
-                    int overdueBooks = GetOverdueBooks(conn);
-                    lblOverdueValue.Text = overdueBooks.ToString();
-                    int overdueLastWeek = GetOverdueBooksLastWeek(conn);
-                    int overdueChange = overdueBooks - overdueLastWeek;
-                    lblOverdueChange.Text = overdueChange >= 0 ? $"+{overdueChange} from last week" : $"{overdueChange} from last week";
+                decimal pendingFines = _dashboardService.GetPendingFines();
+                lblFinesValue.Text = $"${pendingFines:N2}";
+                decimal finesCollectedToday = _dashboardService.GetFinesCollectedToday();
+                lblFinesChange.Text = $"${finesCollectedToday:N2} collected today";
 
-                    decimal pendingFines = GetPendingFines(conn);
-                    lblFinesValue.Text = $"${pendingFines:N2}";
-                    decimal finesCollectedToday = GetFinesCollectedToday(conn);
-                    lblFinesChange.Text = $"${finesCollectedToday:N2} collected today";
-
-                    int totalReservations = GetTotalReservations(conn);
-                    lblReservationsValue.Text = totalReservations.ToString();
-                    int pendingReservations = GetPendingReservations(conn);
-                    lblReservationsChange.Text = $"{pendingReservations} pending";
-                }
+                int totalReservations = _dashboardService.GetTotalReservations();
+                lblReservationsValue.Text = totalReservations.ToString();
+                int pendingReservations = _dashboardService.GetPendingReservations();
+                lblReservationsChange.Text = $"{pendingReservations} pending";
             }
             catch (Exception ex)
             {
@@ -214,124 +208,6 @@ namespace Project5LMS.Forms.Admin.Dashboard
             }
         }
 
-        private int GetTotalBooks(MySqlConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Books";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-        }
-
-        private int GetBooksAddedThisMonth(MySqlConnection conn)
-        {
-            return 0;
-        }
-
-        private int GetActiveMembers(MySqlConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Members WHERE Status = 'Active'";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-        }
-
-        private int GetMembersAddedThisWeek(MySqlConnection conn)
-        {
-            string query = @"SELECT COUNT(*) FROM Members 
-                           WHERE RegistrationDate >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY) 
-                           AND RegistrationDate < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY), INTERVAL 7 DAY)";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
-
-        private int GetActiveBorrowings(MySqlConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Transactions WHERE Status = 'Borrowed' OR Status = 'Active'";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
-
-        private int GetBorrowedToday(MySqlConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Transactions WHERE DATE(BorrowDate) = CURDATE() AND (Status = 'Borrowed' OR Status = 'Active')";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
-
-        private int GetOverdueBooks(MySqlConnection conn)
-        {
-            string query = @"SELECT COUNT(*) FROM Transactions 
-                           WHERE (Status = 'Borrowed' OR Status = 'Active') AND DueDate < CURDATE()";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
-
-        private int GetOverdueBooksLastWeek(MySqlConnection conn)
-        {
-            string query = @"SELECT COUNT(*) FROM Transactions 
-                           WHERE (Status = 'Borrowed' OR Status = 'Active') AND DueDate < DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
-
-        private decimal GetPendingFines(MySqlConnection conn)
-        {
-            string query = @"SELECT COALESCE(SUM(Fine), 0) FROM Transactions 
-                           WHERE (Status = 'Borrowed' OR Status = 'Active') AND DueDate < CURDATE() AND Fine > 0";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null && result != DBNull.Value ? Convert.ToDecimal(result) : 0;
-            }
-        }
-
-        private decimal GetFinesCollectedToday(MySqlConnection conn)
-        {
-            string query = @"SELECT COALESCE(SUM(Fine), 0) FROM Transactions 
-                           WHERE DATE(ReturnDate) = CURDATE() AND Status = 'Returned' AND Fine > 0";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null && result != DBNull.Value ? Convert.ToDecimal(result) : 0;
-            }
-        }
-
-        private int GetTotalReservations(MySqlConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Reservations WHERE Status IN ('Active', 'Ready')";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
-
-        private int GetPendingReservations(MySqlConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Active'";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                object result = cmd.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : 0;
-            }
-        }
 
         private void LoadRecentActivities()
         {
@@ -339,97 +215,20 @@ namespace Project5LMS.Forms.Admin.Dashboard
             {
                 panelActivitiesList.Controls.Clear();
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var activities = _dashboardService.GetRecentActivities(4);
+
+                int yPos = 0;
+                foreach (var activity in activities)
                 {
-                    conn.Open();
-
-                    List<ActivityItem> activities = new List<ActivityItem>();
-
-                    string borrowQuery = @"SELECT t.BorrowDate, m.FirstName, m.LastName, b.Title 
-                                         FROM Transactions t
-                                         JOIN Members m ON t.MemberID = m.MemberID
-                                         JOIN Books b ON t.BookID = b.BookID
-                                         WHERE t.Status = 'Borrowed' OR t.Status = 'Active'
-                                         ORDER BY t.BorrowDate DESC LIMIT 5";
-                    using (MySqlCommand cmd = new MySqlCommand(borrowQuery, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    var activityItem = new ActivityItem
                     {
-                        while (reader.Read())
-                        {
-                            activities.Add(new ActivityItem
-                            {
-                                Type = "Book Borrowed",
-                                Details = $"{reader["FirstName"]} {reader["LastName"]} - {reader["Title"]}",
-                                Timestamp = reader.GetDateTime("BorrowDate")
-                            });
-                        }
-                    }
-
-                    string returnQuery = @"SELECT t.ReturnDate, m.FirstName, m.LastName, b.Title 
-                                         FROM Transactions t
-                                         JOIN Members m ON t.MemberID = m.MemberID
-                                         JOIN Books b ON t.BookID = b.BookID
-                                         WHERE t.Status = 'Returned' AND t.ReturnDate IS NOT NULL
-                                         ORDER BY t.ReturnDate DESC LIMIT 5";
-                    using (MySqlCommand cmd = new MySqlCommand(returnQuery, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            activities.Add(new ActivityItem
-                            {
-                                Type = "Book Returned",
-                                Details = $"{reader["FirstName"]} {reader["LastName"]} - {reader["Title"]}",
-                                Timestamp = reader.GetDateTime("ReturnDate")
-                            });
-                        }
-                    }
-
-                    string memberQuery = @"SELECT RegistrationDate, FirstName, LastName 
-                                         FROM Members 
-                                         ORDER BY RegistrationDate DESC LIMIT 5";
-                    using (MySqlCommand cmd = new MySqlCommand(memberQuery, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            activities.Add(new ActivityItem
-                            {
-                                Type = "New Member",
-                                Details = $"{reader["FirstName"]} {reader["LastName"]} - Member Registration",
-                                Timestamp = reader.GetDateTime("RegistrationDate")
-                            });
-                        }
-                    }
-
-                    string fineQuery = @"SELECT t.ReturnDate, m.FirstName, m.LastName, t.Fine 
-                                        FROM Transactions t
-                                        JOIN Members m ON t.MemberID = m.MemberID
-                                        WHERE t.Status = 'Returned' AND t.ReturnDate IS NOT NULL AND t.Fine > 0
-                                        ORDER BY t.ReturnDate DESC LIMIT 5";
-                    using (MySqlCommand cmd = new MySqlCommand(fineQuery, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            activities.Add(new ActivityItem
-                            {
-                                Type = "Fine Paid",
-                                Details = $"{reader["FirstName"]} {reader["LastName"]} - ${Convert.ToDecimal(reader["Fine"]):F2}",
-                                Timestamp = reader.GetDateTime("ReturnDate")
-                            });
-                        }
-                    }
-
-                    activities = activities.OrderByDescending(a => a.Timestamp).Take(4).ToList();
-
-                    int yPos = 0;
-                    foreach (var activity in activities)
-                    {
-                        Panel activityPanel = CreateActivityPanel(activity, yPos);
-                        panelActivitiesList.Controls.Add(activityPanel);
-                        yPos += 70;
-                    }
+                        Type = activity.Type,
+                        Details = activity.Details,
+                        Timestamp = activity.Timestamp
+                    };
+                    Panel activityPanel = CreateActivityPanel(activityItem, yPos);
+                    panelActivitiesList.Controls.Add(activityPanel);
+                    yPos += 70;
                 }
             }
             catch (Exception ex)
@@ -514,7 +313,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -593,8 +392,8 @@ namespace Project5LMS.Forms.Admin.Dashboard
 
                     foreach (string day in days)
                     {
-                        int borrowed = borrowedData[day];
-                        int returned = returnedData[day];
+                        int borrowed = borrowedData.ContainsKey(day) ? borrowedData[day] : 0;
+                        int returned = returnedData.ContainsKey(day) ? returnedData[day] : 0;
 
                         int borrowedHeight = (int)((double)borrowed / maxValue * chartHeight);
                         Rectangle borrowedRect = new Rectangle(xPos, endY - borrowedHeight, barWidth, borrowedHeight);
@@ -630,25 +429,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string query = @"SELECT Category, COUNT(*) as count 
-                                   FROM Books 
-                                   GROUP BY Category 
-                                   ORDER BY count DESC";
-                    Dictionary<string, int> categoryData = new Dictionary<string, int>();
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string category = reader["Category"] != DBNull.Value ? reader["Category"].ToString() : "Uncategorized";
-                            int count = Convert.ToInt32(reader["count"]);
-                            categoryData[category] = count;
-                        }
-                    }
+                var categoryData = _dashboardService.GetCategoryDistribution();
 
                     if (categoryData.Count == 0) return;
 
@@ -689,7 +470,6 @@ namespace Project5LMS.Forms.Admin.Dashboard
                         colorIndex++;
                         legendY += 20;
                     }
-                }
             }
             catch (Exception ex)
             {

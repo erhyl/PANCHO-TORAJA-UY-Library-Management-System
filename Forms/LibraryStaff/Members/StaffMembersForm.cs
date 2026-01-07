@@ -7,30 +7,22 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 using Project5LMS.Forms.Admin.Members;
-using Project5LMS.Controllers;
 
 namespace Project5LMS.Forms.LibraryStaff.Members
 {
     public partial class StaffMembersForm : Form
     {
-        private string connectionString;
         private DataTable allMembersData;
-        private MembersController membersController;
+        private readonly MembersService _membersService;
         private const string SearchPlaceholder = "Search by name, ID, or email...";
 
         public StaffMembersForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
-            membersController = new MembersController();
+            _membersService = ServiceFactory.CreateMembersService();
         }
 
         private void StaffMembersForm_Load(object sender, EventArgs e)
@@ -185,7 +177,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                     }
 
                     int memberId = Convert.ToInt32(row["MemberID"]);
-                    row["ActiveLoans"] = GetActiveLoansCount(memberId);
+                    row["ActiveLoans"] = _membersService.GetActiveBorrowingCount(memberId);
                 }
 
                 dataGridViewMembers.DataSource = allMembersData;
@@ -199,11 +191,11 @@ namespace Project5LMS.Forms.LibraryStaff.Members
 
         private DataTable GetMembersWithContact()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = ServiceFactory.GetDbContext().GetConnection())
             {
                 conn.Open();
 
-                bool hasContact = CheckColumnExists(conn, "Members", "Contact");
+                bool hasContact = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Contact");
 
                 string query = hasContact
                     ? @"SELECT 
@@ -256,44 +248,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             return string.IsNullOrEmpty(result) ? "N/A" : result;
         }
 
-        private int GetActiveLoansCount(int memberId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"SELECT COUNT(*) FROM Transactions 
-                                   WHERE MemberID = @MemberID 
-                                   AND (Status = 'Borrowed' OR Status = 'Active') 
-                                   AND ReturnDate IS NULL";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MemberID", memberId);
-                        object result = cmd.ExecuteScalar();
-                        return result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
-                    }
-                }
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                           WHERE TABLE_SCHEMA = DATABASE() 
-                           AND TABLE_NAME = @TableName 
-                           AND COLUMN_NAME = @ColumnName";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@TableName", tableName);
-                cmd.Parameters.AddWithValue("@ColumnName", columnName);
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-            }
-        }
 
         private void txtSearch_Enter(object sender, EventArgs e)
         {
@@ -486,7 +440,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                         ? $"{memberRow["FirstName"]} {memberRow["LastName"]}" 
                         : "this member";
 
-                    int activeLoans = GetActiveLoansCount(memberId);
+                    int activeLoans = _membersService.GetActiveBorrowingCount(memberId);
                     if (activeLoans > 0)
                     {
                         MessageBox.Show(
@@ -497,7 +451,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                         return;
                     }
 
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    using (var conn = ServiceFactory.GetDbContext().GetConnection())
                     {
                         conn.Open();
                         string query = "DELETE FROM Members WHERE MemberID = @MemberID";

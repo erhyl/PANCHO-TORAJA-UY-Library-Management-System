@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 using Project5LMS.Forms.Admin.Catalog;
 using Project5LMS.Forms.Admin.Members;
 
@@ -13,22 +16,15 @@ namespace Project5LMS.Forms.Admin.Search
 {
     public partial class AdminSearchForm : Form
     {
-        private string connectionString;
         private DataTable searchResults;
         private Panel panelResults;
         private DataGridView dataGridViewResults;
+        private readonly SearchService _searchService;
 
         public AdminSearchForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _searchService = ServiceFactory.CreateSearchService();
         }
 
         private void AdminSearchForm_Load(object sender, EventArgs e)
@@ -51,20 +47,10 @@ namespace Project5LMS.Forms.Admin.Search
                 cmbCategory.Items.Clear();
                 cmbCategory.Items.Add("All Categories");
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var categories = _searchService.GetBookCategories();
+                foreach (var category in categories)
                 {
-                    conn.Open();
-                    string query = "SELECT DISTINCT Category FROM Books WHERE Category IS NOT NULL AND Category != '' ORDER BY Category";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                cmbCategory.Items.Add(reader.GetString("Category"));
-                            }
-                        }
-                    }
+                    cmbCategory.Items.Add(category);
                 }
 
                 cmbCategory.SelectedIndex = 0;
@@ -157,117 +143,95 @@ namespace Project5LMS.Forms.Admin.Search
             if (category == "All Categories")
                 category = null;
 
-            System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
             try
             {
-                searchResults = new DataTable();
-                string query = BuildSearchQuery(searchIn, category, searchText);
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                SearchResults results;
+                
+                if (searchIn == "Books")
                 {
-                    conn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@SearchText", $"%{searchText}%");
-                        if (category != null)
-                        {
-                            cmd.Parameters.AddWithValue("@Category", category);
-                        }
-
-                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
-                        {
-                            adapter.Fill(searchResults);
-                        }
-                    }
+                    results = _searchService.SearchBooks(searchText);
                 }
-
-                stopwatch.Stop();
-                long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
-
-                if (elapsedMilliseconds > 2000)
+                else if (searchIn == "Members")
                 {
-                    System.Diagnostics.Debug.WriteLine($"WARNING: Search took {elapsedMilliseconds}ms (>2000ms target)");
-                    AuditLogger.Log("Search Performance Warning", 
-                        $"Search: '{searchText}', Type: {searchIn}, Time: {elapsedMilliseconds}ms, Results: {searchResults.Rows.Count}", 
-                        "Performance Warning");
+                    results = _searchService.SearchMembers(searchText);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"Search completed in {elapsedMilliseconds}ms ({searchResults.Rows.Count} results)");
+                    results = _searchService.SearchAll(searchText);
                 }
 
+                if (category != null && results.Books != null)
+                {
+                    results.Books = results.Books.Where(b => b.Category == category).ToList();
+                    results.TotalResults = results.Books.Count + results.Members.Count;
+                }
+
+                if (results.SearchTime > 2000)
+                {
+                    AuditLogger.Log("Search Performance Warning", 
+                        $"Search: '{searchText}', Type: {searchIn}, Time: {results.SearchTime}ms, Results: {results.TotalResults}", 
+                        "Performance Warning");
+                }
+
+                searchResults = ConvertSearchResultsToDataTable(results);
                 DisplaySearchResults();
             }
             catch (Exception ex)
             {
-                stopwatch.Stop();
                 AuditLogger.Log("Search Error", 
-                    $"Search: '{searchText}', Type: {searchIn}, Time: {stopwatch.ElapsedMilliseconds}ms, Error: {ex.Message}", 
+                    $"Search: '{searchText}', Type: {searchIn}, Error: {ex.Message}", 
                     "Failed");
                 MessageBox.Show($"Error performing search: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                System.Diagnostics.Debug.WriteLine($"Search error: {ex.Message}");
             }
         }
 
-        private string BuildSearchQuery(string searchIn, string category, string searchText)
+        private DataTable ConvertSearchResultsToDataTable(SearchResults results)
         {
-            List<string> queries = new List<string>();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Type", typeof(string));
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Title", typeof(string));
+            dt.Columns.Add("Author", typeof(string));
+            dt.Columns.Add("ISBN", typeof(string));
+            dt.Columns.Add("Category", typeof(string));
+            dt.Columns.Add("Status", typeof(string));
+            dt.Columns.Add("MemberID", typeof(int));
+            dt.Columns.Add("MemberName", typeof(string));
+            dt.Columns.Add("MemberType", typeof(string));
 
-            if (searchIn == "All" || searchIn == "Books")
+            foreach (var book in results.Books)
             {
-                string bookQuery = @"SELECT 
-                                    'Book' as Type,
-                                    b.BookID as ID,
-                                    b.Title as Title,
-                                    b.Author as Author,
-                                    b.ISBN as ISBN,
-                                    b.Category as Category,
-                                    b.Status as Status,
-                                    NULL as MemberID,
-                                    NULL as MemberName,
-                                    NULL as MemberType
-                                    FROM Books b
-                                    WHERE (b.Title LIKE @SearchText 
-                                    OR b.Author LIKE @SearchText 
-                                    OR b.ISBN LIKE @SearchText 
-                                    OR b.AccessionNo LIKE @SearchText)";
-                if (category != null)
-                {
-                    bookQuery += " AND b.Category = @Category";
-                }
-                bookQuery += " LIMIT 100";
-                queries.Add(bookQuery);
+                DataRow row = dt.NewRow();
+                row["Type"] = "Book";
+                row["ID"] = book.BookID;
+                row["Title"] = book.Title;
+                row["Author"] = book.Author;
+                row["ISBN"] = book.ISBN;
+                row["Category"] = book.Category;
+                row["Status"] = book.Status;
+                row["MemberID"] = DBNull.Value;
+                row["MemberName"] = DBNull.Value;
+                row["MemberType"] = DBNull.Value;
+                dt.Rows.Add(row);
             }
 
-            if (searchIn == "All" || searchIn == "Members")
+            foreach (var member in results.Members)
             {
-                string memberQuery = @"SELECT 
-                                      'Member' as Type,
-                                      m.MemberID as ID,
-                                      CONCAT(m.FirstName, ' ', m.LastName) as Title,
-                                      m.Email as Author,
-                                      NULL as ISBN,
-                                      m.Type as Category,
-                                      m.Status as Status,
-                                      m.MemberID as MemberID,
-                                      CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
-                                      m.Type as MemberType
-                                      FROM Members m
-                                      WHERE (m.FirstName LIKE @SearchText 
-                                      OR m.LastName LIKE @SearchText 
-                                      OR m.Email LIKE @SearchText 
-                                      OR CAST(m.MemberID AS CHAR) LIKE @SearchText)
-                                      LIMIT 100";
-                queries.Add(memberQuery);
+                DataRow row = dt.NewRow();
+                row["Type"] = "Member";
+                row["ID"] = member.MemberID;
+                row["Title"] = member.FullName;
+                row["Author"] = member.Email;
+                row["ISBN"] = DBNull.Value;
+                row["Category"] = member.Type;
+                row["Status"] = member.Status;
+                row["MemberID"] = member.MemberID;
+                row["MemberName"] = member.FullName;
+                row["MemberType"] = member.Type;
+                dt.Rows.Add(row);
             }
 
-            if (queries.Count == 0)
-            {
-                return "SELECT 'No Results' as Type, 0 as ID, 'No search criteria specified' as Title, NULL as Author, NULL as ISBN, NULL as Category, NULL as Status, NULL as MemberID, NULL as MemberName, NULL as MemberType WHERE 1=0";
-            }
-
-            return string.Join(" UNION ALL ", queries);
+            return dt;
         }
 
         private void DisplaySearchResults()

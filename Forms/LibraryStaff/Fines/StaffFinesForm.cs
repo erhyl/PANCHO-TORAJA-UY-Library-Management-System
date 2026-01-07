@@ -5,28 +5,22 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.LibraryStaff.Fines
 {
     public partial class StaffFinesForm : Form
     {
-        private string connectionString;
         private DataTable allFinesData;
         private const int CardWidth = 568;
         private const int CardHeight = 180;
         private const int CardSpacing = 15;
+        private readonly DatabaseContext _dbContext;
 
         public StaffFinesForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
         }
 
         private void StaffFinesForm_Load(object sender, EventArgs e)
@@ -40,7 +34,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
@@ -97,7 +91,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         {
             try
             {
-                if (!CheckColumnExists(conn, tableName, columnName))
+                if (!DatabaseSchemaHelper.CheckColumnExists(conn, tableName, columnName))
                 {
                     string alterQuery = $"ALTER TABLE {tableName} ADD COLUMN {columnName} {columnDefinition}";
                     using (MySqlCommand cmd = new MySqlCommand(alterQuery, conn))
@@ -112,33 +106,20 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             }
         }
 
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                           WHERE TABLE_SCHEMA = DATABASE() 
-                           AND TABLE_NAME = @TableName 
-                           AND COLUMN_NAME = @ColumnName";
-            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@TableName", tableName);
-                cmd.Parameters.AddWithValue("@ColumnName", columnName);
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-            }
-        }
 
         private void LoadMetrics()
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
                     bool hasFinesTable = CheckTableExists(conn, "Fines");
                     if (hasFinesTable)
                     {
-                        bool hasPaidDate = CheckColumnExists(conn, "Fines", "PaidDate");
-                        bool hasWaivedDate = CheckColumnExists(conn, "Fines", "WaivedDate");
+                        bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
+                        bool hasWaivedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "WaivedDate");
 
                         string queryTotal = "SELECT COALESCE(SUM(Amount), 0) FROM Fines";
                         using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
@@ -156,7 +137,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                             lblMetricPendingValue.Text = $"${pending:F2}";
                         }
 
-                        bool hasDaysOverdue = CheckColumnExists(conn, "Fines", "DaysOverdue");
+                        bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
                         string queryOverdue = hasDaysOverdue
                             ? "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE DaysOverdue > 0 AND (PaidDate IS NULL OR WaivedDate IS NULL)"
                             : "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE Status = 'Overdue'";
@@ -178,7 +159,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     else
                     {
 
-                        bool hasFine = CheckColumnExists(conn, "Transactions", "Fine");
+                        bool hasFine = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "Fine");
                         if (hasFine)
                         {
                             string queryTotal = "SELECT COALESCE(SUM(Fine), 0) FROM Transactions WHERE Fine > 0";
@@ -263,15 +244,15 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
 
         private DataTable GetFinesData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
 
-                bool hasFineType = CheckColumnExists(conn, "Fines", "FineType");
-                bool hasDaysOverdue = CheckColumnExists(conn, "Fines", "DaysOverdue");
-                bool hasDescription = CheckColumnExists(conn, "Fines", "Description");
-                bool hasCreatedDate = CheckColumnExists(conn, "Fines", "CreatedDate");
-                bool hasPaidDate = CheckColumnExists(conn, "Fines", "PaidDate");
+                bool hasFineType = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "FineType");
+                bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
+                bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
+                bool hasCreatedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "CreatedDate");
+                bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
 
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasCreatedDate)

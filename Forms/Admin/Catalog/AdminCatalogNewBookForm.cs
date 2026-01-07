@@ -4,25 +4,19 @@ using System.IO;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.Admin.Catalog
 {
     public partial class AdminCatalogNewBookForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
         private string bookCoverImagePath = null;
 
         public AdminCatalogNewBookForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
         }
 
         private void AdminCatalogNewBookForm_Load(object sender, EventArgs e)
@@ -47,7 +41,7 @@ namespace Project5LMS.Forms.Admin.Catalog
                 cmbCategory.Items.Clear();
                 cmbCategory.Items.Add("Select category...");
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT DISTINCT Category FROM Books WHERE Category IS NOT NULL AND Category != '' ORDER BY Category";
@@ -90,7 +84,7 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT MAX(BookID) as MaxID FROM Books";
@@ -343,7 +337,7 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 

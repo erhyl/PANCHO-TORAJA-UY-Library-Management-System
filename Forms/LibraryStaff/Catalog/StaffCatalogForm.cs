@@ -2,16 +2,19 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.LibraryStaff.Catalog
 {
     public partial class StaffCatalogForm : Form
     {
-        private string connectionString;
         private DataTable allBooksData;
+        private readonly BookService _bookService;
         private const string SearchPlaceholder = "Search by title, author, ISBN, or book ID...";
         private const int CardWidth = 600;
         private const int CardHeight = 280;
@@ -20,14 +23,7 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
         public StaffCatalogForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _bookService = ServiceFactory.CreateBookService();
         }
 
         private void StaffCatalogForm_Load(object sender, EventArgs e)
@@ -44,18 +40,10 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 cmbCategoryFilter.Items.Clear();
                 cmbCategoryFilter.Items.Add("All");
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var categories = _bookService.GetAllCategories();
+                foreach (var category in categories)
                 {
-                    conn.Open();
-                    string query = "SELECT DISTINCT Category FROM Books WHERE Category IS NOT NULL AND Category != '' ORDER BY Category";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            cmbCategoryFilter.Items.Add(reader["Category"].ToString());
-                        }
-                    }
+                    cmbCategoryFilter.Items.Add(category);
                 }
 
                 cmbCategoryFilter.SelectedIndex = 0;
@@ -70,34 +58,18 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
+                var allBooks = _bookService.GetAllBooks();
+                int totalBooks = allBooks.Count();
+                lblMetricTotalBooksValue.Text = totalBooks.ToString();
 
-                    string queryTotalBooks = "SELECT COUNT(DISTINCT BookID) FROM Books";
-                    using (MySqlCommand cmd = new MySqlCommand(queryTotalBooks, conn))
-                    {
-                        int totalBooks = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricTotalBooksValue.Text = totalBooks.ToString();
-                    }
+                int totalCopies = allBooks.Sum(b => b.TotalCopies);
+                lblMetricTotalCopiesValue.Text = totalCopies.ToString();
 
-                    string queryTotalCopies = "SELECT COALESCE(SUM(Copies), 0) FROM Books";
-                    using (MySqlCommand cmd = new MySqlCommand(queryTotalCopies, conn))
-                    {
-                        int totalCopies = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricTotalCopiesValue.Text = totalCopies.ToString();
-                    }
+                int available = allBooks.Sum(b => b.Available);
+                lblMetricAvailableValue.Text = available.ToString();
 
-                    string queryAvailable = "SELECT COALESCE(SUM(Available), 0) FROM Books";
-                    using (MySqlCommand cmd = new MySqlCommand(queryAvailable, conn))
-                    {
-                        int available = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricAvailableValue.Text = available.ToString();
-                    }
-
-                    int checkedOut = Convert.ToInt32(lblMetricTotalCopiesValue.Text) - Convert.ToInt32(lblMetricAvailableValue.Text);
-                    lblMetricCheckedOutValue.Text = checkedOut.ToString();
-                }
+                int checkedOut = totalCopies - available;
+                lblMetricCheckedOutValue.Text = checkedOut.ToString();
             }
             catch (Exception ex)
             {
@@ -121,47 +93,8 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
 
         private DataTable GetBooksData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-
-                bool hasLocation = CheckColumnExists(conn, "Books", "Location");
-
-                string query = hasLocation
-                    ? @"SELECT 
-                            BookID,
-                            Title,
-                            Author,
-                            ISBN,
-                            Publisher,
-                            YearPublished,
-                            Category,
-                            Copies,
-                            Available,
-                            Location
-                         FROM Books
-                         ORDER BY Title"
-                    : @"SELECT 
-                            BookID,
-                            Title,
-                            Author,
-                            ISBN,
-                            Publisher,
-                            YearPublished,
-                            Category,
-                            Copies,
-                            Available
-                         FROM Books
-                         ORDER BY Title";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    return dt;
-                }
-            }
+            var books = _bookService.GetAllBooks();
+            return Helpers.DataTableHelper.BooksToDataTable(books);
         }
 
         private void DisplayBooks(DataTable booksData)

@@ -5,13 +5,19 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.LibraryStaff.Circulation
 {
     public partial class StaffCirculationForm : Form
     {
-        private string connectionString;
         private string currentFilter = "All";
+        private readonly CirculationService _circulationService;
+        private readonly FinesService _finesService;
+        private readonly BookService _bookService;
+        private readonly MembersService _membersService;
+        private readonly DatabaseContext _dbContext;
 
         public StaffCirculationForm()
         {
@@ -30,14 +36,11 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 return;
             }
 
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
+            _circulationService = ServiceFactory.CreateCirculationService();
+            _finesService = ServiceFactory.CreateFinesService();
+            _bookService = ServiceFactory.CreateBookService();
+            _membersService = ServiceFactory.CreateMembersService();
         }
 
         private void StaffCirculationForm_Load(object sender, EventArgs e)
@@ -52,13 +55,13 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
                                               WHERE TABLE_SCHEMA = DATABASE() 
                                               AND TABLE_NAME = 'Transactions'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
                         int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (tableExists == 0)
@@ -76,10 +79,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                                                         FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
                                                         FOREIGN KEY (BookID) REFERENCES Books(BookID)
                                                         )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
+                            _dbContext.ExecuteNonQuery(createTableQuery);
                         }
                     }
                 }
@@ -229,7 +229,21 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 if (bookId == 0)
                 {
 
-                    bookId = GetBookIdFromAccession(bookIdText);
+                    var book = _bookService.GetBookByAccessionNumber(bookIdText);
+                    if (book != null)
+                    {
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        string cleanAccession = bookIdText.Replace("ACC-", "").Trim();
+                        if (int.TryParse(cleanAccession, out int parsedId))
+                        {
+                            var bookById = _bookService.GetBook(parsedId);
+                            if (bookById != null)
+                                bookId = parsedId;
+                        }
+                    }
                     if (bookId == 0)
                     {
                         MessageBox.Show("Book not found with the provided ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -237,64 +251,27 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     }
                 }
 
-                if (!MemberExists(memberId))
+                if (!_membersService.MemberExists(memberId))
                 {
                     MessageBox.Show("Member not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!IsBookAvailable(bookId))
+                if (!_bookService.IsBookAvailable(bookId))
                 {
                     MessageBox.Show("Book is not available for borrowing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!CanMemberBorrow(memberId))
+                if (!_circulationService.CanBorrow(memberId))
                 {
                     MessageBox.Show("Member has reached their borrowing limit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                DateTime borrowDate = DateTime.Now;
-                DateTime dueDate = borrowDate.AddDays(14);
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                if (!_circulationService.BorrowBook(memberId, bookId, 14))
                 {
-                    conn.Open();
-
-                    bool hasTransactionType = CheckColumnExists(conn, "Transactions", "TransactionType");
-
-                    string insertQuery;
-                    if (hasTransactionType)
-                    {
-                        insertQuery = @"INSERT INTO Transactions (MemberID, BookID, BorrowDate, DueDate, Status, TransactionType)
-                                       VALUES (@MemberID, @BookID, @BorrowDate, @DueDate, 'Borrowed', 'Borrow')";
-                    }
-                    else
-                    {
-                        insertQuery = @"INSERT INTO Transactions (MemberID, BookID, BorrowDate, DueDate, Status)
-                                       VALUES (@MemberID, @BookID, @BorrowDate, @DueDate, 'Borrowed')";
-                    }
-
-                    using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MemberID", memberId);
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
-                        cmd.Parameters.AddWithValue("@BorrowDate", borrowDate);
-                        cmd.Parameters.AddWithValue("@DueDate", dueDate);
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    string updateBookQuery = "UPDATE Books SET Available = Available - 1 WHERE BookID = @BookID AND Available > 0";
-                    using (MySqlCommand cmd = new MySqlCommand(updateBookQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        if (rowsAffected == 0)
-                        {
-                            throw new InvalidOperationException("Book availability could not be updated. The book may no longer be available.");
-                        }
-                    }
+                    throw new InvalidOperationException("Failed to borrow book. Please try again.");
                 }
 
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -340,7 +317,21 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 if (bookId == 0)
                 {
 
-                    bookId = GetBookIdFromAccession(bookIdText);
+                    var book = _bookService.GetBookByAccessionNumber(bookIdText);
+                    if (book != null)
+                    {
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        string cleanAccession = bookIdText.Replace("ACC-", "").Trim();
+                        if (int.TryParse(cleanAccession, out int parsedId))
+                        {
+                            var bookById = _bookService.GetBook(parsedId);
+                            if (bookById != null)
+                                bookId = parsedId;
+                        }
+                    }
                     if (bookId == 0)
                     {
                         MessageBox.Show("Book not found with the provided ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -348,67 +339,26 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     }
                 }
 
-                int transactionId = GetActiveTransactionId(bookId);
-                if (transactionId == 0)
+                var activeTransaction = _circulationService.GetActiveTransactionByBook(bookId);
+                if (activeTransaction == null)
                 {
                     MessageBox.Show("No active borrowing found for this book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                decimal fine = CalculateFine(transactionId);
+                int transactionId = activeTransaction.TransactionID;
+                decimal fine = _finesService.CalculateFine(transactionId);
 
-                DateTime returnDate = DateTime.Now;
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                if (_circulationService.ReturnBook(transactionId))
                 {
-                    conn.Open();
-
-                    bool hasTransactionType = CheckColumnExists(conn, "Transactions", "TransactionType");
-                    bool hasFine = CheckColumnExists(conn, "Transactions", "Fine");
-
-                    string updateQuery;
-                    if (hasTransactionType && hasFine)
+                    if (fine > 0)
                     {
-                        updateQuery = @"UPDATE Transactions 
-                                       SET ReturnDate = @ReturnDate, Status = 'Returned', TransactionType = 'Return', Fine = @Fine
-                                       WHERE TransactionID = @TransactionID";
+                        _finesService.UpdateTransactionFine(transactionId, fine);
                     }
-                    else if (hasFine)
-                    {
-                        updateQuery = @"UPDATE Transactions 
-                                       SET ReturnDate = @ReturnDate, Status = 'Returned', Fine = @Fine
-                                       WHERE TransactionID = @TransactionID";
-                    }
-                    else if (hasTransactionType)
-                    {
-                        updateQuery = @"UPDATE Transactions 
-                                       SET ReturnDate = @ReturnDate, Status = 'Returned', TransactionType = 'Return'
-                                       WHERE TransactionID = @TransactionID";
-                    }
-                    else
-                    {
-                        updateQuery = @"UPDATE Transactions 
-                                       SET ReturnDate = @ReturnDate, Status = 'Returned'
-                                       WHERE TransactionID = @TransactionID";
-                    }
-
-                    using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ReturnDate", returnDate);
-                        cmd.Parameters.AddWithValue("@TransactionID", transactionId);
-                        if (hasFine)
-                        {
-                            cmd.Parameters.AddWithValue("@Fine", fine);
-                        }
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    string updateBookQuery = "UPDATE Books SET Available = Available + 1 WHERE BookID = @BookID";
-                    using (MySqlCommand cmd = new MySqlCommand(updateBookQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
-                        cmd.ExecuteNonQuery();
-                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("Failed to return book. Please try again.");
                 }
 
                 string message = fine > 0 
@@ -450,7 +400,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT t.TransactionID, t.MemberID, t.BookID, t.BorrowDate, t.DueDate, t.ReturnDate, 
@@ -669,7 +619,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             try
             {
                 string cleanAccession = accessionNo.Replace("ACC-", "").Trim();
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT BookID FROM Books 
@@ -702,7 +652,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT COUNT(*) FROM Members WHERE MemberID = @MemberID";
@@ -724,7 +674,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT Available FROM Books WHERE BookID = @BookID";
@@ -751,7 +701,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT m.MemberType, 
@@ -804,7 +754,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT TransactionID FROM Transactions 
@@ -824,52 +774,6 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             {
                 return 0;
             }
-        }
-
-        private decimal CalculateFine(int transactionId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT DueDate FROM Transactions WHERE TransactionID = @TransactionID";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@TransactionID", transactionId);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            DateTime dueDate = Convert.ToDateTime(result);
-                            DateTime currentDate = DateTime.Now;
-
-                            if (dueDate < currentDate)
-                            {
-
-                                TimeSpan overdueTime = currentDate - dueDate;
-                                int daysOverdue = overdueTime.Days;
-
-                                if (daysOverdue == 0 && overdueTime.TotalHours > 0)
-                                {
-                                    daysOverdue = 1;
-                                }
-
-                                decimal finePerDay = 0.50m;
-                                decimal calculatedFine = daysOverdue * finePerDay;
-
-                                return Math.Round(calculatedFine, 2, MidpointRounding.AwayFromZero);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error calculating fine for transaction {transactionId}: {ex.Message}");
-
-                return 0m;
-            }
-            return 0m;
         }
 
         private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)

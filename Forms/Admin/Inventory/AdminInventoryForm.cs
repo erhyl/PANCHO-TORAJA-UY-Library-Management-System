@@ -6,27 +6,21 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.Admin.Inventory
 {
     public partial class AdminInventoryForm : Form
     {
-        private string connectionString;
         private DataTable allInventoryData;
         private string currentConditionFilter = "All Conditions";
         private string currentStatusFilter = "All Status";
+        private readonly DatabaseContext _dbContext;
 
         public AdminInventoryForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
         }
 
         private void AdminInventoryForm_Load(object sender, EventArgs e)
@@ -41,14 +35,15 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
 
                     string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
                                               WHERE TABLE_SCHEMA = DATABASE() 
                                               AND TABLE_NAME = 'Inventory'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
                         int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (tableExists == 0)
@@ -64,19 +59,15 @@ namespace Project5LMS.Forms.Admin.Inventory
                                                         Notes VARCHAR(255) NULL,
                                                         FOREIGN KEY (BookID) REFERENCES Books(BookID)
                                                         )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
+                            dbContext.ExecuteNonQuery(createTableQuery);
 
                             PopulateInventoryFromBooks(conn);
                         }
                         else
                         {
-
-                            AddColumnIfNotExists(conn, "Inventory", "CopyNumber", "INT NOT NULL DEFAULT 1");
-                            AddColumnIfNotExists(conn, "Inventory", "LastVerified", "DATETIME NULL");
-                            AddColumnIfNotExists(conn, "Inventory", "Notes", "VARCHAR(255) NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Inventory", "CopyNumber", "INT NOT NULL DEFAULT 1");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Inventory", "LastVerified", "DATETIME NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Inventory", "Notes", "VARCHAR(255) NULL");
                         }
                     }
                 }
@@ -541,7 +532,7 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -628,12 +619,12 @@ namespace Project5LMS.Forms.Admin.Inventory
 
         private DataTable GetInventoryData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
 
-                bool hasCopyNumber = CheckColumnExists(conn, "Inventory", "CopyNumber");
-                bool hasLastVerified = CheckColumnExists(conn, "Inventory", "LastVerified");
+                bool hasCopyNumber = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "CopyNumber");
+                bool hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
 
                 string query;
                 if (hasCopyNumber && hasLastVerified)
@@ -704,34 +695,13 @@ namespace Project5LMS.Forms.Admin.Inventory
             }
         }
 
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @tableName 
-                                AND COLUMN_NAME = @columnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
-                    cmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         private string GenerateLocation(int bookId, int copyNumber)
         {
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT Category FROM Books WHERE BookID = @BookID";
@@ -836,11 +806,11 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
-                    bool hasLastVerified = CheckColumnExists(conn, "Inventory", "LastVerified");
+                    bool hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
                     string updateQuery;
                     if (hasLastVerified)
                     {
@@ -949,7 +919,7 @@ namespace Project5LMS.Forms.Admin.Inventory
 
                     if (updateForm.ShowDialog() == DialogResult.OK)
                     {
-                        using (MySqlConnection conn = new MySqlConnection(connectionString))
+                        using (var conn = _dbContext.GetConnection())
                         {
                             conn.Open();
                             string updateQuery = "UPDATE Inventory SET Condition = @Condition, Status = @Status, Location = @Location WHERE InventoryID = @InventoryID";

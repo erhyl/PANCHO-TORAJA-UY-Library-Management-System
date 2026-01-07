@@ -4,17 +4,22 @@ using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 using Project5LMS.Forms.Admin.UserManagement;
 
 namespace Project5LMS.Forms.Admin.Settings
 {
     public partial class AdminSettingsForm : Form
     {
-        private string connectionString;
+        private readonly SettingsService _settingsService;
+        private readonly UserService _userService;
+        private readonly DatabaseContext _dbContext;
 
         public AdminSettingsForm()
         {
             InitializeComponent();
+            _dbContext = new DatabaseContext();
 
             try
             {
@@ -29,14 +34,8 @@ namespace Project5LMS.Forms.Admin.Settings
                 return;
             }
 
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _settingsService = ServiceFactory.CreateSettingsService();
+            _userService = new UserService();
         }
 
         private void AdminSettingsForm_Load(object sender, EventArgs e)
@@ -86,30 +85,7 @@ namespace Project5LMS.Forms.Admin.Settings
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
-                                              AND TABLE_NAME = 'Settings'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
-                    {
-                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
-                        if (tableExists == 0)
-                        {
-                            string createTableQuery = @"CREATE TABLE IF NOT EXISTS Settings (
-                                                        SettingKey VARCHAR(100) PRIMARY KEY,
-                                                        SettingValue TEXT,
-                                                        Category VARCHAR(50),
-                                                        UpdatedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-                                                        )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                }
+                _settingsService.EnsureSettingsTableExists();
             }
             catch (Exception ex)
             {
@@ -505,49 +481,12 @@ namespace Project5LMS.Forms.Admin.Settings
 
         private string GetSetting(string key, string defaultValue = "")
         {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT SettingValue FROM Settings WHERE SettingKey = @Key";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Key", key);
-                        object result = cmd.ExecuteScalar();
-                        return result?.ToString() ?? defaultValue;
-                    }
-                }
-            }
-            catch
-            {
-                return defaultValue;
-            }
+            return _settingsService.GetSetting(key, defaultValue);
         }
 
         private void SaveSetting(string key, string value, string category = "General")
         {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"INSERT INTO Settings (SettingKey, SettingValue, Category) 
-                                   VALUES (@Key, @Value, @Category)
-                                   ON DUPLICATE KEY UPDATE SettingValue = @Value, Category = @Category";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Key", key);
-                        cmd.Parameters.AddWithValue("@Value", value);
-                        cmd.Parameters.AddWithValue("@Category", category);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error saving setting: {ex.Message}");
-            }
+            _settingsService.SaveSetting(key, value, category);
         }
 
         private void SaveGeneralSettings(TextBox txtLibraryName, TextBox txtLibraryCode, TextBox txtAddress, TextBox txtEmail, TextBox txtPhone)
@@ -614,7 +553,7 @@ namespace Project5LMS.Forms.Admin.Settings
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT PasswordHash FROM Users WHERE UserID = @UserID";
@@ -657,20 +596,16 @@ namespace Project5LMS.Forms.Admin.Settings
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                string query = "SELECT COUNT(*) FROM Users WHERE Role = 'LibraryStaff'";
+                var result = dbContext.ExecuteQuery(query);
+                if (result.Rows.Count > 0)
                 {
-                    conn.Open();
-                    string query = "SELECT COUNT(*) FROM Users WHERE Role = 'LibraryStaff'";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        return Convert.ToInt32(cmd.ExecuteScalar());
-                    }
+                    return Convert.ToInt32(result.Rows[0][0]);
                 }
             }
-            catch
-            {
-                return 0;
-            }
+            catch { }
+            return 0;
         }
 
         private bool TestDatabaseConnection()

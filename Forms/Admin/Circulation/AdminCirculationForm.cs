@@ -5,13 +5,19 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.Admin.Circulation
 {
     public partial class AdminCirculationForm : Form
     {
-        private string connectionString;
         private DataTable allTransactionsData;
+        private readonly CirculationService _circulationService;
+        private readonly FinesService _finesService;
+        private readonly BookService _bookService;
+        private readonly MembersService _membersService;
+        private readonly DatabaseContext _dbContext;
 
         public AdminCirculationForm()
         {
@@ -30,14 +36,11 @@ namespace Project5LMS.Forms.Admin.Circulation
                 return;
             }
 
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
+            _circulationService = ServiceFactory.CreateCirculationService();
+            _finesService = ServiceFactory.CreateFinesService();
+            _bookService = ServiceFactory.CreateBookService();
+            _membersService = ServiceFactory.CreateMembersService();
         }
 
         private void AdminCirculationForm_Load(object sender, EventArgs e)
@@ -54,7 +57,7 @@ namespace Project5LMS.Forms.Admin.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -336,7 +339,7 @@ namespace Project5LMS.Forms.Admin.Circulation
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -457,12 +460,12 @@ namespace Project5LMS.Forms.Admin.Circulation
 
         private DataTable GetTransactionsData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
 
-                bool hasTransactionType = CheckColumnExists(conn, "Transactions", "TransactionType");
-                bool hasFine = CheckColumnExists(conn, "Transactions", "Fine");
+                bool hasTransactionType = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "TransactionType");
+                bool hasFine = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "Fine");
 
                 string query;
                 if (hasTransactionType && hasFine)
@@ -701,85 +704,39 @@ namespace Project5LMS.Forms.Admin.Circulation
                     return;
                 }
 
-                if (!MemberExists(memberId))
+                if (!_membersService.MemberExists(memberId))
                 {
                     MessageBox.Show("Member not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!IsBookAvailable(bookId))
+                if (!_bookService.IsBookAvailable(bookId))
                 {
                     MessageBox.Show("Book is not available for borrowing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!CanMemberBorrow(memberId))
+                if (!_circulationService.CanBorrow(memberId))
                 {
                     MessageBox.Show("Member has reached their borrowing limit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                DateTime borrowDate = DateTime.Now;
-                DateTime dueDate = borrowDate.AddDays(14);
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                if (_circulationService.BorrowBook(memberId, bookId, 14))
                 {
-                    conn.Open();
-                    using (MySqlTransaction transaction = conn.BeginTransaction())
-                    {
-                        try
-                        {
+                    var transaction = _circulationService.GetActiveTransactionByBook(bookId);
+                    DateTime dueDate = transaction != null ? transaction.DueDate : DateTime.Now.AddDays(14);
 
-                            bool hasTransactionType = CheckColumnExists(conn, "Transactions", "TransactionType");
-
-                            string insertQuery;
-                            if (hasTransactionType)
-                            {
-                                insertQuery = @"INSERT INTO Transactions (MemberID, BookID, BorrowDate, DueDate, Status, TransactionType)
-                                               VALUES (@MemberID, @BookID, @BorrowDate, @DueDate, 'Borrowed', 'Borrow')";
-                            }
-                            else
-                            {
-                                insertQuery = @"INSERT INTO Transactions (MemberID, BookID, BorrowDate, DueDate, Status)
-                                               VALUES (@MemberID, @BookID, @BorrowDate, @DueDate, 'Borrowed')";
-                            }
-
-                            using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@MemberID", memberId);
-                                cmd.Parameters.AddWithValue("@BookID", bookId);
-                                cmd.Parameters.AddWithValue("@BorrowDate", borrowDate);
-                                cmd.Parameters.AddWithValue("@DueDate", dueDate);
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            string updateBookQuery = "UPDATE Books SET Available = Available - 1 WHERE BookID = @BookID AND Available > 0";
-                            using (MySqlCommand cmd = new MySqlCommand(updateBookQuery, conn, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@BookID", bookId);
-                                int rowsAffected = cmd.ExecuteNonQuery();
-                                if (rowsAffected == 0)
-                                {
-                                    transaction.Rollback();
-                                    throw new InvalidOperationException("Book availability could not be updated. The book may no longer be available.");
-                                }
-                            }
-
-                            transaction.Commit();
-
-                            AuditLogger.LogCirculation("Book Borrowed", 
-                                $"BookID: {bookId}, MemberID: {memberId}, DueDate: {dueDate:yyyy-MM-dd}", 
-                                "Success");
-                        }
-                        catch
-                        {
-                            transaction.Rollback();
-                            AuditLogger.LogCirculation("Book Borrow Failed", 
-                                $"BookID: {bookId}, MemberID: {memberId}", 
-                                "Failed");
-                            throw;
-                        }
-                    }
+                    AuditLogger.LogCirculation("Book Borrowed", 
+                        $"BookID: {bookId}, MemberID: {memberId}, DueDate: {dueDate:yyyy-MM-dd}", 
+                        "Success");
+                }
+                else
+                {
+                    AuditLogger.LogCirculation("Book Borrow Failed", 
+                        $"BookID: {bookId}, MemberID: {memberId}", 
+                        "Failed");
+                    throw new InvalidOperationException("Failed to borrow book. Please try again.");
                 }
 
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -819,106 +776,40 @@ namespace Project5LMS.Forms.Admin.Circulation
                     return;
                 }
 
-                int transactionId = GetActiveTransactionId(bookId);
-                if (transactionId == 0)
+                var activeTransaction = _circulationService.GetActiveTransactionByBook(bookId);
+                if (activeTransaction == null)
                 {
                     MessageBox.Show("No active borrowing found for this book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                decimal fine = CalculateFine(transactionId);
+                int transactionId = activeTransaction.TransactionID;
+                decimal fine = _finesService.CalculateFine(transactionId);
 
-                DateTime returnDate = DateTime.Now;
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                if (_circulationService.ReturnBook(transactionId))
                 {
-                    conn.Open();
-                    using (MySqlTransaction transaction = conn.BeginTransaction())
+                    if (fine > 0)
                     {
-                        try
-                        {
-
-                            bool hasTransactionType = CheckColumnExists(conn, "Transactions", "TransactionType");
-                            bool hasFine = CheckColumnExists(conn, "Transactions", "Fine");
-
-                            string updateQuery;
-                            if (hasTransactionType && hasFine)
-                            {
-                                updateQuery = @"UPDATE Transactions 
-                                               SET ReturnDate = @ReturnDate, Status = 'Returned', TransactionType = 'Return', Fine = @Fine
-                                               WHERE TransactionID = @TransactionID";
-                            }
-                            else if (hasFine)
-                            {
-                                updateQuery = @"UPDATE Transactions 
-                                               SET ReturnDate = @ReturnDate, Status = 'Returned', Fine = @Fine
-                                               WHERE TransactionID = @TransactionID";
-                            }
-                            else if (hasTransactionType)
-                            {
-                                updateQuery = @"UPDATE Transactions 
-                                               SET ReturnDate = @ReturnDate, Status = 'Returned', TransactionType = 'Return'
-                                               WHERE TransactionID = @TransactionID";
-                            }
-                            else
-                            {
-                                updateQuery = @"UPDATE Transactions 
-                                               SET ReturnDate = @ReturnDate, Status = 'Returned'
-                                               WHERE TransactionID = @TransactionID";
-                            }
-
-                            using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@ReturnDate", returnDate);
-                                cmd.Parameters.AddWithValue("@TransactionID", transactionId);
-                                if (hasFine)
-                                {
-                                    cmd.Parameters.AddWithValue("@Fine", Math.Round(fine, 2, MidpointRounding.AwayFromZero));
-                                }
-                                int rowsAffected = cmd.ExecuteNonQuery();
-                                if (rowsAffected == 0)
-                                {
-                                    transaction.Rollback();
-                                    throw new InvalidOperationException("Transaction could not be updated. Transaction may not exist.");
-                                }
-                            }
-
-                            string updateBookQuery = @"UPDATE Books 
-                                                      SET Available = LEAST(Available + 1, TotalCopies) 
-                                                      WHERE BookID = @BookID";
-                            using (MySqlCommand cmd = new MySqlCommand(updateBookQuery, conn, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@BookID", bookId);
-                                int rowsAffected = cmd.ExecuteNonQuery();
-                                if (rowsAffected == 0)
-                                {
-                                    transaction.Rollback();
-                                    throw new InvalidOperationException("Book availability could not be updated. Book may not exist.");
-                                }
-                            }
-
-                            transaction.Commit();
-
-                            string fineInfo = fine > 0 ? $", Fine: ${fine:F2}" : "";
-                            AuditLogger.LogCirculation("Book Returned", 
-                                $"BookID: {bookId}, TransactionID: {transactionId}{fineInfo}", 
-                                "Success");
-                        }
-                        catch
-                        {
-                            transaction.Rollback();
-                            AuditLogger.LogCirculation("Book Return Failed", 
-                                $"BookID: {bookId}, TransactionID: {transactionId}", 
-                                "Failed");
-                            throw;
-                        }
+                        _finesService.UpdateTransactionFine(transactionId, fine);
                     }
-                }
 
-                string message = fine > 0 
-                    ? $"Book returned successfully!\n\nFine: ${fine:F2}" 
-                    : "Book returned successfully!";
-                MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string fineInfo = fine > 0 ? $", Fine: ${fine:F2}" : "";
+                    AuditLogger.LogCirculation("Book Returned", 
+                        $"BookID: {bookId}, TransactionID: {transactionId}{fineInfo}", 
+                        "Success");
+
+                    string message = fine > 0 
+                        ? $"Book returned successfully!\n\nFine: ${fine:F2}" 
+                        : "Book returned successfully!";
+                    MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    AuditLogger.LogCirculation("Book Return Failed", 
+                        $"BookID: {bookId}, TransactionID: {transactionId}", 
+                        "Failed");
+                    throw new InvalidOperationException("Failed to return book. Please try again.");
+                }
 
                 txtReturnBookAccession.Text = "Scan or enter book accession number...";
                 txtReturnBookAccession.ForeColor = Color.Gray;
@@ -936,213 +827,22 @@ namespace Project5LMS.Forms.Admin.Circulation
         {
             try
             {
-
                 string cleanAccession = accessionNo.Replace("ACC-", "").Trim();
+                var book = _bookService.GetBookByAccessionNumber(accessionNo);
+                if (book != null)
+                    return book.BookID;
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                if (int.TryParse(cleanAccession, out int bookId))
                 {
-                    conn.Open();
-
-                    string query = @"SELECT BookID FROM Books 
-                                    WHERE Barcode = @Accession 
-                                    OR BookID = @BookID";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Accession", accessionNo);
-                        if (int.TryParse(cleanAccession, out int bookId))
-                        {
-                            cmd.Parameters.AddWithValue("@BookID", bookId);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@BookID", 0);
-                        }
-
-                        object result = cmd.ExecuteScalar();
-                        return result != null ? Convert.ToInt32(result) : 0;
-                    }
+                    var bookById = _bookService.GetBook(bookId);
+                    return bookById != null ? bookId : 0;
                 }
+                return 0;
             }
             catch
             {
                 return 0;
             }
-        }
-
-        private bool MemberExists(int memberId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT COUNT(*) FROM Members WHERE MemberID = @MemberID";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MemberID", memberId);
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
-                        return count > 0;
-                    }
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private bool IsBookAvailable(int bookId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT Available FROM Books WHERE BookID = @BookID";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            int available = Convert.ToInt32(result);
-                            return available > 0;
-                        }
-                        return false;
-                    }
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private bool CanMemberBorrow(int memberId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string query = @"SELECT m.MemberType, 
-                                    (SELECT COUNT(*) FROM Transactions t 
-                                     WHERE t.MemberID = m.MemberID 
-                                     AND (t.Status = 'Borrowed' OR t.Status = 'Active')) as CurrentBorrowings
-                                    FROM Members m
-                                    WHERE m.MemberID = @MemberID";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MemberID", memberId);
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                string memberType = reader["MemberType"] != DBNull.Value ? reader["MemberType"].ToString() : "";
-                                int currentBorrowings = reader["CurrentBorrowings"] != DBNull.Value ? Convert.ToInt32(reader["CurrentBorrowings"]) : 0;
-
-                                int maxBorrowings = GetMaxBorrowingsForType(memberType);
-                                return currentBorrowings < maxBorrowings;
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            return false;
-        }
-
-        private int GetMaxBorrowingsForType(string memberType)
-        {
-            switch (memberType?.ToLower())
-            {
-                case "student":
-                    return 5;
-                case "faculty":
-                    return 10;
-                case "staff":
-                    return 7;
-                case "guest":
-                    return 3;
-                default:
-                    return 5;
-            }
-        }
-
-        private int GetActiveTransactionId(int bookId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"SELECT TransactionID FROM Transactions 
-                                    WHERE BookID = @BookID 
-                                    AND (Status = 'Borrowed' OR Status = 'Active')
-                                    ORDER BY TransactionID DESC
-                                    LIMIT 1";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
-                        object result = cmd.ExecuteScalar();
-                        return result != null ? Convert.ToInt32(result) : 0;
-                    }
-                }
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        private decimal CalculateFine(int transactionId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT DueDate FROM Transactions WHERE TransactionID = @TransactionID";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@TransactionID", transactionId);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            DateTime dueDate = Convert.ToDateTime(result);
-                            DateTime currentDate = DateTime.Now;
-
-                            if (dueDate < currentDate)
-                            {
-
-                                TimeSpan overdueTime = currentDate - dueDate;
-                                int daysOverdue = overdueTime.Days;
-
-                                if (daysOverdue == 0 && overdueTime.TotalHours > 0)
-                                {
-                                    daysOverdue = 1;
-                                }
-
-                                decimal finePerDay = 0.50m;
-                                decimal calculatedFine = daysOverdue * finePerDay;
-
-                                return Math.Round(calculatedFine, 2, MidpointRounding.AwayFromZero);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error calculating fine for transaction {transactionId}: {ex.Message}");
-
-                return 0m;
-            }
-            return 0m;
         }
 
         private void txtBorrowMemberID_TextChanged(object sender, EventArgs e)

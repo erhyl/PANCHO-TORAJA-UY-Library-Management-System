@@ -7,26 +7,20 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.Admin.Reservations
 {
     public partial class AdminReservationsForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
         private DataTable allReservationsData;
         private string currentFilter = "All Status";
 
         public AdminReservationsForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
         }
 
         private void AdminReservationsForm_Load(object sender, EventArgs e)
@@ -41,14 +35,15 @@ namespace Project5LMS.Forms.Admin.Reservations
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
 
                     string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
                                               WHERE TABLE_SCHEMA = DATABASE() 
                                               AND TABLE_NAME = 'Reservations'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
                         int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (tableExists == 0)
@@ -66,17 +61,13 @@ namespace Project5LMS.Forms.Admin.Reservations
                                                         FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
                                                         FOREIGN KEY (BookID) REFERENCES Books(BookID)
                                                         )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
+                            dbContext.ExecuteNonQuery(createTableQuery);
                         }
                         else
                         {
-
-                            AddColumnIfNotExists(conn, "Reservations", "ExpiryDate", "DATETIME NULL");
-                            AddColumnIfNotExists(conn, "Reservations", "Priority", "INT DEFAULT 0");
-                            AddColumnIfNotExists(conn, "Reservations", "FulfilledDate", "DATETIME NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Reservations", "ExpiryDate", "DATETIME NULL");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Reservations", "Priority", "INT DEFAULT 0");
+                            DatabaseSchemaHelper.AddColumnIfNotExists(conn, "Reservations", "FulfilledDate", "DATETIME NULL");
                         }
                     }
                 }
@@ -84,35 +75,6 @@ namespace Project5LMS.Forms.Admin.Reservations
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Reservations table exists: {ex.Message}");
-            }
-        }
-
-        private void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
-        {
-            try
-            {
-                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                          WHERE TABLE_SCHEMA = DATABASE() 
-                                          AND TABLE_NAME = @tableName 
-                                          AND COLUMN_NAME = @columnName";
-                using (MySqlCommand checkCmd = new MySqlCommand(checkColumnQuery, conn))
-                {
-                    checkCmd.Parameters.AddWithValue("@tableName", tableName);
-                    checkCmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
-                    if (count == 0)
-                    {
-                        string alterQuery = $"ALTER TABLE {tableName} ADD COLUMN {columnName} {columnDefinition}";
-                        using (MySqlCommand alterCmd = new MySqlCommand(alterQuery, conn))
-                        {
-                            alterCmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error adding column {columnName}: {ex.Message}");
             }
         }
 
@@ -518,7 +480,7 @@ namespace Project5LMS.Forms.Admin.Reservations
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -646,13 +608,13 @@ namespace Project5LMS.Forms.Admin.Reservations
 
         private DataTable GetReservationsData()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
 
-                bool hasExpiryDate = CheckColumnExists(conn, "Reservations", "ExpiryDate");
-                bool hasPriority = CheckColumnExists(conn, "Reservations", "Priority");
-                bool hasFulfilledDate = CheckColumnExists(conn, "Reservations", "FulfilledDate");
+                bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
+                bool hasPriority = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Priority");
+                bool hasFulfilledDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "FulfilledDate");
 
                 string query;
                 if (hasExpiryDate && hasPriority && hasFulfilledDate)
@@ -708,27 +670,6 @@ namespace Project5LMS.Forms.Admin.Reservations
             }
         }
 
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @tableName 
-                                AND COLUMN_NAME = @columnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
-                    cmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         private void ApplyFilter()
         {
@@ -762,7 +703,7 @@ namespace Project5LMS.Forms.Admin.Reservations
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "UPDATE Reservations SET Status = 'Ready', PickupDate = @PickupDate WHERE ReservationID = @ReservationID";
@@ -788,7 +729,7 @@ namespace Project5LMS.Forms.Admin.Reservations
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -804,7 +745,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                         }
                     }
 
-                    bool hasFulfilledDate = CheckColumnExists(conn, "Reservations", "FulfilledDate");
+                    bool hasFulfilledDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "FulfilledDate");
                     string updateQuery;
                     if (hasFulfilledDate)
                     {
@@ -853,7 +794,7 @@ namespace Project5LMS.Forms.Admin.Reservations
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "DELETE FROM Reservations WHERE ReservationID = @ReservationID";

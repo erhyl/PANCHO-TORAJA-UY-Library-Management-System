@@ -8,14 +8,16 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Models;
+using Project5LMS.Services;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.Admin.UserManagement
 {
     public partial class UserManagementForm : Form
     {
-        private string connectionString;
         private List<User> allUsers = new List<User>();
         private List<User> filteredUsers = new List<User>();
+        private readonly UserService _userService;
 
         public UserManagementForm()
         {
@@ -34,14 +36,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 return;
             }
 
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _userService = new UserService();
         }
 
         private void UserManagementForm_Load(object sender, EventArgs e)
@@ -68,7 +63,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = ServiceFactory.GetDbContext().GetConnection())
                 {
                     conn.Open();
 
@@ -122,30 +117,23 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 allUsers.Clear();
                 panelUsersContainer.Controls.Clear();
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                string query = @"SELECT UserID, Email, FirstName, LastName, Role 
+                                FROM Users 
+                                ORDER BY FirstName, LastName";
+
+                var result = dbContext.ExecuteQuery(query);
+                foreach (DataRow row in result.Rows)
                 {
-                    conn.Open();
-
-                    string query = @"SELECT UserID, Email, FirstName, LastName, Role 
-                                    FROM Users 
-                                    ORDER BY FirstName, LastName";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    var user = new User
                     {
-                        while (reader.Read())
-                        {
-                            var user = new User
-                            {
-                                UserID = reader.GetInt32("UserID"),
-                                Email = reader["Email"] != DBNull.Value ? reader.GetString("Email") : "",
-                                FirstName = reader["FirstName"] != DBNull.Value ? reader.GetString("FirstName") : "",
-                                LastName = reader["LastName"] != DBNull.Value ? reader.GetString("LastName") : "",
-                                Role = reader["Role"] != DBNull.Value ? reader.GetString("Role") : ""
-                            };
-                            allUsers.Add(user);
-                        }
-                    }
+                        UserID = Convert.ToInt32(row["UserID"]),
+                        Email = row["Email"]?.ToString() ?? "",
+                        FirstName = row["FirstName"]?.ToString() ?? "",
+                        LastName = row["LastName"]?.ToString() ?? "",
+                        Role = row["Role"]?.ToString() ?? ""
+                    };
+                    allUsers.Add(user);
                 }
 
                 filteredUsers = allUsers.ToList();
@@ -544,24 +532,25 @@ namespace Project5LMS.Forms.Admin.UserManagement
             {
                 try
                 {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    var dbContext = new DatabaseContext();
+                    using (var conn = dbContext.GetConnection())
                     {
                         conn.Open();
                         string query = "DELETE FROM Users WHERE UserID = @userId";
-                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        using (var cmd = new MySqlCommand(query, conn))
                         {
-                        cmd.Parameters.AddWithValue("@userId", user.UserID);
-                        cmd.ExecuteNonQuery();
+                            cmd.Parameters.AddWithValue("@userId", user.UserID);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
-                }
 
-                AuditLogger.LogDataModification("User Deleted", 
-                    $"UserID: {user.UserID}, Email: {user.Email}, Role: {user.Role}", 
-                    "Success");
+                    AuditLogger.LogDataModification("User Deleted", 
+                        $"UserID: {user.UserID}, Email: {user.Email}, Role: {user.Role}", 
+                        "Success");
 
-                MessageBox.Show("User deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadUsers();
-                LoadMetrics();
+                    MessageBox.Show("User deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadUsers();
+                    LoadMetrics();
                 }
                 catch (Exception ex)
                 {
@@ -597,14 +586,15 @@ namespace Project5LMS.Forms.Admin.UserManagement
             {
                 try
                 {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    var dbContext = new DatabaseContext();
+                    using (var conn = dbContext.GetConnection())
                     {
                         conn.Open();
 
                         try
                         {
                             string query = "UPDATE Users SET Status = 'Suspended' WHERE UserID = @userId";
-                            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                            using (var cmd = new MySqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@userId", user.UserID);
                                 cmd.ExecuteNonQuery();
@@ -634,12 +624,12 @@ namespace Project5LMS.Forms.Admin.UserManagement
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string query = "SELECT CreatedDate FROM Users WHERE UserID = @userId";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@userId", userId);
                         object result = cmd.ExecuteScalar();
@@ -651,10 +641,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     }
                 }
             }
-            catch
-            {
-
-            }
+            catch { }
             return DateTime.Now.ToString("yyyy-MM-dd");
         }
 
@@ -662,12 +649,12 @@ namespace Project5LMS.Forms.Admin.UserManagement
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var dbContext = new DatabaseContext();
+                using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string query = "SELECT LastLoginDate FROM Users WHERE UserID = @userId";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@userId", userId);
                         object result = cmd.ExecuteScalar();
@@ -679,10 +666,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     }
                 }
             }
-            catch
-            {
-
-            }
+            catch { }
             return "Never";
         }
     }

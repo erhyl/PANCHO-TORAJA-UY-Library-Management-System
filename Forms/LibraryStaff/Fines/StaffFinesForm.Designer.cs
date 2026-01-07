@@ -1,6 +1,6 @@
 namespace Project5LMS.Forms.LibraryStaff.Fines
 {
-    partial class StaffFinesForm
+    public partial class StaffFinesForm
     {
         private System.ComponentModel.IContainer components = null;
 

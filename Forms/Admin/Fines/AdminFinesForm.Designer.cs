@@ -1,6 +1,6 @@
 ﻿namespace Project5LMS.Forms.Admin.Fines
 {
-    partial class AdminFinesForm
+    public partial class AdminFinesForm
     {
         /// <summary>
         /// Required designer variable.

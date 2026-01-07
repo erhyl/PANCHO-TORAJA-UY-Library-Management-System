@@ -5,26 +5,20 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
 
 namespace Project5LMS.Forms.LibraryStaff.Inventory
 {
     public partial class StaffInventoryForm : Form
     {
-        private string connectionString;
         private DataTable inventoryData;
         private string currentCategoryFilter = "All";
+        private readonly DatabaseContext _dbContext;
 
         public StaffInventoryForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = new DatabaseContext();
         }
 
         private void StaffInventoryForm_Load(object sender, EventArgs e)
@@ -40,13 +34,13 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
                                               WHERE TABLE_SCHEMA = DATABASE() 
                                               AND TABLE_NAME = 'Inventory'";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
                         int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (tableExists == 0)
@@ -62,10 +56,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                                                         Notes VARCHAR(255) NULL,
                                                         FOREIGN KEY (BookID) REFERENCES Books(BookID)
                                                         )";
-                            using (MySqlCommand createCmd = new MySqlCommand(createTableQuery, conn))
-                            {
-                                createCmd.ExecuteNonQuery();
-                            }
+                            _dbContext.ExecuteNonQuery(createTableQuery);
                         }
                     }
                 }
@@ -234,7 +225,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 cmbCategoryFilter.Items.Clear();
                 cmbCategoryFilter.Items.Add("All");
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = "SELECT DISTINCT Category FROM Books WHERE Category IS NOT NULL AND Category != '' ORDER BY Category";
@@ -262,7 +253,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -308,7 +299,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT 
@@ -469,7 +460,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     return;
                 }
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string checkQuery = "SELECT COUNT(*) FROM Books WHERE BookID = @BookID";
@@ -612,7 +603,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     return;
                 }
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -748,7 +739,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     return;
                 }
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 

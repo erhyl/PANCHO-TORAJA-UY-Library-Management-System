@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
 using Project5LMS.Forms.LibraryStaff.Catalog;
 using Project5LMS.Forms.LibraryStaff.Members;
 using Project5LMS.Forms.Admin.Catalog;
@@ -15,22 +17,15 @@ namespace Project5LMS.Forms.LibraryStaff.Search
 {
     public partial class StaffSearchForm : Form
     {
-        private string connectionString;
         private DataTable searchResults;
         private string currentFilter = "All";
         private List<string> quickSearchExamples = new List<string> { "The Great Gatsby", "Orwell", "978-0", "Sarah Johnson", "M1001", "Fiction" };
+        private readonly SearchService _searchService;
 
         public StaffSearchForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _searchService = ServiceFactory.CreateSearchService();
         }
 
         private void StaffSearchForm_Load(object sender, EventArgs e)
@@ -158,22 +153,31 @@ namespace Project5LMS.Forms.LibraryStaff.Search
 
             try
             {
-                searchResults = new DataTable();
-                string query = BuildSearchQuery(currentFilter, searchText);
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                string searchIn = currentFilter == "Books" ? "Books" : (currentFilter == "Members" ? "Members" : "All");
+                string category = "";
+                
+                SearchResults results;
+                
+                if (searchIn == "Books")
                 {
-                    conn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@SearchText", $"%{searchText}%");
-                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
-                        {
-                            adapter.Fill(searchResults);
-                        }
-                    }
+                    results = _searchService.SearchBooks(searchText);
+                }
+                else if (searchIn == "Members")
+                {
+                    results = _searchService.SearchMembers(searchText);
+                }
+                else
+                {
+                    results = _searchService.SearchAll(searchText);
                 }
 
+                if (category != null && results.Books != null)
+                {
+                    results.Books = results.Books.Where(b => b.Category == category).ToList();
+                    results.TotalResults = results.Books.Count + results.Members.Count;
+                }
+
+                searchResults = ConvertSearchResultsToDataTable(results);
                 DisplaySearchResults();
             }
             catch (Exception ex)
@@ -181,6 +185,55 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 MessageBox.Show($"Error performing search: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Diagnostics.Debug.WriteLine($"Search error: {ex.Message}");
             }
+        }
+
+        private DataTable ConvertSearchResultsToDataTable(SearchResults results)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Type", typeof(string));
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Title", typeof(string));
+            dt.Columns.Add("Author", typeof(string));
+            dt.Columns.Add("ISBN", typeof(string));
+            dt.Columns.Add("Category", typeof(string));
+            dt.Columns.Add("Status", typeof(string));
+            dt.Columns.Add("MemberID", typeof(int));
+            dt.Columns.Add("MemberName", typeof(string));
+            dt.Columns.Add("MemberType", typeof(string));
+
+            foreach (var book in results.Books)
+            {
+                DataRow row = dt.NewRow();
+                row["Type"] = "Book";
+                row["ID"] = book.BookID;
+                row["Title"] = book.Title;
+                row["Author"] = book.Author;
+                row["ISBN"] = book.ISBN;
+                row["Category"] = book.Category;
+                row["Status"] = book.Status;
+                row["MemberID"] = DBNull.Value;
+                row["MemberName"] = DBNull.Value;
+                row["MemberType"] = DBNull.Value;
+                dt.Rows.Add(row);
+            }
+
+            foreach (var member in results.Members)
+            {
+                DataRow row = dt.NewRow();
+                row["Type"] = "Member";
+                row["ID"] = member.MemberID;
+                row["Title"] = member.FullName;
+                row["Author"] = member.Email;
+                row["ISBN"] = DBNull.Value;
+                row["Category"] = member.Type;
+                row["Status"] = member.Status;
+                row["MemberID"] = member.MemberID;
+                row["MemberName"] = member.FullName;
+                row["MemberType"] = member.Type;
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
 
         private string BuildSearchQuery(string filter, string searchText)

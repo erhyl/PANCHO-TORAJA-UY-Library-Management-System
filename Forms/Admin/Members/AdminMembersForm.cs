@@ -7,29 +7,26 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
+using Project5LMS.Repositories;
+using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.Members;
-using Project5LMS.Controllers;
 
 namespace Project5LMS.Forms.Admin.Members
 {
     public partial class AdminMembersForm : Form
     {
-        private string connectionString;
         private DataTable allMembersData;
-        private MembersController membersController;
+        private readonly MembersService _membersService;
+        private readonly ITransactionRepository _transactionRepository;
 
         public AdminMembersForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
-            membersController = new MembersController();
+            _membersService = ServiceFactory.CreateMembersService();
+            var dbContext = new DatabaseContext();
+            _transactionRepository = new TransactionRepository(dbContext);
         }
 
         private void AdminMembersForm_Load(object sender, EventArgs e)
@@ -339,40 +336,18 @@ namespace Project5LMS.Forms.Admin.Members
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
+                var allMembers = _membersService.GetAllMembers().ToList();
+                int total = allMembers.Count;
+                lblMetricTotalValue.Text = total.ToString();
 
-                    string queryTotal = "SELECT COUNT(*) FROM Members";
-                    using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
-                    {
-                        int total = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricTotalValue.Text = total.ToString();
-                    }
+                int active = allMembers.Count(m => m.IsActive || string.IsNullOrWhiteSpace(m.Status));
+                lblMetricActiveValue.Text = active.ToString();
 
-                    string queryActive = "SELECT COUNT(*) FROM Members WHERE Status = 'Active' OR Status IS NULL OR Status = ''";
-                    using (MySqlCommand cmd = new MySqlCommand(queryActive, conn))
-                    {
-                        int active = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricActiveValue.Text = active.ToString();
-                    }
+                int suspended = allMembers.Count(m => m.Status?.Equals("Suspended", StringComparison.OrdinalIgnoreCase) == true);
+                lblMetricSuspendedValue.Text = suspended.ToString();
 
-                    string querySuspended = "SELECT COUNT(*) FROM Members WHERE Status = 'Suspended'";
-                    using (MySqlCommand cmd = new MySqlCommand(querySuspended, conn))
-                    {
-                        int suspended = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricSuspendedValue.Text = suspended.ToString();
-                    }
-
-                    string queryExpired = @"SELECT COUNT(*) FROM Members 
-                                          WHERE ExpirationDate < CURDATE() 
-                                          AND (Status = 'Active' OR Status IS NULL OR Status = '')";
-                    using (MySqlCommand cmd = new MySqlCommand(queryExpired, conn))
-                    {
-                        int expired = Convert.ToInt32(cmd.ExecuteScalar());
-                        lblMetricExpiredValue.Text = expired.ToString();
-                    }
-                }
+                int expired = allMembers.Count(m => m.IsExpired && (m.IsActive || string.IsNullOrWhiteSpace(m.Status)));
+                lblMetricExpiredValue.Text = expired.ToString();
             }
             catch (Exception ex)
             {
@@ -384,38 +359,18 @@ namespace Project5LMS.Forms.Admin.Members
         {
             try
             {
+                var members = _membersService.GetAllMembers()
+                    .OrderBy(m => m.LastName)
+                    .ThenBy(m => m.FirstName)
+                    .ToList();
 
-                allMembersData = GetMembersWithContact();
-
-                if (!allMembersData.Columns.Contains("Name"))
-                {
-                    allMembersData.Columns.Add("Name", typeof(string));
-                }
-                if (!allMembersData.Columns.Contains("Contact"))
-                {
-                    allMembersData.Columns.Add("Contact", typeof(string));
-                }
-                if (!allMembersData.Columns.Contains("Books"))
-                {
-                    allMembersData.Columns.Add("Books", typeof(string));
-                }
-                if (!allMembersData.Columns.Contains("Expires"))
-                {
-                    allMembersData.Columns.Add("Expires", typeof(string));
-                }
+                allMembersData = DataTableHelper.MembersToDataTable(members, m => _membersService.GetActiveBorrowingCount(m.MemberID));
 
                 foreach (DataRow row in allMembersData.Rows)
                 {
-
-                    string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
-                    string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
-                    row["Name"] = $"{firstName} {lastName}".Trim();
-
-                    if (allMembersData.Columns.Contains("Contact") && row["Contact"] != DBNull.Value && !string.IsNullOrEmpty(row["Contact"].ToString()))
+                    string contact = row["Contact"]?.ToString() ?? "";
+                    if (!string.IsNullOrEmpty(contact))
                     {
-
-                        string contact = row["Contact"].ToString();
-
                         contact = new string(contact.Where(char.IsDigit).ToArray());
                         if (contact.Length == 10)
                         {
@@ -436,13 +391,14 @@ namespace Project5LMS.Forms.Admin.Members
                     }
 
                     int memberId = Convert.ToInt32(row["MemberID"]);
-                    int borrowedCount = GetBorrowedBooksCount(memberId);
-                    int maxBooks = GetMaxBooksForType(row["MemberType"]?.ToString() ?? "");
+                    int borrowedCount = Convert.ToInt32(row["Books"]);
+                    string memberType = row["MemberType"]?.ToString() ?? "";
+                    int maxBooks = GetMaxBooksForType(memberType);
                     row["Books"] = $"{borrowedCount}/{maxBooks}";
 
-                    if (row["ExpirationDate"] != DBNull.Value)
+                    if (row["Expires"] != DBNull.Value)
                     {
-                        DateTime expDate = Convert.ToDateTime(row["ExpirationDate"]);
+                        DateTime expDate = Convert.ToDateTime(row["Expires"]);
                         row["Expires"] = expDate.ToString("yyyy-MM-dd");
                     }
                     else
@@ -457,101 +413,6 @@ namespace Project5LMS.Forms.Admin.Members
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading members: {ex.Message}");
                 MessageBox.Show($"Error loading members: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private DataTable GetMembersWithContact()
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-
-                bool hasContact = CheckColumnExists(conn, "Members", "Contact");
-
-                string query;
-                if (hasContact)
-                {
-                    query = @"SELECT 
-                                MemberID,
-                                FirstName,
-                                LastName,
-                                MemberType,
-                                Email,
-                                Contact,
-                                RegistrationDate,
-                                ExpirationDate,
-                                Status
-                             FROM Members
-                             ORDER BY LastName, FirstName";
-                }
-                else
-                {
-                    query = @"SELECT 
-                                MemberID,
-                                FirstName,
-                                LastName,
-                                MemberType,
-                                Email,
-                                RegistrationDate,
-                                ExpirationDate,
-                                Status
-                             FROM Members
-                             ORDER BY LastName, FirstName";
-                }
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    return dt;
-                }
-            }
-        }
-
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @tableName 
-                                AND COLUMN_NAME = @columnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
-                    cmd.Parameters.AddWithValue("@columnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private int GetBorrowedBooksCount(int memberId)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"SELECT COUNT(*) FROM Transactions 
-                                    WHERE MemberID = @memberId 
-                                    AND (Status = 'Borrowed' OR Status = 'Active')";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@memberId", memberId);
-                        object result = cmd.ExecuteScalar();
-                        return result != null ? Convert.ToInt32(result) : 0;
-                    }
-                }
-            }
-            catch
-            {
-                return 0;
             }
         }
 
@@ -755,31 +616,28 @@ namespace Project5LMS.Forms.Admin.Members
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var activeTransactions = _transactionRepository.GetByMemberId(memberId)
+                    .Where(t => t.Status == "Borrowed" || t.Status == "Active")
+                    .ToList();
+                
+                loanCount = activeTransactions.Count;
+                fineCount = activeTransactions.Count(t => t.Fine.HasValue && t.Fine.Value > 0);
+
+                try
                 {
-                    conn.Open();
-
-                    string queryLoans = "SELECT COUNT(*) FROM Transactions WHERE MemberID = @memberId AND (Status = 'Borrowed' OR Status = 'Active')";
-                    using (MySqlCommand cmd = new MySqlCommand(queryLoans, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@memberId", memberId);
-                        loanCount = Convert.ToInt32(cmd.ExecuteScalar());
-                    }
-
-                    string queryFines = "SELECT COUNT(*) FROM Fines WHERE MemberID = @memberId AND (Status = 'Unpaid' OR Status = 'Pending')";
-                    using (MySqlCommand cmd = new MySqlCommand(queryFines, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@memberId", memberId);
-                        fineCount = Convert.ToInt32(cmd.ExecuteScalar());
-                    }
-
+                    var dbContext = new DatabaseContext();
                     string queryReservations = "SELECT COUNT(*) FROM Reservations WHERE MemberID = @memberId AND Status = 'Active'";
-                    using (MySqlCommand cmd = new MySqlCommand(queryReservations, conn))
+                    using (var conn = dbContext.GetConnection())
                     {
-                        cmd.Parameters.AddWithValue("@memberId", memberId);
-                        reservationCount = Convert.ToInt32(cmd.ExecuteScalar());
+                        conn.Open();
+                        using (var cmd = new MySqlCommand(queryReservations, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@memberId", memberId);
+                            reservationCount = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
                     }
                 }
+                catch { }
             }
             catch (Exception ex)
             {
@@ -802,23 +660,25 @@ namespace Project5LMS.Forms.Admin.Members
 
                 if (result == DialogResult.Yes)
                 {
-
                     try
                     {
-                        using (MySqlConnection conn = new MySqlConnection(connectionString))
+                        var member = _membersService.GetMember(memberId);
+                        if (member != null)
                         {
-                            conn.Open();
-                            string query = "UPDATE Members SET Status = 'Suspended' WHERE MemberID = @memberId";
-                            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                            member.Status = "Suspended";
+                            bool updated = _membersService.UpdateMember(member);
+                            if (updated)
                             {
-                                cmd.Parameters.AddWithValue("@memberId", memberId);
-                                cmd.ExecuteNonQuery();
+                                MessageBox.Show("Member deactivated (suspended) successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                AuditLogger.LogDataModification("Member suspended", $"MemberID: {memberId}, Name: {memberName}", "Success");
+                                LoadMembers();
+                                LoadMetrics();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Failed to deactivate member.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-
-                        MessageBox.Show("Member deactivated (suspended) successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadMembers();
-                        LoadMetrics();
                     }
                     catch (Exception ex)
                     {
@@ -839,24 +699,23 @@ namespace Project5LMS.Forms.Admin.Members
                 {
                     try
                     {
-                        using (MySqlConnection conn = new MySqlConnection(connectionString))
+                        bool deleted = _membersService.DeleteMember(memberId);
+                        if (deleted)
                         {
-                            conn.Open();
-                            string query = "DELETE FROM Members WHERE MemberID = @memberId";
-                            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@memberId", memberId);
-                                cmd.ExecuteNonQuery();
-                            }
+                            MessageBox.Show("Member deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            AuditLogger.LogDataModification("Member deleted", $"MemberID: {memberId}, Name: {memberName}", "Success");
+                            LoadMembers();
+                            LoadMetrics();
                         }
-
-                        MessageBox.Show("Member deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadMembers();
-                        LoadMetrics();
+                        else
+                        {
+                            MessageBox.Show("Failed to delete member.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Error deleting member: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        AuditLogger.LogDataModification("Member deletion failed", $"MemberID: {memberId}, Error: {ex.Message}", "Failed");
                     }
                 }
             }
