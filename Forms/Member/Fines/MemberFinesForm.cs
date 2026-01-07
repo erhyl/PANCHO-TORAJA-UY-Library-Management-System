@@ -5,18 +5,23 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Member.Fines
 {
     public partial class MemberFinesForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
+        private readonly IFinesService _finesService;
         private decimal totalOutstanding = 0;
 
         public MemberFinesForm()
         {
             InitializeComponent();
-            connectionString = DatabaseHelper.GetConnectionString();
+            _dbContext = ServiceFactory.GetDbContext();
+            _finesService = ServiceFactory.CreateFinesService();
             this.Load += MemberFinesForm_Load;
             this.VisibleChanged += MemberFinesForm_VisibleChanged;
             this.BackColor = Color.FromArgb(250, 250, 250);
@@ -80,7 +85,7 @@ namespace Project5LMS.Forms.Member.Fines
                 panelOutstandingFines.Visible = true;
                 panelTotalOutstanding.Visible = true;
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -107,12 +112,12 @@ namespace Project5LMS.Forms.Member.Fines
                         }
                     }
 
-                    bool hasFineType = CheckColumnExists(conn, "Fines", "FineType");
-                    bool hasDescription = CheckColumnExists(conn, "Fines", "Description");
-                    bool hasIssueDate = CheckColumnExists(conn, "Fines", "IssueDate");
-                    bool hasCreatedDate = CheckColumnExists(conn, "Fines", "CreatedDate");
-                    bool hasStatus = CheckColumnExists(conn, "Fines", "Status");
-                    bool hasPaid = CheckColumnExists(conn, "Fines", "Paid");
+                    bool hasFineType = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "FineType");
+                    bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
+                    bool hasIssueDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "IssueDate");
+                    bool hasCreatedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "CreatedDate");
+                    bool hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Status");
+                    bool hasPaid = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Paid");
 
                     string dateColumn = hasIssueDate ? "IssueDate" : (hasCreatedDate ? "CreatedDate" : "NULL");
                     string statusColumn = hasStatus ? "Status" : "'Unpaid'";
@@ -190,7 +195,7 @@ namespace Project5LMS.Forms.Member.Fines
                 panelPaymentHistory.Visible = true;
                 panelFineRates.Visible = true;
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -216,11 +221,11 @@ namespace Project5LMS.Forms.Member.Fines
                         }
                     }
 
-                    bool hasFineType = CheckColumnExists(conn, "Fines", "FineType");
-                    bool hasIssueDate = CheckColumnExists(conn, "Fines", "IssueDate");
-                    bool hasCreatedDate = CheckColumnExists(conn, "Fines", "CreatedDate");
-                    bool hasStatus = CheckColumnExists(conn, "Fines", "Status");
-                    bool hasPaid = CheckColumnExists(conn, "Fines", "Paid");
+                    bool hasFineType = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "FineType");
+                    bool hasIssueDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "IssueDate");
+                    bool hasCreatedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "CreatedDate");
+                    bool hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Status");
+                    bool hasPaid = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Paid");
 
                     string dateColumn = hasIssueDate ? "IssueDate" : (hasCreatedDate ? "CreatedDate" : "NULL");
                     string statusColumn = hasStatus ? "Status" : "'Paid'";
@@ -505,27 +510,6 @@ namespace Project5LMS.Forms.Member.Fines
             }
         }
 
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @TableName 
-                                AND COLUMN_NAME = @ColumnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@TableName", tableName);
-                    cmd.Parameters.AddWithValue("@ColumnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         private void panelExclamationIcon_Paint(object sender, PaintEventArgs e)
         {

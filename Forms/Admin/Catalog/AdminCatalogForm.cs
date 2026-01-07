@@ -8,20 +8,21 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Admin.Catalog
 {
     public partial class AdminCatalogForm : Form
     {
         private DataTable allBooksData;
-        private readonly BookService _bookService;
+        private readonly IBookService _bookService;
         private readonly DatabaseContext _dbContext;
 
         public AdminCatalogForm()
         {
             InitializeComponent();
             _bookService = ServiceFactory.CreateBookService();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void AdminCatalogForm_Load(object sender, EventArgs e)

@@ -7,16 +7,17 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.LibraryStaff.Circulation
 {
     public partial class StaffCirculationForm : Form
     {
         private string currentFilter = "All";
-        private readonly CirculationService _circulationService;
-        private readonly FinesService _finesService;
-        private readonly BookService _bookService;
-        private readonly MembersService _membersService;
+        private readonly ICirculationService _circulationService;
+        private readonly IFinesService _finesService;
+        private readonly IBookService _bookService;
+        private readonly IMembersService _membersService;
         private readonly DatabaseContext _dbContext;
 
         public StaffCirculationForm()
@@ -36,7 +37,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 return;
             }
 
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
             _circulationService = ServiceFactory.CreateCirculationService();
             _finesService = ServiceFactory.CreateFinesService();
             _bookService = ServiceFactory.CreateBookService();
@@ -704,7 +705,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT m.MemberType, 
+                    bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                    string typeColumn = hasMemberType ? "m.MemberType" : "m.Type";
+                    string query = $@"SELECT {typeColumn} as MemberType, 
                                     (SELECT COUNT(*) FROM Transactions t 
                                      WHERE t.MemberID = m.MemberID 
                                      AND (t.Status = 'Borrowed' OR t.Status = 'Active')) as CurrentBorrowings

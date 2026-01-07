@@ -2,21 +2,30 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
+using Project5LMS.Repositories;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Member.Borrowings
 {
     public partial class MyBorrowingsForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
+        private readonly TransactionRepository _transactionRepository;
+        private readonly IBookService _bookService;
         private const int MAX_RENEWALS = 3;
 
         public MyBorrowingsForm()
         {
             InitializeComponent();
-            connectionString = DatabaseHelper.GetConnectionString();
+            _dbContext = ServiceFactory.GetDbContext();
+            _transactionRepository = new TransactionRepository(_dbContext);
+            _bookService = ServiceFactory.CreateBookService();
         }
 
         private void MyBorrowingsForm_Load(object sender, EventArgs e)
@@ -43,7 +52,7 @@ namespace Project5LMS.Forms.Member.Borrowings
             {
                 panelBorrowedList.Controls.Clear();
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -60,7 +69,7 @@ namespace Project5LMS.Forms.Member.Borrowings
                         }
                     }
 
-                    bool hasRenewedCount = CheckColumnExists(conn, "Transactions", "RenewedCount");
+                    bool hasRenewedCount = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "RenewedCount");
 
                     string query = @"SELECT 
                                     t.TransactionID,
@@ -264,11 +273,11 @@ namespace Project5LMS.Forms.Member.Borrowings
             {
                 try
                 {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    using (var conn = _dbContext.GetConnection())
                     {
                         conn.Open();
 
-                        bool hasRenewedCount = CheckColumnExists(conn, "Transactions", "RenewedCount");
+                        bool hasRenewedCount = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "RenewedCount");
 
                         DateTime newDueDate = currentDueDate.AddDays(14);
                         string updateQuery;
@@ -327,7 +336,7 @@ namespace Project5LMS.Forms.Member.Borrowings
             {
                 panelHistoryList.Controls.Clear();
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -467,27 +476,6 @@ namespace Project5LMS.Forms.Member.Borrowings
             return card;
         }
 
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @TableName 
-                                AND COLUMN_NAME = @ColumnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@TableName", tableName);
-                    cmd.Parameters.AddWithValue("@ColumnName", columnName);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         private void DrawCalendarIcon(Graphics g, Rectangle rect)
         {

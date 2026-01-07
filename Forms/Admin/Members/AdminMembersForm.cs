@@ -18,14 +18,14 @@ namespace Project5LMS.Forms.Admin.Members
     public partial class AdminMembersForm : Form
     {
         private DataTable allMembersData;
-        private readonly MembersService _membersService;
+        private readonly IMembersService _membersService;
         private readonly ITransactionRepository _transactionRepository;
 
         public AdminMembersForm()
         {
             InitializeComponent();
             _membersService = ServiceFactory.CreateMembersService();
-            var dbContext = new DatabaseContext();
+            var dbContext = ServiceFactory.GetDbContext();
             _transactionRepository = new TransactionRepository(dbContext);
         }
 
@@ -625,7 +625,7 @@ namespace Project5LMS.Forms.Admin.Members
 
                 try
                 {
-                    var dbContext = new DatabaseContext();
+                    var dbContext = ServiceFactory.GetDbContext();
                     string queryReservations = "SELECT COUNT(*) FROM Reservations WHERE MemberID = @memberId AND Status = 'Active'";
                     using (var conn = dbContext.GetConnection())
                     {

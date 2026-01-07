@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.LibraryStaff.Reservations
 {
@@ -20,7 +21,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         public StaffReservationsForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void StaffReservationsForm_Load(object sender, EventArgs e)
@@ -185,12 +186,20 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 conn.Open();
                 bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
                 bool hasPriority = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Priority");
+                bool hasReservationDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservationDate");
+                
+                // Use ReservationDate if it exists, otherwise try alternative column names
+                // Always alias as "ReservationDate" so the rest of the code works correctly
+                string reservationDateColumn = hasReservationDate ? "r.ReservationDate" : 
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "r.ReservedDate" : 
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Date") ? "r.Date" : "NOW()"));
+                string reservationDateAlias = "ReservationDate"; // Always use this alias for consistency
 
-                string query = @"SELECT 
+                string query = $@"SELECT 
                                 r.ReservationID,
                                 r.MemberID,
                                 r.BookID,
-                                r.ReservationDate,
+                                {reservationDateColumn} as {reservationDateAlias},
                                 r.PickupDate,
                                 " + (hasExpiryDate ? "r.ExpiryDate," : "NULL as ExpiryDate,") + @"
                                 r.Status,
@@ -202,7 +211,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                                 FROM Reservations r
                                 INNER JOIN Members m ON r.MemberID = m.MemberID
                                 INNER JOIN Books b ON r.BookID = b.BookID
-                                ORDER BY r.ReservationDate DESC";
+                                ORDER BY " + reservationDateColumn + " DESC";
 
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
                 {
@@ -851,15 +860,19 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                     }
 
                     bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
+                    bool hasReservationDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservationDate");
+                    string dateColumn = hasReservationDate ? "ReservationDate" : 
+                        (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "ReservedDate" : "Date");
+                    
                     string insertQuery;
                     if (hasExpiryDate)
                     {
-                        insertQuery = @"INSERT INTO Reservations (MemberID, BookID, ReservationDate, ExpiryDate, Status) 
+                        insertQuery = $@"INSERT INTO Reservations (MemberID, BookID, {dateColumn}, ExpiryDate, Status) 
                                        VALUES (@MemberID, @BookID, @ReservationDate, @ExpiryDate, 'Pending')";
                     }
                     else
                     {
-                        insertQuery = @"INSERT INTO Reservations (MemberID, BookID, ReservationDate, Status) 
+                        insertQuery = $@"INSERT INTO Reservations (MemberID, BookID, {dateColumn}, Status) 
                                        VALUES (@MemberID, @BookID, @ReservationDate, 'Pending')";
                     }
 

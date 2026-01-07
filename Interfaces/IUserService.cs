@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Project5LMS.Models;
 
 namespace Project5LMS.Interfaces
 {
-    internal interface IUserService
+    public interface IUserService
     {
+        User Login(string email, string password);
     }
 }
-

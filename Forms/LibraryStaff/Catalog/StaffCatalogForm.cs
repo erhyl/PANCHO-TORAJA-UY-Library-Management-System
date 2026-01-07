@@ -8,13 +8,14 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.LibraryStaff.Catalog
 {
     public partial class StaffCatalogForm : Form
     {
         private DataTable allBooksData;
-        private readonly BookService _bookService;
+        private readonly IBookService _bookService;
         private const string SearchPlaceholder = "Search by title, author, ISBN, or book ID...";
         private const int CardWidth = 600;
         private const int CardHeight = 280;

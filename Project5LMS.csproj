@@ -252,6 +252,12 @@
     <Compile Include="Forms\LibraryStaff\Inventory\StaffInventoryForm.Designer.cs">
       <DependentUpon>StaffInventoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Admin\UserManagement\AddUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Admin\UserManagement\AddUserForm.Designer.cs">
+      <DependentUpon>AddUserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Admin\UserManagement\UserManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,14 +311,17 @@
     <Compile Include="Repositories\TransactionRepository.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
     <Compile Include="Interfaces\ICirculationService.cs" />
+    <Compile Include="Interfaces\IDashboardService.cs" />
     <Compile Include="Interfaces\IFinesService.cs" />
     <Compile Include="Interfaces\IMembersService.cs" />
     <Compile Include="Interfaces\ISearchService.cs" />
+    <Compile Include="Interfaces\ISettingsService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\CatalogItem.cs" />
     <Compile Include="Models\CirculationRecord.cs" />
+    <Compile Include="Models\DashboardActivity.cs" />
     <Compile Include="Models\FineRecord.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\LibraryStaff.cs" />

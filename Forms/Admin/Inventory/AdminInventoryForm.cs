@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.Admin.Inventory
 {
@@ -20,7 +21,7 @@ namespace Project5LMS.Forms.Admin.Inventory
         public AdminInventoryForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void AdminInventoryForm_Load(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
@@ -59,9 +60,26 @@ namespace Project5LMS.Forms.Admin.Inventory
                                                         Notes VARCHAR(255) NULL,
                                                         FOREIGN KEY (BookID) REFERENCES Books(BookID)
                                                         )";
-                            dbContext.ExecuteNonQuery(createTableQuery);
-
-                            PopulateInventoryFromBooks(conn);
+                            try
+                            {
+                                dbContext.ExecuteNonQuery(createTableQuery);
+                                
+                                // Try to populate inventory, but don't fail if this errors
+                                try
+                                {
+                                    PopulateInventoryFromBooks(conn);
+                                }
+                                catch (Exception populateEx)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Warning: Could not populate inventory from books: {populateEx.Message}");
+                                    // Continue - table is created, just not populated
+                                }
+                            }
+                            catch (Exception createEx)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Error creating Inventory table: {createEx.Message}");
+                                throw; // Re-throw to be caught by outer catch
+                            }
                         }
                         else
                         {
@@ -82,8 +100,11 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             try
             {
-
-                string query = "SELECT BookID, Copies, Location FROM Books";
+                // Check which column exists: Copies or TotalCopies
+                bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                string copiesColumn = hasCopies ? "Copies" : "TotalCopies";
+                
+                string query = $"SELECT BookID, {copiesColumn} as Copies, Location FROM Books";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -592,7 +613,16 @@ namespace Project5LMS.Forms.Admin.Inventory
                     string title = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     string author = row["Author"] != DBNull.Value ? row["Author"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    string barcode = row["Barcode"] != DBNull.Value ? row["Barcode"].ToString() : "";
+                    // Try to get Barcode or AccessionNo from the row
+                    string barcode = "";
+                    if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
+                    {
+                        barcode = row["Barcode"].ToString();
+                    }
+                    else if (row.Table.Columns.Contains("AccessionNo") && row["AccessionNo"] != DBNull.Value)
+                    {
+                        barcode = row["AccessionNo"].ToString();
+                    }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
                     row["BookDetails"] = $"{title} by {author} ({accessionNo})";
 
@@ -623,13 +653,67 @@ namespace Project5LMS.Forms.Admin.Inventory
             {
                 conn.Open();
 
+                // Check if Inventory table exists first
+                string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                          WHERE TABLE_SCHEMA = DATABASE() 
+                                          AND TABLE_NAME = 'Inventory'";
+                using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
+                {
+                    int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+                    if (tableExists == 0)
+                    {
+                        // Table doesn't exist, create it inline
+                        try
+                        {
+                            string createTableQuery = @"CREATE TABLE IF NOT EXISTS Inventory (
+                                                        InventoryID INT AUTO_INCREMENT PRIMARY KEY,
+                                                        BookID INT NOT NULL,
+                                                        CopyNumber INT NOT NULL,
+                                                        Location VARCHAR(50) NULL,
+                                                        Condition VARCHAR(50) DEFAULT 'Good',
+                                                        Status VARCHAR(50) DEFAULT 'Available',
+                                                        LastVerified DATETIME NULL,
+                                                        Notes VARCHAR(255) NULL,
+                                                        FOREIGN KEY (BookID) REFERENCES Books(BookID)
+                                                        )";
+                            using (var createCmd = new MySqlCommand(createTableQuery, conn))
+                            {
+                                createCmd.ExecuteNonQuery();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error creating Inventory table in GetInventoryData: {ex.Message}");
+                            // Return empty table if creation fails
+                            DataTable emptyTable = new DataTable();
+                            emptyTable.Columns.Add("InventoryID", typeof(int));
+                            emptyTable.Columns.Add("BookID", typeof(int));
+                            emptyTable.Columns.Add("CopyNumber", typeof(int));
+                            emptyTable.Columns.Add("Location", typeof(string));
+                            emptyTable.Columns.Add("Condition", typeof(string));
+                            emptyTable.Columns.Add("Status", typeof(string));
+                            return emptyTable;
+                        }
+                    }
+                }
+
                 bool hasCopyNumber = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "CopyNumber");
                 bool hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
+                bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                
+                // Use Barcode if it exists, otherwise use AccessionNo
+                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
+                
+                // Use Copies if it exists, otherwise use TotalCopies
+                string copiesColumn = hasCopies ? "b.Copies" : "b.TotalCopies";
+                string copiesAlias = "Copies";
 
                 string query;
                 if (hasCopyNumber && hasLastVerified)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 i.InventoryID,
                                 i.BookID,
                                 i.CopyNumber,
@@ -640,15 +724,15 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 b.Title,
                                 b.Author,
                                 b.Category,
-                                b.Copies,
-                                b.Barcode
+                                {copiesColumn} as {copiesAlias},
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Inventory i
                              INNER JOIN Books b ON i.BookID = b.BookID
                              ORDER BY i.InventoryID DESC";
                 }
                 else if (hasCopyNumber)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 i.InventoryID,
                                 i.BookID,
                                 i.CopyNumber,
@@ -659,15 +743,15 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 b.Title,
                                 b.Author,
                                 b.Category,
-                                b.Copies,
-                                b.Barcode
+                                {copiesColumn} as {copiesAlias},
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Inventory i
                              INNER JOIN Books b ON i.BookID = b.BookID
                              ORDER BY i.InventoryID DESC";
                 }
                 else
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 i.InventoryID,
                                 i.BookID,
                                 1 as CopyNumber,
@@ -678,8 +762,8 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 b.Title,
                                 b.Author,
                                 b.Category,
-                                b.Copies,
-                                b.Barcode
+                                {copiesColumn} as {copiesAlias},
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Inventory i
                              INNER JOIN Books b ON i.BookID = b.BookID
                              ORDER BY i.InventoryID DESC";

@@ -9,6 +9,8 @@ using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Repositories;
+using Project5LMS.Interfaces;
+using Project5LMS.Models;
 using Project5LMS.Forms.LibraryStaff.Catalog;
 using Project5LMS.Forms.LibraryStaff.Members;
 using Project5LMS.Forms.LibraryStaff.Circulation;
@@ -21,7 +23,7 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
 {
     public partial class StaffDashboardForm : Form
     {
-        private readonly DashboardService _dashboardService;
+        private readonly IDashboardService _dashboardService;
 
         public StaffDashboardForm()
         {
@@ -230,7 +232,7 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             try
             {
                 panelOverdueBooksList.Controls.Clear();
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 var transactionRepository = new TransactionRepository(dbContext);
                 var bookService = ServiceFactory.CreateBookService();
                 var membersService = ServiceFactory.CreateMembersService();

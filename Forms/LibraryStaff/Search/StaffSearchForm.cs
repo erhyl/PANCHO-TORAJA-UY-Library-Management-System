@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
+using Project5LMS.Interfaces;
 using Project5LMS.Forms.LibraryStaff.Catalog;
 using Project5LMS.Forms.LibraryStaff.Members;
 using Project5LMS.Forms.Admin.Catalog;
@@ -20,7 +21,7 @@ namespace Project5LMS.Forms.LibraryStaff.Search
         private DataTable searchResults;
         private string currentFilter = "All";
         private List<string> quickSearchExamples = new List<string> { "The Great Gatsby", "Orwell", "978-0", "Sarah Johnson", "M1001", "Fiction" };
-        private readonly SearchService _searchService;
+        private readonly ISearchService _searchService;
 
         public StaffSearchForm()
         {

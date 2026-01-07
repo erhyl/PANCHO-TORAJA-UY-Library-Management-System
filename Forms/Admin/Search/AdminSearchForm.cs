@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.Catalog;
 using Project5LMS.Forms.Admin.Members;
 
@@ -19,7 +20,7 @@ namespace Project5LMS.Forms.Admin.Search
         private DataTable searchResults;
         private Panel panelResults;
         private DataGridView dataGridViewResults;
-        private readonly SearchService _searchService;
+        private readonly ISearchService _searchService;
 
         public AdminSearchForm()
         {

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.Admin.Reservations
 {
@@ -20,7 +21,7 @@ namespace Project5LMS.Forms.Admin.Reservations
         public AdminReservationsForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void AdminReservationsForm_Load(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace Project5LMS.Forms.Admin.Reservations
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
@@ -556,14 +557,33 @@ namespace Project5LMS.Forms.Admin.Reservations
 
                     string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    string barcode = row["Barcode"] != DBNull.Value ? row["Barcode"].ToString() : "";
+                    // Try to get Barcode or AccessionNo from the row
+                    string barcode = "";
+                    if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
+                    {
+                        barcode = row["Barcode"].ToString();
+                    }
+                    else if (row.Table.Columns.Contains("AccessionNo") && row["AccessionNo"] != DBNull.Value)
+                    {
+                        barcode = row["AccessionNo"].ToString();
+                    }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
                     row["Book"] = $"{bookTitle} ({accessionNo})";
 
-                    if (row["ExpiryDate"] == DBNull.Value && row["ReservationDate"] != DBNull.Value)
+                    // Try to get ReservationDate or ReservedDate from the row
+                    DateTime? reservationDate = null;
+                    if (row.Table.Columns.Contains("ReservationDate") && row["ReservationDate"] != DBNull.Value)
                     {
-                        DateTime reservationDate = Convert.ToDateTime(row["ReservationDate"]);
-                        row["ExpiryDate"] = reservationDate.AddDays(7);
+                        reservationDate = Convert.ToDateTime(row["ReservationDate"]);
+                    }
+                    else if (row.Table.Columns.Contains("ReservedDate") && row["ReservedDate"] != DBNull.Value)
+                    {
+                        reservationDate = Convert.ToDateTime(row["ReservedDate"]);
+                    }
+                    
+                    if (row["ExpiryDate"] == DBNull.Value && reservationDate.HasValue)
+                    {
+                        row["ExpiryDate"] = reservationDate.Value.AddDays(7);
                     }
 
                     string currentStatus = row["Status"] != DBNull.Value ? row["Status"].ToString() : "Pending";
@@ -582,7 +602,16 @@ namespace Project5LMS.Forms.Admin.Reservations
                     }
                 }
 
-                pendingRows = pendingRows.OrderBy(r => Convert.ToDateTime(r["ReservationDate"])).ToList();
+                // Order by ReservationDate or ReservedDate
+                pendingRows = pendingRows.OrderBy(r => 
+                {
+                    if (r.Table.Columns.Contains("ReservationDate") && r["ReservationDate"] != DBNull.Value)
+                        return Convert.ToDateTime(r["ReservationDate"]);
+                    else if (r.Table.Columns.Contains("ReservedDate") && r["ReservedDate"] != DBNull.Value)
+                        return Convert.ToDateTime(r["ReservedDate"]);
+                    else
+                        return DateTime.MinValue;
+                }).ToList();
                 for (int i = 0; i < pendingRows.Count; i++)
                 {
                     pendingRows[i]["Priority"] = i + 1;
@@ -615,15 +644,28 @@ namespace Project5LMS.Forms.Admin.Reservations
                 bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
                 bool hasPriority = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Priority");
                 bool hasFulfilledDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "FulfilledDate");
+                bool hasReservationDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservationDate");
+                bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                
+                // Use ReservationDate if it exists, otherwise try alternative column names
+                string reservationDateColumn = hasReservationDate ? "r.ReservationDate" : 
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "r.ReservedDate" : 
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Date") ? "r.Date" : "NOW()"));
+                string reservationDateAlias = hasReservationDate ? "ReservationDate" : 
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "ReservedDate" : "ReservationDate");
+                
+                // Use Barcode if it exists, otherwise use AccessionNo
+                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
 
                 string query;
                 if (hasExpiryDate && hasPriority && hasFulfilledDate)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 r.ReservationID,
                                 r.MemberID,
                                 r.BookID,
-                                r.ReservationDate,
+                                {reservationDateColumn} as {reservationDateAlias},
                                 r.PickupDate,
                                 r.ExpiryDate,
                                 r.Status,
@@ -632,19 +674,19 @@ namespace Project5LMS.Forms.Admin.Reservations
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Reservations r
                              INNER JOIN Members m ON r.MemberID = m.MemberID
                              INNER JOIN Books b ON r.BookID = b.BookID
-                             ORDER BY r.ReservationDate DESC";
+                             ORDER BY {reservationDateColumn} DESC";
                 }
                 else
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 r.ReservationID,
                                 r.MemberID,
                                 r.BookID,
-                                r.ReservationDate,
+                                {reservationDateColumn} as {reservationDateAlias},
                                 r.PickupDate,
                                 NULL as ExpiryDate,
                                 r.Status,
@@ -653,11 +695,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Reservations r
                              INNER JOIN Members m ON r.MemberID = m.MemberID
                              INNER JOIN Books b ON r.BookID = b.BookID
-                             ORDER BY r.ReservationDate DESC";
+                             ORDER BY {reservationDateColumn} DESC";
                 }
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))

@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
         private readonly DatabaseContext _dbContext;
 

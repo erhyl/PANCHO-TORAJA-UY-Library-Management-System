@@ -2,20 +2,24 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Member.Search
 {
     public partial class MemberSearchForm : Form
     {
-        private string connectionString;
+        private readonly ISearchService _searchService;
 
         public MemberSearchForm()
         {
             InitializeComponent();
-            connectionString = DatabaseHelper.GetConnectionString();
+            _searchService = ServiceFactory.CreateSearchService();
         }
 
         private void MemberSearchForm_Load(object sender, EventArgs e)
@@ -76,47 +80,49 @@ namespace Project5LMS.Forms.Member.Search
             {
                 panelSearchResults.Controls.Clear();
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                SearchResults results = _searchService.SearchBooks(searchTerm);
+                
+                var filteredResults = results.Books;
+                
+                if (searchBy == "Author")
                 {
-                    conn.Open();
-
-                    string query = BuildSearchQuery(searchBy);
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        string searchPattern = "%" + searchTerm + "%";
-                        cmd.Parameters.AddWithValue("@SearchTerm", searchPattern);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            int yPos = 0;
-                            int resultCount = 0;
-
-                            while (reader.Read())
-                            {
-                                resultCount++;
-                                int bookID = reader.GetInt32("BookID");
-                                string title = reader["Title"].ToString();
-                                string author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : "Unknown";
-                                string isbn = reader["ISBN"] != DBNull.Value ? reader["ISBN"].ToString() : "N/A";
-                                string category = reader["Category"] != DBNull.Value ? reader["Category"].ToString() : "Uncategorized";
-                                int available = reader["Available"] != DBNull.Value ? Convert.ToInt32(reader["Available"]) : 0;
-
-                                bool isAvailable = available > 0;
-                                string status = isAvailable ? "Available" : "Borrowed";
-                                string location = $"Section A, Shelf {bookID % 20 + 1}";
-
-                                Panel bookCard = CreateBookCard(bookID, title, author, isbn, category, location, available, status, isAvailable);
-                                bookCard.Location = new Point(0, yPos);
-                                bookCard.Width = panelSearchResults.Width - 20;
-                                panelSearchResults.Controls.Add(bookCard);
-
-                                yPos += bookCard.Height + 15;
-                            }
-
-                            lblResultsCount.Text = $"Search Results ({resultCount})";
-                        }
-                    }
+                    filteredResults = results.Books.Where(b => b.Author != null && b.Author.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 }
+                else if (searchBy == "ISBN")
+                {
+                    filteredResults = results.Books.Where(b => b.ISBN != null && b.ISBN.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                }
+                else if (searchBy == "Category")
+                {
+                    filteredResults = results.Books.Where(b => b.Category != null && b.Category.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                }
+
+                int yPos = 0;
+                int resultCount = 0;
+
+                foreach (var book in filteredResults)
+                {
+                    resultCount++;
+                    int bookID = book.BookID;
+                    string title = book.Title;
+                    string author = book.Author ?? "Unknown";
+                    string isbn = book.ISBN ?? "N/A";
+                    string category = book.Category ?? "Uncategorized";
+                    int available = book.Available;
+
+                    bool isAvailable = available > 0;
+                    string status = isAvailable ? "Available" : "Borrowed";
+                    string location = $"Section A, Shelf {bookID % 20 + 1}";
+
+                    Panel bookCard = CreateBookCard(bookID, title, author, isbn, category, location, available, status, isAvailable);
+                    bookCard.Location = new Point(0, yPos);
+                    bookCard.Width = panelSearchResults.Width - 20;
+                    panelSearchResults.Controls.Add(bookCard);
+
+                    yPos += bookCard.Height + 15;
+                }
+
+                lblResultsCount.Text = $"Search Results ({resultCount})";
             }
             catch (Exception ex)
             {
@@ -124,40 +130,6 @@ namespace Project5LMS.Forms.Member.Search
             }
         }
 
-        private string BuildSearchQuery(string searchBy)
-        {
-            string baseQuery = @"SELECT 
-                                    b.BookID,
-                                    b.Title,
-                                    b.Author,
-                                    b.ISBN,
-                                    b.Category,
-                                    b.Available
-                                FROM Books b
-                                WHERE ";
-
-            switch (searchBy)
-            {
-                case "Title":
-                    baseQuery += "b.Title LIKE @SearchTerm";
-                    break;
-                case "Author":
-                    baseQuery += "b.Author LIKE @SearchTerm";
-                    break;
-                case "ISBN":
-                    baseQuery += "b.ISBN LIKE @SearchTerm";
-                    break;
-                case "Category":
-                    baseQuery += "b.Category LIKE @SearchTerm";
-                    break;
-                default:
-                    baseQuery += "b.Title LIKE @SearchTerm";
-                    break;
-            }
-
-            baseQuery += " ORDER BY b.Title LIMIT 100";
-            return baseQuery;
-        }
 
         private Panel CreateBookCard(int bookID, string title, string author, string isbn, string category, string location, int available, string status, bool isAvailable)
         {
@@ -215,7 +187,7 @@ namespace Project5LMS.Forms.Member.Search
 
             Label lblLocation = new Label
             {
-                Text = $"?? {location} • {available} copy{(available != 1 ? "ies" : "")} available",
+                Text = $"?? {location} ï¿½ {available} copy{(available != 1 ? "ies" : "")} available",
                 Font = new Font("Segoe UI", 11F),
                 ForeColor = Color.FromArgb(96, 96, 96),
                 Location = new Point(600, 50),
@@ -278,7 +250,7 @@ namespace Project5LMS.Forms.Member.Search
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = ServiceFactory.GetDbContext().GetConnection())
                 {
                     conn.Open();
 

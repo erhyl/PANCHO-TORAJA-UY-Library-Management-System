@@ -2,18 +2,19 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Models;
 using Project5LMS.Data;
 using Project5LMS.Helpers;
+using Project5LMS.Interfaces;
 using System;
 using System.Linq;
 
 namespace Project5LMS.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly DatabaseContext _db;
 
-        public UserService()
+        public UserService(DatabaseContext dbContext = null)
         {
-            _db = new DatabaseContext();
+            _db = dbContext ?? new DatabaseContext();
         }
 
         public User Login(string email, string password)

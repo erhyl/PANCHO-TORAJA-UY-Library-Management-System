@@ -257,7 +257,7 @@ namespace Project5LMS
                 {
                     try
                     {
-                        UserService userService = new UserService();
+                        var userService = ServiceFactory.CreateUserService();
                         var user = userService.Login(email, password);
 
                         this.Invoke((MethodInvoker)delegate

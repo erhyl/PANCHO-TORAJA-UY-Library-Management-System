@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.LibraryStaff.Inventory
 {
@@ -18,7 +19,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         public StaffInventoryForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void StaffInventoryForm_Load(object sender, EventArgs e)
@@ -302,7 +303,52 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT 
+                    
+                    // Check if Inventory table exists
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                              WHERE TABLE_SCHEMA = DATABASE() 
+                                              AND TABLE_NAME = 'Inventory'";
+                    bool hasInventoryTable = false;
+                    using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    {
+                        hasInventoryTable = Convert.ToInt32(checkCmd.ExecuteScalar()) > 0;
+                    }
+                    
+                    bool hasCondition = false;
+                    bool hasStatus = false;
+                    bool hasLastVerified = false;
+                    
+                    if (hasInventoryTable)
+                    {
+                        hasCondition = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Condition");
+                        hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Status");
+                        hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
+                    }
+                    
+                    // Build damaged subquery - check Condition column if it exists
+                    string damagedSubquery = hasInventoryTable && hasCondition
+                        ? @"(SELECT BookID, COUNT(*) as DamagedCount 
+                            FROM Inventory 
+                            WHERE Condition = 'Damaged' 
+                            GROUP BY BookID)"
+                        : @"(SELECT BookID, 0 as DamagedCount 
+                            FROM (SELECT 1) as dummy 
+                            WHERE 1=0)"; // Empty result if column doesn't exist
+                    
+                    // Build lost subquery - check Status column if it exists
+                    string lostSubquery = hasInventoryTable && hasStatus
+                        ? @"(SELECT BookID, COUNT(*) as LostCount 
+                            FROM Inventory 
+                            WHERE Status = 'Lost' 
+                            GROUP BY BookID)"
+                        : @"(SELECT BookID, 0 as LostCount 
+                            FROM (SELECT 1) as dummy 
+                            WHERE 1=0)"; // Empty result if column doesn't exist
+                    
+                    string lastVerifiedSelect = hasLastVerified ? "COALESCE(MAX(i.LastVerified), b.DateAdded)" : "b.DateAdded";
+                    string inventoryJoin = hasInventoryTable ? "LEFT JOIN Inventory i ON b.BookID = i.BookID" : "";
+                    
+                    string query = $@"SELECT 
                                     b.BookID,
                                     b.Title,
                                     b.Category,
@@ -312,25 +358,15 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                                     (b.Copies - b.Available) as CheckedOut,
                                     COALESCE(damaged.DamagedCount, 0) as Damaged,
                                     COALESCE(lost.LostCount, 0) as Lost,
-                                    COALESCE(MAX(i.LastVerified), b.DateAdded) as LastUpdated,
+                                    {lastVerifiedSelect} as LastUpdated,
                                     CASE 
                                         WHEN COALESCE(damaged.DamagedCount, 0) = 0 AND COALESCE(lost.LostCount, 0) = 0 THEN 'Good'
                                         ELSE 'Needs Attention'
                                     END as Status
                                     FROM Books b
-                                    LEFT JOIN (
-                                        SELECT BookID, COUNT(*) as DamagedCount 
-                                        FROM Inventory 
-                                        WHERE Condition = 'Damaged' 
-                                        GROUP BY BookID
-                                    ) damaged ON b.BookID = damaged.BookID
-                                    LEFT JOIN (
-                                        SELECT BookID, COUNT(*) as LostCount 
-                                        FROM Inventory 
-                                        WHERE Status = 'Lost' 
-                                        GROUP BY BookID
-                                    ) lost ON b.BookID = lost.BookID
-                                    LEFT JOIN Inventory i ON b.BookID = i.BookID";
+                                    LEFT JOIN {damagedSubquery} damaged ON b.BookID = damaged.BookID
+                                    LEFT JOIN {lostSubquery} lost ON b.BookID = lost.BookID
+                                    {inventoryJoin}";
 
                     if (currentCategoryFilter != "All")
                     {

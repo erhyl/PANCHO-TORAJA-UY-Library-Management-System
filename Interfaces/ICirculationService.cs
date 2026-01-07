@@ -1,13 +1,15 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Project5LMS.Models;
 
 namespace Project5LMS.Interfaces
 {
-    internal interface ICirculationService
+    public interface ICirculationService
     {
+        bool BorrowBook(int memberId, int bookId, int borrowDays = 7);
+        bool ReturnBook(int transactionId);
+        IEnumerable<CirculationRecord> GetMemberTransactions(int memberId);
+        IEnumerable<CirculationRecord> GetOverdueTransactions();
+        CirculationRecord GetActiveTransactionByBook(int bookId);
+        bool CanBorrow(int memberId);
     }
 }
-

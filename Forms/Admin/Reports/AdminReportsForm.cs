@@ -7,12 +7,14 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.Admin.Reports
 {
     public partial class AdminReportsForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
         private string currentReportType = "Circulation";
         private DateTime startDate;
         private DateTime endDate;
@@ -23,14 +25,7 @@ namespace Project5LMS.Forms.Admin.Reports
         public AdminReportsForm()
         {
             InitializeComponent();
-            try
-            {
-                connectionString = DatabaseHelper.GetConnectionString();
-            }
-            catch
-            {
-                connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
-            }
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void AdminReportsForm_Load(object sender, EventArgs e)
@@ -183,6 +178,7 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             panelChart.Paint += PanelChart_Circulation_Paint;
             panelContent.Controls.Add(panelChart);
+            panelChart.Invalidate(); // Force repaint to load data
         }
 
         private void PanelChart_Circulation_Paint(object sender, PaintEventArgs e)
@@ -231,6 +227,7 @@ namespace Project5LMS.Forms.Admin.Reports
             container.Controls.Add(tablePanel, 0, 1);
 
             panelContent.Controls.Add(container);
+            panelChart.Invalidate(); // Force repaint to load chart data
             LoadNewMemberRegistrations();
         }
 
@@ -293,6 +290,7 @@ namespace Project5LMS.Forms.Admin.Reports
             container.Controls.Add(tablePanel, 0, 1);
 
             panelContent.Controls.Add(container);
+            panelChart.Invalidate(); // Force repaint to load chart data
             LoadMostBorrowedBooks();
         }
 
@@ -405,7 +403,7 @@ namespace Project5LMS.Forms.Admin.Reports
             Dictionary<DateTime, int> data = new Dictionary<DateTime, int>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT DATE(BorrowDate) as Date, COUNT(*) as Count
@@ -432,6 +430,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading borrowing data: {ex.Message}");
+                MessageBox.Show($"Error loading borrowing data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return data;
         }
@@ -441,7 +440,7 @@ namespace Project5LMS.Forms.Admin.Reports
             Dictionary<DateTime, int> data = new Dictionary<DateTime, int>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT DATE(ReturnDate) as Date, COUNT(*) as Count
@@ -469,6 +468,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading return data: {ex.Message}");
+                MessageBox.Show($"Error loading return data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return data;
         }
@@ -478,14 +478,18 @@ namespace Project5LMS.Forms.Admin.Reports
             Dictionary<string, int> data = new Dictionary<string, int>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT m.MemberType, COUNT(DISTINCT t.TransactionID) as ActivityCount
+                    // Check if MemberType or Type column exists
+                    bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                    string typeColumn = hasMemberType ? "m.MemberType" : "m.Type";
+                    
+                    string query = $@"SELECT {typeColumn} as MemberType, COUNT(DISTINCT t.TransactionID) as ActivityCount
                                    FROM Transactions t
                                    INNER JOIN Members m ON t.MemberID = m.MemberID
                                    WHERE t.BorrowDate >= @StartDate AND t.BorrowDate <= @EndDate
-                                   GROUP BY m.MemberType";
+                                   GROUP BY {typeColumn}";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@StartDate", startDate);
@@ -505,6 +509,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading member activity: {ex.Message}");
+                MessageBox.Show($"Error loading member activity: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return data;
         }
@@ -514,7 +519,7 @@ namespace Project5LMS.Forms.Admin.Reports
             Dictionary<string, int> data = new Dictionary<string, int>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT b.Category, COUNT(*) as BorrowCount
@@ -542,6 +547,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading borrowing by category: {ex.Message}");
+                MessageBox.Show($"Error loading borrowing by category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return data;
         }
@@ -556,7 +562,7 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT 
@@ -580,6 +586,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading collection summary: {ex.Message}");
+                MessageBox.Show($"Error loading collection summary: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return summary;
         }
@@ -594,7 +601,7 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     bool hasFinesTable = CheckTableExists(conn, "Fines");
@@ -674,7 +681,7 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT 
@@ -700,6 +707,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading usage statistics: {ex.Message}");
+                MessageBox.Show($"Error loading usage statistics: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return stats;
         }
@@ -708,13 +716,17 @@ namespace Project5LMS.Forms.Admin.Reports
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT 
+                    // Check if MemberType or Type column exists
+                    bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                    string typeColumn = hasMemberType ? "MemberType" : "Type";
+                    
+                    string query = $@"SELECT 
                                     MemberID as 'MEMBER ID',
                                     CONCAT(FirstName, ' ', LastName) as 'NAME',
-                                    MemberType as 'MEMBER TYPE',
+                                    {typeColumn} as 'MEMBER TYPE',
                                     DATE(RegistrationDate) as 'REGISTRATION DATE'
                                     FROM Members
                                     WHERE RegistrationDate >= @StartDate AND RegistrationDate <= @EndDate
@@ -736,6 +748,7 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading new member registrations: {ex.Message}");
+                MessageBox.Show($"Error loading new member registrations: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -743,16 +756,18 @@ namespace Project5LMS.Forms.Admin.Reports
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
+                    // MySQL doesn't support ROW_NUMBER() in older versions, use alternative
                     string query = @"SELECT 
-                                    ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) as '#',
+                                    @row_number := @row_number + 1 as '#',
                                     b.Title as 'TITLE',
                                     b.Author as 'AUTHOR',
                                     COUNT(*) as 'TIMES BORROWED'
                                     FROM Transactions t
                                     INNER JOIN Books b ON t.BookID = b.BookID
+                                    CROSS JOIN (SELECT @row_number := 0) r
                                     WHERE t.BorrowDate >= @StartDate AND t.BorrowDate <= @EndDate
                                     GROUP BY b.BookID, b.Title, b.Author
                                     ORDER BY COUNT(*) DESC
@@ -773,6 +788,39 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading most borrowed books: {ex.Message}");
+                // Try simpler query without ROW_NUMBER
+                try
+                {
+                    using (var conn = _dbContext.GetConnection())
+                    {
+                        conn.Open();
+                        string simpleQuery = @"SELECT 
+                                            b.Title as 'TITLE',
+                                            b.Author as 'AUTHOR',
+                                            COUNT(*) as 'TIMES BORROWED'
+                                            FROM Transactions t
+                                            INNER JOIN Books b ON t.BookID = b.BookID
+                                            WHERE t.BorrowDate >= @StartDate AND t.BorrowDate <= @EndDate
+                                            GROUP BY b.BookID, b.Title, b.Author
+                                            ORDER BY COUNT(*) DESC
+                                            LIMIT 10";
+                        using (MySqlCommand cmd = new MySqlCommand(simpleQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@StartDate", startDate);
+                            cmd.Parameters.AddWithValue("@EndDate", endDate);
+                            using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                            {
+                                DataTable dt = new DataTable();
+                                adapter.Fill(dt);
+                                dataGridViewReports.DataSource = dt;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show($"Error loading most borrowed books: {ex2.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -780,7 +828,7 @@ namespace Project5LMS.Forms.Admin.Reports
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"SELECT 
@@ -795,7 +843,7 @@ namespace Project5LMS.Forms.Admin.Reports
                                     AND t.ReturnDate IS NULL
                                     AND t.DueDate < NOW()
                                     GROUP BY m.MemberID, m.FirstName, m.LastName
-                                    ORDER BY DAYS OVERDUE DESC";
+                                    ORDER BY MAX(DATEDIFF(NOW(), t.DueDate)) DESC";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -803,15 +851,19 @@ namespace Project5LMS.Forms.Admin.Reports
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
                             dataGridViewReports.DataSource = dt;
-                            dataGridViewReports.Columns["FINE AMOUNT"].DefaultCellStyle.Format = "C2";
-                            dataGridViewReports.Columns["FINE AMOUNT"].DefaultCellStyle.ForeColor = Color.Red;
+                            if (dataGridViewReports.Columns.Contains("FINE AMOUNT"))
+                            {
+                                dataGridViewReports.Columns["FINE AMOUNT"].DefaultCellStyle.Format = "C2";
+                                dataGridViewReports.Columns["FINE AMOUNT"].DefaultCellStyle.ForeColor = Color.Red;
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error loading overdue books: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error loading overdue books report: {ex.Message}");
+                MessageBox.Show($"Error loading overdue books report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

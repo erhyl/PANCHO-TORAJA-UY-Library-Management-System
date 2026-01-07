@@ -121,10 +121,10 @@
             this.btnExportReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportReport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExportReport.ForeColor = System.Drawing.Color.White;
-            this.btnExportReport.Location = new System.Drawing.Point(1318, 10);
+            this.btnExportReport.Location = new System.Drawing.Point(1304, 8);
             this.btnExportReport.Margin = new System.Windows.Forms.Padding(4);
             this.btnExportReport.Name = "btnExportReport";
-            this.btnExportReport.Size = new System.Drawing.Size(148, 40);
+            this.btnExportReport.Size = new System.Drawing.Size(208, 42);
             this.btnExportReport.TabIndex = 2;
             this.btnExportReport.Text = "📥 Export Report";
             this.btnExportReport.UseVisualStyleBackColor = false;
@@ -132,11 +132,11 @@
             // 
             // btnStatisticalReports
             // 
-            this.btnStatisticalReports.BackColor = System.Drawing.Color.White;
+            this.btnStatisticalReports.BackColor = System.Drawing.Color.Maroon;
             this.btnStatisticalReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnStatisticalReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStatisticalReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStatisticalReports.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnStatisticalReports.ForeColor = System.Drawing.Color.White;
             this.btnStatisticalReports.Location = new System.Drawing.Point(788, 0);
             this.btnStatisticalReports.Margin = new System.Windows.Forms.Padding(4);
             this.btnStatisticalReports.Name = "btnStatisticalReports";
@@ -148,11 +148,11 @@
             // 
             // btnFinancialReports
             // 
-            this.btnFinancialReports.BackColor = System.Drawing.Color.White;
+            this.btnFinancialReports.BackColor = System.Drawing.Color.Maroon;
             this.btnFinancialReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnFinancialReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFinancialReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFinancialReports.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnFinancialReports.ForeColor = System.Drawing.Color.White;
             this.btnFinancialReports.Location = new System.Drawing.Point(592, 0);
             this.btnFinancialReports.Margin = new System.Windows.Forms.Padding(4);
             this.btnFinancialReports.Name = "btnFinancialReports";
@@ -164,11 +164,11 @@
             // 
             // btnCollectionReports
             // 
-            this.btnCollectionReports.BackColor = System.Drawing.Color.White;
+            this.btnCollectionReports.BackColor = System.Drawing.Color.Maroon;
             this.btnCollectionReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnCollectionReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCollectionReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCollectionReports.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnCollectionReports.ForeColor = System.Drawing.Color.White;
             this.btnCollectionReports.Location = new System.Drawing.Point(397, 0);
             this.btnCollectionReports.Margin = new System.Windows.Forms.Padding(4);
             this.btnCollectionReports.Name = "btnCollectionReports";
@@ -180,11 +180,11 @@
             // 
             // btnMemberReports
             // 
-            this.btnMemberReports.BackColor = System.Drawing.Color.White;
+            this.btnMemberReports.BackColor = System.Drawing.Color.Maroon;
             this.btnMemberReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnMemberReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMemberReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMemberReports.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMemberReports.ForeColor = System.Drawing.Color.White;
             this.btnMemberReports.Location = new System.Drawing.Point(198, 0);
             this.btnMemberReports.Margin = new System.Windows.Forms.Padding(4);
             this.btnMemberReports.Name = "btnMemberReports";
@@ -239,7 +239,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(10, 0);
+            this.lblTitle.Location = new System.Drawing.Point(4, 0);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(434, 54);

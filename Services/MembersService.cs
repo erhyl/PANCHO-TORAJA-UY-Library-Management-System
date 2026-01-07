@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using Project5LMS.Models;
 using Project5LMS.Repositories;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
-    public class MembersService
+    public class MembersService : IMembersService
     {
         private readonly IMemberRepository _memberRepository;
 

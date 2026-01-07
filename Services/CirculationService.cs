@@ -4,10 +4,11 @@ using Project5LMS.Models;
 using Project5LMS.Repositories;
 using Project5LMS.Data;
 using Project5LMS.Helpers;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
-    public class CirculationService
+    public class CirculationService : ICirculationService
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IBookRepository _bookRepository;

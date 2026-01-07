@@ -4,10 +4,11 @@ using System.Linq;
 using Project5LMS.Models;
 using Project5LMS.Repositories;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
-    public class DashboardService
+    public class DashboardService : IDashboardService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMemberRepository _memberRepository;
@@ -312,11 +313,5 @@ namespace Project5LMS.Services
         }
     }
 
-    public class DashboardActivity
-    {
-        public string Type { get; set; }
-        public string Details { get; set; }
-        public DateTime Timestamp { get; set; }
-    }
 }
 

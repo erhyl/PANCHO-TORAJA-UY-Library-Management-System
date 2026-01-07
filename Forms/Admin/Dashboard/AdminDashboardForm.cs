@@ -8,6 +8,8 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
+using Project5LMS.Models;
 using Project5LMS.Forms.Admin.UserManagement;
 using Project5LMS.Forms.Admin.Settings;
 using Project5LMS.Forms.Admin.Reports;
@@ -23,14 +25,14 @@ namespace Project5LMS.Forms.Admin.Dashboard
 {
     public partial class AdminDashboardForm : Form
     {
-        private readonly DashboardService _dashboardService;
-        private readonly FinesService _finesService;
+        private readonly IDashboardService _dashboardService;
+        private readonly IFinesService _finesService;
         private readonly DatabaseContext _dbContext;
 
         public AdminDashboardForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
 
             try
             {

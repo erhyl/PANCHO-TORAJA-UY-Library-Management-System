@@ -5,17 +5,22 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Services;
+using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Member.Profile
 {
     public partial class MemberProfileForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
+        private readonly IMembersService _membersService;
 
         public MemberProfileForm()
         {
             InitializeComponent();
-            connectionString = DatabaseHelper.GetConnectionString();
+            _dbContext = ServiceFactory.GetDbContext();
+            _membersService = ServiceFactory.CreateMembersService();
             this.Load += MemberProfileForm_Load;
             this.VisibleChanged += MemberProfileForm_VisibleChanged;
 
@@ -52,7 +57,7 @@ namespace Project5LMS.Forms.Member.Profile
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -74,15 +79,17 @@ namespace Project5LMS.Forms.Member.Profile
             try
             {
 
-                bool hasContact = CheckColumnExists(conn, "Members", "Contact");
-                bool hasAddress = CheckColumnExists(conn, "Members", "Address");
+                bool hasContact = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Contact");
+                bool hasAddress = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Address");
+                bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                string typeColumn = hasMemberType ? "MemberType" : "Type";
 
-                string query = @"SELECT 
+                string query = $@"SELECT 
                                     MemberID,
                                     FirstName,
                                     LastName,
                                     Email,
-                                    MemberType,
+                                    {typeColumn} as MemberType,
                                     RegistrationDate,
                                     ExpirationDate,
                                     Status" +
@@ -201,7 +208,9 @@ namespace Project5LMS.Forms.Member.Profile
                 int reservationLimit = 5;
                 decimal fineRate = 1.00m;
 
-                string memberTypeQuery = "SELECT MemberType FROM Members WHERE MemberID = @MemberID";
+                bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                string typeColumn = hasMemberType ? "MemberType" : "Type";
+                string memberTypeQuery = $"SELECT {typeColumn} FROM Members WHERE MemberID = @MemberID";
                 using (MySqlCommand cmd = new MySqlCommand(memberTypeQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@MemberID", memberID);
@@ -353,32 +362,6 @@ namespace Project5LMS.Forms.Member.Profile
             }
         }
 
-        private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
-        {
-            try
-            {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @TableName 
-                                AND COLUMN_NAME = @ColumnName";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@TableName", tableName);
-                    cmd.Parameters.AddWithValue("@ColumnName", columnName);
-                    object result = cmd.ExecuteScalar();
-                    if (result != null && result != DBNull.Value)
-                    {
-                        int count = Convert.ToInt32(result);
-                        return count > 0;
-                    }
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         private void panelAvatar_Paint(object sender, PaintEventArgs e)
         {
@@ -600,6 +583,16 @@ namespace Project5LMS.Forms.Member.Profile
                 };
                 g.DrawPolygon(pen, shield);
             }
+        }
+
+        private void lblAddressLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPhoneValue_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

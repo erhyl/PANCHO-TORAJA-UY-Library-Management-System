@@ -4,10 +4,11 @@ using Project5LMS.Models;
 using Project5LMS.Repositories;
 using Project5LMS.Strategies;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
-    public class FinesService
+    public class FinesService : IFinesService
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IFineCalculationStrategy _fineStrategy;

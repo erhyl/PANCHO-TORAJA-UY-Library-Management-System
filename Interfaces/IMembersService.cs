@@ -1,13 +1,18 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Project5LMS.Models;
 
 namespace Project5LMS.Interfaces
 {
-    internal interface IMembersService
+    public interface IMembersService
     {
+        Member GetMember(int memberId);
+        Member GetMemberByEmail(string email);
+        IEnumerable<Member> GetAllMembers();
+        IEnumerable<Member> SearchMembers(string searchTerm);
+        bool AddMember(Member member);
+        bool UpdateMember(Member member);
+        bool DeleteMember(int memberId);
+        bool MemberExists(int memberId);
+        int GetActiveBorrowingCount(int memberId);
     }
 }
-

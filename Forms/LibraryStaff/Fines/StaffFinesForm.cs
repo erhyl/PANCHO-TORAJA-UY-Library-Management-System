@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.LibraryStaff.Fines
 {
@@ -20,7 +21,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         public StaffFinesForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void StaffFinesForm_Load(object sender, EventArgs e)
@@ -253,14 +254,24 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
                 bool hasCreatedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "CreatedDate");
                 bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
+                bool hasBookID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "BookID");
+                bool hasTransactionID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "TransactionID");
+
+                // Build BookID selection - use BookID if exists, otherwise try to get from TransactionID
+                string bookIDSelect = hasBookID ? "f.BookID," : "NULL as BookID,";
+                string bookJoin = hasBookID 
+                    ? "LEFT JOIN Books b ON f.BookID = b.BookID" 
+                    : (hasTransactionID 
+                        ? "LEFT JOIN Transactions t ON f.TransactionID = t.TransactionID LEFT JOIN Books b ON t.BookID = b.BookID"
+                        : "LEFT JOIN Books b ON 1=0"); // No join if neither column exists
 
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasCreatedDate)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
-                                f.BookID,
+                                {bookIDSelect}
                                 f.FineType,
                                 f.Amount,
                                 f.Paid,
@@ -268,21 +279,21 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                                 f.DaysOverdue,
                                 f.Description,
                                 f.CreatedDate,
-                                f.PaidDate,
+                                " + (hasPaidDate ? "f.PaidDate," : "NULL as PaidDate,") + @"
                                 m.FirstName,
                                 m.LastName,
                                 b.Title as BookTitle
                              FROM Fines f
                              INNER JOIN Members m ON f.MemberID = m.MemberID
-                             LEFT JOIN Books b ON f.BookID = b.BookID
+                             " + bookJoin + @"
                              ORDER BY f.CreatedDate DESC";
                 }
                 else
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
-                                f.BookID,
+                                {bookIDSelect}
                                 COALESCE(f.FineType, 'Overdue') as FineType,
                                 f.Amount,
                                 f.Paid,
@@ -296,7 +307,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                                 b.Title as BookTitle
                              FROM Fines f
                              INNER JOIN Members m ON f.MemberID = m.MemberID
-                             LEFT JOIN Books b ON f.BookID = b.BookID
+                             " + bookJoin + @"
                              ORDER BY f.FineID DESC";
                 }
 

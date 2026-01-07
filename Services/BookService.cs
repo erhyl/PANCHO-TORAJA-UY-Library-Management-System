@@ -3,10 +3,11 @@ using System.Linq;
 using Project5LMS.Models;
 using Project5LMS.Repositories;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
-    public class BookService
+    public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
 

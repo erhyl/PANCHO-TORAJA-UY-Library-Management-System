@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.Members;
 
 namespace Project5LMS.Forms.LibraryStaff.Members
@@ -16,7 +17,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
     public partial class StaffMembersForm : Form
     {
         private DataTable allMembersData;
-        private readonly MembersService _membersService;
+        private readonly IMembersService _membersService;
         private const string SearchPlaceholder = "Search by name, ID, or email...";
 
         public StaffMembersForm()
@@ -196,13 +197,15 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 conn.Open();
 
                 bool hasContact = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Contact");
+                bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                string typeColumn = hasMemberType ? "MemberType" : "Type";
 
                 string query = hasContact
-                    ? @"SELECT 
+                    ? $@"SELECT 
                             MemberID,
                             FirstName,
                             LastName,
-                            MemberType,
+                            {typeColumn} as MemberType,
                             Email,
                             Contact,
                             RegistrationDate,
@@ -210,11 +213,11 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                             Status
                          FROM Members
                          ORDER BY LastName, FirstName"
-                    : @"SELECT 
+                    : $@"SELECT 
                             MemberID,
                             FirstName,
                             LastName,
-                            MemberType,
+                            {typeColumn} as MemberType,
                             Email,
                             RegistrationDate,
                             ExpirationDate,

@@ -5,17 +5,19 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
+using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.Member.Reservations
 {
     public partial class MemberReservationsForm : Form
     {
-        private string connectionString;
+        private readonly DatabaseContext _dbContext;
 
         public MemberReservationsForm()
         {
             InitializeComponent();
-            connectionString = DatabaseHelper.GetConnectionString();
+            _dbContext = ServiceFactory.GetDbContext();
             this.Load += MemberReservationsForm_Load;
             this.VisibleChanged += MemberReservationsForm_VisibleChanged;
 
@@ -54,7 +56,7 @@ namespace Project5LMS.Forms.Member.Reservations
             {
                 panelReservationsList.Controls.Clear();
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
 
@@ -372,7 +374,7 @@ namespace Project5LMS.Forms.Member.Reservations
             {
                 try
                 {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    using (var conn = _dbContext.GetConnection())
                     {
                         conn.Open();
 

@@ -1,6 +1,7 @@
 using Project5LMS.Data;
 using Project5LMS.Repositories;
 using Project5LMS.Strategies;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Services
 {
@@ -24,27 +25,27 @@ namespace Project5LMS.Services
             return _dbContext;
         }
 
-        public static BookService CreateBookService()
+        public static IBookService CreateBookService()
         {
             return new BookService(new BookRepository(GetDbContext()));
         }
 
-        public static BookService CreateBookService(DatabaseContext dbContext)
+        public static IBookService CreateBookService(DatabaseContext dbContext)
         {
             return new BookService(new BookRepository(dbContext));
         }
 
-        public static FinesService CreateFinesService()
+        public static IFinesService CreateFinesService()
         {
             return new FinesService(new TransactionRepository(GetDbContext()), new StandardFineStrategy());
         }
 
-        public static FinesService CreateFinesService(IFineCalculationStrategy strategy)
+        public static IFinesService CreateFinesService(IFineCalculationStrategy strategy)
         {
             return new FinesService(new TransactionRepository(GetDbContext()), strategy);
         }
 
-        public static CirculationService CreateCirculationService()
+        public static ICirculationService CreateCirculationService()
         {
             var dbContext = GetDbContext();
             return new CirculationService(
@@ -53,26 +54,36 @@ namespace Project5LMS.Services
                 new MemberRepository(dbContext));
         }
 
-        public static MembersService CreateMembersService()
+        public static IMembersService CreateMembersService()
         {
             return new MembersService(new MemberRepository(GetDbContext()));
         }
 
-        public static DashboardService CreateDashboardService()
+        public static IDashboardService CreateDashboardService()
         {
             var dbContext = GetDbContext();
             return new DashboardService(dbContext);
         }
 
-        public static SearchService CreateSearchService()
+        public static ISearchService CreateSearchService()
         {
             var dbContext = GetDbContext();
             return new SearchService(dbContext);
         }
 
-        public static SettingsService CreateSettingsService()
+        public static ISettingsService CreateSettingsService()
         {
             return new SettingsService(GetDbContext());
+        }
+
+        public static IUserService CreateUserService()
+        {
+            return new UserService(GetDbContext());
+        }
+
+        public static IUserService CreateUserService(DatabaseContext dbContext)
+        {
+            return new UserService(dbContext);
         }
     }
 }

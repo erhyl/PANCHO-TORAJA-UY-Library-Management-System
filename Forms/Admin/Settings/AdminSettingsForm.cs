@@ -6,20 +6,21 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.UserManagement;
 
 namespace Project5LMS.Forms.Admin.Settings
 {
     public partial class AdminSettingsForm : Form
     {
-        private readonly SettingsService _settingsService;
-        private readonly UserService _userService;
+        private readonly ISettingsService _settingsService;
+        private readonly IUserService _userService;
         private readonly DatabaseContext _dbContext;
 
         public AdminSettingsForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
 
             try
             {
@@ -35,7 +36,7 @@ namespace Project5LMS.Forms.Admin.Settings
             }
 
             _settingsService = ServiceFactory.CreateSettingsService();
-            _userService = new UserService();
+            _userService = ServiceFactory.CreateUserService();
         }
 
         private void AdminSettingsForm_Load(object sender, EventArgs e)
@@ -596,7 +597,7 @@ namespace Project5LMS.Forms.Admin.Settings
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 string query = "SELECT COUNT(*) FROM Users WHERE Role = 'LibraryStaff'";
                 var result = dbContext.ExecuteQuery(query);
                 if (result.Rows.Count > 0)

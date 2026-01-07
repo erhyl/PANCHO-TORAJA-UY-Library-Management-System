@@ -9,6 +9,7 @@ using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Repositories;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Admin.Fines
 {
@@ -17,16 +18,16 @@ namespace Project5LMS.Forms.Admin.Fines
         private DataTable allFinesData;
         private string currentStatusFilter = "All Status";
         private string currentTypeFilter = "All Types";
-        private readonly FinesService _finesService;
+        private readonly IFinesService _finesService;
         private readonly ITransactionRepository _transactionRepository;
-        private readonly MembersService _membersService;
-        private readonly BookService _bookService;
+        private readonly IMembersService _membersService;
+        private readonly IBookService _bookService;
 
         public AdminFinesForm()
         {
             InitializeComponent();
+            var dbContext = ServiceFactory.GetDbContext();
             _finesService = ServiceFactory.CreateFinesService();
-            var dbContext = new DatabaseContext();
             _transactionRepository = new TransactionRepository(dbContext);
             _membersService = ServiceFactory.CreateMembersService();
             _bookService = ServiceFactory.CreateBookService();
@@ -44,7 +45,7 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
@@ -526,7 +527,7 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 string queryPending = @"SELECT COALESCE(SUM(Amount - Paid), 0) FROM Fines 
                                       WHERE Status = 'Pending' OR Status = 'Partial'";
                 var pendingResult = dbContext.ExecuteQuery(queryPending);
@@ -606,7 +607,16 @@ namespace Project5LMS.Forms.Admin.Fines
                     {
                         string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                         int bookId = Convert.ToInt32(row["BookID"]);
-                        string barcode = row["Barcode"] != DBNull.Value ? row["Barcode"].ToString() : "";
+                        // Try to get Barcode or AccessionNo from the row
+                        string barcode = "";
+                        if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
+                        {
+                            barcode = row["Barcode"].ToString();
+                        }
+                        else if (row.Table.Columns.Contains("AccessionNo") && row["AccessionNo"] != DBNull.Value)
+                        {
+                            barcode = row["AccessionNo"].ToString();
+                        }
                         string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
                         row["BookItem"] = $"{bookTitle} ({accessionNo})";
                     }
@@ -665,7 +675,7 @@ namespace Project5LMS.Forms.Admin.Fines
 
         private DataTable GetFinesData()
         {
-            var dbContext = new DatabaseContext();
+            var dbContext = ServiceFactory.GetDbContext();
             using (var conn = dbContext.GetConnection())
             {
                 conn.Open();
@@ -674,11 +684,16 @@ namespace Project5LMS.Forms.Admin.Fines
                 bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
                 bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
                 bool hasTransactionID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "TransactionID");
+                bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                
+                // Use Barcode if it exists, otherwise use AccessionNo
+                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
 
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasTransactionID)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
                                 f.BookID,
@@ -692,7 +707,7 @@ namespace Project5LMS.Forms.Admin.Fines
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Fines f
                              INNER JOIN Members m ON f.MemberID = m.MemberID
                              LEFT JOIN Books b ON f.BookID = b.BookID
@@ -700,7 +715,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 }
                 else
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
                                 f.BookID,
@@ -714,7 +729,7 @@ namespace Project5LMS.Forms.Admin.Fines
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Fines f
                              INNER JOIN Members m ON f.MemberID = m.MemberID
                              LEFT JOIN Books b ON f.BookID = b.BookID
@@ -753,7 +768,7 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
@@ -794,7 +809,7 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
@@ -840,7 +855,7 @@ namespace Project5LMS.Forms.Admin.Fines
 
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();

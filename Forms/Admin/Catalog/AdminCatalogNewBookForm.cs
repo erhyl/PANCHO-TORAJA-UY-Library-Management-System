@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
+using Project5LMS.Services;
 
 namespace Project5LMS.Forms.Admin.Catalog
 {
@@ -16,7 +17,7 @@ namespace Project5LMS.Forms.Admin.Catalog
         public AdminCatalogNewBookForm()
         {
             InitializeComponent();
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
         }
 
         private void AdminCatalogNewBookForm_Load(object sender, EventArgs e)

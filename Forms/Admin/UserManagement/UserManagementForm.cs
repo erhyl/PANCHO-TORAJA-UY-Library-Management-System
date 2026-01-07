@@ -10,6 +10,7 @@ using Project5LMS.Helpers;
 using Project5LMS.Models;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Admin.UserManagement
 {
@@ -17,7 +18,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
     {
         private List<User> allUsers = new List<User>();
         private List<User> filteredUsers = new List<User>();
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
         public UserManagementForm()
         {
@@ -36,7 +37,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 return;
             }
 
-            _userService = new UserService();
+            _userService = ServiceFactory.CreateUserService();
         }
 
         private void UserManagementForm_Load(object sender, EventArgs e)
@@ -117,7 +118,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 allUsers.Clear();
                 panelUsersContainer.Controls.Clear();
 
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 string query = @"SELECT UserID, Email, FirstName, LastName, Role 
                                 FROM Users 
                                 ORDER BY FirstName, LastName";
@@ -510,8 +511,21 @@ namespace Project5LMS.Forms.Admin.UserManagement
 
         private void btnAddNewUser_Click(object sender, EventArgs e)
         {
-
-            MessageBox.Show("Add New User functionality - to be implemented", "Add User", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                using (AddUserForm addUserForm = new AddUserForm())
+                {
+                    if (addUserForm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadUsers();
+                        LoadMetrics();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening add user form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void EditUser(User user)
@@ -532,7 +546,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             {
                 try
                 {
-                    var dbContext = new DatabaseContext();
+                    var dbContext = ServiceFactory.GetDbContext();
                     using (var conn = dbContext.GetConnection())
                     {
                         conn.Open();
@@ -586,7 +600,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             {
                 try
                 {
-                    var dbContext = new DatabaseContext();
+                    var dbContext = ServiceFactory.GetDbContext();
                     using (var conn = dbContext.GetConnection())
                     {
                         conn.Open();
@@ -624,7 +638,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
@@ -649,7 +663,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
         {
             try
             {
-                var dbContext = new DatabaseContext();
+                var dbContext = ServiceFactory.GetDbContext();
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();

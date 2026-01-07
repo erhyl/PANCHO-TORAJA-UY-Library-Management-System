@@ -7,16 +7,17 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
+using Project5LMS.Interfaces;
 
 namespace Project5LMS.Forms.Admin.Circulation
 {
     public partial class AdminCirculationForm : Form
     {
         private DataTable allTransactionsData;
-        private readonly CirculationService _circulationService;
-        private readonly FinesService _finesService;
-        private readonly BookService _bookService;
-        private readonly MembersService _membersService;
+        private readonly ICirculationService _circulationService;
+        private readonly IFinesService _finesService;
+        private readonly IBookService _bookService;
+        private readonly IMembersService _membersService;
         private readonly DatabaseContext _dbContext;
 
         public AdminCirculationForm()
@@ -36,7 +37,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 return;
             }
 
-            _dbContext = new DatabaseContext();
+            _dbContext = ServiceFactory.GetDbContext();
             _circulationService = ServiceFactory.CreateCirculationService();
             _finesService = ServiceFactory.CreateFinesService();
             _bookService = ServiceFactory.CreateBookService();
@@ -419,7 +420,16 @@ namespace Project5LMS.Forms.Admin.Circulation
 
                     string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    string barcode = row["Barcode"] != DBNull.Value ? row["Barcode"].ToString() : "";
+                    // Try to get Barcode or AccessionNo from the row
+                    string barcode = "";
+                    if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
+                    {
+                        barcode = row["Barcode"].ToString();
+                    }
+                    else if (row.Table.Columns.Contains("AccessionNo") && row["AccessionNo"] != DBNull.Value)
+                    {
+                        barcode = row["AccessionNo"].ToString();
+                    }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
                     row["Book"] = $"{bookTitle} ({accessionNo})";
 
@@ -466,11 +476,16 @@ namespace Project5LMS.Forms.Admin.Circulation
 
                 bool hasTransactionType = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "TransactionType");
                 bool hasFine = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "Fine");
+                bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                
+                // Use Barcode if it exists, otherwise use AccessionNo
+                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
 
                 string query;
                 if (hasTransactionType && hasFine)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 t.TransactionID,
                                 t.MemberID,
                                 t.BookID,
@@ -483,7 +498,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Transactions t
                              INNER JOIN Members m ON t.MemberID = m.MemberID
                              INNER JOIN Books b ON t.BookID = b.BookID
@@ -492,7 +507,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
                 else if (hasTransactionType)
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 t.TransactionID,
                                 t.MemberID,
                                 t.BookID,
@@ -505,7 +520,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Transactions t
                              INNER JOIN Members m ON t.MemberID = m.MemberID
                              INNER JOIN Books b ON t.BookID = b.BookID
@@ -514,7 +529,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
                 else
                 {
-                    query = @"SELECT 
+                    query = $@"SELECT 
                                 t.TransactionID,
                                 t.MemberID,
                                 t.BookID,
@@ -527,7 +542,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                                 m.FirstName,
                                 m.LastName,
                                 b.Title,
-                                b.Barcode
+                                {bookIdentifier} as {bookIdentifierAlias}
                              FROM Transactions t
                              INNER JOIN Members m ON t.MemberID = m.MemberID
                              INNER JOIN Books b ON t.BookID = b.BookID
