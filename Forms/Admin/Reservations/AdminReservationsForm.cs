@@ -645,7 +645,9 @@ namespace Project5LMS.Forms.Admin.Reservations
                 bool hasPriority = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Priority");
                 bool hasFulfilledDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "FulfilledDate");
                 bool hasReservationDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservationDate");
+                bool hasPickupDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "PickupDate");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
                 
                 // Use ReservationDate if it exists, otherwise try alternative column names
                 string reservationDateColumn = hasReservationDate ? "r.ReservationDate" : 
@@ -654,9 +656,12 @@ namespace Project5LMS.Forms.Admin.Reservations
                 string reservationDateAlias = hasReservationDate ? "ReservationDate" : 
                     (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "ReservedDate" : "ReservationDate");
                 
-                // Use Barcode if it exists, otherwise use AccessionNo
-                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
-                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
+                // Use PickupDate if it exists, otherwise use NULL
+                string pickupDateSelect = hasPickupDate ? "r.PickupDate," : "NULL as PickupDate,";
+                
+                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
+                string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
 
                 string query;
                 if (hasExpiryDate && hasPriority && hasFulfilledDate)
@@ -666,7 +671,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                                 r.MemberID,
                                 r.BookID,
                                 {reservationDateColumn} as {reservationDateAlias},
-                                r.PickupDate,
+                                {pickupDateSelect}
                                 r.ExpiryDate,
                                 r.Status,
                                 r.Priority,
@@ -687,7 +692,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                                 r.MemberID,
                                 r.BookID,
                                 {reservationDateColumn} as {reservationDateAlias},
-                                r.PickupDate,
+                                {pickupDateSelect}
                                 NULL as ExpiryDate,
                                 r.Status,
                                 0 as Priority,
@@ -748,11 +753,17 @@ namespace Project5LMS.Forms.Admin.Reservations
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = "UPDATE Reservations SET Status = 'Ready', PickupDate = @PickupDate WHERE ReservationID = @ReservationID";
+                    bool hasPickupDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "PickupDate");
+                    string query = hasPickupDate 
+                        ? "UPDATE Reservations SET Status = 'Ready', PickupDate = @PickupDate WHERE ReservationID = @ReservationID"
+                        : "UPDATE Reservations SET Status = 'Ready' WHERE ReservationID = @ReservationID";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@ReservationID", reservationId);
-                        cmd.Parameters.AddWithValue("@PickupDate", DateTime.Now);
+                        if (hasPickupDate)
+                        {
+                            cmd.Parameters.AddWithValue("@PickupDate", DateTime.Now);
+                        }
                         cmd.ExecuteNonQuery();
                     }
                 }

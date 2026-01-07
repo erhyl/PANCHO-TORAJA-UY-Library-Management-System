@@ -571,7 +571,10 @@ namespace Project5LMS.Forms.Admin.Inventory
                         lblMetricNeedsRepairValue.Text = needsRepair.ToString();
                     }
 
-                    string queryDamaged = "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'";
+                    bool hasCondition = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Condition");
+                    string queryDamaged = hasCondition 
+                        ? "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'"
+                        : "SELECT 0"; // Return 0 if Condition column doesn't exist
                     using (MySqlCommand cmd = new MySqlCommand(queryDamaged, conn))
                     {
                         int damaged = Convert.ToInt32(cmd.ExecuteScalar());
@@ -609,9 +612,18 @@ namespace Project5LMS.Forms.Admin.Inventory
 
                 foreach (DataRow row in allInventoryData.Rows)
                 {
-
-                    string title = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
-                    string author = row["Author"] != DBNull.Value ? row["Author"].ToString() : "";
+                    string title = "";
+                    if (row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value)
+                    {
+                        title = row["Title"].ToString();
+                    }
+                    
+                    string author = "";
+                    if (row.Table.Columns.Contains("Author") && row["Author"] != DBNull.Value)
+                    {
+                        author = row["Author"].ToString();
+                    }
+                    
                     int bookId = Convert.ToInt32(row["BookID"]);
                     // Try to get Barcode or AccessionNo from the row
                     string barcode = "";
@@ -623,8 +635,30 @@ namespace Project5LMS.Forms.Admin.Inventory
                     {
                         barcode = row["AccessionNo"].ToString();
                     }
+                    else if (row.Table.Columns.Contains("BookID") && row["BookID"] != DBNull.Value)
+                    {
+                        barcode = $"BOOK-{bookId}";
+                    }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
-                    row["BookDetails"] = $"{title} by {author} ({accessionNo})";
+                    
+                    // Build book details string
+                    string bookDetails;
+                    if (!string.IsNullOrEmpty(title))
+                    {
+                        if (!string.IsNullOrEmpty(author) && author != "N/A")
+                        {
+                            bookDetails = $"{title} by {author} ({accessionNo})";
+                        }
+                        else
+                        {
+                            bookDetails = $"{title} ({accessionNo})";
+                        }
+                    }
+                    else
+                    {
+                        bookDetails = $"Book ID: {bookId} ({accessionNo})";
+                    }
+                    row["BookDetails"] = bookDetails;
 
                     int copyNumber = Convert.ToInt32(row["CopyNumber"]);
                     int totalCopies = row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 1;
@@ -700,14 +734,23 @@ namespace Project5LMS.Forms.Admin.Inventory
                 bool hasCopyNumber = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "CopyNumber");
                 bool hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
                 bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                bool hasTitle = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Title");
+                bool hasAuthor = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Author");
+                bool hasCategory = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Category");
                 
-                // Use Barcode if it exists, otherwise use AccessionNo
-                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
-                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
+                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
+                string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
+                
+                // Use Title if it exists, otherwise use a default
+                string titleSelect = hasTitle ? "b.Title," : "'N/A' as Title,";
+                string authorSelect = hasAuthor ? "b.Author," : "'N/A' as Author,";
+                string categorySelect = hasCategory ? "b.Category," : "'N/A' as Category,";
                 
                 // Use Copies if it exists, otherwise use TotalCopies
-                string copiesColumn = hasCopies ? "b.Copies" : "b.TotalCopies";
+                string copiesColumn = hasCopies ? "b.Copies" : (DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies") ? "b.TotalCopies" : "1");
                 string copiesAlias = "Copies";
 
                 string query;
@@ -721,9 +764,9 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 i.Condition,
                                 i.Status,
                                 i.LastVerified,
-                                b.Title,
-                                b.Author,
-                                b.Category,
+                                {titleSelect}
+                                {authorSelect}
+                                {categorySelect}
                                 {copiesColumn} as {copiesAlias},
                                 {bookIdentifier} as {bookIdentifierAlias}
                              FROM Inventory i
@@ -740,9 +783,9 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 i.Condition,
                                 i.Status,
                                 NULL as LastVerified,
-                                b.Title,
-                                b.Author,
-                                b.Category,
+                                {titleSelect}
+                                {authorSelect}
+                                {categorySelect}
                                 {copiesColumn} as {copiesAlias},
                                 {bookIdentifier} as {bookIdentifierAlias}
                              FROM Inventory i
@@ -759,9 +802,9 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 i.Condition,
                                 i.Status,
                                 NULL as LastVerified,
-                                b.Title,
-                                b.Author,
-                                b.Category,
+                                {titleSelect}
+                                {authorSelect}
+                                {categorySelect}
                                 {copiesColumn} as {copiesAlias},
                                 {bookIdentifier} as {bookIdentifierAlias}
                              FROM Inventory i

@@ -483,6 +483,14 @@ namespace Project5LMS.Forms.Admin.Reports
                     conn.Open();
                     // Check if MemberType or Type column exists
                     bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
+                    bool hasType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Type");
+                    
+                    if (!hasMemberType && !hasType)
+                    {
+                        // If neither column exists, return empty data
+                        return data;
+                    }
+                    
                     string typeColumn = hasMemberType ? "m.MemberType" : "m.Type";
                     
                     string query = $@"SELECT {typeColumn} as MemberType, COUNT(DISTINCT t.TransactionID) as ActivityCount
@@ -522,6 +530,15 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
+                    bool hasCategory = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Category");
+                    
+                    if (!hasCategory)
+                    {
+                        // If Category doesn't exist, return empty data or use a default
+                        data["All Books"] = 0;
+                        return data;
+                    }
+                    
                     string query = @"SELECT b.Category, COUNT(*) as BorrowCount
                                    FROM Transactions t
                                    INNER JOIN Books b ON t.BookID = b.BookID
@@ -565,9 +582,15 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT 
+                    bool hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Status");
+                    
+                    string availableQuery = hasStatus 
+                        ? "(SELECT COUNT(*) FROM Books WHERE Status = 'Available' OR Status IS NULL)"
+                        : "(SELECT COUNT(*) FROM Books)"; // If no Status column, assume all are available
+                    
+                    string query = $@"SELECT 
                                     (SELECT COUNT(*) FROM Books) as Total,
-                                    (SELECT COUNT(*) FROM Books WHERE Status = 'Available' OR Status IS NULL) as Available,
+                                    {availableQuery} as Available,
                                     (SELECT COUNT(*) FROM Transactions WHERE Status = 'Borrowed' AND ReturnDate IS NULL) as OnLoan";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -695,10 +718,10 @@ namespace Project5LMS.Forms.Admin.Reports
                         {
                             if (reader.Read())
                             {
-                                stats["DailyVisits"] = Convert.ToInt32(reader["DailyVisits"]);
-                                stats["BooksPerMember"] = Convert.ToDouble(reader["BooksPerMember"]);
-                                stats["AvgPeriod"] = Convert.ToInt32(reader["AvgPeriod"]);
-                                stats["Turnover"] = Convert.ToInt32(reader["Turnover"]);
+                                stats["DailyVisits"] = reader["DailyVisits"] != DBNull.Value ? Convert.ToInt32(reader["DailyVisits"]) : 0;
+                                stats["BooksPerMember"] = reader["BooksPerMember"] != DBNull.Value ? Convert.ToDouble(reader["BooksPerMember"]) : 0.0;
+                                stats["AvgPeriod"] = reader["AvgPeriod"] != DBNull.Value ? Convert.ToInt32(reader["AvgPeriod"]) : 0;
+                                stats["Turnover"] = reader["Turnover"] != DBNull.Value ? Convert.ToInt32(reader["Turnover"]) : 0;
                             }
                         }
                     }
@@ -721,7 +744,21 @@ namespace Project5LMS.Forms.Admin.Reports
                     conn.Open();
                     // Check if MemberType or Type column exists
                     bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                    string typeColumn = hasMemberType ? "MemberType" : "Type";
+                    bool hasType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Type");
+                    
+                    string typeColumn;
+                    if (hasMemberType)
+                    {
+                        typeColumn = "MemberType";
+                    }
+                    else if (hasType)
+                    {
+                        typeColumn = "Type";
+                    }
+                    else
+                    {
+                        typeColumn = "'N/A'";
+                    }
                     
                     string query = $@"SELECT 
                                     MemberID as 'MEMBER ID',

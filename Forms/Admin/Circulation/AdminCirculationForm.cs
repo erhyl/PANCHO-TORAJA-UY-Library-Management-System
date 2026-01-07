@@ -477,10 +477,11 @@ namespace Project5LMS.Forms.Admin.Circulation
                 bool hasTransactionType = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "TransactionType");
                 bool hasFine = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "Fine");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
                 
-                // Use Barcode if it exists, otherwise use AccessionNo
-                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
-                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
+                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
+                string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
 
                 string query;
                 if (hasTransactionType && hasFine)

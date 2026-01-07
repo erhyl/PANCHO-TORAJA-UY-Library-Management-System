@@ -605,7 +605,12 @@ namespace Project5LMS.Forms.Admin.Fines
 
                     if (row["BookID"] != DBNull.Value && Convert.ToInt32(row["BookID"]) > 0)
                     {
-                        string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
+                        string bookTitle = "";
+                        if (row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value)
+                        {
+                            bookTitle = row["Title"].ToString();
+                        }
+                        
                         int bookId = Convert.ToInt32(row["BookID"]);
                         // Try to get Barcode or AccessionNo from the row
                         string barcode = "";
@@ -617,8 +622,16 @@ namespace Project5LMS.Forms.Admin.Fines
                         {
                             barcode = row["AccessionNo"].ToString();
                         }
+                        else if (row.Table.Columns.Contains("BookID") && row["BookID"] != DBNull.Value)
+                        {
+                            barcode = $"BOOK-{bookId}";
+                        }
                         string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
-                        row["BookItem"] = $"{bookTitle} ({accessionNo})";
+                        
+                        string bookItem = !string.IsNullOrEmpty(bookTitle) 
+                            ? $"{bookTitle} ({accessionNo})" 
+                            : $"Book ID: {bookId} ({accessionNo})";
+                        row["BookItem"] = bookItem;
                     }
                     else
                     {
@@ -684,11 +697,30 @@ namespace Project5LMS.Forms.Admin.Fines
                 bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
                 bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
                 bool hasTransactionID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "TransactionID");
+                bool hasBookID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "BookID");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
+                bool hasTitle = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Title");
                 
-                // Use Barcode if it exists, otherwise use AccessionNo
-                string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
-                string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
+                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
+                string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
+                string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
+                
+                // Use Title if it exists, otherwise use a default
+                string titleSelect = hasTitle ? "b.Title," : "'N/A' as Title,";
+                
+                // Build BookID selection - use BookID if exists, otherwise try to get from TransactionID
+                string bookIDSelect = hasBookID ? "f.BookID," : "NULL as BookID,";
+                bool canJoinBooks = hasBookID || hasTransactionID;
+                string bookJoin = hasBookID 
+                    ? "LEFT JOIN Books b ON f.BookID = b.BookID" 
+                    : (hasTransactionID 
+                        ? "LEFT JOIN Transactions t ON f.TransactionID = t.TransactionID LEFT JOIN Books b ON t.BookID = b.BookID"
+                        : ""); // No join if neither column exists
+                
+                // If we can't join Books, use NULL for book-related columns
+                string bookTitleSelect = canJoinBooks ? titleSelect : "'N/A' as Title";
+                string bookIdSelect = canJoinBooks ? $"{bookIdentifier} as {bookIdentifierAlias}" : "'N/A' as BookID";
 
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasTransactionID)
@@ -696,7 +728,7 @@ namespace Project5LMS.Forms.Admin.Fines
                     query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
-                                f.BookID,
+                                {bookIDSelect}
                                 f.TransactionID,
                                 f.FineType,
                                 f.Amount,
@@ -706,11 +738,11 @@ namespace Project5LMS.Forms.Admin.Fines
                                 f.Description,
                                 m.FirstName,
                                 m.LastName,
-                                b.Title,
-                                {bookIdentifier} as {bookIdentifierAlias}
+                                {bookTitleSelect},
+                                {bookIdSelect}
                              FROM Fines f
                              INNER JOIN Members m ON f.MemberID = m.MemberID
-                             LEFT JOIN Books b ON f.BookID = b.BookID
+                             {bookJoin}
                              ORDER BY f.FineID DESC";
                 }
                 else
@@ -718,7 +750,7 @@ namespace Project5LMS.Forms.Admin.Fines
                     query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
-                                f.BookID,
+                                {bookIDSelect}
                                 NULL as TransactionID,
                                 COALESCE(f.FineType, 'Overdue') as FineType,
                                 f.Amount,
@@ -728,11 +760,11 @@ namespace Project5LMS.Forms.Admin.Fines
                                 NULL as Description,
                                 m.FirstName,
                                 m.LastName,
-                                b.Title,
-                                {bookIdentifier} as {bookIdentifierAlias}
+                                {bookTitleSelect},
+                                {bookIdSelect}
                              FROM Fines f
                              INNER JOIN Members m ON f.MemberID = m.MemberID
-                             LEFT JOIN Books b ON f.BookID = b.BookID
+                             {bookJoin}
                              ORDER BY f.FineID DESC";
                 }
 

@@ -404,9 +404,13 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT t.TransactionID, t.MemberID, t.BookID, t.BorrowDate, t.DueDate, t.ReturnDate, 
+                    bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                    string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
+                    string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
+                    
+                    string query = $@"SELECT t.TransactionID, t.MemberID, t.BookID, t.BorrowDate, t.DueDate, t.ReturnDate, 
                                     t.Status, t.TransactionType, t.Fine,
-                                    b.Title as BookTitle, b.AccessionNo,
+                                    b.Title as BookTitle, {bookIdentifier} as {bookIdentifierAlias},
                                     m.FirstName, m.LastName, m.MemberID as MemberIDNum
                                     FROM Transactions t
                                     INNER JOIN Books b ON t.BookID = b.BookID
