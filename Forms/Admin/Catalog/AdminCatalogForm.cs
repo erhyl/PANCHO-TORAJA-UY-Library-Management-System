@@ -639,5 +639,14 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
         }
 
+        private void lblResourceTypeFilter_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelSearchFilter_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

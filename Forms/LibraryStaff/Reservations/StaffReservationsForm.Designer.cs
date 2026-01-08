@@ -69,10 +69,9 @@
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelReservationsList
@@ -82,11 +81,10 @@
             this.panelReservationsList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelReservationsList.Controls.Add(this.panelCreateReservation);
             this.panelReservationsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelReservationsList.Location = new System.Drawing.Point(32, 275);
-            this.panelReservationsList.Margin = new System.Windows.Forms.Padding(4);
+            this.panelReservationsList.Location = new System.Drawing.Point(24, 223);
             this.panelReservationsList.Name = "panelReservationsList";
-            this.panelReservationsList.Padding = new System.Windows.Forms.Padding(20);
-            this.panelReservationsList.Size = new System.Drawing.Size(1536, 680);
+            this.panelReservationsList.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelReservationsList.Size = new System.Drawing.Size(1152, 553);
             this.panelReservationsList.TabIndex = 3;
             // 
             // panelCreateReservation
@@ -100,10 +98,9 @@
             this.panelCreateReservation.Controls.Add(this.lblMemberID);
             this.panelCreateReservation.Controls.Add(this.lblCreateReservationTitle);
             this.panelCreateReservation.Location = new System.Drawing.Point(-1, -1);
-            this.panelCreateReservation.Margin = new System.Windows.Forms.Padding(4);
             this.panelCreateReservation.Name = "panelCreateReservation";
-            this.panelCreateReservation.Padding = new System.Windows.Forms.Padding(30);
-            this.panelCreateReservation.Size = new System.Drawing.Size(1536, 119);
+            this.panelCreateReservation.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelCreateReservation.Size = new System.Drawing.Size(1152, 97);
             this.panelCreateReservation.TabIndex = 4;
             // 
             // btnCreateReservation
@@ -113,10 +110,9 @@
             this.btnCreateReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateReservation.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateReservation.ForeColor = System.Drawing.Color.White;
-            this.btnCreateReservation.Location = new System.Drawing.Point(604, 58);
-            this.btnCreateReservation.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateReservation.Location = new System.Drawing.Point(434, 48);
             this.btnCreateReservation.Name = "btnCreateReservation";
-            this.btnCreateReservation.Size = new System.Drawing.Size(200, 45);
+            this.btnCreateReservation.Size = new System.Drawing.Size(150, 37);
             this.btnCreateReservation.TabIndex = 5;
             this.btnCreateReservation.Text = "Create Reservation";
             this.btnCreateReservation.UseVisualStyleBackColor = false;
@@ -127,10 +123,9 @@
             this.txtBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBookID.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBookID.ForeColor = System.Drawing.Color.Gray;
-            this.txtBookID.Location = new System.Drawing.Point(320, 71);
-            this.txtBookID.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBookID.Location = new System.Drawing.Point(240, 58);
             this.txtBookID.Name = "txtBookID";
-            this.txtBookID.Size = new System.Drawing.Size(190, 32);
+            this.txtBookID.Size = new System.Drawing.Size(143, 27);
             this.txtBookID.TabIndex = 4;
             this.txtBookID.Text = "Enter book ID";
             this.txtBookID.Enter += new System.EventHandler(this.txtBookID_Enter);
@@ -141,10 +136,9 @@
             this.lblBookID.AutoSize = true;
             this.lblBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBookID.Location = new System.Drawing.Point(316, 44);
-            this.lblBookID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBookID.Location = new System.Drawing.Point(237, 36);
             this.lblBookID.Name = "lblBookID";
-            this.lblBookID.Size = new System.Drawing.Size(70, 23);
+            this.lblBookID.Size = new System.Drawing.Size(58, 19);
             this.lblBookID.TabIndex = 3;
             this.lblBookID.Text = "Book ID";
             // 
@@ -153,10 +147,9 @@
             this.txtMemberID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMemberID.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMemberID.ForeColor = System.Drawing.Color.Gray;
-            this.txtMemberID.Location = new System.Drawing.Point(12, 71);
-            this.txtMemberID.Margin = new System.Windows.Forms.Padding(4);
+            this.txtMemberID.Location = new System.Drawing.Point(9, 58);
             this.txtMemberID.Name = "txtMemberID";
-            this.txtMemberID.Size = new System.Drawing.Size(180, 32);
+            this.txtMemberID.Size = new System.Drawing.Size(136, 27);
             this.txtMemberID.TabIndex = 2;
             this.txtMemberID.Text = "Enter member ID";
             this.txtMemberID.Enter += new System.EventHandler(this.txtMemberID_Enter);
@@ -167,10 +160,9 @@
             this.lblMemberID.AutoSize = true;
             this.lblMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberID.Location = new System.Drawing.Point(8, 44);
-            this.lblMemberID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberID.Location = new System.Drawing.Point(6, 36);
             this.lblMemberID.Name = "lblMemberID";
-            this.lblMemberID.Size = new System.Drawing.Size(96, 23);
+            this.lblMemberID.Size = new System.Drawing.Size(79, 19);
             this.lblMemberID.TabIndex = 1;
             this.lblMemberID.Text = "Member ID";
             // 
@@ -180,9 +172,8 @@
             this.lblCreateReservationTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCreateReservationTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblCreateReservationTitle.Location = new System.Drawing.Point(1, -1);
-            this.lblCreateReservationTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCreateReservationTitle.Name = "lblCreateReservationTitle";
-            this.lblCreateReservationTitle.Size = new System.Drawing.Size(287, 32);
+            this.lblCreateReservationTitle.Size = new System.Drawing.Size(224, 25);
             this.lblCreateReservationTitle.TabIndex = 0;
             this.lblCreateReservationTitle.Text = "Create New Reservation";
             // 
@@ -195,11 +186,10 @@
             this.panelFilterTabs.Controls.Add(this.btnFilterActive);
             this.panelFilterTabs.Controls.Add(this.btnFilterAll);
             this.panelFilterTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFilterTabs.Location = new System.Drawing.Point(32, 275);
-            this.panelFilterTabs.Margin = new System.Windows.Forms.Padding(4);
+            this.panelFilterTabs.Location = new System.Drawing.Point(24, 223);
             this.panelFilterTabs.Name = "panelFilterTabs";
-            this.panelFilterTabs.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelFilterTabs.Size = new System.Drawing.Size(1536, 680);
+            this.panelFilterTabs.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
+            this.panelFilterTabs.Size = new System.Drawing.Size(1152, 553);
             this.panelFilterTabs.TabIndex = 2;
             // 
             // btnFilterExpired
@@ -209,10 +199,9 @@
             this.btnFilterExpired.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFilterExpired.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterExpired.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnFilterExpired.Location = new System.Drawing.Point(300, 15);
-            this.btnFilterExpired.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFilterExpired.Location = new System.Drawing.Point(225, 12);
             this.btnFilterExpired.Name = "btnFilterExpired";
-            this.btnFilterExpired.Size = new System.Drawing.Size(100, 20);
+            this.btnFilterExpired.Size = new System.Drawing.Size(75, 16);
             this.btnFilterExpired.TabIndex = 3;
             this.btnFilterExpired.Text = "Expired (0)";
             this.btnFilterExpired.UseVisualStyleBackColor = false;
@@ -225,10 +214,9 @@
             this.btnFilterReady.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFilterReady.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterReady.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnFilterReady.Location = new System.Drawing.Point(200, 15);
-            this.btnFilterReady.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFilterReady.Location = new System.Drawing.Point(150, 12);
             this.btnFilterReady.Name = "btnFilterReady";
-            this.btnFilterReady.Size = new System.Drawing.Size(100, 20);
+            this.btnFilterReady.Size = new System.Drawing.Size(75, 16);
             this.btnFilterReady.TabIndex = 2;
             this.btnFilterReady.Text = "Ready (0)";
             this.btnFilterReady.UseVisualStyleBackColor = false;
@@ -241,10 +229,9 @@
             this.btnFilterActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFilterActive.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnFilterActive.Location = new System.Drawing.Point(100, 15);
-            this.btnFilterActive.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFilterActive.Location = new System.Drawing.Point(75, 12);
             this.btnFilterActive.Name = "btnFilterActive";
-            this.btnFilterActive.Size = new System.Drawing.Size(100, 20);
+            this.btnFilterActive.Size = new System.Drawing.Size(75, 16);
             this.btnFilterActive.TabIndex = 1;
             this.btnFilterActive.Text = "Active (0)";
             this.btnFilterActive.UseVisualStyleBackColor = false;
@@ -257,10 +244,9 @@
             this.btnFilterAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFilterAll.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnFilterAll.Location = new System.Drawing.Point(20, 15);
-            this.btnFilterAll.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFilterAll.Location = new System.Drawing.Point(15, 12);
             this.btnFilterAll.Name = "btnFilterAll";
-            this.btnFilterAll.Size = new System.Drawing.Size(80, 20);
+            this.btnFilterAll.Size = new System.Drawing.Size(60, 16);
             this.btnFilterAll.TabIndex = 0;
             this.btnFilterAll.Text = "All (0)";
             this.btnFilterAll.UseVisualStyleBackColor = false;
@@ -273,23 +259,20 @@
             this.panelMetrics.Controls.Add(this.panelMetricActive);
             this.panelMetrics.Controls.Add(this.panelMetricTotal);
             this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMetrics.Location = new System.Drawing.Point(32, 125);
-            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetrics.Location = new System.Drawing.Point(24, 101);
             this.panelMetrics.Name = "panelMetrics";
-            this.panelMetrics.Size = new System.Drawing.Size(1536, 150);
+            this.panelMetrics.Size = new System.Drawing.Size(1152, 122);
             this.panelMetrics.TabIndex = 1;
             // 
             // panelMetricExpired
             // 
             this.panelMetricExpired.BackColor = System.Drawing.Color.White;
-            this.panelMetricExpired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricExpired.Controls.Add(this.lblMetricExpiredValue);
             this.panelMetricExpired.Controls.Add(this.lblMetricExpiredTitle);
-            this.panelMetricExpired.Location = new System.Drawing.Point(1170, 0);
-            this.panelMetricExpired.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricExpired.Location = new System.Drawing.Point(878, 0);
             this.panelMetricExpired.Name = "panelMetricExpired";
-            this.panelMetricExpired.Padding = new System.Windows.Forms.Padding(20);
-            this.panelMetricExpired.Size = new System.Drawing.Size(366, 120);
+            this.panelMetricExpired.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelMetricExpired.Size = new System.Drawing.Size(275, 98);
             this.panelMetricExpired.TabIndex = 3;
             // 
             // lblMetricExpiredValue
@@ -297,10 +280,9 @@
             this.lblMetricExpiredValue.AutoSize = true;
             this.lblMetricExpiredValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricExpiredValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricExpiredValue.Location = new System.Drawing.Point(24, 16);
-            this.lblMetricExpiredValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricExpiredValue.Location = new System.Drawing.Point(18, 13);
             this.lblMetricExpiredValue.Name = "lblMetricExpiredValue";
-            this.lblMetricExpiredValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricExpiredValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricExpiredValue.TabIndex = 2;
             this.lblMetricExpiredValue.Text = "0";
             // 
@@ -309,24 +291,21 @@
             this.lblMetricExpiredTitle.AutoSize = true;
             this.lblMetricExpiredTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricExpiredTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricExpiredTitle.Location = new System.Drawing.Point(29, 70);
-            this.lblMetricExpiredTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricExpiredTitle.Location = new System.Drawing.Point(22, 57);
             this.lblMetricExpiredTitle.Name = "lblMetricExpiredTitle";
-            this.lblMetricExpiredTitle.Size = new System.Drawing.Size(94, 23);
+            this.lblMetricExpiredTitle.Size = new System.Drawing.Size(76, 19);
             this.lblMetricExpiredTitle.TabIndex = 1;
             this.lblMetricExpiredTitle.Text = "❌ Expired";
             // 
             // panelMetricReady
             // 
             this.panelMetricReady.BackColor = System.Drawing.Color.White;
-            this.panelMetricReady.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricReady.Controls.Add(this.lblMetricReadyValue);
             this.panelMetricReady.Controls.Add(this.lblMetricReadyTitle);
-            this.panelMetricReady.Location = new System.Drawing.Point(780, 0);
-            this.panelMetricReady.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricReady.Location = new System.Drawing.Point(585, 0);
             this.panelMetricReady.Name = "panelMetricReady";
-            this.panelMetricReady.Padding = new System.Windows.Forms.Padding(20);
-            this.panelMetricReady.Size = new System.Drawing.Size(366, 120);
+            this.panelMetricReady.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelMetricReady.Size = new System.Drawing.Size(275, 98);
             this.panelMetricReady.TabIndex = 2;
             // 
             // lblMetricReadyValue
@@ -334,10 +313,9 @@
             this.lblMetricReadyValue.AutoSize = true;
             this.lblMetricReadyValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricReadyValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricReadyValue.Location = new System.Drawing.Point(24, 16);
-            this.lblMetricReadyValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricReadyValue.Location = new System.Drawing.Point(18, 13);
             this.lblMetricReadyValue.Name = "lblMetricReadyValue";
-            this.lblMetricReadyValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricReadyValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricReadyValue.TabIndex = 2;
             this.lblMetricReadyValue.Text = "0";
             // 
@@ -346,24 +324,21 @@
             this.lblMetricReadyTitle.AutoSize = true;
             this.lblMetricReadyTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricReadyTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricReadyTitle.Location = new System.Drawing.Point(29, 75);
-            this.lblMetricReadyTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricReadyTitle.Location = new System.Drawing.Point(22, 61);
             this.lblMetricReadyTitle.Name = "lblMetricReadyTitle";
-            this.lblMetricReadyTitle.Size = new System.Drawing.Size(165, 23);
+            this.lblMetricReadyTitle.Size = new System.Drawing.Size(134, 19);
             this.lblMetricReadyTitle.TabIndex = 1;
             this.lblMetricReadyTitle.Text = "📌 Ready for Pickup";
             // 
             // panelMetricActive
             // 
             this.panelMetricActive.BackColor = System.Drawing.Color.White;
-            this.panelMetricActive.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricActive.Controls.Add(this.lblMetricActiveValue);
             this.panelMetricActive.Controls.Add(this.lblMetricActiveTitle);
-            this.panelMetricActive.Location = new System.Drawing.Point(390, 0);
-            this.panelMetricActive.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetricActive.Location = new System.Drawing.Point(292, 0);
             this.panelMetricActive.Name = "panelMetricActive";
-            this.panelMetricActive.Padding = new System.Windows.Forms.Padding(20);
-            this.panelMetricActive.Size = new System.Drawing.Size(366, 120);
+            this.panelMetricActive.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelMetricActive.Size = new System.Drawing.Size(275, 98);
             this.panelMetricActive.TabIndex = 1;
             // 
             // lblMetricActiveValue
@@ -371,10 +346,9 @@
             this.lblMetricActiveValue.AutoSize = true;
             this.lblMetricActiveValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricActiveValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricActiveValue.Location = new System.Drawing.Point(24, 20);
-            this.lblMetricActiveValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricActiveValue.Location = new System.Drawing.Point(18, 16);
             this.lblMetricActiveValue.Name = "lblMetricActiveValue";
-            this.lblMetricActiveValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricActiveValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricActiveValue.TabIndex = 2;
             this.lblMetricActiveValue.Text = "0";
             // 
@@ -383,24 +357,21 @@
             this.lblMetricActiveTitle.AutoSize = true;
             this.lblMetricActiveTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricActiveTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricActiveTitle.Location = new System.Drawing.Point(29, 75);
-            this.lblMetricActiveTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricActiveTitle.Location = new System.Drawing.Point(22, 61);
             this.lblMetricActiveTitle.Name = "lblMetricActiveTitle";
-            this.lblMetricActiveTitle.Size = new System.Drawing.Size(84, 23);
+            this.lblMetricActiveTitle.Size = new System.Drawing.Size(69, 19);
             this.lblMetricActiveTitle.TabIndex = 1;
             this.lblMetricActiveTitle.Text = "✅ Active";
             // 
             // panelMetricTotal
             // 
             this.panelMetricTotal.BackColor = System.Drawing.Color.White;
-            this.panelMetricTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalValue);
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalTitle);
             this.panelMetricTotal.Location = new System.Drawing.Point(0, 0);
-            this.panelMetricTotal.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricTotal.Name = "panelMetricTotal";
-            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(20);
-            this.panelMetricTotal.Size = new System.Drawing.Size(366, 120);
+            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelMetricTotal.Size = new System.Drawing.Size(275, 98);
             this.panelMetricTotal.TabIndex = 0;
             // 
             // lblMetricTotalValue
@@ -408,10 +379,9 @@
             this.lblMetricTotalValue.AutoSize = true;
             this.lblMetricTotalValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricTotalValue.Location = new System.Drawing.Point(27, 20);
-            this.lblMetricTotalValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalValue.Location = new System.Drawing.Point(20, 16);
             this.lblMetricTotalValue.Name = "lblMetricTotalValue";
-            this.lblMetricTotalValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricTotalValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricTotalValue.TabIndex = 2;
             this.lblMetricTotalValue.Text = "0";
             // 
@@ -420,10 +390,9 @@
             this.lblMetricTotalTitle.AutoSize = true;
             this.lblMetricTotalTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTotalTitle.Location = new System.Drawing.Point(32, 74);
-            this.lblMetricTotalTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalTitle.Location = new System.Drawing.Point(24, 60);
             this.lblMetricTotalTitle.Name = "lblMetricTotalTitle";
-            this.lblMetricTotalTitle.Size = new System.Drawing.Size(174, 23);
+            this.lblMetricTotalTitle.Size = new System.Drawing.Size(142, 19);
             this.lblMetricTotalTitle.TabIndex = 1;
             this.lblMetricTotalTitle.Text = "📅 Total Reservations";
             // 
@@ -432,10 +401,9 @@
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(32, 30);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
+            this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1536, 95);
+            this.panelHeader.Size = new System.Drawing.Size(1152, 77);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -443,10 +411,9 @@
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(0, 60);
-            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSubtitle.Location = new System.Drawing.Point(0, 49);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(289, 23);
+            this.lblSubtitle.Size = new System.Drawing.Size(233, 19);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Track and manage book reservations";
             // 
@@ -455,22 +422,20 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(4, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Location = new System.Drawing.Point(3, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(264, 54);
+            this.lblTitle.Size = new System.Drawing.Size(210, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Reservations";
             // 
             // StaffReservationsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1600, 985);
+            this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StaffReservationsForm";
             this.Text = "Reservations";
             this.Load += new System.EventHandler(this.StaffReservationsForm_Load);

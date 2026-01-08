@@ -513,5 +513,10 @@ namespace Project5LMS.Forms.Admin.Dashboard
             public string Details { get; set; }
             public DateTime Timestamp { get; set; }
         }
+
+        private void panelCharts_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
