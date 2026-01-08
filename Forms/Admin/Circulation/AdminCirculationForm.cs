@@ -875,5 +875,10 @@ namespace Project5LMS.Forms.Admin.Circulation
         {
 
         }
+
+        private void dataGridViewTransactions_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

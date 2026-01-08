@@ -62,15 +62,15 @@
             this.panelMetricTotalTransactions = new System.Windows.Forms.Panel();
             this.lblMetricTotalTransactionsValue = new System.Windows.Forms.Label();
             this.lblMetricTotalTransactionsTitle = new System.Windows.Forms.Label();
+            this.panelMetricTodayActivity = new System.Windows.Forms.Panel();
+            this.lblMetricTodayActivityValue = new System.Windows.Forms.Label();
+            this.lblMetricTodayActivityTitle = new System.Windows.Forms.Label();
             this.panelMetricOverdue = new System.Windows.Forms.Panel();
             this.lblMetricOverdueValue = new System.Windows.Forms.Label();
             this.lblMetricOverdueTitle = new System.Windows.Forms.Label();
             this.panelMetricCurrentlyBorrowed = new System.Windows.Forms.Panel();
             this.lblMetricCurrentlyBorrowedValue = new System.Windows.Forms.Label();
             this.lblMetricCurrentlyBorrowedTitle = new System.Windows.Forms.Label();
-            this.panelMetricTodayActivity = new System.Windows.Forms.Panel();
-            this.lblMetricTodayActivityValue = new System.Windows.Forms.Label();
-            this.lblMetricTodayActivityTitle = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -85,9 +85,9 @@
             this.panelReturnContent.SuspendLayout();
             this.panelMetrics.SuspendLayout();
             this.panelMetricTotalTransactions.SuspendLayout();
+            this.panelMetricTodayActivity.SuspendLayout();
             this.panelMetricOverdue.SuspendLayout();
             this.panelMetricCurrentlyBorrowed.SuspendLayout();
-            this.panelMetricTodayActivity.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,7 +102,7 @@
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
             this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
@@ -115,7 +115,7 @@
             this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTableContainer.Location = new System.Drawing.Point(24, 466);
             this.panelTableContainer.Name = "panelTableContainer";
-            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16);
             this.panelTableContainer.Size = new System.Drawing.Size(1152, 310);
             this.panelTableContainer.TabIndex = 3;
             // 
@@ -251,7 +251,6 @@
             this.colFine.HeaderText = "FINE";
             this.colFine.Name = "colFine";
             this.colFine.ReadOnly = true;
-            this.colFine.Width = 100;
             // 
             // panelActionTabs
             // 
@@ -260,7 +259,7 @@
             this.panelActionTabs.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelActionTabs.Location = new System.Drawing.Point(24, 206);
             this.panelActionTabs.Name = "panelActionTabs";
-            this.panelActionTabs.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelActionTabs.Padding = new System.Windows.Forms.Padding(16);
             this.panelActionTabs.Size = new System.Drawing.Size(1152, 260);
             this.panelActionTabs.TabIndex = 2;
             // 
@@ -284,7 +283,7 @@
             this.tabBorrow.Controls.Add(this.panelBorrowContent);
             this.tabBorrow.Location = new System.Drawing.Point(4, 26);
             this.tabBorrow.Name = "tabBorrow";
-            this.tabBorrow.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabBorrow.Padding = new System.Windows.Forms.Padding(3);
             this.tabBorrow.Size = new System.Drawing.Size(1112, 198);
             this.tabBorrow.TabIndex = 0;
             this.tabBorrow.Text = "Borrow Book";
@@ -376,8 +375,8 @@
             this.tabReturn.Controls.Add(this.panelReturnContent);
             this.tabReturn.Location = new System.Drawing.Point(4, 26);
             this.tabReturn.Name = "tabReturn";
-            this.tabReturn.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabReturn.Size = new System.Drawing.Size(1111, 196);
+            this.tabReturn.Padding = new System.Windows.Forms.Padding(3);
+            this.tabReturn.Size = new System.Drawing.Size(1112, 198);
             this.tabReturn.TabIndex = 1;
             this.tabReturn.Text = "Return Book";
             // 
@@ -390,7 +389,7 @@
             this.panelReturnContent.Location = new System.Drawing.Point(3, 3);
             this.panelReturnContent.Name = "panelReturnContent";
             this.panelReturnContent.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
-            this.panelReturnContent.Size = new System.Drawing.Size(1105, 190);
+            this.panelReturnContent.Size = new System.Drawing.Size(1106, 192);
             this.panelReturnContent.TabIndex = 1;
             this.panelReturnContent.Visible = false;
             // 
@@ -439,8 +438,8 @@
             this.tabHistory.BackColor = System.Drawing.Color.White;
             this.tabHistory.Location = new System.Drawing.Point(4, 26);
             this.tabHistory.Name = "tabHistory";
-            this.tabHistory.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabHistory.Size = new System.Drawing.Size(1111, 196);
+            this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHistory.Size = new System.Drawing.Size(1112, 198);
             this.tabHistory.TabIndex = 2;
             this.tabHistory.Text = "Transaction History";
             // 
@@ -465,7 +464,7 @@
             this.panelMetricTotalTransactions.Location = new System.Drawing.Point(931, 0);
             this.panelMetricTotalTransactions.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricTotalTransactions.Name = "panelMetricTotalTransactions";
-            this.panelMetricTotalTransactions.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricTotalTransactions.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricTotalTransactions.Size = new System.Drawing.Size(220, 100);
             this.panelMetricTotalTransactions.TabIndex = 3;
             // 
@@ -491,6 +490,40 @@
             this.lblMetricTotalTransactionsTitle.TabIndex = 1;
             this.lblMetricTotalTransactionsTitle.Text = "📈 Total Transactions";
             // 
+            // panelMetricTodayActivity
+            // 
+            this.panelMetricTodayActivity.BackColor = System.Drawing.Color.White;
+            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityValue);
+            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityTitle);
+            this.panelMetricTodayActivity.Location = new System.Drawing.Point(0, 0);
+            this.panelMetricTodayActivity.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
+            this.panelMetricTodayActivity.Name = "panelMetricTodayActivity";
+            this.panelMetricTodayActivity.Padding = new System.Windows.Forms.Padding(16);
+            this.panelMetricTodayActivity.Size = new System.Drawing.Size(220, 100);
+            this.panelMetricTodayActivity.TabIndex = 0;
+            // 
+            // lblMetricTodayActivityValue
+            // 
+            this.lblMetricTodayActivityValue.AutoSize = true;
+            this.lblMetricTodayActivityValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTodayActivityValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricTodayActivityValue.Location = new System.Drawing.Point(16, 50);
+            this.lblMetricTodayActivityValue.Name = "lblMetricTodayActivityValue";
+            this.lblMetricTodayActivityValue.Size = new System.Drawing.Size(38, 45);
+            this.lblMetricTodayActivityValue.TabIndex = 2;
+            this.lblMetricTodayActivityValue.Text = "0";
+            // 
+            // lblMetricTodayActivityTitle
+            // 
+            this.lblMetricTodayActivityTitle.AutoSize = true;
+            this.lblMetricTodayActivityTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTodayActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricTodayActivityTitle.Location = new System.Drawing.Point(16, 16);
+            this.lblMetricTodayActivityTitle.Name = "lblMetricTodayActivityTitle";
+            this.lblMetricTodayActivityTitle.Size = new System.Drawing.Size(126, 19);
+            this.lblMetricTodayActivityTitle.TabIndex = 1;
+            this.lblMetricTodayActivityTitle.Text = "🕒 Today\'s Activity";
+            // 
             // panelMetricOverdue
             // 
             this.panelMetricOverdue.BackColor = System.Drawing.Color.White;
@@ -499,7 +532,7 @@
             this.panelMetricOverdue.Location = new System.Drawing.Point(624, 0);
             this.panelMetricOverdue.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricOverdue.Name = "panelMetricOverdue";
-            this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricOverdue.Size = new System.Drawing.Size(220, 100);
             this.panelMetricOverdue.TabIndex = 2;
             // 
@@ -533,7 +566,7 @@
             this.panelMetricCurrentlyBorrowed.Location = new System.Drawing.Point(318, 0);
             this.panelMetricCurrentlyBorrowed.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricCurrentlyBorrowed.Name = "panelMetricCurrentlyBorrowed";
-            this.panelMetricCurrentlyBorrowed.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricCurrentlyBorrowed.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricCurrentlyBorrowed.Size = new System.Drawing.Size(220, 100);
             this.panelMetricCurrentlyBorrowed.TabIndex = 1;
             // 
@@ -558,40 +591,6 @@
             this.lblMetricCurrentlyBorrowedTitle.Size = new System.Drawing.Size(152, 19);
             this.lblMetricCurrentlyBorrowedTitle.TabIndex = 1;
             this.lblMetricCurrentlyBorrowedTitle.Text = "📕 Currently Borrowed";
-            // 
-            // panelMetricTodayActivity
-            // 
-            this.panelMetricTodayActivity.BackColor = System.Drawing.Color.White;
-            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityValue);
-            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityTitle);
-            this.panelMetricTodayActivity.Location = new System.Drawing.Point(0, 0);
-            this.panelMetricTodayActivity.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.panelMetricTodayActivity.Name = "panelMetricTodayActivity";
-            this.panelMetricTodayActivity.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
-            this.panelMetricTodayActivity.Size = new System.Drawing.Size(220, 100);
-            this.panelMetricTodayActivity.TabIndex = 0;
-            // 
-            // lblMetricTodayActivityValue
-            // 
-            this.lblMetricTodayActivityValue.AutoSize = true;
-            this.lblMetricTodayActivityValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricTodayActivityValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricTodayActivityValue.Location = new System.Drawing.Point(16, 50);
-            this.lblMetricTodayActivityValue.Name = "lblMetricTodayActivityValue";
-            this.lblMetricTodayActivityValue.Size = new System.Drawing.Size(38, 45);
-            this.lblMetricTodayActivityValue.TabIndex = 2;
-            this.lblMetricTodayActivityValue.Text = "0";
-            // 
-            // lblMetricTodayActivityTitle
-            // 
-            this.lblMetricTodayActivityTitle.AutoSize = true;
-            this.lblMetricTodayActivityTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricTodayActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTodayActivityTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblMetricTodayActivityTitle.Name = "lblMetricTodayActivityTitle";
-            this.lblMetricTodayActivityTitle.Size = new System.Drawing.Size(126, 19);
-            this.lblMetricTodayActivityTitle.TabIndex = 1;
-            this.lblMetricTodayActivityTitle.Text = "🕒 Today\'s Activity";
             // 
             // panelHeader
             // 
@@ -652,12 +651,12 @@
             this.panelMetrics.ResumeLayout(false);
             this.panelMetricTotalTransactions.ResumeLayout(false);
             this.panelMetricTotalTransactions.PerformLayout();
+            this.panelMetricTodayActivity.ResumeLayout(false);
+            this.panelMetricTodayActivity.PerformLayout();
             this.panelMetricOverdue.ResumeLayout(false);
             this.panelMetricOverdue.PerformLayout();
             this.panelMetricCurrentlyBorrowed.ResumeLayout(false);
             this.panelMetricCurrentlyBorrowed.PerformLayout();
-            this.panelMetricTodayActivity.ResumeLayout(false);
-            this.panelMetricTodayActivity.PerformLayout();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
