@@ -28,10 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.lblRecentTransactions = new System.Windows.Forms.Label();
             this.dataGridViewTransactions = new System.Windows.Forms.DataGridView();
+            this.colTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBorrowDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelActionTabs = new System.Windows.Forms.Panel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabBorrow = new System.Windows.Forms.TabPage();
@@ -123,10 +134,39 @@
             // 
             this.dataGridViewTransactions.AllowUserToAddRows = false;
             this.dataGridViewTransactions.AllowUserToDeleteRows = false;
+            this.dataGridViewTransactions.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewTransactions.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewTransactions.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTransactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTransactionID,
+            this.colType,
+            this.colMember,
+            this.colBook,
+            this.colBorrowDate,
+            this.colDueDate,
+            this.colStatus,
+            this.colFine});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTransactions.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTransactions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewTransactions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewTransactions.Location = new System.Drawing.Point(16, 16);
@@ -136,10 +176,82 @@
             this.dataGridViewTransactions.ReadOnly = true;
             this.dataGridViewTransactions.RowHeadersVisible = false;
             this.dataGridViewTransactions.RowHeadersWidth = 51;
-            this.dataGridViewTransactions.RowTemplate.Height = 50;
+            this.dataGridViewTransactions.RowTemplate.Height = 60;
             this.dataGridViewTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewTransactions.Size = new System.Drawing.Size(1118, 276);
             this.dataGridViewTransactions.TabIndex = 0;
+            // 
+            // colTransactionID
+            // 
+            this.colTransactionID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colTransactionID.DataPropertyName = "TransactionID";
+            this.colTransactionID.HeaderText = "TRANSACTION ID";
+            this.colTransactionID.Name = "colTransactionID";
+            this.colTransactionID.ReadOnly = true;
+            this.colTransactionID.Width = 120;
+            // 
+            // colType
+            // 
+            this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colType.DataPropertyName = "Type";
+            this.colType.HeaderText = "TYPE";
+            this.colType.Name = "colType";
+            this.colType.ReadOnly = true;
+            this.colType.Width = 120;
+            // 
+            // colMember
+            // 
+            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMember.DataPropertyName = "Member";
+            this.colMember.HeaderText = "MEMBER";
+            this.colMember.Name = "colMember";
+            this.colMember.ReadOnly = true;
+            this.colMember.Width = 200;
+            // 
+            // colBook
+            // 
+            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBook.DataPropertyName = "Book";
+            this.colBook.HeaderText = "BOOK";
+            this.colBook.Name = "colBook";
+            this.colBook.ReadOnly = true;
+            this.colBook.Width = 250;
+            // 
+            // colBorrowDate
+            // 
+            this.colBorrowDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBorrowDate.DataPropertyName = "BorrowDate";
+            this.colBorrowDate.HeaderText = "BORROW DATE";
+            this.colBorrowDate.Name = "colBorrowDate";
+            this.colBorrowDate.ReadOnly = true;
+            this.colBorrowDate.Width = 120;
+            // 
+            // colDueDate
+            // 
+            this.colDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colDueDate.DataPropertyName = "DueDate";
+            this.colDueDate.HeaderText = "DUE DATE";
+            this.colDueDate.Name = "colDueDate";
+            this.colDueDate.ReadOnly = true;
+            this.colDueDate.Width = 120;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 120;
+            // 
+            // colFine
+            // 
+            this.colFine.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colFine.DataPropertyName = "Fine";
+            this.colFine.HeaderText = "FINE";
+            this.colFine.Name = "colFine";
+            this.colFine.ReadOnly = true;
+            this.colFine.Width = 100;
             // 
             // panelActionTabs
             // 
@@ -588,6 +700,14 @@
         private System.Windows.Forms.Button btnProcessReturn;
         private System.Windows.Forms.Panel panelTableContainer;
         private System.Windows.Forms.DataGridView dataGridViewTransactions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTransactionID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMember;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBook;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBorrowDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDueDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFine;
         private System.Windows.Forms.Label lblRecentTransactions;
     }
 }

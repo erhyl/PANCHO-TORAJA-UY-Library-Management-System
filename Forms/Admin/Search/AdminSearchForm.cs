@@ -87,9 +87,42 @@ namespace Project5LMS.Forms.Admin.Search
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 ReadOnly = true,
                 AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                AllowUserToOrderColumns = true,
                 BackgroundColor = Color.White,
                 BorderStyle = BorderStyle.None,
-                Margin = new Padding(0, 50, 0, 0)
+                Margin = new Padding(0, 50, 0, 0),
+                MultiSelect = false,
+                RowHeadersVisible = false,
+                RowHeadersWidth = 51,
+                RowTemplate = { Height = 60 },
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                GridColor = Color.FromArgb(240, 240, 240),
+                AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(250, 250, 250)
+                },
+                ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleLeft,
+                    BackColor = Color.FromArgb(248, 249, 250),
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(64, 64, 64),
+                    SelectionBackColor = SystemColors.Highlight,
+                    SelectionForeColor = SystemColors.HighlightText,
+                    WrapMode = DataGridViewTriState.True
+                },
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleLeft,
+                    BackColor = SystemColors.Window,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    ForeColor = SystemColors.ControlText,
+                    Padding = new Padding(10, 5, 10, 5),
+                    SelectionBackColor = SystemColors.Highlight,
+                    SelectionForeColor = SystemColors.HighlightText,
+                    WrapMode = DataGridViewTriState.False
+                }
             };
 
             panelResults.Controls.Add(lblResultsTitle);

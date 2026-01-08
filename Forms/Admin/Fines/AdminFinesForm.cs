@@ -953,5 +953,10 @@ namespace Project5LMS.Forms.Admin.Fines
         {
 
         }
+
+        private void dataGridViewFines_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

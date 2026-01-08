@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewReservations = new System.Windows.Forms.DataGridView();
+            this.colReservationID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colReservedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colExpiryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPriority = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
             this.panelMetrics = new System.Windows.Forms.Panel();
             this.panelMetricExpired = new System.Windows.Forms.Panel();
@@ -96,10 +107,39 @@
             // 
             this.dataGridViewReservations.AllowUserToAddRows = false;
             this.dataGridViewReservations.AllowUserToDeleteRows = false;
+            this.dataGridViewReservations.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewReservations.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewReservations.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewReservations.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewReservations.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewReservations.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewReservations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewReservations.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colReservationID,
+            this.colMember,
+            this.colBook,
+            this.colReservedDate,
+            this.colExpiryDate,
+            this.colPriority,
+            this.colStatus,
+            this.colActions});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewReservations.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewReservations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewReservations.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewReservations.Location = new System.Drawing.Point(16, 16);
@@ -112,6 +152,78 @@
             this.dataGridViewReservations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewReservations.Size = new System.Drawing.Size(1118, 548);
             this.dataGridViewReservations.TabIndex = 0;
+            // 
+            // colReservationID
+            // 
+            this.colReservationID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colReservationID.DataPropertyName = "ReservationID";
+            this.colReservationID.HeaderText = "RESERVATION ID";
+            this.colReservationID.Name = "colReservationID";
+            this.colReservationID.ReadOnly = true;
+            this.colReservationID.Width = 150;
+            // 
+            // colMember
+            // 
+            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMember.DataPropertyName = "Member";
+            this.colMember.HeaderText = "MEMBER";
+            this.colMember.Name = "colMember";
+            this.colMember.ReadOnly = true;
+            this.colMember.Width = 200;
+            // 
+            // colBook
+            // 
+            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBook.DataPropertyName = "Book";
+            this.colBook.HeaderText = "BOOK";
+            this.colBook.Name = "colBook";
+            this.colBook.ReadOnly = true;
+            this.colBook.Width = 300;
+            // 
+            // colReservedDate
+            // 
+            this.colReservedDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colReservedDate.DataPropertyName = "ReservedDate";
+            this.colReservedDate.HeaderText = "RESERVED DATE";
+            this.colReservedDate.Name = "colReservedDate";
+            this.colReservedDate.ReadOnly = true;
+            this.colReservedDate.Width = 130;
+            // 
+            // colExpiryDate
+            // 
+            this.colExpiryDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colExpiryDate.DataPropertyName = "ExpiryDate";
+            this.colExpiryDate.HeaderText = "EXPIRY DATE";
+            this.colExpiryDate.Name = "colExpiryDate";
+            this.colExpiryDate.ReadOnly = true;
+            this.colExpiryDate.Width = 130;
+            // 
+            // colPriority
+            // 
+            this.colPriority.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colPriority.DataPropertyName = "Priority";
+            this.colPriority.HeaderText = "PRIORITY";
+            this.colPriority.Name = "colPriority";
+            this.colPriority.ReadOnly = true;
+            this.colPriority.Width = 100;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 120;
+            // 
+            // colActions
+            // 
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colActions.DataPropertyName = "Actions";
+            this.colActions.HeaderText = "ACTIONS";
+            this.colActions.Name = "colActions";
+            this.colActions.ReadOnly = true;
+            this.colActions.Width = 200;
             // 
             // panelFilter
             // 
@@ -414,6 +526,14 @@
         private System.Windows.Forms.Panel panelFilter;
         private System.Windows.Forms.Panel panelTableContainer;
         private System.Windows.Forms.DataGridView dataGridViewReservations;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colReservationID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMember;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBook;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colReservedDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colExpiryDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPriority;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colActions;
         private System.Windows.Forms.Button btnFilter;
     }
 }

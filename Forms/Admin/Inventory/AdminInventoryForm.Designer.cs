@@ -28,9 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewInventory = new System.Windows.Forms.DataGridView();
+            this.colInventoryID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBookDetails = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCondition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLastVerified = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelSearchFilter = new System.Windows.Forms.Panel();
             this.btnFilterStatus = new System.Windows.Forms.Button();
             this.btnFilterCondition = new System.Windows.Forms.Button();
@@ -94,10 +106,40 @@
             // 
             this.dataGridViewInventory.AllowUserToAddRows = false;
             this.dataGridViewInventory.AllowUserToDeleteRows = false;
+            this.dataGridViewInventory.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewInventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewInventory.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewInventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colInventoryID,
+            this.colBookDetails,
+            this.colCategory,
+            this.colLocation,
+            this.colCopy,
+            this.colCondition,
+            this.colStatus,
+            this.colLastVerified,
+            this.colActions});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewInventory.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewInventory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewInventory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewInventory.Location = new System.Drawing.Point(16, 16);
@@ -110,6 +152,87 @@
             this.dataGridViewInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewInventory.Size = new System.Drawing.Size(1118, 546);
             this.dataGridViewInventory.TabIndex = 0;
+            // 
+            // colInventoryID
+            // 
+            this.colInventoryID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colInventoryID.DataPropertyName = "InventoryID";
+            this.colInventoryID.HeaderText = "INVENTORY ID";
+            this.colInventoryID.Name = "colInventoryID";
+            this.colInventoryID.ReadOnly = true;
+            this.colInventoryID.Width = 120;
+            // 
+            // colBookDetails
+            // 
+            this.colBookDetails.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBookDetails.DataPropertyName = "BookDetails";
+            this.colBookDetails.HeaderText = "BOOK DETAILS";
+            this.colBookDetails.Name = "colBookDetails";
+            this.colBookDetails.ReadOnly = true;
+            this.colBookDetails.Width = 300;
+            // 
+            // colCategory
+            // 
+            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCategory.DataPropertyName = "Category";
+            this.colCategory.HeaderText = "CATEGORY";
+            this.colCategory.Name = "colCategory";
+            this.colCategory.ReadOnly = true;
+            this.colCategory.Width = 120;
+            // 
+            // colLocation
+            // 
+            this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLocation.DataPropertyName = "Location";
+            this.colLocation.HeaderText = "LOCATION";
+            this.colLocation.Name = "colLocation";
+            this.colLocation.ReadOnly = true;
+            this.colLocation.Width = 100;
+            // 
+            // colCopy
+            // 
+            this.colCopy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCopy.DataPropertyName = "Copy";
+            this.colCopy.HeaderText = "COPY";
+            this.colCopy.Name = "colCopy";
+            this.colCopy.ReadOnly = true;
+            this.colCopy.Width = 100;
+            // 
+            // colCondition
+            // 
+            this.colCondition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCondition.DataPropertyName = "Condition";
+            this.colCondition.HeaderText = "CONDITION";
+            this.colCondition.Name = "colCondition";
+            this.colCondition.ReadOnly = true;
+            this.colCondition.Width = 120;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 120;
+            // 
+            // colLastVerified
+            // 
+            this.colLastVerified.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLastVerified.DataPropertyName = "LastVerified";
+            this.colLastVerified.HeaderText = "LAST VERIFIED";
+            this.colLastVerified.Name = "colLastVerified";
+            this.colLastVerified.ReadOnly = true;
+            this.colLastVerified.Width = 130;
+            // 
+            // colActions
+            // 
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colActions.DataPropertyName = "Actions";
+            this.colActions.HeaderText = "ACTIONS";
+            this.colActions.Name = "colActions";
+            this.colActions.ReadOnly = true;
+            this.colActions.Width = 200;
             // 
             // panelSearchFilter
             // 
@@ -405,5 +528,14 @@
         private System.Windows.Forms.Button btnFilterStatus;
         private System.Windows.Forms.Panel panelTableContainer;
         private System.Windows.Forms.DataGridView dataGridViewInventory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInventoryID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBookDetails;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCategory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLocation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCopy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCondition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLastVerified;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colActions;
     }
 }

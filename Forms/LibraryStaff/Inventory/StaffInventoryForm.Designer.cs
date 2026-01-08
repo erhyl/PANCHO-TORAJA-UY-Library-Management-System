@@ -17,9 +17,23 @@
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelInventoryTable = new System.Windows.Forms.Panel();
             this.dataGridViewInventory = new System.Windows.Forms.DataGridView();
+            this.colBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAvailable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckedOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDamaged = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilter = new System.Windows.Forms.Panel();
             this.cmbCategoryFilter = new System.Windows.Forms.ComboBox();
             this.lblCategoryFilter = new System.Windows.Forms.Label();
@@ -112,18 +126,154 @@
             // 
             this.dataGridViewInventory.AllowUserToAddRows = false;
             this.dataGridViewInventory.AllowUserToDeleteRows = false;
+            this.dataGridViewInventory.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewInventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewInventory.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewInventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colBookID,
+            this.colTitle,
+            this.colCategory,
+            this.colLocation,
+            this.colTotal,
+            this.colAvailable,
+            this.colCheckedOut,
+            this.colDamaged,
+            this.colLost,
+            this.colLastUpdated,
+            this.colStatus});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewInventory.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewInventory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewInventory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewInventory.Location = new System.Drawing.Point(0, 20);
             this.dataGridViewInventory.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridViewInventory.MultiSelect = false;
             this.dataGridViewInventory.Name = "dataGridViewInventory";
             this.dataGridViewInventory.ReadOnly = true;
+            this.dataGridViewInventory.RowHeadersVisible = false;
             this.dataGridViewInventory.RowHeadersWidth = 51;
+            this.dataGridViewInventory.RowTemplate.Height = 60;
+            this.dataGridViewInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewInventory.Size = new System.Drawing.Size(1536, 377);
             this.dataGridViewInventory.TabIndex = 0;
+            // 
+            // colBookID
+            // 
+            this.colBookID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBookID.DataPropertyName = "BookID";
+            this.colBookID.HeaderText = "Book ID";
+            this.colBookID.Name = "colBookID";
+            this.colBookID.ReadOnly = true;
+            this.colBookID.Width = 100;
+            // 
+            // colTitle
+            // 
+            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTitle.DataPropertyName = "Title";
+            this.colTitle.HeaderText = "Title";
+            this.colTitle.Name = "colTitle";
+            this.colTitle.ReadOnly = true;
+            this.colTitle.MinimumWidth = 250;
+            // 
+            // colCategory
+            // 
+            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCategory.DataPropertyName = "Category";
+            this.colCategory.HeaderText = "Category";
+            this.colCategory.Name = "colCategory";
+            this.colCategory.ReadOnly = true;
+            this.colCategory.Width = 120;
+            // 
+            // colLocation
+            // 
+            this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLocation.DataPropertyName = "Location";
+            this.colLocation.HeaderText = "Location";
+            this.colLocation.Name = "colLocation";
+            this.colLocation.ReadOnly = true;
+            this.colLocation.Width = 100;
+            // 
+            // colTotal
+            // 
+            this.colTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colTotal.DataPropertyName = "Total";
+            this.colTotal.HeaderText = "Total";
+            this.colTotal.Name = "colTotal";
+            this.colTotal.ReadOnly = true;
+            this.colTotal.Width = 80;
+            // 
+            // colAvailable
+            // 
+            this.colAvailable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colAvailable.DataPropertyName = "Available";
+            this.colAvailable.HeaderText = "Available";
+            this.colAvailable.Name = "colAvailable";
+            this.colAvailable.ReadOnly = true;
+            this.colAvailable.Width = 100;
+            // 
+            // colCheckedOut
+            // 
+            this.colCheckedOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCheckedOut.DataPropertyName = "CheckedOut";
+            this.colCheckedOut.HeaderText = "Checked Out";
+            this.colCheckedOut.Name = "colCheckedOut";
+            this.colCheckedOut.ReadOnly = true;
+            this.colCheckedOut.Width = 120;
+            // 
+            // colDamaged
+            // 
+            this.colDamaged.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colDamaged.DataPropertyName = "Damaged";
+            this.colDamaged.HeaderText = "Damaged";
+            this.colDamaged.Name = "colDamaged";
+            this.colDamaged.ReadOnly = true;
+            this.colDamaged.Width = 100;
+            // 
+            // colLost
+            // 
+            this.colLost.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLost.DataPropertyName = "Lost";
+            this.colLost.HeaderText = "Lost";
+            this.colLost.Name = "colLost";
+            this.colLost.ReadOnly = true;
+            this.colLost.Width = 80;
+            // 
+            // colLastUpdated
+            // 
+            this.colLastUpdated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLastUpdated.DataPropertyName = "LastUpdated";
+            this.colLastUpdated.HeaderText = "Last Updated";
+            this.colLastUpdated.Name = "colLastUpdated";
+            this.colLastUpdated.ReadOnly = true;
+            this.colLastUpdated.Width = 130;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "Status";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 120;
             // 
             // panelFilter
             // 
@@ -741,5 +891,16 @@
         private System.Windows.Forms.ComboBox cmbCategoryFilter;
         private System.Windows.Forms.Panel panelInventoryTable;
         private System.Windows.Forms.DataGridView dataGridViewInventory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBookID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCategory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLocation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAvailable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCheckedOut;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDamaged;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLastUpdated;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
     }
 }

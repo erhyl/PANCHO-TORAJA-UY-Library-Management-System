@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewMembers = new System.Windows.Forms.DataGridView();
+            this.colMemberID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colContact = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMemberType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBooks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colExpires = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelSearchFilter = new System.Windows.Forms.Panel();
             this.cmbStatusFilter = new System.Windows.Forms.ComboBox();
             this.lblStatusFilter = new System.Windows.Forms.Label();
@@ -103,10 +114,39 @@
             // 
             this.dataGridViewMembers.AllowUserToAddRows = false;
             this.dataGridViewMembers.AllowUserToDeleteRows = false;
+            this.dataGridViewMembers.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewMembers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewMembers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewMembers.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewMembers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewMembers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMembers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colMemberID,
+            this.colName,
+            this.colContact,
+            this.colMemberType,
+            this.colStatus,
+            this.colBooks,
+            this.colExpires,
+            this.colActions});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewMembers.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewMembers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewMembers.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewMembers.Location = new System.Drawing.Point(21, 20);
@@ -116,11 +156,83 @@
             this.dataGridViewMembers.ReadOnly = true;
             this.dataGridViewMembers.RowHeadersVisible = false;
             this.dataGridViewMembers.RowHeadersWidth = 51;
-            this.dataGridViewMembers.RowTemplate.Height = 50;
+            this.dataGridViewMembers.RowTemplate.Height = 60;
             this.dataGridViewMembers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewMembers.Size = new System.Drawing.Size(1816, 879);
             this.dataGridViewMembers.TabIndex = 0;
             this.dataGridViewMembers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMembers_CellClick);
+            // 
+            // colMemberID
+            // 
+            this.colMemberID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMemberID.DataPropertyName = "MemberID";
+            this.colMemberID.HeaderText = "MEMBER ID";
+            this.colMemberID.Name = "colMemberID";
+            this.colMemberID.ReadOnly = true;
+            this.colMemberID.Width = 120;
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colName.DataPropertyName = "Name";
+            this.colName.HeaderText = "NAME";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            this.colName.Width = 250;
+            // 
+            // colContact
+            // 
+            this.colContact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colContact.DataPropertyName = "Contact";
+            this.colContact.HeaderText = "CONTACT";
+            this.colContact.Name = "colContact";
+            this.colContact.ReadOnly = true;
+            this.colContact.Width = 150;
+            // 
+            // colMemberType
+            // 
+            this.colMemberType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMemberType.DataPropertyName = "MemberType";
+            this.colMemberType.HeaderText = "TYPE";
+            this.colMemberType.Name = "colMemberType";
+            this.colMemberType.ReadOnly = true;
+            this.colMemberType.Width = 120;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 120;
+            // 
+            // colBooks
+            // 
+            this.colBooks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBooks.DataPropertyName = "Books";
+            this.colBooks.HeaderText = "BOOKS";
+            this.colBooks.Name = "colBooks";
+            this.colBooks.ReadOnly = true;
+            this.colBooks.Width = 100;
+            // 
+            // colExpires
+            // 
+            this.colExpires.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colExpires.DataPropertyName = "Expires";
+            this.colExpires.HeaderText = "EXPIRES";
+            this.colExpires.Name = "colExpires";
+            this.colExpires.ReadOnly = true;
+            this.colExpires.Width = 120;
+            // 
+            // colActions
+            // 
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colActions.DataPropertyName = "Actions";
+            this.colActions.HeaderText = "ACTIONS";
+            this.colActions.Name = "colActions";
+            this.colActions.ReadOnly = true;
+            this.colActions.Width = 150;
             // 
             // panelSearchFilter
             // 
@@ -531,5 +643,13 @@
         private System.Windows.Forms.ComboBox cmbStatusFilter;
         private System.Windows.Forms.Panel panelTableContainer;
         private System.Windows.Forms.DataGridView dataGridViewMembers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMemberID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colContact;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMemberType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBooks;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colExpires;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colActions;
     }
 }

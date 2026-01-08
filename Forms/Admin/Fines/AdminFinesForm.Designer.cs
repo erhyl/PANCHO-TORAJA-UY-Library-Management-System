@@ -28,9 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewFines = new System.Windows.Forms.DataGridView();
+            this.colFineID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBookItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDaysOverdue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPaid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilters = new System.Windows.Forms.Panel();
             this.btnFilterType = new System.Windows.Forms.Button();
             this.btnFilterStatus = new System.Windows.Forms.Button();
@@ -93,10 +105,40 @@
             // 
             this.dataGridViewFines.AllowUserToAddRows = false;
             this.dataGridViewFines.AllowUserToDeleteRows = false;
+            this.dataGridViewFines.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewFines.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewFines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewFines.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewFines.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewFines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewFines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewFines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colFineID,
+            this.colMember,
+            this.colBookItem,
+            this.colType,
+            this.colDaysOverdue,
+            this.colAmount,
+            this.colPaid,
+            this.colStatus,
+            this.colActions});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewFines.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewFines.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewFines.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewFines.Location = new System.Drawing.Point(16, 16);
@@ -109,6 +151,87 @@
             this.dataGridViewFines.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewFines.Size = new System.Drawing.Size(1211, 520);
             this.dataGridViewFines.TabIndex = 0;
+            // 
+            // colFineID
+            // 
+            this.colFineID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colFineID.DataPropertyName = "FineID";
+            this.colFineID.HeaderText = "FINE ID";
+            this.colFineID.Name = "colFineID";
+            this.colFineID.ReadOnly = true;
+            this.colFineID.Width = 120;
+            // 
+            // colMember
+            // 
+            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMember.DataPropertyName = "Member";
+            this.colMember.HeaderText = "MEMBER";
+            this.colMember.Name = "colMember";
+            this.colMember.ReadOnly = true;
+            this.colMember.Width = 200;
+            // 
+            // colBookItem
+            // 
+            this.colBookItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBookItem.DataPropertyName = "BookItem";
+            this.colBookItem.HeaderText = "BOOK/ITEM";
+            this.colBookItem.Name = "colBookItem";
+            this.colBookItem.ReadOnly = true;
+            this.colBookItem.Width = 250;
+            // 
+            // colType
+            // 
+            this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colType.DataPropertyName = "Type";
+            this.colType.HeaderText = "TYPE";
+            this.colType.Name = "colType";
+            this.colType.ReadOnly = true;
+            this.colType.Width = 120;
+            // 
+            // colDaysOverdue
+            // 
+            this.colDaysOverdue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colDaysOverdue.DataPropertyName = "DaysOverdue";
+            this.colDaysOverdue.HeaderText = "DAYS OVERDUE";
+            this.colDaysOverdue.Name = "colDaysOverdue";
+            this.colDaysOverdue.ReadOnly = true;
+            this.colDaysOverdue.Width = 120;
+            // 
+            // colAmount
+            // 
+            this.colAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colAmount.DataPropertyName = "Amount";
+            this.colAmount.HeaderText = "AMOUNT";
+            this.colAmount.Name = "colAmount";
+            this.colAmount.ReadOnly = true;
+            this.colAmount.Width = 100;
+            // 
+            // colPaid
+            // 
+            this.colPaid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colPaid.DataPropertyName = "Paid";
+            this.colPaid.HeaderText = "PAID";
+            this.colPaid.Name = "colPaid";
+            this.colPaid.ReadOnly = true;
+            this.colPaid.Width = 100;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 120;
+            // 
+            // colActions
+            // 
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colActions.DataPropertyName = "Actions";
+            this.colActions.HeaderText = "ACTIONS";
+            this.colActions.Name = "colActions";
+            this.colActions.ReadOnly = true;
+            this.colActions.Width = 200;
             // 
             // panelFilters
             // 
@@ -393,5 +516,14 @@
         private System.Windows.Forms.Button btnFilterType;
         private System.Windows.Forms.Panel panelTableContainer;
         private System.Windows.Forms.DataGridView dataGridViewFines;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFineID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMember;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBookItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDaysOverdue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPaid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colActions;
     }
 }
