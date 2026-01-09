@@ -1,0 +1,319 @@
+namespace Project5LMS.Forms.Admin.UserManagement
+{
+    partial class AddUserForm
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        private System.Windows.Forms.Panel panelMainContainer;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Panel panelFormContent;
+        private System.Windows.Forms.Label lblFirstName;
+        private System.Windows.Forms.Label lblLastName;
+        private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.Label lblConfirmPassword;
+        private System.Windows.Forms.Label lblRole;
+        private System.Windows.Forms.TextBox txtFirstName;
+        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox txtConfirmPassword;
+        private System.Windows.Forms.ComboBox cmbRole;
+        private System.Windows.Forms.Panel panelButtons;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnSave;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        private void InitializeComponent()
+        {
+            this.panelMainContainer = new System.Windows.Forms.Panel();
+            this.panelButtons = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.panelFormContent = new System.Windows.Forms.Panel();
+            this.cmbRole = new System.Windows.Forms.ComboBox();
+            this.lblRole = new System.Windows.Forms.Label();
+            this.txtConfirmPassword = new System.Windows.Forms.TextBox();
+            this.lblConfirmPassword = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.lblEmail = new System.Windows.Forms.Label();
+            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.lblLastName = new System.Windows.Forms.Label();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
+            this.lblFirstName = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.panelMainContainer.SuspendLayout();
+            this.panelButtons.SuspendLayout();
+            this.panelFormContent.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelMainContainer
+            // 
+            this.panelMainContainer.BackColor = System.Drawing.Color.White;
+            this.panelMainContainer.Controls.Add(this.panelButtons);
+            this.panelMainContainer.Controls.Add(this.panelFormContent);
+            this.panelMainContainer.Controls.Add(this.lblTitle);
+            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMainContainer.ForeColor = System.Drawing.Color.White;
+            this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMainContainer.Name = "panelMainContainer";
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
+            this.panelMainContainer.Size = new System.Drawing.Size(500, 550);
+            this.panelMainContainer.TabIndex = 0;
+            // 
+            // panelButtons
+            // 
+            this.panelButtons.Controls.Add(this.btnCancel);
+            this.panelButtons.Controls.Add(this.btnSave);
+            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelButtons.Location = new System.Drawing.Point(40, 470);
+            this.panelButtons.Margin = new System.Windows.Forms.Padding(4);
+            this.panelButtons.Name = "panelButtons";
+            this.panelButtons.Size = new System.Drawing.Size(420, 50);
+            this.panelButtons.TabIndex = 2;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(-1, 7);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(120, 39);
+            this.btnCancel.TabIndex = 7;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ForeColor = System.Drawing.Color.White;
+            this.btnSave.Location = new System.Drawing.Point(300, 7);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(120, 39);
+            this.btnSave.TabIndex = 6;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // panelFormContent
+            // 
+            this.panelFormContent.Controls.Add(this.cmbRole);
+            this.panelFormContent.Controls.Add(this.lblRole);
+            this.panelFormContent.Controls.Add(this.txtConfirmPassword);
+            this.panelFormContent.Controls.Add(this.lblConfirmPassword);
+            this.panelFormContent.Controls.Add(this.txtPassword);
+            this.panelFormContent.Controls.Add(this.lblPassword);
+            this.panelFormContent.Controls.Add(this.txtEmail);
+            this.panelFormContent.Controls.Add(this.lblEmail);
+            this.panelFormContent.Controls.Add(this.txtLastName);
+            this.panelFormContent.Controls.Add(this.lblLastName);
+            this.panelFormContent.Controls.Add(this.txtFirstName);
+            this.panelFormContent.Controls.Add(this.lblFirstName);
+            this.panelFormContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFormContent.Location = new System.Drawing.Point(40, 86);
+            this.panelFormContent.Margin = new System.Windows.Forms.Padding(4);
+            this.panelFormContent.Name = "panelFormContent";
+            this.panelFormContent.Size = new System.Drawing.Size(420, 384);
+            this.panelFormContent.TabIndex = 1;
+            // 
+            // cmbRole
+            // 
+            this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbRole.FormattingEnabled = true;
+            this.cmbRole.Items.AddRange(new object[] {
+            "Admin",
+            "LibraryStaff",
+            "Member"});
+            this.cmbRole.Location = new System.Drawing.Point(0, 368);
+            this.cmbRole.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbRole.Name = "cmbRole";
+            this.cmbRole.Size = new System.Drawing.Size(420, 30);
+            this.cmbRole.TabIndex = 5;
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblRole.Location = new System.Drawing.Point(4, 340);
+            this.lblRole.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(47, 24);
+            this.lblRole.TabIndex = 11;
+            this.lblRole.Text = "Role";
+            // 
+            // txtConfirmPassword
+            // 
+            this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtConfirmPassword.Location = new System.Drawing.Point(0, 303);
+            this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtConfirmPassword.Name = "txtConfirmPassword";
+            this.txtConfirmPassword.PasswordChar = '*';
+            this.txtConfirmPassword.Size = new System.Drawing.Size(420, 28);
+            this.txtConfirmPassword.TabIndex = 4;
+            // 
+            // lblConfirmPassword
+            // 
+            this.lblConfirmPassword.AutoSize = true;
+            this.lblConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblConfirmPassword.Location = new System.Drawing.Point(4, 275);
+            this.lblConfirmPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblConfirmPassword.Name = "lblConfirmPassword";
+            this.lblConfirmPassword.Size = new System.Drawing.Size(155, 24);
+            this.lblConfirmPassword.TabIndex = 9;
+            this.lblConfirmPassword.Text = "Confirm Password";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Location = new System.Drawing.Point(0, 234);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(420, 28);
+            this.txtPassword.TabIndex = 3;
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblPassword.Location = new System.Drawing.Point(4, 206);
+            this.lblPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(92, 24);
+            this.lblPassword.TabIndex = 7;
+            this.lblPassword.Text = "Password";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmail.Location = new System.Drawing.Point(0, 165);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(420, 28);
+            this.txtEmail.TabIndex = 2;
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblEmail.Location = new System.Drawing.Point(4, 137);
+            this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(57, 24);
+            this.lblEmail.TabIndex = 5;
+            this.lblEmail.Text = "Email";
+            // 
+            // txtLastName
+            // 
+            this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLastName.Location = new System.Drawing.Point(0, 96);
+            this.txtLastName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(420, 28);
+            this.txtLastName.TabIndex = 1;
+            // 
+            // lblLastName
+            // 
+            this.lblLastName.AutoSize = true;
+            this.lblLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLastName.Location = new System.Drawing.Point(4, 68);
+            this.lblLastName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblLastName.Name = "lblLastName";
+            this.lblLastName.Size = new System.Drawing.Size(99, 24);
+            this.lblLastName.TabIndex = 3;
+            this.lblLastName.Text = "Last Name";
+            // 
+            // txtFirstName
+            // 
+            this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFirstName.Location = new System.Drawing.Point(0, 28);
+            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(420, 28);
+            this.txtFirstName.TabIndex = 0;
+            // 
+            // lblFirstName
+            // 
+            this.lblFirstName.AutoSize = true;
+            this.lblFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFirstName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblFirstName.Location = new System.Drawing.Point(4, 0);
+            this.lblFirstName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFirstName.Name = "lblFirstName";
+            this.lblFirstName.Size = new System.Drawing.Size(99, 24);
+            this.lblFirstName.TabIndex = 1;
+            this.lblFirstName.Text = "First Name";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblTitle.Location = new System.Drawing.Point(44, 30);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(140, 31);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Add User";
+            // 
+            // AddUserForm
+            // 
+            this.AcceptButton = this.btnSave;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(500, 550);
+            this.Controls.Add(this.panelMainContainer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "AddUserForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Add User";
+            this.Load += new System.EventHandler(this.AddUserForm_Load);
+            this.panelMainContainer.ResumeLayout(false);
+            this.panelMainContainer.PerformLayout();
+            this.panelButtons.ResumeLayout(false);
+            this.panelFormContent.ResumeLayout(false);
+            this.panelFormContent.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+    }
+}
+
