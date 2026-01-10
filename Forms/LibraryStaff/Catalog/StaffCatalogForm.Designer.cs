@@ -138,7 +138,7 @@
             this.lblMetricCheckedOutTitle.Name = "lblMetricCheckedOutTitle";
             this.lblMetricCheckedOutTitle.Size = new System.Drawing.Size(118, 20);
             this.lblMetricCheckedOutTitle.TabIndex = 0;
-            this.lblMetricCheckedOutTitle.Text = "?? Checked Out";
+            this.lblMetricCheckedOutTitle.Text = "📖 Checked Out";
             this.panelMetricAvailable.BackColor = System.Drawing.Color.White;
             this.panelMetricAvailable.Controls.Add(this.lblMetricAvailableValue);
             this.panelMetricAvailable.Controls.Add(this.lblMetricAvailableTitle);
@@ -165,7 +165,7 @@
             this.lblMetricAvailableTitle.Name = "lblMetricAvailableTitle";
             this.lblMetricAvailableTitle.Size = new System.Drawing.Size(96, 20);
             this.lblMetricAvailableTitle.TabIndex = 0;
-            this.lblMetricAvailableTitle.Text = "?? Available";
+            this.lblMetricAvailableTitle.Text = "✅ Available";
             this.panelMetricTotalCopies.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalCopies.Controls.Add(this.lblMetricTotalCopiesValue);
             this.panelMetricTotalCopies.Controls.Add(this.lblMetricTotalCopiesTitle);
@@ -192,7 +192,7 @@
             this.lblMetricTotalCopiesTitle.Name = "lblMetricTotalCopiesTitle";
             this.lblMetricTotalCopiesTitle.Size = new System.Drawing.Size(116, 20);
             this.lblMetricTotalCopiesTitle.TabIndex = 0;
-            this.lblMetricTotalCopiesTitle.Text = "??? Total Copies";
+            this.lblMetricTotalCopiesTitle.Text = "📚 Total Copies";
             this.panelMetricTotalBooks.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalBooks.Controls.Add(this.lblMetricTotalBooksValue);
             this.panelMetricTotalBooks.Controls.Add(this.lblMetricTotalBooksTitle);
@@ -219,7 +219,7 @@
             this.lblMetricTotalBooksTitle.Name = "lblMetricTotalBooksTitle";
             this.lblMetricTotalBooksTitle.Size = new System.Drawing.Size(111, 20);
             this.lblMetricTotalBooksTitle.TabIndex = 0;
-            this.lblMetricTotalBooksTitle.Text = "?? Total Books";
+            this.lblMetricTotalBooksTitle.Text = "📚 Total Books";
             this.panelHeader.Controls.Add(this.btnAddNewBook);
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);

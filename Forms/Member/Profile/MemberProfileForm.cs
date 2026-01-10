@@ -68,14 +68,12 @@ namespace Project5LMS.Forms.Member.Profile
             {
                 bool hasContact = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Contact");
                 bool hasAddress = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Address");
-                bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                string typeColumn = hasMemberType ? "MemberType" : "Type";
-                string query = $@"SELECT
+                string query = @"SELECT
                                     MemberID,
                                     FirstName,
                                     LastName,
                                     Email,
-                                    {typeColumn} as MemberType,
+                                    COALESCE(Type, MemberType) as MemberType,
                                     RegistrationDate,
                                     ExpirationDate,
                                     Status" +
@@ -178,9 +176,7 @@ namespace Project5LMS.Forms.Member.Profile
                 int renewalLimit = 3;
                 int reservationLimit = 5;
                 decimal fineRate = 1.00m;
-                bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                string typeColumn = hasMemberType ? "MemberType" : "Type";
-                string memberTypeQuery = $"SELECT {typeColumn} FROM Members WHERE MemberID = @MemberID";
+                string memberTypeQuery = "SELECT COALESCE(Type, MemberType) FROM Members WHERE MemberID = @MemberID";
                 using (MySqlCommand cmd = new MySqlCommand(memberTypeQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@MemberID", memberID);

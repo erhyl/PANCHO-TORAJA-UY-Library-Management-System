@@ -288,7 +288,7 @@
             this.lblLostLabel.Name = "lblLostLabel";
             this.lblLostLabel.Size = new System.Drawing.Size(69, 23);
             this.lblLostLabel.TabIndex = 1;
-            this.lblLostLabel.Text = "? Lost";
+            this.lblLostLabel.Text = "📕 Lost";
             this.cardDamaged.BackColor = System.Drawing.Color.White;
             this.cardDamaged.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardDamaged.Controls.Add(this.lblDamagedValue);
@@ -316,7 +316,7 @@
             this.lblDamagedLabel.Name = "lblDamagedLabel";
             this.lblDamagedLabel.Size = new System.Drawing.Size(112, 23);
             this.lblDamagedLabel.TabIndex = 1;
-            this.lblDamagedLabel.Text = "?? Damaged";
+            this.lblDamagedLabel.Text = "🔧 Damaged";
             this.cardCheckedOut.BackColor = System.Drawing.Color.White;
             this.cardCheckedOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardCheckedOut.Controls.Add(this.lblCheckedOutValue);
@@ -344,7 +344,7 @@
             this.lblCheckedOutLabel.Name = "lblCheckedOutLabel";
             this.lblCheckedOutLabel.Size = new System.Drawing.Size(137, 23);
             this.lblCheckedOutLabel.TabIndex = 1;
-            this.lblCheckedOutLabel.Text = "?? Checked Out";
+            this.lblCheckedOutLabel.Text = "📖 Checked Out";
             this.cardAvailable.BackColor = System.Drawing.Color.White;
             this.cardAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardAvailable.Controls.Add(this.lblAvailableValue);
@@ -372,7 +372,7 @@
             this.lblAvailableLabel.Name = "lblAvailableLabel";
             this.lblAvailableLabel.Size = new System.Drawing.Size(106, 23);
             this.lblAvailableLabel.TabIndex = 1;
-            this.lblAvailableLabel.Text = "?? Available";
+            this.lblAvailableLabel.Text = "✅ Available";
             this.cardTotalCopies.BackColor = System.Drawing.Color.White;
             this.cardTotalCopies.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardTotalCopies.Controls.Add(this.lblTotalCopiesValue);
@@ -401,7 +401,7 @@
             this.lblTotalCopiesLabel.Name = "lblTotalCopiesLabel";
             this.lblTotalCopiesLabel.Size = new System.Drawing.Size(130, 23);
             this.lblTotalCopiesLabel.TabIndex = 1;
-            this.lblTotalCopiesLabel.Text = "??? Total Copies";
+            this.lblTotalCopiesLabel.Text = "📚 Total Copies";
             this.panelActionCards.Controls.Add(this.cardReportLost);
             this.panelActionCards.Controls.Add(this.cardReportDamage);
             this.panelActionCards.Controls.Add(this.cardUpdateStock);

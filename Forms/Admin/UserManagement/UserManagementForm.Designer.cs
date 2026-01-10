@@ -144,7 +144,7 @@
             this.lblMetricSuspendedTitle.Name = "lblMetricSuspendedTitle";
             this.lblMetricSuspendedTitle.Size = new System.Drawing.Size(99, 19);
             this.lblMetricSuspendedTitle.TabIndex = 1;
-            this.lblMetricSuspendedTitle.Text = "? Suspended";
+            this.lblMetricSuspendedTitle.Text = "⛔ Suspended";
             this.panelMetricAdministrators.BackColor = System.Drawing.Color.White;
             this.panelMetricAdministrators.Controls.Add(this.lblMetricAdministratorsValue);
             this.panelMetricAdministrators.Controls.Add(this.lblMetricAdministratorsTitle);
@@ -169,7 +169,7 @@
             this.lblMetricAdministratorsTitle.Name = "lblMetricAdministratorsTitle";
             this.lblMetricAdministratorsTitle.Size = new System.Drawing.Size(122, 19);
             this.lblMetricAdministratorsTitle.TabIndex = 1;
-            this.lblMetricAdministratorsTitle.Text = "?? Administrators";
+            this.lblMetricAdministratorsTitle.Text = "🛡️ Administrators";
             this.panelMetricActiveUsers.BackColor = System.Drawing.Color.White;
             this.panelMetricActiveUsers.Controls.Add(this.lblMetricActiveUsersValue);
             this.panelMetricActiveUsers.Controls.Add(this.lblMetricActiveUsersTitle);
@@ -194,7 +194,7 @@
             this.lblMetricActiveUsersTitle.Name = "lblMetricActiveUsersTitle";
             this.lblMetricActiveUsersTitle.Size = new System.Drawing.Size(107, 19);
             this.lblMetricActiveUsersTitle.TabIndex = 1;
-            this.lblMetricActiveUsersTitle.Text = "? Active Users";
+            this.lblMetricActiveUsersTitle.Text = "🟢 Active Users";
             this.panelMetricTotalUsers.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalUsers.Controls.Add(this.lblMetricTotalUsersValue);
             this.panelMetricTotalUsers.Controls.Add(this.lblMetricTotalUsersTitle);
@@ -219,7 +219,7 @@
             this.lblMetricTotalUsersTitle.Name = "lblMetricTotalUsersTitle";
             this.lblMetricTotalUsersTitle.Size = new System.Drawing.Size(99, 19);
             this.lblMetricTotalUsersTitle.TabIndex = 1;
-            this.lblMetricTotalUsersTitle.Text = "?? Total Users";
+            this.lblMetricTotalUsersTitle.Text = "👥 Total Users";
             this.panelHeader.Controls.Add(this.btnAddNewUser);
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);

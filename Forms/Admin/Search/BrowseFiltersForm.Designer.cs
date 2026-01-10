@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Search
+namespace Project5LMS.Forms.Admin.Search
 {
     partial class BrowseFiltersForm
     {
@@ -40,7 +40,7 @@
             this.lblBrowseType.Text = "Browse Type";
             this.lblStartDate.AutoSize = true;
             this.lblStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartDate.Location = new System.Drawing.Point(23, 71);
+            this.lblStartDate.Location = new System.Drawing.Point(23, 73);
             this.lblStartDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStartDate.Name = "lblStartDate";
             this.lblStartDate.Size = new System.Drawing.Size(102, 20);
@@ -48,7 +48,7 @@
             this.lblStartDate.Text = "Start Date:";
             this.lblEndDate.AutoSize = true;
             this.lblEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndDate.Location = new System.Drawing.Point(29, 114);
+            this.lblEndDate.Location = new System.Drawing.Point(32, 118);
             this.lblEndDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEndDate.Name = "lblEndDate";
             this.lblEndDate.Size = new System.Drawing.Size(93, 20);
@@ -56,20 +56,20 @@
             this.lblEndDate.Text = "End Date:";
             this.dtpStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartDate.Location = new System.Drawing.Point(133, 69);
-            this.dtpStartDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpStartDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpStartDate.Name = "dtpStartDate";
             this.dtpStartDate.Size = new System.Drawing.Size(265, 24);
             this.dtpStartDate.TabIndex = 3;
             this.dtpEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpEndDate.Location = new System.Drawing.Point(133, 114);
-            this.dtpEndDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpEndDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpEndDate.Name = "dtpEndDate";
             this.dtpEndDate.Size = new System.Drawing.Size(265, 24);
             this.dtpEndDate.TabIndex = 4;
             this.chkWeightedPopularity.AutoSize = true;
             this.chkWeightedPopularity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkWeightedPopularity.Location = new System.Drawing.Point(15, 159);
-            this.chkWeightedPopularity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkWeightedPopularity.Location = new System.Drawing.Point(15, 163);
+            this.chkWeightedPopularity.Margin = new System.Windows.Forms.Padding(4);
             this.chkWeightedPopularity.Name = "chkWeightedPopularity";
             this.chkWeightedPopularity.Size = new System.Drawing.Size(399, 22);
             this.chkWeightedPopularity.TabIndex = 5;
@@ -78,7 +78,7 @@
             this.btnApply.BackColor = System.Drawing.Color.Maroon;
             this.btnApply.ForeColor = System.Drawing.Color.White;
             this.btnApply.Location = new System.Drawing.Point(258, 244);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(140, 46);
             this.btnApply.TabIndex = 6;
@@ -87,10 +87,10 @@
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(31, 244);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Location = new System.Drawing.Point(27, 244);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(129, 46);
+            this.btnCancel.Size = new System.Drawing.Size(133, 46);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -107,7 +107,7 @@
             this.Controls.Add(this.lblStartDate);
             this.Controls.Add(this.lblBrowseType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BrowseFiltersForm";
@@ -115,6 +115,7 @@
             this.Text = "Browse Filters";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
     }
 }

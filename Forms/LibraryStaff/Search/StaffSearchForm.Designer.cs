@@ -280,7 +280,7 @@
             this.lblSearchIn.Name = "lblSearchIn";
             this.lblSearchIn.Size = new System.Drawing.Size(112, 23);
             this.lblSearchIn.TabIndex = 0;
-            this.lblSearchIn.Text = "?? Search in:";
+            this.lblSearchIn.Text = "🔍 Search in:";
             this.panelSearchInput.Controls.Add(this.btnSearch);
             this.panelSearchInput.Controls.Add(this.txtSearch);
             this.panelSearchInput.Location = new System.Drawing.Point(30, 16);

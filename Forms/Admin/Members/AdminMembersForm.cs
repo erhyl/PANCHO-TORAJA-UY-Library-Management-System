@@ -172,6 +172,24 @@ namespace Project5LMS.Forms.Admin.Members
                 }
                 e.FormattingApplied = true;
             }
+            if (columnName == "Books" && e.Value != null)
+            {
+                if (row.DataBoundItem != null)
+                {
+                    DataRowView rowView = row.DataBoundItem as DataRowView;
+                    if (rowView != null)
+                    {
+                        int borrowedCount = Convert.ToInt32(e.Value);
+                        int maxBooks = 10;
+                        if (rowView.Row.Table.Columns.Contains("MaxBooks") && rowView["MaxBooks"] != DBNull.Value)
+                        {
+                            maxBooks = Convert.ToInt32(rowView["MaxBooks"]);
+                        }
+                        e.Value = $"{borrowedCount}/{maxBooks}";
+                    }
+                }
+                e.FormattingApplied = true;
+            }
             }
             catch (Exception ex)
             {
@@ -196,21 +214,21 @@ namespace Project5LMS.Forms.Admin.Members
                 {
                     e.Graphics.FillEllipse(brush, editRect);
                 }
-                TextRenderer.DrawText(e.Graphics, "?", dataGridViewMembers.DefaultCellStyle.Font, editRect, Color.White,
+                TextRenderer.DrawText(e.Graphics, "✏️", dataGridViewMembers.DefaultCellStyle.Font, editRect, Color.White,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
                 Rectangle viewRect = new Rectangle(startX + buttonSize + spacing, startY, buttonSize, buttonSize);
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(13, 110, 253)))
                 {
                     e.Graphics.FillEllipse(brush, viewRect);
                 }
-                TextRenderer.DrawText(e.Graphics, "??", dataGridViewMembers.DefaultCellStyle.Font, viewRect, Color.White,
+                TextRenderer.DrawText(e.Graphics, "👁️", dataGridViewMembers.DefaultCellStyle.Font, viewRect, Color.White,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
                 Rectangle deactivateRect = new Rectangle(startX + (buttonSize + spacing) * 2, startY, buttonSize, buttonSize);
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(220, 53, 69)))
                 {
                     e.Graphics.FillEllipse(brush, deactivateRect);
                 }
-                TextRenderer.DrawText(e.Graphics, "??", dataGridViewMembers.DefaultCellStyle.Font, deactivateRect, Color.White,
+                TextRenderer.DrawText(e.Graphics, "🚫", dataGridViewMembers.DefaultCellStyle.Font, deactivateRect, Color.White,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
                 e.Handled = true;
                 return;
@@ -349,7 +367,11 @@ namespace Project5LMS.Forms.Admin.Members
                     int borrowedCount = Convert.ToInt32(row["Books"]);
                     string memberType = row["MemberType"]?.ToString() ?? "";
                     int maxBooks = GetMaxBooksForType(memberType);
-                    row["Books"] = $"{borrowedCount}/{maxBooks}";
+                    if (!allMembersData.Columns.Contains("MaxBooks"))
+                    {
+                        allMembersData.Columns.Add("MaxBooks", typeof(int));
+                    }
+                    row["MaxBooks"] = maxBooks;
                     if (row["Expires"] != DBNull.Value)
                     {
                         DateTime expDate = Convert.ToDateTime(row["Expires"]);
@@ -400,8 +422,7 @@ namespace Project5LMS.Forms.Admin.Members
             foreach (DataRow row in allMembersData.Rows)
             {
                 bool matchesSearch = string.IsNullOrEmpty(searchText) ||
-                    row["FirstName"].ToString().ToLower().Contains(searchText) ||
-                    row["LastName"].ToString().ToLower().Contains(searchText) ||
+                    row["Name"].ToString().ToLower().Contains(searchText) ||
                     row["Email"].ToString().ToLower().Contains(searchText);
                 bool matchesType = selectedType == null || row["MemberType"].ToString() == selectedType;
                 bool matchesStatus = selectedStatus == null;

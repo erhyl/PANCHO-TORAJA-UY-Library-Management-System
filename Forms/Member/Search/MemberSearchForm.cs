@@ -160,7 +160,7 @@ namespace Project5LMS.Forms.Member.Search
             panelCategory.Controls.Add(lblCategory);
             Label lblLocation = new Label
             {
-                Text = $"?? {location} � {available} copy{(available != 1 ? "ies" : "")} available",
+                Text = $"📍 {location} � {available} copy{(available != 1 ? "ies" : "")} available",
                 Font = new Font("Segoe UI", 11F),
                 ForeColor = Color.FromArgb(96, 96, 96),
                 Location = new Point(600, 50),

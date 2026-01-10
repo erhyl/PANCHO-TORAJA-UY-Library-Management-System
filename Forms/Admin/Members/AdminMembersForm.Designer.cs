@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Members
+namespace Project5LMS.Forms.Admin.Members
 {
     partial class AdminMembersForm
     {
@@ -170,6 +170,7 @@
             this.colBooks.HeaderText = "BOOKS";
             this.colBooks.MinimumWidth = 6;
             this.colBooks.Name = "colBooks";
+            this.colBooks.Width = 125;
             this.colExpires.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colExpires.DataPropertyName = "Expires";
             this.colExpires.HeaderText = "EXPIRES";
@@ -250,11 +251,11 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(399, 30);
             this.txtSearch.TabIndex = 0;
-            this.txtSearch.Text = "?? Search members...";
+            this.txtSearch.Text = " Search members...";
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
-            this.panelMetrics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panelMetrics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelMetrics.Controls.Add(this.panelMetricExpired);
             this.panelMetrics.Controls.Add(this.panelMetricSuspended);
@@ -405,7 +406,7 @@
             this.panelMetricIconTotal.Name = "panelMetricIconTotal";
             this.panelMetricIconTotal.Size = new System.Drawing.Size(53, 49);
             this.panelMetricIconTotal.TabIndex = 0;
-            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHeader.Controls.Add(this.btnAddNewMember);
             this.panelHeader.Controls.Add(this.lblSubtitle);
@@ -473,6 +474,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

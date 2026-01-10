@@ -558,7 +558,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             card.Controls.Add(lblDate);
             Label lblCheckmark = new Label
             {
-                Text = "?",
+                Text = "✅",
                 Font = new Font("Segoe UI", 16F, FontStyle.Bold),
                 ForeColor = status == "Returned" ? Color.FromArgb(40, 167, 69) : Color.FromArgb(40, 167, 69),
                 AutoSize = true,
@@ -793,9 +793,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                    string typeColumn = hasMemberType ? "m.MemberType" : "m.Type";
-                    string query = $@"SELECT {typeColumn} as MemberType,
+                    string query = @"SELECT COALESCE(m.Type, m.MemberType) as MemberType,
                                     (SELECT COUNT(*) FROM Transactions t
                                      WHERE t.MemberID = m.MemberID
                                      AND (t.Status = 'Borrowed' OR t.Status = 'Active')) as CurrentBorrowings

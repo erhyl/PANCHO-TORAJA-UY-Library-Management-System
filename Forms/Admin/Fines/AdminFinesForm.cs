@@ -36,12 +36,20 @@ namespace Project5LMS.Forms.Admin.Fines
         }
         private void AdminFinesForm_Load(object sender, EventArgs e)
         {
-            EnsureFinesTableExists();
-            SetupDataGridView();
-            SetupPaymentHistoryGridView();
-            LoadMetrics();
-            LoadFines();
-            LoadPaymentHistory();
+            try
+            {
+                EnsureFinesTableExists();
+                SetupDataGridView();
+                SetupPaymentHistoryGridView();
+                LoadMetrics();
+                LoadFines();
+                LoadPaymentHistory();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading fines form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Fines form load error: {ex}");
+            }
         }
         private void EnsureFinesTableExists()
         {
@@ -204,6 +212,7 @@ namespace Project5LMS.Forms.Admin.Fines
             dataGridViewFines.CellFormatting += DataGridViewFines_CellFormatting;
             dataGridViewFines.CellPainting += DataGridViewFines_CellPainting;
             dataGridViewFines.CellContentClick += DataGridViewFines_CellContentClick;
+            dataGridViewFines.DataError += DataGridViewFines_DataError;
         }
         private void SetupPaymentHistoryGridView()
         {
@@ -296,27 +305,58 @@ namespace Project5LMS.Forms.Admin.Fines
                 }
             }
         }
+        private void DataGridViewFines_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+            System.Diagnostics.Debug.WriteLine($"DataGridView error in row {e.RowIndex}, column {e.ColumnIndex}: {e.Exception.Message}");
+        }
         private void DataGridViewFines_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            DataGridViewRow row = dataGridViewFines.Rows[e.RowIndex];
-            string columnName = dataGridViewFines.Columns[e.ColumnIndex].Name;
-            if (columnName == "FineID" && e.Value != null)
+            try
             {
-                string fineIdStr = e.Value.ToString();
-                if (int.TryParse(fineIdStr, out int fineId))
+                DataGridViewRow row = dataGridViewFines.Rows[e.RowIndex];
+                string columnName = dataGridViewFines.Columns[e.ColumnIndex].Name;
+                if (columnName == "FineID" && e.Value != null)
                 {
-                    e.Value = $"FINE-{fineIdStr.PadLeft(3, '0')}";
+                    string fineIdStr = e.Value.ToString();
+                    if (int.TryParse(fineIdStr, out int fineId))
+                    {
+                        e.Value = $"FINE-{fineIdStr.PadLeft(3, '0')}";
+                        e.FormattingApplied = true;
+                    }
                 }
-                e.FormattingApplied = true;
+                else if ((columnName == "Amount" || columnName == "Paid") && e.Value != null)
+                {
+                    object originalValue = e.Value;
+                    if (originalValue is decimal decimalValue)
+                    {
+                        e.Value = $"${decimalValue:F2}";
+                        e.FormattingApplied = true;
+                    }
+                    else if (originalValue is double doubleValue)
+                    {
+                        e.Value = $"${(decimal)doubleValue:F2}";
+                        e.FormattingApplied = true;
+                    }
+                    else if (decimal.TryParse(originalValue.ToString(), out decimal parsedValue))
+                    {
+                        e.Value = $"${parsedValue:F2}";
+                        e.FormattingApplied = true;
+                    }
+                }
+                else if (columnName == "DaysOverdue" && e.Value != null)
+                {
+                    if (e.Value is int || e.Value is DBNull)
+                    {
+                        e.FormattingApplied = true;
+                    }
+                }
             }
-            if ((columnName == "Amount" || columnName == "Paid") && e.Value != null)
+            catch (Exception ex)
             {
-                if (decimal.TryParse(e.Value.ToString(), out decimal amountValue))
-                {
-                    e.Value = $"${amountValue:F2}";
-                }
-                e.FormattingApplied = true;
+                System.Diagnostics.Debug.WriteLine($"Error in CellFormatting: {ex.Message}");
+                e.FormattingApplied = false;
             }
         }
         private void DataGridViewFines_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -503,9 +543,11 @@ namespace Project5LMS.Forms.Admin.Fines
         }
         private void DataGridViewFines_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-            string columnName = dataGridViewFines.Columns[e.ColumnIndex].Name;
-            if (columnName != "Actions") return;
+            try
+            {
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+                string columnName = dataGridViewFines.Columns[e.ColumnIndex].Name;
+                if (columnName != "Actions") return;
             DataGridViewRow row = dataGridViewFines.Rows[e.RowIndex];
             int fineId = 0;
             if (row.DataBoundItem is DataRowView drv1)
@@ -601,6 +643,12 @@ namespace Project5LMS.Forms.Admin.Fines
                     ShowPaymentHistory(memberId);
                 }
             }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while processing your request: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"CellContentClick error: {ex}");
+            }
         }
         private void LoadMetrics()
         {
@@ -667,6 +715,32 @@ namespace Project5LMS.Forms.Admin.Fines
                 {
                     allFinesData.Columns.Add("Status", typeof(string));
                 }
+                if (allFinesData.Columns.Contains("Amount") && allFinesData.Columns["Amount"].DataType != typeof(string))
+                {
+                    DataColumn amountCol = allFinesData.Columns["Amount"];
+                    string amountName = amountCol.ColumnName;
+                    int amountIndex = amountCol.Ordinal;
+                    allFinesData.Columns.Remove(amountCol);
+                    DataColumn newAmountCol = new DataColumn(amountName, typeof(string));
+                    allFinesData.Columns.Add(newAmountCol);
+                    if (amountIndex < allFinesData.Columns.Count - 1)
+                    {
+                        newAmountCol.SetOrdinal(amountIndex);
+                    }
+                }
+                if (allFinesData.Columns.Contains("Paid") && allFinesData.Columns["Paid"].DataType != typeof(string))
+                {
+                    DataColumn paidCol = allFinesData.Columns["Paid"];
+                    string paidName = paidCol.ColumnName;
+                    int paidIndex = paidCol.Ordinal;
+                    allFinesData.Columns.Remove(paidCol);
+                    DataColumn newPaidCol = new DataColumn(paidName, typeof(string));
+                    allFinesData.Columns.Add(newPaidCol);
+                    if (paidIndex < allFinesData.Columns.Count - 1)
+                    {
+                        newPaidCol.SetOrdinal(paidIndex);
+                    }
+                }
                 foreach (DataRow row in allFinesData.Rows)
                 {
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
@@ -707,8 +781,38 @@ namespace Project5LMS.Forms.Admin.Fines
                     }
                     string fineType = row["FineType"] != DBNull.Value ? row["FineType"].ToString() : "Overdue";
                     row["Type"] = fineType;
-                    decimal amount = Convert.ToDecimal(row["Amount"]);
-                    decimal paid = Convert.ToDecimal(row["Paid"]);
+                    decimal amount = 0;
+                    decimal paid = 0;
+                    if (row.Table.Columns.Contains("Amount") && row["Amount"] != DBNull.Value)
+                    {
+                        if (row["Amount"] is decimal)
+                        {
+                            amount = (decimal)row["Amount"];
+                        }
+                        else if (decimal.TryParse(row["Amount"].ToString().Replace("$", ""), out decimal parsedAmount))
+                        {
+                            amount = parsedAmount;
+                        }
+                    }
+                    if (row.Table.Columns.Contains("Paid") && row["Paid"] != DBNull.Value)
+                    {
+                        if (row["Paid"] is decimal)
+                        {
+                            paid = (decimal)row["Paid"];
+                        }
+                        else if (decimal.TryParse(row["Paid"].ToString().Replace("$", ""), out decimal parsedPaid))
+                        {
+                            paid = parsedPaid;
+                        }
+                    }
+                    if (allFinesData.Columns["Amount"].DataType == typeof(string))
+                    {
+                        row["Amount"] = $"${amount:F2}";
+                    }
+                    if (allFinesData.Columns["Paid"].DataType == typeof(string))
+                    {
+                        row["Paid"] = $"${paid:F2}";
+                    }
                     string currentStatus = row["Status"] != DBNull.Value ? row["Status"].ToString() : "Pending";
                     if (currentStatus == "Waived")
                     {
@@ -745,7 +849,13 @@ namespace Project5LMS.Forms.Admin.Fines
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading fines: {ex.Message}");
-                MessageBox.Show($"Error loading fines: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                string errorMessage = $"Error loading fines: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\n\nInner Exception: {ex.InnerException.Message}";
+                }
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private DataTable GetFinesData()
@@ -762,9 +872,6 @@ namespace Project5LMS.Forms.Admin.Fines
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
                 bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
                 bool hasTitle = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Title");
-                string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
-                string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
-                string titleSelect = hasTitle ? "b.Title," : "'N/A' as Title,";
                 string bookIDSelect = hasBookID ? "f.BookID," : "NULL as BookID,";
                 bool canJoinBooks = hasBookID || hasTransactionID;
                 string bookJoin = hasBookID
@@ -772,7 +879,13 @@ namespace Project5LMS.Forms.Admin.Fines
                     : (hasTransactionID
                         ? "LEFT JOIN Transactions t ON f.TransactionID = t.TransactionID LEFT JOIN Books b ON t.BookID = b.BookID"
                         : "");
-                string bookTitleSelect = canJoinBooks ? titleSelect : "'N/A' as Title";
+                string bookIdentifier = canJoinBooks 
+                    ? (hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)"))
+                    : "'N/A'";
+                string bookIdentifierAlias = canJoinBooks
+                    ? (hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID"))
+                    : "BookID";
+                string bookTitleSelect = canJoinBooks && hasTitle ? "b.Title" : "'N/A' as Title";
                 string bookIdSelect = canJoinBooks ? $"{bookIdentifier} as {bookIdentifierAlias}" : "'N/A' as BookID";
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasTransactionID)
@@ -825,21 +938,21 @@ namespace Project5LMS.Forms.Admin.Fines
         private void btnFilterStatus_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
-            filterMenu.Items.Add("All Status", null, (s, args) => { currentStatusFilter = "All Status"; btnFilterStatus.Text = "?? All Status"; LoadFines(); });
-            filterMenu.Items.Add("Pending", null, (s, args) => { currentStatusFilter = "Pending"; btnFilterStatus.Text = "?? Pending"; LoadFines(); });
-            filterMenu.Items.Add("Partial", null, (s, args) => { currentStatusFilter = "Partial"; btnFilterStatus.Text = "?? Partial"; LoadFines(); });
-            filterMenu.Items.Add("Paid", null, (s, args) => { currentStatusFilter = "Paid"; btnFilterStatus.Text = "?? Paid"; LoadFines(); });
-            filterMenu.Items.Add("Waived", null, (s, args) => { currentStatusFilter = "Waived"; btnFilterStatus.Text = "?? Waived"; LoadFines(); });
+            filterMenu.Items.Add("All Status", null, (s, args) => { currentStatusFilter = "All Status"; btnFilterStatus.Text = "🔍 All Status"; LoadFines(); });
+            filterMenu.Items.Add("Pending", null, (s, args) => { currentStatusFilter = "Pending"; btnFilterStatus.Text = "⏳ Pending"; LoadFines(); });
+            filterMenu.Items.Add("Partial", null, (s, args) => { currentStatusFilter = "Partial"; btnFilterStatus.Text = "💰 Partial"; LoadFines(); });
+            filterMenu.Items.Add("Paid", null, (s, args) => { currentStatusFilter = "Paid"; btnFilterStatus.Text = "✅ Paid"; LoadFines(); });
+            filterMenu.Items.Add("Waived", null, (s, args) => { currentStatusFilter = "Waived"; btnFilterStatus.Text = "🔓 Waived"; LoadFines(); });
             filterMenu.Show(btnFilterStatus, new Point(0, btnFilterStatus.Height));
         }
         private void btnFilterType_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
-            filterMenu.Items.Add("All Types", null, (s, args) => { currentTypeFilter = "All Types"; btnFilterType.Text = "?? All Types"; LoadFines(); });
-            filterMenu.Items.Add("Overdue", null, (s, args) => { currentTypeFilter = "Overdue"; btnFilterType.Text = "?? Overdue"; LoadFines(); });
-            filterMenu.Items.Add("Lost Book", null, (s, args) => { currentTypeFilter = "Lost Book"; btnFilterType.Text = "?? Lost Book"; LoadFines(); });
-            filterMenu.Items.Add("Damaged Book", null, (s, args) => { currentTypeFilter = "Damaged Book"; btnFilterType.Text = "?? Damaged Book"; LoadFines(); });
-            filterMenu.Items.Add("Lost Card", null, (s, args) => { currentTypeFilter = "Lost Card"; btnFilterType.Text = "?? Lost Card"; LoadFines(); });
+            filterMenu.Items.Add("All Types", null, (s, args) => { currentTypeFilter = "All Types"; btnFilterType.Text = "🔍 All Types"; LoadFines(); });
+            filterMenu.Items.Add("Overdue", null, (s, args) => { currentTypeFilter = "Overdue"; btnFilterType.Text = "⚠️ Overdue"; LoadFines(); });
+            filterMenu.Items.Add("Lost Book", null, (s, args) => { currentTypeFilter = "Lost Book"; btnFilterType.Text = "📕 Lost Book"; LoadFines(); });
+            filterMenu.Items.Add("Damaged Book", null, (s, args) => { currentTypeFilter = "Damaged Book"; btnFilterType.Text = "🔧 Damaged Book"; LoadFines(); });
+            filterMenu.Items.Add("Lost Card", null, (s, args) => { currentTypeFilter = "Lost Card"; btnFilterType.Text = "🪪 Lost Card"; LoadFines(); });
             filterMenu.Show(btnFilterType, new Point(0, btnFilterType.Height));
         }
         private void CollectFine(int fineId, decimal amount)

@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Circulation
+namespace Project5LMS.Forms.Admin.Circulation
 {
     partial class AdminCirculationForm
     {
@@ -101,12 +101,12 @@
             this.panelTableContainer.Size = new System.Drawing.Size(1536, 381);
             this.panelTableContainer.TabIndex = 3;
             this.lblRecentTransactions.AutoSize = true;
-            this.lblRecentTransactions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecentTransactions.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentTransactions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRecentTransactions.Location = new System.Drawing.Point(20, 20);
+            this.lblRecentTransactions.Location = new System.Drawing.Point(20, -3);
             this.lblRecentTransactions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRecentTransactions.Name = "lblRecentTransactions";
-            this.lblRecentTransactions.Size = new System.Drawing.Size(201, 28);
+            this.lblRecentTransactions.Size = new System.Drawing.Size(167, 23);
             this.lblRecentTransactions.TabIndex = 1;
             this.lblRecentTransactions.Text = "Recent Transactions";
             this.dataGridViewTransactions.AllowUserToOrderColumns = true;
@@ -543,6 +543,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

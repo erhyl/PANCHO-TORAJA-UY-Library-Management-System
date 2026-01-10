@@ -131,12 +131,13 @@ namespace Project5LMS
         }
         private void txtEmail_Enter(object sender, EventArgs e)
         {
-            txtEmail.BackColor = Color.FromArgb(255, 255, 250);
-            txtEmail.BorderStyle = BorderStyle.FixedSingle;
+            panelEmailContainer.BackColor = Color.FromArgb(255, 255, 250);
+            panelEmailContainer.BorderStyle = BorderStyle.FixedSingle;
         }
         private void txtEmail_Leave(object sender, EventArgs e)
         {
-            txtEmail.BackColor = Color.White;
+            panelEmailContainer.BackColor = Color.White;
+            panelEmailContainer.BorderStyle = BorderStyle.FixedSingle;
         }
         private void txtEmail_KeyDown(object sender, KeyEventArgs e)
         {

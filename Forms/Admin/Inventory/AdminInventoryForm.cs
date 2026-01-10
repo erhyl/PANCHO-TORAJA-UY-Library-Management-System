@@ -23,10 +23,18 @@ namespace Project5LMS.Forms.Admin.Inventory
         }
         private void AdminInventoryForm_Load(object sender, EventArgs e)
         {
-            EnsureInventoryTableExists();
-            SetupDataGridView();
-            LoadMetrics();
-            LoadInventory();
+            try
+            {
+                EnsureInventoryTableExists();
+                SetupDataGridView();
+                LoadMetrics();
+                LoadInventory();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading inventory form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Inventory form load error: {ex}");
+            }
         }
         private void EnsureInventoryTableExists()
         {
@@ -49,7 +57,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                                                         BookID INT NOT NULL,
                                                         CopyNumber INT NOT NULL,
                                                         Location VARCHAR(50) NULL,
-                                                        Condition VARCHAR(50) DEFAULT 'Good',
+                                                        `Condition` VARCHAR(50) DEFAULT 'Good',
                                                         Status VARCHAR(50) DEFAULT 'Available',
                                                         LastVerified DATETIME NULL,
                                                         Notes VARCHAR(255) NULL,
@@ -110,7 +118,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                     {
                         for (int i = 1; i <= book.Item2; i++)
                         {
-                            string insertQuery = @"INSERT INTO Inventory (BookID, CopyNumber, Location, Condition, Status, LastVerified)
+                            string insertQuery = @"INSERT INTO Inventory (BookID, CopyNumber, Location, `Condition`, Status, LastVerified)
                                                   VALUES (@BookID, @CopyNumber, @Location, 'Good', 'Available', @LastVerified)";
                             using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn))
                             {
@@ -267,29 +275,44 @@ namespace Project5LMS.Forms.Admin.Inventory
         }
         private void DataGridViewInventory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-            DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
-            string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
-            if (columnName == "InventoryID" && e.Value != null)
+            try
             {
-                string inventoryIdStr = e.Value.ToString();
-                if (int.TryParse(inventoryIdStr, out int inventoryId))
+                if (e.RowIndex < 0) return;
+                DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
+                string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
+                if (columnName == "InventoryID" && e.Value != null)
                 {
-                    e.Value = $"INV-{inventoryIdStr.PadLeft(3, '0')}";
+                    string inventoryIdStr = e.Value.ToString();
+                    if (int.TryParse(inventoryIdStr, out int inventoryId))
+                    {
+                        e.Value = $"INV-{inventoryIdStr.PadLeft(3, '0')}";
+                    }
+                    e.FormattingApplied = true;
                 }
-                e.FormattingApplied = true;
+                if (columnName == "LastVerified")
+                {
+                    if (e.Value != null && e.Value != DBNull.Value)
+                    {
+                        if (DateTime.TryParse(e.Value.ToString(), out DateTime date))
+                        {
+                            e.Value = date.ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            e.Value = "N/A";
+                        }
+                    }
+                    else
+                    {
+                        e.Value = "N/A";
+                    }
+                    e.FormattingApplied = true;
+                }
             }
-            if (columnName == "LastVerified" && e.Value != null && e.Value != DBNull.Value)
+            catch (Exception ex)
             {
-                if (DateTime.TryParse(e.Value.ToString(), out DateTime date))
-                {
-                    e.Value = date.ToString("yyyy-MM-dd");
-                }
-                else
-                {
-                    e.Value = "N/A";
-                }
-                e.FormattingApplied = true;
+                System.Diagnostics.Debug.WriteLine($"Error formatting cell: {ex.Message}");
+                e.FormattingApplied = false;
             }
         }
         private void DataGridViewInventory_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -446,43 +469,51 @@ namespace Project5LMS.Forms.Admin.Inventory
         }
         private void DataGridViewInventory_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-            string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
-            if (columnName != "Actions") return;
-            DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
-            int inventoryId = 0;
-            if (row.DataBoundItem is DataRowView drv)
+            try
             {
-                inventoryId = Convert.ToInt32(drv["InventoryID"]);
-            }
-            else if (row.DataBoundItem is DataRow dr)
-            {
-                inventoryId = Convert.ToInt32(dr["InventoryID"]);
-            }
-            else
-            {
-                object inventoryIdObj = row.Cells["InventoryID"].Value;
-                if (inventoryIdObj != null)
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+                string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
+                if (columnName != "Actions") return;
+                DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
+                int inventoryId = 0;
+                if (row.DataBoundItem is DataRowView drv)
                 {
-                    string inventoryIdStr = inventoryIdObj.ToString().Replace("INV-", "");
-                    int.TryParse(inventoryIdStr, out inventoryId);
+                    inventoryId = Convert.ToInt32(drv["InventoryID"]);
+                }
+                else if (row.DataBoundItem is DataRow dr)
+                {
+                    inventoryId = Convert.ToInt32(dr["InventoryID"]);
+                }
+                else
+                {
+                    object inventoryIdObj = row.Cells["InventoryID"].Value;
+                    if (inventoryIdObj != null)
+                    {
+                        string inventoryIdStr = inventoryIdObj.ToString().Replace("INV-", "");
+                        int.TryParse(inventoryIdStr, out inventoryId);
+                    }
+                }
+                Point clickPoint = dataGridViewInventory.PointToClient(Control.MousePosition);
+                Rectangle cellRect = dataGridViewInventory.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                int buttonY = cellRect.Y + (cellRect.Height - 30) / 2;
+                int buttonWidth = 80;
+                int spacing = 5;
+                int xOffset = cellRect.X + 5;
+                Rectangle btnVerifyRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
+                Rectangle btnUpdateRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
+                if (btnVerifyRect.Contains(clickPoint))
+                {
+                    VerifyInventory(inventoryId);
+                }
+                else if (btnUpdateRect.Contains(clickPoint))
+                {
+                    UpdateInventory(inventoryId);
                 }
             }
-            Point clickPoint = dataGridViewInventory.PointToClient(Control.MousePosition);
-            Rectangle cellRect = dataGridViewInventory.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-            int buttonY = cellRect.Y + (cellRect.Height - 30) / 2;
-            int buttonWidth = 80;
-            int spacing = 5;
-            int xOffset = cellRect.X + 5;
-            Rectangle btnVerifyRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
-            Rectangle btnUpdateRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
-            if (btnVerifyRect.Contains(clickPoint))
+            catch (Exception ex)
             {
-                VerifyInventory(inventoryId);
-            }
-            else if (btnUpdateRect.Contains(clickPoint))
-            {
-                UpdateInventory(inventoryId);
+                MessageBox.Show($"An error occurred while processing your request: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"CellContentClick error: {ex}");
             }
         }
         private void LoadMetrics()
@@ -506,7 +537,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                     }
                     bool hasCondition = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Condition");
                     string queryDamaged = hasCondition
-                        ? "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'"
+                        ? "SELECT COUNT(*) FROM Inventory WHERE `Condition` = 'Damaged'"
                         : "SELECT 0";
                     using (MySqlCommand cmd = new MySqlCommand(queryDamaged, conn))
                     {
@@ -620,7 +651,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                                                         BookID INT NOT NULL,
                                                         CopyNumber INT NOT NULL,
                                                         Location VARCHAR(50) NULL,
-                                                        Condition VARCHAR(50) DEFAULT 'Good',
+                                                        `Condition` VARCHAR(50) DEFAULT 'Good',
                                                         Status VARCHAR(50) DEFAULT 'Available',
                                                         LastVerified DATETIME NULL,
                                                         Notes VARCHAR(255) NULL,
@@ -650,6 +681,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
                 bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
                 bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                bool hasTotalCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies");
                 bool hasTitle = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Title");
                 bool hasAuthor = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Author");
                 bool hasCategory = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Category");
@@ -658,7 +690,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 string titleSelect = hasTitle ? "b.Title," : "'N/A' as Title,";
                 string authorSelect = hasAuthor ? "b.Author," : "'N/A' as Author,";
                 string categorySelect = hasCategory ? "b.Category," : "'N/A' as Category,";
-                string copiesColumn = hasCopies ? "b.Copies" : (DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies") ? "b.TotalCopies" : "1");
+                string copiesColumn = hasCopies ? "b.Copies" : (hasTotalCopies ? "b.TotalCopies" : "(SELECT COUNT(*) FROM BookCopies WHERE BookID = b.BookID)");
                 string copiesAlias = "Copies";
                 string query;
                 if (hasCopyNumber && hasLastVerified)
@@ -668,7 +700,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 i.BookID,
                                 i.CopyNumber,
                                 i.Location,
-                                i.Condition,
+                                i.`Condition`,
                                 i.Status,
                                 i.LastVerified,
                                 {titleSelect}
@@ -687,7 +719,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 i.BookID,
                                 i.CopyNumber,
                                 i.Location,
-                                i.Condition,
+                                i.`Condition`,
                                 i.Status,
                                 NULL as LastVerified,
                                 {titleSelect}
@@ -706,7 +738,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 i.BookID,
                                 1 as CopyNumber,
                                 i.Location,
-                                i.Condition,
+                                i.`Condition`,
                                 i.Status,
                                 NULL as LastVerified,
                                 {titleSelect}
@@ -760,7 +792,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             string rowFilter = "";
             if (currentConditionFilter != "All Conditions")
             {
-                rowFilter = $"Condition = '{currentConditionFilter}'";
+                rowFilter = $"`Condition` = '{currentConditionFilter}'";
             }
             if (currentStatusFilter != "All Status")
             {
@@ -790,7 +822,7 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                txtSearch.Text = "?? Search inventory...";
+                txtSearch.Text = "🔍 Search inventory...";
                 txtSearch.ForeColor = Color.Gray;
             }
         }
@@ -801,21 +833,21 @@ namespace Project5LMS.Forms.Admin.Inventory
         private void btnFilterCondition_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
-            filterMenu.Items.Add("All Conditions", null, (s, args) => { currentConditionFilter = "All Conditions"; btnFilterCondition.Text = "?? All Conditions"; LoadInventory(); });
-            filterMenu.Items.Add("Excellent", null, (s, args) => { currentConditionFilter = "Excellent"; btnFilterCondition.Text = "?? Excellent"; LoadInventory(); });
-            filterMenu.Items.Add("Good", null, (s, args) => { currentConditionFilter = "Good"; btnFilterCondition.Text = "?? Good"; LoadInventory(); });
-            filterMenu.Items.Add("Fair", null, (s, args) => { currentConditionFilter = "Fair"; btnFilterCondition.Text = "?? Fair"; LoadInventory(); });
-            filterMenu.Items.Add("Damaged", null, (s, args) => { currentConditionFilter = "Damaged"; btnFilterCondition.Text = "?? Damaged"; LoadInventory(); });
+            filterMenu.Items.Add("All Conditions", null, (s, args) => { currentConditionFilter = "All Conditions"; btnFilterCondition.Text = "🔍 All Conditions"; LoadInventory(); });
+            filterMenu.Items.Add("Excellent", null, (s, args) => { currentConditionFilter = "Excellent"; btnFilterCondition.Text = "⭐ Excellent"; LoadInventory(); });
+            filterMenu.Items.Add("Good", null, (s, args) => { currentConditionFilter = "Good"; btnFilterCondition.Text = "✅ Good"; LoadInventory(); });
+            filterMenu.Items.Add("Fair", null, (s, args) => { currentConditionFilter = "Fair"; btnFilterCondition.Text = "⚠️ Fair"; LoadInventory(); });
+            filterMenu.Items.Add("Damaged", null, (s, args) => { currentConditionFilter = "Damaged"; btnFilterCondition.Text = "🔧 Damaged"; LoadInventory(); });
             filterMenu.Show(btnFilterCondition, new Point(0, btnFilterCondition.Height));
         }
         private void btnFilterStatus_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
-            filterMenu.Items.Add("All Status", null, (s, args) => { currentStatusFilter = "All Status"; btnFilterStatus.Text = "?? All Status"; LoadInventory(); });
-            filterMenu.Items.Add("Available", null, (s, args) => { currentStatusFilter = "Available"; btnFilterStatus.Text = "?? Available"; LoadInventory(); });
-            filterMenu.Items.Add("Borrowed", null, (s, args) => { currentStatusFilter = "Borrowed"; btnFilterStatus.Text = "?? Borrowed"; LoadInventory(); });
-            filterMenu.Items.Add("For Repair", null, (s, args) => { currentStatusFilter = "For Repair"; btnFilterStatus.Text = "?? For Repair"; LoadInventory(); });
-            filterMenu.Items.Add("Lost", null, (s, args) => { currentStatusFilter = "Lost"; btnFilterStatus.Text = "?? Lost"; LoadInventory(); });
+            filterMenu.Items.Add("All Status", null, (s, args) => { currentStatusFilter = "All Status"; btnFilterStatus.Text = "🔍 All Status"; LoadInventory(); });
+            filterMenu.Items.Add("Available", null, (s, args) => { currentStatusFilter = "Available"; btnFilterStatus.Text = "✅ Available"; LoadInventory(); });
+            filterMenu.Items.Add("Borrowed", null, (s, args) => { currentStatusFilter = "Borrowed"; btnFilterStatus.Text = "📖 Borrowed"; LoadInventory(); });
+            filterMenu.Items.Add("For Repair", null, (s, args) => { currentStatusFilter = "For Repair"; btnFilterStatus.Text = "🔧 For Repair"; LoadInventory(); });
+            filterMenu.Items.Add("Lost", null, (s, args) => { currentStatusFilter = "Lost"; btnFilterStatus.Text = "📕 Lost"; LoadInventory(); });
             filterMenu.Show(btnFilterStatus, new Point(0, btnFilterStatus.Height));
         }
         private void VerifyInventory(int inventoryId)
@@ -924,7 +956,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                         using (var conn = _dbContext.GetConnection())
                         {
                             conn.Open();
-                            string updateQuery = "UPDATE Inventory SET Condition = @Condition, Status = @Status, Location = @Location WHERE InventoryID = @InventoryID";
+                            string updateQuery = "UPDATE Inventory SET `Condition` = @Condition, Status = @Status, Location = @Location WHERE InventoryID = @InventoryID";
                             using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
                             {
                                 cmd.Parameters.AddWithValue("@InventoryID", inventoryId);

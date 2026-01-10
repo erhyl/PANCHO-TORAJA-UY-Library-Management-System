@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Inventory
+namespace Project5LMS.Forms.Admin.Inventory
 {
     partial class AdminInventoryForm
     {
@@ -68,7 +68,7 @@
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
@@ -78,7 +78,7 @@
             this.panelTableContainer.Controls.Add(this.dataGridViewInventory);
             this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTableContainer.Location = new System.Drawing.Point(32, 242);
-            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelTableContainer.Name = "panelTableContainer";
             this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelTableContainer.Size = new System.Drawing.Size(1536, 713);
@@ -120,7 +120,7 @@
             this.dataGridViewInventory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewInventory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewInventory.Location = new System.Drawing.Point(21, 20);
-            this.dataGridViewInventory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewInventory.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewInventory.MultiSelect = false;
             this.dataGridViewInventory.Name = "dataGridViewInventory";
             this.dataGridViewInventory.RowHeadersVisible = false;
@@ -152,11 +152,13 @@
             this.colLocation.HeaderText = "LOCATION";
             this.colLocation.MinimumWidth = 6;
             this.colLocation.Name = "colLocation";
+            this.colLocation.Width = 125;
             this.colCopy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCopy.DataPropertyName = "Copy";
             this.colCopy.HeaderText = "COPY";
             this.colCopy.MinimumWidth = 6;
             this.colCopy.Name = "colCopy";
+            this.colCopy.Width = 125;
             this.colCondition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCondition.DataPropertyName = "Condition";
             this.colCondition.HeaderText = "CONDITION";
@@ -186,7 +188,7 @@
             this.panelSearchFilter.Controls.Add(this.txtSearch);
             this.panelSearchFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSearchFilter.Location = new System.Drawing.Point(32, 199);
-            this.panelSearchFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelSearchFilter.Margin = new System.Windows.Forms.Padding(4);
             this.panelSearchFilter.Name = "panelSearchFilter";
             this.panelSearchFilter.Size = new System.Drawing.Size(1536, 43);
             this.panelSearchFilter.TabIndex = 2;
@@ -196,11 +198,11 @@
             this.btnFilterStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnFilterStatus.Location = new System.Drawing.Point(1380, 7);
-            this.btnFilterStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFilterStatus.Margin = new System.Windows.Forms.Padding(4);
             this.btnFilterStatus.Name = "btnFilterStatus";
             this.btnFilterStatus.Size = new System.Drawing.Size(156, 28);
             this.btnFilterStatus.TabIndex = 2;
-            this.btnFilterStatus.Text = "?? All Status";
+            this.btnFilterStatus.Text = " All Status";
             this.btnFilterStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFilterStatus.UseVisualStyleBackColor = false;
             this.btnFilterStatus.Click += new System.EventHandler(this.btnFilterStatus_Click);
@@ -210,11 +212,11 @@
             this.btnFilterCondition.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterCondition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnFilterCondition.Location = new System.Drawing.Point(1224, 7);
-            this.btnFilterCondition.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFilterCondition.Margin = new System.Windows.Forms.Padding(4);
             this.btnFilterCondition.Name = "btnFilterCondition";
             this.btnFilterCondition.Size = new System.Drawing.Size(163, 28);
             this.btnFilterCondition.TabIndex = 1;
-            this.btnFilterCondition.Text = "?? All Conditions";
+            this.btnFilterCondition.Text = " All Conditions";
             this.btnFilterCondition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFilterCondition.UseVisualStyleBackColor = false;
             this.btnFilterCondition.Click += new System.EventHandler(this.btnFilterCondition_Click);
@@ -222,11 +224,11 @@
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
             this.txtSearch.Location = new System.Drawing.Point(8, 5);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(723, 30);
             this.txtSearch.TabIndex = 0;
-            this.txtSearch.Text = "?? Search inventory...";
+            this.txtSearch.Text = " Search inventory...";
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
@@ -237,7 +239,7 @@
             this.panelMetrics.Controls.Add(this.panelMetricTotal);
             this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMetrics.Location = new System.Drawing.Point(32, 121);
-            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1536, 78);
             this.panelMetrics.TabIndex = 1;
@@ -265,9 +267,9 @@
             this.lblMetricLostTitle.Location = new System.Drawing.Point(15, 10);
             this.lblMetricLostTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricLostTitle.Name = "lblMetricLostTitle";
-            this.lblMetricLostTitle.Size = new System.Drawing.Size(76, 20);
+            this.lblMetricLostTitle.Size = new System.Drawing.Size(101, 20);
             this.lblMetricLostTitle.TabIndex = 1;
-            this.lblMetricLostTitle.Text = "Lost Items";
+            this.lblMetricLostTitle.Text = "? Lost Items";
             this.panelMetricDamaged.BackColor = System.Drawing.Color.White;
             this.panelMetricDamaged.Controls.Add(this.lblMetricDamagedValue);
             this.panelMetricDamaged.Controls.Add(this.lblMetricDamagedTitle);
@@ -292,9 +294,9 @@
             this.lblMetricDamagedTitle.Location = new System.Drawing.Point(21, 10);
             this.lblMetricDamagedTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricDamagedTitle.Name = "lblMetricDamagedTitle";
-            this.lblMetricDamagedTitle.Size = new System.Drawing.Size(75, 20);
+            this.lblMetricDamagedTitle.Size = new System.Drawing.Size(100, 20);
             this.lblMetricDamagedTitle.TabIndex = 1;
-            this.lblMetricDamagedTitle.Text = "Damaged";
+            this.lblMetricDamagedTitle.Text = "??? Damaged";
             this.panelMetricNeedsRepair.BackColor = System.Drawing.Color.White;
             this.panelMetricNeedsRepair.Controls.Add(this.lblMetricNeedsRepairValue);
             this.panelMetricNeedsRepair.Controls.Add(this.lblMetricNeedsRepairTitle);
@@ -319,9 +321,9 @@
             this.lblMetricNeedsRepairTitle.Location = new System.Drawing.Point(21, 10);
             this.lblMetricNeedsRepairTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricNeedsRepairTitle.Name = "lblMetricNeedsRepairTitle";
-            this.lblMetricNeedsRepairTitle.Size = new System.Drawing.Size(98, 20);
+            this.lblMetricNeedsRepairTitle.Size = new System.Drawing.Size(123, 20);
             this.lblMetricNeedsRepairTitle.TabIndex = 1;
-            this.lblMetricNeedsRepairTitle.Text = "Needs Repair";
+            this.lblMetricNeedsRepairTitle.Text = "?? Needs Repair";
             this.panelMetricTotal.BackColor = System.Drawing.Color.White;
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalValue);
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalTitle);
@@ -346,14 +348,14 @@
             this.lblMetricTotalTitle.Location = new System.Drawing.Point(17, 10);
             this.lblMetricTotalTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricTotalTitle.Name = "lblMetricTotalTitle";
-            this.lblMetricTotalTitle.Size = new System.Drawing.Size(82, 20);
+            this.lblMetricTotalTitle.Size = new System.Drawing.Size(107, 20);
             this.lblMetricTotalTitle.TabIndex = 1;
-            this.lblMetricTotalTitle.Text = "Total Items";
+            this.lblMetricTotalTitle.Text = "?? Total Items";
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(32, 30);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 91);
             this.panelHeader.TabIndex = 0;
@@ -381,7 +383,7 @@
             this.ClientSize = new System.Drawing.Size(1600, 985);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AdminInventoryForm";
             this.Text = "Inventory Management";
             this.Load += new System.EventHandler(this.AdminInventoryForm_Load);
@@ -402,6 +404,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

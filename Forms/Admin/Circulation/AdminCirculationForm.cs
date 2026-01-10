@@ -189,6 +189,30 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
                 e.FormattingApplied = true;
             }
+            if (columnName == "Fine" && e.Value != null)
+            {
+                if (row.DataBoundItem != null)
+                {
+                    DataRowView rowView = row.DataBoundItem as DataRowView;
+                    if (rowView != null)
+                    {
+                        decimal fineAmount = 0;
+                        if (rowView["Fine"] != DBNull.Value)
+                        {
+                            fineAmount = Convert.ToDecimal(rowView["Fine"]);
+                        }
+                        if (fineAmount > 0)
+                        {
+                            e.Value = $"${fineAmount:F2}";
+                        }
+                        else
+                        {
+                            e.Value = "-";
+                        }
+                    }
+                }
+                e.FormattingApplied = true;
+            }
         }
         private void DataGridViewTransactions_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -357,10 +381,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 {
                     allTransactionsData.Columns.Add("Book", typeof(string));
                 }
-                if (!allTransactionsData.Columns.Contains("Fine"))
-                {
-                    allTransactionsData.Columns.Add("Fine", typeof(string));
-                }
                 foreach (DataRow row in allTransactionsData.Rows)
                 {
                     string transactionType = row["TransactionType"] != DBNull.Value ? row["TransactionType"].ToString() : "Borrow";
@@ -382,14 +402,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                     }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? IDFormatter.FormatAccessionNumber(barcode) : IDFormatter.FormatAccessionNumber(bookId.ToString());
                     row["Book"] = IDFormatter.FormatBookDisplay(bookTitle, accessionNo);
-                    if (row["Fine"] != DBNull.Value && Convert.ToDecimal(row["Fine"]) > 0)
-                    {
-                        row["Fine"] = $"${Convert.ToDecimal(row["Fine"]):F2}";
-                    }
-                    else
-                    {
-                        row["Fine"] = "-";
-                    }
                     if (row["Status"].ToString() == "Borrowed" || row["Status"].ToString() == "Active")
                     {
                         if (row["DueDate"] != DBNull.Value)

@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Reservations
+namespace Project5LMS.Forms.Admin.Reservations
 {
     partial class AdminReservationsForm
     {
@@ -69,7 +69,7 @@
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
@@ -79,7 +79,7 @@
             this.panelTableContainer.Controls.Add(this.dataGridViewReservations);
             this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTableContainer.Location = new System.Drawing.Point(32, 240);
-            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelTableContainer.Name = "panelTableContainer";
             this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelTableContainer.Size = new System.Drawing.Size(1536, 715);
@@ -120,7 +120,7 @@
             this.dataGridViewReservations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewReservations.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewReservations.Location = new System.Drawing.Point(21, 20);
-            this.dataGridViewReservations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewReservations.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewReservations.MultiSelect = false;
             this.dataGridViewReservations.Name = "dataGridViewReservations";
             this.dataGridViewReservations.RowHeadersVisible = false;
@@ -164,6 +164,7 @@
             this.colPriority.HeaderText = "PRIORITY";
             this.colPriority.MinimumWidth = 6;
             this.colPriority.Name = "colPriority";
+            this.colPriority.Width = 125;
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "STATUS";
@@ -179,7 +180,7 @@
             this.panelFilter.Controls.Add(this.btnFilter);
             this.panelFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilter.Location = new System.Drawing.Point(32, 197);
-            this.panelFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelFilter.Margin = new System.Windows.Forms.Padding(4);
             this.panelFilter.Name = "panelFilter";
             this.panelFilter.Size = new System.Drawing.Size(1536, 43);
             this.panelFilter.TabIndex = 2;
@@ -189,7 +190,7 @@
             this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnFilter.Location = new System.Drawing.Point(1383, 4);
-            this.btnFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFilter.Margin = new System.Windows.Forms.Padding(4);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(149, 36);
             this.btnFilter.TabIndex = 0;
@@ -204,7 +205,7 @@
             this.panelMetrics.Controls.Add(this.panelMetricTotal);
             this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMetrics.Location = new System.Drawing.Point(32, 119);
-            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1536, 78);
             this.panelMetrics.TabIndex = 1;
@@ -286,9 +287,9 @@
             this.lblMetricPendingTitle.Location = new System.Drawing.Point(16, 10);
             this.lblMetricPendingTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricPendingTitle.Name = "lblMetricPendingTitle";
-            this.lblMetricPendingTitle.Size = new System.Drawing.Size(62, 20);
+            this.lblMetricPendingTitle.Size = new System.Drawing.Size(87, 20);
             this.lblMetricPendingTitle.TabIndex = 1;
-            this.lblMetricPendingTitle.Text = "Pending";
+            this.lblMetricPendingTitle.Text = "? Pending";
             this.panelMetricTotal.BackColor = System.Drawing.Color.White;
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalValue);
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalTitle);
@@ -313,15 +314,15 @@
             this.lblMetricTotalTitle.Location = new System.Drawing.Point(20, 10);
             this.lblMetricTotalTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricTotalTitle.Name = "lblMetricTotalTitle";
-            this.lblMetricTotalTitle.Size = new System.Drawing.Size(158, 20);
+            this.lblMetricTotalTitle.Size = new System.Drawing.Size(154, 20);
             this.lblMetricTotalTitle.TabIndex = 1;
-            this.lblMetricTotalTitle.Text = "??  Total Reservations";
+            this.lblMetricTotalTitle.Text = "?? Total Reservations";
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.panelMetricReady);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(32, 30);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 89);
             this.panelHeader.TabIndex = 0;
@@ -379,7 +380,7 @@
             this.ClientSize = new System.Drawing.Size(1600, 985);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AdminReservationsForm";
             this.Text = "Reservation Management";
             this.Load += new System.EventHandler(this.AdminReservationsForm_Load);
@@ -401,6 +402,7 @@
             this.panelMetricReady.ResumeLayout(false);
             this.panelMetricReady.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

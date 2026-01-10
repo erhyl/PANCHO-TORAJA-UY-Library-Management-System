@@ -238,7 +238,7 @@
             this.lblMetricExpiredTitle.Name = "lblMetricExpiredTitle";
             this.lblMetricExpiredTitle.Size = new System.Drawing.Size(76, 19);
             this.lblMetricExpiredTitle.TabIndex = 1;
-            this.lblMetricExpiredTitle.Text = "? Expired";
+            this.lblMetricExpiredTitle.Text = "⏰ Expired";
             this.panelMetricReady.BackColor = System.Drawing.Color.White;
             this.panelMetricReady.Controls.Add(this.lblMetricReadyValue);
             this.panelMetricReady.Controls.Add(this.lblMetricReadyTitle);
@@ -262,7 +262,7 @@
             this.lblMetricReadyTitle.Name = "lblMetricReadyTitle";
             this.lblMetricReadyTitle.Size = new System.Drawing.Size(134, 19);
             this.lblMetricReadyTitle.TabIndex = 1;
-            this.lblMetricReadyTitle.Text = "?? Ready for Pickup";
+            this.lblMetricReadyTitle.Text = "✅ Ready for Pickup";
             this.panelMetricActive.BackColor = System.Drawing.Color.White;
             this.panelMetricActive.Controls.Add(this.lblMetricActiveValue);
             this.panelMetricActive.Controls.Add(this.lblMetricActiveTitle);
@@ -286,7 +286,7 @@
             this.lblMetricActiveTitle.Name = "lblMetricActiveTitle";
             this.lblMetricActiveTitle.Size = new System.Drawing.Size(69, 19);
             this.lblMetricActiveTitle.TabIndex = 1;
-            this.lblMetricActiveTitle.Text = "? Active";
+            this.lblMetricActiveTitle.Text = "📋 Active";
             this.panelMetricTotal.BackColor = System.Drawing.Color.White;
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalValue);
             this.panelMetricTotal.Controls.Add(this.lblMetricTotalTitle);
@@ -310,7 +310,7 @@
             this.lblMetricTotalTitle.Name = "lblMetricTotalTitle";
             this.lblMetricTotalTitle.Size = new System.Drawing.Size(142, 19);
             this.lblMetricTotalTitle.TabIndex = 1;
-            this.lblMetricTotalTitle.Text = "?? Total Reservations";
+            this.lblMetricTotalTitle.Text = "📋 Total Reservations";
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;

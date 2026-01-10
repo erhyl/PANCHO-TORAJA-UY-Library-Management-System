@@ -643,11 +643,11 @@ namespace Project5LMS.Forms.Admin.Reservations
         private void btnFilter_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
-            filterMenu.Items.Add("All Status", null, (s, args) => { currentFilter = "All Status"; btnFilter.Text = "?? All Status"; LoadReservations(); });
-            filterMenu.Items.Add("Pending", null, (s, args) => { currentFilter = "Pending"; btnFilter.Text = "?? Pending"; LoadReservations(); });
-            filterMenu.Items.Add("Ready", null, (s, args) => { currentFilter = "Ready"; btnFilter.Text = "?? Ready"; LoadReservations(); });
-            filterMenu.Items.Add("Fulfilled", null, (s, args) => { currentFilter = "Fulfilled"; btnFilter.Text = "?? Fulfilled"; LoadReservations(); });
-            filterMenu.Items.Add("Expired", null, (s, args) => { currentFilter = "Expired"; btnFilter.Text = "?? Expired"; LoadReservations(); });
+            filterMenu.Items.Add("All Status", null, (s, args) => { currentFilter = "All Status"; btnFilter.Text = "🔍 All Status"; LoadReservations(); });
+            filterMenu.Items.Add("Pending", null, (s, args) => { currentFilter = "Pending"; btnFilter.Text = "⏳ Pending"; LoadReservations(); });
+            filterMenu.Items.Add("Ready", null, (s, args) => { currentFilter = "Ready"; btnFilter.Text = "✅ Ready"; LoadReservations(); });
+            filterMenu.Items.Add("Fulfilled", null, (s, args) => { currentFilter = "Fulfilled"; btnFilter.Text = "✔️ Fulfilled"; LoadReservations(); });
+            filterMenu.Items.Add("Expired", null, (s, args) => { currentFilter = "Expired"; btnFilter.Text = "⏰ Expired"; LoadReservations(); });
             filterMenu.Show(btnFilter, new Point(0, btnFilter.Height));
         }
         private void MarkAsReady(int reservationId)

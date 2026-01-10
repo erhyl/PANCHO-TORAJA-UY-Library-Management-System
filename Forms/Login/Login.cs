@@ -1,4 +1,4 @@
-﻿using Project5LMS.Forms.Admin.Dashboard;
+using Project5LMS.Forms.Admin.Dashboard;
 using Project5LMS.Forms.LibraryStaff.Dashboard;
 using Project5LMS.Forms.Member.Dashboard;
 using Project5LMS.Helpers;
@@ -6,6 +6,7 @@ using Project5LMS.Properties;
 using Project5LMS.Services;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,29 +24,26 @@ namespace Project5LMS
         }
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            LoadEyeIcon();
-            SetupPasswordField();
-            picEyeIcon.BringToFront();
-            if (cmbRole.Items.Count > 0 && cmbRole.SelectedIndex == -1)
+            try
             {
-                cmbRole.SelectedIndex = 0;
+                UpdateShowHidePasswordText();
+                if (!this.DesignMode)
+                {
+                    if (cmbRole.Items.Count > 0 && cmbRole.SelectedIndex == -1)
+                    {
+                        cmbRole.SelectedIndex = 0;
+                    }
+                    securityService.CleanupOldRecords();
+                    txtUsername.KeyDown += TextBox_KeyDown;
+                    txtPassword.KeyDown += TextBox_KeyDown;
+                    cmbRole.KeyDown += ComboBox_KeyDown;
+                    txtUsername.Focus();
+                }
             }
-            securityService.CleanupOldRecords();
-            txtUsername.KeyDown += TextBox_KeyDown;
-            txtPassword.KeyDown += TextBox_KeyDown;
-            cmbRole.KeyDown += ComboBox_KeyDown;
-            txtUsername.Focus();
-        }
-        private void SetupPasswordField()
-        {
-            int iconWidth = 25;
-            int iconHeight = 22;
-            int padding = 5;
-            int iconX = txtPassword.Left + txtPassword.Width - iconWidth - padding;
-            int iconY = txtPassword.Top + (txtPassword.Height - iconHeight) / 2;
-            picEyeIcon.Location = new Point(iconX, iconY);
-            picEyeIcon.Size = new Size(iconWidth, iconHeight);
-            picEyeIcon.BringToFront();
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Login form load error: {ex}");
+            }
         }
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -73,80 +71,19 @@ namespace Project5LMS
         }
         private void ClearErrorIndicators()
         {
-            txtUsername.BackColor = Color.White;
-            txtPassword.BackColor = Color.White;
+            panelEmail.BackColor = Color.White;
+            panelPassword.BackColor = Color.White;
         }
-        private void LoadEyeIcon()
+        private void UpdateShowHidePasswordText()
         {
-            bool iconLoaded = false;
-            try
+            if (lnkShowHidePassword != null)
             {
-                var eyeResource = Resources.ResourceManager.GetObject("eye");
-                if (eyeResource != null && eyeResource is Bitmap)
-                {
-                    picEyeIcon.Image = (Bitmap)eyeResource;
-                    picEyeIcon.BackColor = Color.Transparent;
-                    picEyeIcon.Visible = true;
-                    iconLoaded = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to load eye from resources: {ex.Message}");
-            }
-            if (!iconLoaded)
-            {
-                try
-                {
-                    string[] possiblePaths = new string[]
-                    {
-                        Path.Combine(Application.StartupPath, "Resources", "Images", "Icons", "eye.png"),
-                        Path.Combine(Directory.GetParent(Application.StartupPath).Parent.FullName, "Resources", "Images", "Icons", "eye.png"),
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Images", "Icons", "eye.png"),
-                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images", "Icons", "eye.png"),
-                        Path.GetFullPath(Path.Combine(Application.StartupPath, "..", "..", "Resources", "Images", "Icons", "eye.png"))
-                    };
-                    string iconPath = null;
-                    foreach (string path in possiblePaths)
-                    {
-                        try
-                        {
-                            string fullPath = Path.GetFullPath(path);
-                            if (File.Exists(fullPath))
-                            {
-                                iconPath = fullPath;
-                                System.Diagnostics.Debug.WriteLine($"Found eye icon at: {iconPath}");
-                                break;
-                            }
-                        }
-                        catch
-                        {
-                            continue;
-                        }
-                    }
-                    if (iconPath != null && File.Exists(iconPath))
-                    {
-                        picEyeIcon.Image = Image.FromFile(iconPath);
-                        picEyeIcon.BackColor = Color.Transparent;
-                        picEyeIcon.Visible = true;
-                        iconLoaded = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Failed to load eye from file: {ex.Message}");
-                }
-            }
-            if (!iconLoaded)
-            {
-                picEyeIcon.Visible = true;
-                picEyeIcon.BackColor = Color.LightGray;
-                picEyeIcon.Image = null;
-                System.Diagnostics.Debug.WriteLine("Eye icon could not be loaded from any source.");
+                lnkShowHidePassword.Text = isPasswordVisible ? "Hide" : "Show";
             }
         }
-        private void picEyeIcon_Click(object sender, EventArgs e)
+        private void lnkShowHidePassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            e.Link.Visited = true;
             TogglePasswordVisibility();
         }
         private void TogglePasswordVisibility()
@@ -159,19 +96,20 @@ namespace Project5LMS
                 txtPassword.UseSystemPasswordChar = !isPasswordVisible;
                 txtPassword.SelectionStart = selectionStart;
                 txtPassword.SelectionLength = selectionLength;
+                UpdateShowHidePasswordText();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error toggling password visibility: {ex.Message}");
             }
         }
-        private void picEyeIcon_MouseEnter(object sender, EventArgs e)
+        private void lnkShowHidePassword_MouseEnter(object sender, EventArgs e)
         {
-            picEyeIcon.BackColor = Color.FromArgb(245, 245, 245);
+            lnkShowHidePassword.LinkColor = Color.FromArgb(64, 64, 64);
         }
-        private void picEyeIcon_MouseLeave(object sender, EventArgs e)
+        private void lnkShowHidePassword_MouseLeave(object sender, EventArgs e)
         {
-            picEyeIcon.BackColor = Color.White;
+            lnkShowHidePassword.LinkColor = Color.FromArgb(100, 100, 100);
         }
         private void LoginForm_Click(object sender, EventArgs e)
         {
@@ -376,7 +314,16 @@ namespace Project5LMS
             {
                 MessageBox.Show(message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            control.BackColor = Color.FromArgb(255, 240, 240);
+            if (control == txtUsername)
+            {
+                panelEmail.BackColor = Color.FromArgb(255, 240, 240);
+                panelEmail.BorderStyle = BorderStyle.FixedSingle;
+            }
+            else if (control == txtPassword)
+            {
+                panelPassword.BackColor = Color.FromArgb(255, 240, 240);
+                panelPassword.BorderStyle = BorderStyle.FixedSingle;
+            }
             control.Focus();
         }
         private void cmbRole_SelectedIndexChanged(object sender, EventArgs e)
@@ -395,30 +342,32 @@ namespace Project5LMS
         }
         private void txtUsername_Enter(object sender, EventArgs e)
         {
-            txtUsername.BackColor = Color.FromArgb(255, 255, 250);
-            txtUsername.BorderStyle = BorderStyle.FixedSingle;
+            panelEmail.BackColor = Color.FromArgb(255, 255, 250);
+            panelEmail.BorderStyle = BorderStyle.FixedSingle;
         }
         private void txtUsername_Leave(object sender, EventArgs e)
         {
-            txtUsername.BackColor = Color.White;
+            panelEmail.BackColor = Color.White;
+            panelEmail.BorderStyle = BorderStyle.FixedSingle;
         }
         private void txtPassword_Enter(object sender, EventArgs e)
         {
-            txtPassword.BackColor = Color.FromArgb(255, 255, 250);
-            txtPassword.BorderStyle = BorderStyle.FixedSingle;
+            panelPassword.BackColor = Color.FromArgb(255, 255, 250);
+            panelPassword.BorderStyle = BorderStyle.FixedSingle;
         }
         private void txtPassword_Leave(object sender, EventArgs e)
         {
-            txtPassword.BackColor = Color.White;
+            panelPassword.BackColor = Color.White;
+            panelPassword.BorderStyle = BorderStyle.FixedSingle;
         }
         private void btnSignin_MouseEnter(object sender, EventArgs e)
         {
-            btnSignin.BackColor = Color.FromArgb(150, 0, 0);
+            btnSignin.BackColor = Color.FromArgb(180, 0, 0);
             btnSignin.Cursor = Cursors.Hand;
         }
         private void btnSignin_MouseLeave(object sender, EventArgs e)
         {
-            btnSignin.BackColor = Color.FromArgb(128, 0, 0);
+            btnSignin.BackColor = Color.FromArgb(139, 0, 0);
             btnSignin.Cursor = Cursors.Default;
         }
         private void label1_Click_1(object sender, EventArgs e)
@@ -437,6 +386,16 @@ namespace Project5LMS
             {
                 MessageBox.Show($"Error opening forgot password form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void lnkForgotPassword_MouseEnter(object sender, EventArgs e)
+        {
+            lnkForgotPassword.LinkColor = Color.White;
+            lnkForgotPassword.Font = new Font(lnkForgotPassword.Font, FontStyle.Underline);
+        }
+        private void lnkForgotPassword_MouseLeave(object sender, EventArgs e)
+        {
+            lnkForgotPassword.LinkColor = Color.FromArgb(255, 255, 200);
+            lnkForgotPassword.Font = new Font(lnkForgotPassword.Font, FontStyle.Regular);
         }
     }
 }

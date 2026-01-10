@@ -343,7 +343,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             card.Controls.Add(btnEdit);
             Button btnDelete = new Button
             {
-                Text = "??",
+                Text = "👁️",
                 Font = new Font("Segoe UI", 12),
                 ForeColor = Color.FromArgb(220, 53, 69),
                 BackColor = Color.Transparent,

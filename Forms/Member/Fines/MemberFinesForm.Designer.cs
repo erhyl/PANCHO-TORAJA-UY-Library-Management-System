@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Member.Fines
+namespace Project5LMS.Forms.Member.Fines
 {
     partial class MemberFinesForm
     {
@@ -22,7 +22,6 @@
             this.lblRate1 = new System.Windows.Forms.Label();
             this.panelPaymentHistory = new System.Windows.Forms.Panel();
             this.panelPaymentHistoryHeader = new System.Windows.Forms.Panel();
-            this.panelDollarIcon = new System.Windows.Forms.Panel();
             this.lblPaymentHistoryTitle = new System.Windows.Forms.Label();
             this.panelPaymentHistoryList = new System.Windows.Forms.Panel();
             this.panelOutstandingFines = new System.Windows.Forms.Panel();
@@ -31,7 +30,6 @@
             this.panelTotalOutstanding = new System.Windows.Forms.Panel();
             this.btnPayNow = new System.Windows.Forms.Button();
             this.lblTotalAmount = new System.Windows.Forms.Label();
-            this.panelExclamationIcon = new System.Windows.Forms.Panel();
             this.lblTotalOutstandingLabel = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblSubtitle = new System.Windows.Forms.Label();
@@ -114,7 +112,6 @@
             this.panelPaymentHistory.Size = new System.Drawing.Size(750, 300);
             this.panelPaymentHistory.TabIndex = 3;
             this.panelPaymentHistoryHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.panelPaymentHistoryHeader.Controls.Add(this.panelDollarIcon);
             this.panelPaymentHistoryHeader.Controls.Add(this.lblPaymentHistoryTitle);
             this.panelPaymentHistoryHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelPaymentHistoryHeader.Location = new System.Drawing.Point(0, 0);
@@ -122,22 +119,15 @@
             this.panelPaymentHistoryHeader.Name = "panelPaymentHistoryHeader";
             this.panelPaymentHistoryHeader.Size = new System.Drawing.Size(750, 50);
             this.panelPaymentHistoryHeader.TabIndex = 1;
-            this.panelDollarIcon.BackColor = System.Drawing.Color.Transparent;
-            this.panelDollarIcon.Location = new System.Drawing.Point(20, 10);
-            this.panelDollarIcon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelDollarIcon.Name = "panelDollarIcon";
-            this.panelDollarIcon.Size = new System.Drawing.Size(30, 30);
-            this.panelDollarIcon.TabIndex = 1;
-            this.panelDollarIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelDollarIcon_Paint);
             this.lblPaymentHistoryTitle.AutoSize = true;
             this.lblPaymentHistoryTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPaymentHistoryTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPaymentHistoryTitle.Location = new System.Drawing.Point(60, 12);
+            this.lblPaymentHistoryTitle.Location = new System.Drawing.Point(14, 0);
             this.lblPaymentHistoryTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPaymentHistoryTitle.Name = "lblPaymentHistoryTitle";
-            this.lblPaymentHistoryTitle.Size = new System.Drawing.Size(226, 32);
+            this.lblPaymentHistoryTitle.Size = new System.Drawing.Size(204, 32);
             this.lblPaymentHistoryTitle.TabIndex = 0;
-            this.lblPaymentHistoryTitle.Text = "P Payment History";
+            this.lblPaymentHistoryTitle.Text = "Payment History";
             this.panelPaymentHistoryList.AutoScroll = true;
             this.panelPaymentHistoryList.BackColor = System.Drawing.Color.White;
             this.panelPaymentHistoryList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -174,13 +164,12 @@
             this.panelTotalOutstanding.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelTotalOutstanding.Controls.Add(this.btnPayNow);
             this.panelTotalOutstanding.Controls.Add(this.lblTotalAmount);
-            this.panelTotalOutstanding.Controls.Add(this.panelExclamationIcon);
             this.panelTotalOutstanding.Controls.Add(this.lblTotalOutstandingLabel);
-            this.panelTotalOutstanding.Location = new System.Drawing.Point(40, 200);
+            this.panelTotalOutstanding.Location = new System.Drawing.Point(40, 171);
             this.panelTotalOutstanding.Margin = new System.Windows.Forms.Padding(4);
             this.panelTotalOutstanding.Name = "panelTotalOutstanding";
             this.panelTotalOutstanding.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
-            this.panelTotalOutstanding.Size = new System.Drawing.Size(1240, 130);
+            this.panelTotalOutstanding.Size = new System.Drawing.Size(1240, 159);
             this.panelTotalOutstanding.TabIndex = 1;
             this.btnPayNow.BackColor = System.Drawing.Color.Maroon;
             this.btnPayNow.FlatAppearance.BorderSize = 0;
@@ -198,23 +187,16 @@
             this.lblTotalAmount.AutoSize = true;
             this.lblTotalAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(60)))));
-            this.lblTotalAmount.Location = new System.Drawing.Point(100, 60);
+            this.lblTotalAmount.Location = new System.Drawing.Point(34, 57);
             this.lblTotalAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalAmount.Name = "lblTotalAmount";
             this.lblTotalAmount.Size = new System.Drawing.Size(128, 54);
             this.lblTotalAmount.TabIndex = 2;
             this.lblTotalAmount.Text = "P0.00";
-            this.panelExclamationIcon.BackColor = System.Drawing.Color.Transparent;
-            this.panelExclamationIcon.Location = new System.Drawing.Point(30, 50);
-            this.panelExclamationIcon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelExclamationIcon.Name = "panelExclamationIcon";
-            this.panelExclamationIcon.Size = new System.Drawing.Size(40, 40);
-            this.panelExclamationIcon.TabIndex = 1;
-            this.panelExclamationIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelExclamationIcon_Paint);
             this.lblTotalOutstandingLabel.AutoSize = true;
             this.lblTotalOutstandingLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalOutstandingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTotalOutstandingLabel.Location = new System.Drawing.Point(100, 25);
+            this.lblTotalOutstandingLabel.Location = new System.Drawing.Point(20, 25);
             this.lblTotalOutstandingLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalOutstandingLabel.Name = "lblTotalOutstandingLabel";
             this.lblTotalOutstandingLabel.Size = new System.Drawing.Size(266, 32);
@@ -269,6 +251,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;
@@ -276,7 +259,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
         private System.Windows.Forms.Panel panelTotalOutstanding;
-        private System.Windows.Forms.Panel panelExclamationIcon;
         private System.Windows.Forms.Label lblTotalOutstandingLabel;
         private System.Windows.Forms.Label lblTotalAmount;
         private System.Windows.Forms.Button btnPayNow;
@@ -285,7 +267,6 @@
         private System.Windows.Forms.Panel panelOutstandingFinesList;
         private System.Windows.Forms.Panel panelPaymentHistory;
         private System.Windows.Forms.Panel panelPaymentHistoryHeader;
-        private System.Windows.Forms.Panel panelDollarIcon;
         private System.Windows.Forms.Label lblPaymentHistoryTitle;
         private System.Windows.Forms.Panel panelPaymentHistoryList;
         private System.Windows.Forms.Panel panelFineRates;

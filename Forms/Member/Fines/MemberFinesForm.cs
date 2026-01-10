@@ -102,9 +102,18 @@ namespace Project5LMS.Forms.Member.Fines
                     bool hasCreatedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "CreatedDate");
                     bool hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Status");
                     bool hasPaid = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Paid");
-                    string dateColumn = hasIssueDate ? "IssueDate" : (hasCreatedDate ? "CreatedDate" : "NULL");
-                    string statusColumn = hasStatus ? "Status" : "'Unpaid'";
-                    string paidColumn = hasPaid ? "Paid" : "0";
+                    string dateColumn = hasIssueDate ? "f.IssueDate" : (hasCreatedDate ? "f.CreatedDate" : "f.CreatedDate");
+                    string statusColumn = hasStatus ? "f.Status" : "'Unpaid'";
+                    string paidColumn = hasPaid ? "f.Paid" : "0";
+                    string paidFilter = hasPaid 
+                        ? "AND (f.PaidDate IS NULL OR f.Paid < f.Amount)"
+                        : "AND f.PaidDate IS NULL";
+                    string statusFilter = hasStatus 
+                        ? "AND (f.Status != 'Paid' AND f.Status != 'Waived')"
+                        : "";
+                    string orderBy = hasIssueDate || hasCreatedDate 
+                        ? $"ORDER BY {dateColumn} DESC"
+                        : "ORDER BY f.FineID DESC";
                     string query = $@"SELECT
                                     f.FineID,
                                     b.Title as BookTitle,
@@ -118,9 +127,8 @@ namespace Project5LMS.Forms.Member.Fines
                                 FROM Fines f
                                 LEFT JOIN Books b ON f.BookID = b.BookID
                                 WHERE f.MemberID = @MemberID
-                                AND ({statusColumn} != 'Paid' AND {statusColumn} != 'Waived')
-                                AND (f.PaidDate IS NULL OR {paidColumn} < f.Amount)
-                                ORDER BY {dateColumn} DESC";
+                                " + statusFilter + paidFilter + @"
+                                " + orderBy;
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@MemberID", memberID);
@@ -194,8 +202,11 @@ namespace Project5LMS.Forms.Member.Fines
                     bool hasCreatedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "CreatedDate");
                     bool hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Status");
                     bool hasPaid = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Paid");
-                    string dateColumn = hasIssueDate ? "IssueDate" : (hasCreatedDate ? "CreatedDate" : "NULL");
-                    string statusColumn = hasStatus ? "Status" : "'Paid'";
+                    string dateColumn = hasIssueDate ? "f.IssueDate" : (hasCreatedDate ? "f.CreatedDate" : "f.CreatedDate");
+                    string statusColumn = hasStatus ? "f.Status" : "'Paid'";
+                    string statusFilter = hasStatus
+                        ? "AND (f.PaidDate IS NOT NULL OR f.Status = 'Paid')"
+                        : "AND f.PaidDate IS NOT NULL";
                     string query = $@"SELECT
                                     f.FineID,
                                     b.Title as BookTitle,
@@ -207,7 +218,7 @@ namespace Project5LMS.Forms.Member.Fines
                                 FROM Fines f
                                 LEFT JOIN Books b ON f.BookID = b.BookID
                                 WHERE f.MemberID = @MemberID
-                                AND (f.PaidDate IS NOT NULL OR {statusColumn} = 'Paid')
+                                " + statusFilter + @"
                                 ORDER BY f.PaidDate DESC
                                 LIMIT 50";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -444,43 +455,6 @@ namespace Project5LMS.Forms.Member.Fines
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
-            }
-        }
-        private void panelExclamationIcon_Paint(object sender, PaintEventArgs e)
-        {
-            DrawExclamationIcon(e.Graphics, panelExclamationIcon.ClientRectangle);
-        }
-        private void DrawExclamationIcon(Graphics g, Rectangle rect)
-        {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            int centerX = rect.Width / 2;
-            int centerY = rect.Height / 2;
-            int radius = Math.Min(rect.Width, rect.Height) / 2 - 2;
-            using (Brush brush = new SolidBrush(Color.FromArgb(220, 20, 60)))
-            {
-                g.FillEllipse(brush, centerX - radius, centerY - radius, radius * 2, radius * 2);
-            }
-            using (Font font = new Font("Segoe UI", radius, FontStyle.Bold))
-            using (Brush brush = new SolidBrush(Color.White))
-            {
-                SizeF textSize = g.MeasureString("!", font);
-                float x = centerX - textSize.Width / 2;
-                float y = centerY - textSize.Height / 2;
-                g.DrawString("!", font, brush, x, y);
-            }
-        }
-        private void panelDollarIcon_Paint(object sender, PaintEventArgs e)
-        {
-            DrawDollarIcon(e.Graphics, panelDollarIcon.ClientRectangle);
-        }
-        private void DrawDollarIcon(Graphics g, Rectangle rect)
-        {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            int centerX = rect.Width / 2;
-            int centerY = rect.Height / 2;
-            using (Pen pen = new Pen(Color.FromArgb(64, 64, 64), 2))
-            {
-                g.DrawString("$", new Font("Segoe UI", 20, FontStyle.Bold), new SolidBrush(Color.FromArgb(64, 64, 64)), centerX - 8, centerY - 12);
             }
         }
     }

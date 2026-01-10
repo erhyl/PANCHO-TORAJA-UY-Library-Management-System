@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Settings
+namespace Project5LMS.Forms.Admin.Settings
 {
     partial class AdminSettingsForm
     {
@@ -636,7 +636,7 @@
             this.panelFineRatesContent.Name = "panelFineRatesContent";
             this.panelFineRatesContent.Size = new System.Drawing.Size(1152, 460);
             this.panelFineRatesContent.TabIndex = 0;
-            this.btnSaveFineRates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnSaveFineRates.BackColor = System.Drawing.Color.Maroon;
             this.btnSaveFineRates.FlatAppearance.BorderSize = 0;
             this.btnSaveFineRates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveFineRates.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -827,10 +827,10 @@
             this.lnkStaffManage.Location = new System.Drawing.Point(20, 70);
             this.lnkStaffManage.Margin = new System.Windows.Forms.Padding(0);
             this.lnkStaffManage.Name = "lnkStaffManage";
-            this.lnkStaffManage.Size = new System.Drawing.Size(130, 23);
+            this.lnkStaffManage.Size = new System.Drawing.Size(123, 23);
             this.lnkStaffManage.TabIndex = 2;
             this.lnkStaffManage.TabStop = true;
-            this.lnkStaffManage.Text = "Manage Staff ?";
+            this.lnkStaffManage.Text = "Manage Staff ??";
             this.lnkStaffManage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkStaffManage_LinkClicked);
             this.lblStaffDescription.AutoSize = true;
             this.lblStaffDescription.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -880,10 +880,10 @@
             this.lnkAdminManage.Location = new System.Drawing.Point(20, 70);
             this.lnkAdminManage.Margin = new System.Windows.Forms.Padding(0);
             this.lnkAdminManage.Name = "lnkAdminManage";
-            this.lnkAdminManage.Size = new System.Drawing.Size(154, 23);
+            this.lnkAdminManage.Size = new System.Drawing.Size(147, 23);
             this.lnkAdminManage.TabIndex = 2;
             this.lnkAdminManage.TabStop = true;
-            this.lnkAdminManage.Text = "Manage Admins ?";
+            this.lnkAdminManage.Text = "Manage Admins ???";
             this.lnkAdminManage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkAdminManage_LinkClicked);
             this.lblAdminDescription.AutoSize = true;
             this.lblAdminDescription.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1170,7 +1170,7 @@
             this.panelSecurityContent.Name = "panelSecurityContent";
             this.panelSecurityContent.Size = new System.Drawing.Size(419, 411);
             this.panelSecurityContent.TabIndex = 0;
-            this.btnUpdatePassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnUpdatePassword.BackColor = System.Drawing.Color.Maroon;
             this.btnUpdatePassword.FlatAppearance.BorderSize = 0;
             this.btnUpdatePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdatePassword.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1188,7 +1188,7 @@
             this.txtConfirmPassword.Location = new System.Drawing.Point(7, 270);
             this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.PasswordChar = '�';
+            this.txtConfirmPassword.PasswordChar = '?';
             this.txtConfirmPassword.Size = new System.Drawing.Size(393, 30);
             this.txtConfirmPassword.TabIndex = 7;
             this.lblConfirmPassword.AutoSize = true;
@@ -1205,7 +1205,7 @@
             this.txtNewPassword.Location = new System.Drawing.Point(7, 195);
             this.txtNewPassword.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.txtNewPassword.Name = "txtNewPassword";
-            this.txtNewPassword.PasswordChar = '�';
+            this.txtNewPassword.PasswordChar = '?';
             this.txtNewPassword.Size = new System.Drawing.Size(393, 30);
             this.txtNewPassword.TabIndex = 5;
             this.lblNewPassword.AutoSize = true;
@@ -1222,7 +1222,7 @@
             this.txtCurrentPassword.Location = new System.Drawing.Point(7, 120);
             this.txtCurrentPassword.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.txtCurrentPassword.Name = "txtCurrentPassword";
-            this.txtCurrentPassword.PasswordChar = '�';
+            this.txtCurrentPassword.PasswordChar = '?';
             this.txtCurrentPassword.Size = new System.Drawing.Size(393, 30);
             this.txtCurrentPassword.TabIndex = 3;
             this.lblCurrentPassword.AutoSize = true;
@@ -1285,7 +1285,7 @@
             this.panelSystemInfoCard.Margin = new System.Windows.Forms.Padding(0);
             this.panelSystemInfoCard.Name = "panelSystemInfoCard";
             this.panelSystemInfoCard.Padding = new System.Windows.Forms.Padding(20);
-            this.panelSystemInfoCard.Size = new System.Drawing.Size(600, 280);
+            this.panelSystemInfoCard.Size = new System.Drawing.Size(764, 285);
             this.panelSystemInfoCard.TabIndex = 0;
             this.lblStorageUsedValue.AutoSize = true;
             this.lblStorageUsedValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1364,7 +1364,7 @@
             this.lblSystemInfoTitle.AutoSize = true;
             this.lblSystemInfoTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSystemInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblSystemInfoTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblSystemInfoTitle.Location = new System.Drawing.Point(17, 19);
             this.lblSystemInfoTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblSystemInfoTitle.Name = "lblSystemInfoTitle";
             this.lblSystemInfoTitle.Size = new System.Drawing.Size(296, 41);
@@ -1420,6 +1420,7 @@
             this.panelSystemInfoCard.ResumeLayout(false);
             this.panelSystemInfoCard.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelHeader;

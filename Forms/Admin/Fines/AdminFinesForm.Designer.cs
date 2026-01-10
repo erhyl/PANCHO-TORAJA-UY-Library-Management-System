@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Fines
+namespace Project5LMS.Forms.Admin.Fines
 {
     public partial class AdminFinesForm
     {
@@ -82,14 +82,14 @@
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1724, 980);
             this.panelMainContainer.TabIndex = 0;
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerMain.Location = new System.Drawing.Point(32, 269);
-            this.splitContainerMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainerMain.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainerMain.Name = "splitContainerMain";
             this.splitContainerMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.splitContainerMain.Panel1.Controls.Add(this.panelTableContainer);
@@ -103,7 +103,7 @@
             this.panelTableContainer.Controls.Add(this.dataGridViewFines);
             this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTableContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelTableContainer.Name = "panelTableContainer";
             this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelTableContainer.Size = new System.Drawing.Size(1660, 430);
@@ -145,7 +145,7 @@
             this.dataGridViewFines.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewFines.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewFines.Location = new System.Drawing.Point(21, 20);
-            this.dataGridViewFines.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewFines.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewFines.MultiSelect = false;
             this.dataGridViewFines.Name = "dataGridViewFines";
             this.dataGridViewFines.RowHeadersVisible = false;
@@ -189,11 +189,13 @@
             this.colAmount.HeaderText = "AMOUNT";
             this.colAmount.MinimumWidth = 6;
             this.colAmount.Name = "colAmount";
+            this.colAmount.Width = 125;
             this.colPaid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colPaid.DataPropertyName = "Paid";
             this.colPaid.HeaderText = "PAID";
             this.colPaid.MinimumWidth = 6;
             this.colPaid.Name = "colPaid";
+            this.colPaid.Width = 125;
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "STATUS";
@@ -212,7 +214,7 @@
             this.panelPaymentHistory.Controls.Add(this.lblPaymentHistoryTitle);
             this.panelPaymentHistory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPaymentHistory.Location = new System.Drawing.Point(0, 0);
-            this.panelPaymentHistory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelPaymentHistory.Margin = new System.Windows.Forms.Padding(4);
             this.panelPaymentHistory.Name = "panelPaymentHistory";
             this.panelPaymentHistory.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelPaymentHistory.Size = new System.Drawing.Size(1660, 241);
@@ -280,14 +282,14 @@
             this.lblPaymentHistoryTitle.Location = new System.Drawing.Point(21, 20);
             this.lblPaymentHistoryTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPaymentHistoryTitle.Name = "lblPaymentHistoryTitle";
-            this.lblPaymentHistoryTitle.Size = new System.Drawing.Size(205, 28);
+            this.lblPaymentHistoryTitle.Size = new System.Drawing.Size(195, 28);
             this.lblPaymentHistoryTitle.TabIndex = 0;
             this.lblPaymentHistoryTitle.Text = "?? Payment History";
             this.panelFilters.Controls.Add(this.btnFilterType);
             this.panelFilters.Controls.Add(this.btnFilterStatus);
             this.panelFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilters.Location = new System.Drawing.Point(32, 226);
-            this.panelFilters.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelFilters.Margin = new System.Windows.Forms.Padding(4);
             this.panelFilters.Name = "panelFilters";
             this.panelFilters.Size = new System.Drawing.Size(1660, 43);
             this.panelFilters.TabIndex = 2;
@@ -297,7 +299,7 @@
             this.btnFilterType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnFilterType.Location = new System.Drawing.Point(1503, 7);
-            this.btnFilterType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFilterType.Margin = new System.Windows.Forms.Padding(4);
             this.btnFilterType.Name = "btnFilterType";
             this.btnFilterType.Size = new System.Drawing.Size(149, 31);
             this.btnFilterType.TabIndex = 1;
@@ -311,7 +313,7 @@
             this.btnFilterStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilterStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnFilterStatus.Location = new System.Drawing.Point(1345, 7);
-            this.btnFilterStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFilterStatus.Margin = new System.Windows.Forms.Padding(4);
             this.btnFilterStatus.Name = "btnFilterStatus";
             this.btnFilterStatus.Size = new System.Drawing.Size(149, 31);
             this.btnFilterStatus.TabIndex = 0;
@@ -326,7 +328,7 @@
             this.panelMetrics.Controls.Add(this.panelMetricPending);
             this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMetrics.Location = new System.Drawing.Point(32, 140);
-            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1660, 86);
             this.panelMetrics.TabIndex = 1;
@@ -385,7 +387,7 @@
             this.lblMetricWaivedTitle.Name = "lblMetricWaivedTitle";
             this.lblMetricWaivedTitle.Size = new System.Drawing.Size(83, 20);
             this.lblMetricWaivedTitle.TabIndex = 1;
-            this.lblMetricWaivedTitle.Text = "? Waived";
+            this.lblMetricWaivedTitle.Text = "?? Waived";
             this.lblMetricWaivedTitle.Click += new System.EventHandler(this.lblMetricWaivedTitle_Click);
             this.panelMetricCollected.BackColor = System.Drawing.Color.White;
             this.panelMetricCollected.Controls.Add(this.lblMetricCollectedValue);
@@ -413,7 +415,7 @@
             this.lblMetricCollectedTitle.Name = "lblMetricCollectedTitle";
             this.lblMetricCollectedTitle.Size = new System.Drawing.Size(161, 20);
             this.lblMetricCollectedTitle.TabIndex = 1;
-            this.lblMetricCollectedTitle.Text = "? Collected                ";
+            this.lblMetricCollectedTitle.Text = "?? Collected                ";
             this.lblMetricCollectedTitle.Click += new System.EventHandler(this.lblMetricCollectedTitle_Click);
             this.panelMetricPending.BackColor = System.Drawing.Color.White;
             this.panelMetricPending.Controls.Add(this.lblMetricPendingValue);
@@ -448,7 +450,7 @@
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(32, 30);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1660, 110);
             this.panelHeader.TabIndex = 0;
@@ -476,7 +478,7 @@
             this.ClientSize = new System.Drawing.Size(1724, 980);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AdminFinesForm";
             this.Text = "Fine & Penalty Management";
             this.Load += new System.EventHandler(this.AdminFinesForm_Load);
@@ -503,6 +505,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

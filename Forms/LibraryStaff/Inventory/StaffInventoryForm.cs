@@ -244,7 +244,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     }
                     int checkedOut = Convert.ToInt32(lblTotalCopiesValue.Text) - Convert.ToInt32(lblAvailableValue.Text);
                     lblCheckedOutValue.Text = checkedOut.ToString();
-                    string queryDamaged = "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'";
+                    string queryDamaged = "SELECT COUNT(*) FROM Inventory WHERE `Condition` = 'Damaged'";
                     using (MySqlCommand cmd = new MySqlCommand(queryDamaged, conn))
                     {
                         int damaged = Convert.ToInt32(cmd.ExecuteScalar());
@@ -290,7 +290,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     string damagedSubquery = hasInventoryTable && hasCondition
                         ? @"(SELECT BookID, COUNT(*) as DamagedCount
                             FROM Inventory
-                            WHERE Condition = 'Damaged'
+                            WHERE `Condition` = 'Damaged'
                             GROUP BY BookID)"
                         : @"(SELECT BookID, 0 as DamagedCount
                             FROM (SELECT 1) as dummy
@@ -472,7 +472,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     }
                     for (int i = 1; i <= quantity; i++)
                     {
-                        string insertQuery = @"INSERT INTO Inventory (BookID, CopyNumber, Location, Condition, Status, LastVerified)
+                        string insertQuery = @"INSERT INTO Inventory (BookID, CopyNumber, Location, `Condition`, Status, LastVerified)
                                               VALUES (@BookID, @CopyNumber, @Location, 'Good', 'Available', @LastVerified)";
                         using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn))
                         {
@@ -598,7 +598,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         return;
                     }
                     string updateQuery = @"UPDATE Inventory
-                                          SET Condition = 'Damaged',
+                                          SET `Condition` = 'Damaged',
                                               Status = 'For Repair',
                                               Notes = @Notes,
                                               LastVerified = @LastVerified

@@ -100,7 +100,7 @@
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(180, 37);
             this.btnLogout.TabIndex = 12;
-            this.btnLogout.Text = "?? Logout";
+            this.btnLogout.Text = "🚪 Logout";
             this.btnLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
@@ -126,7 +126,7 @@
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(180, 41);
             this.btnSearch.TabIndex = 9;
-            this.btnSearch.Text = "?? Search";
+            this.btnSearch.Text = "🔍 Search";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -139,7 +139,7 @@
             this.btnInventory.Name = "btnInventory";
             this.btnInventory.Size = new System.Drawing.Size(180, 41);
             this.btnInventory.TabIndex = 8;
-            this.btnInventory.Text = "?? Inventory";
+            this.btnInventory.Text = "📦 Inventory";
             this.btnInventory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInventory.UseVisualStyleBackColor = false;
             this.btnInventory.Click += new System.EventHandler(this.btnInventory_Click);
@@ -152,7 +152,7 @@
             this.btnFines.Name = "btnFines";
             this.btnFines.Size = new System.Drawing.Size(180, 41);
             this.btnFines.TabIndex = 7;
-            this.btnFines.Text = "?? Fines";
+            this.btnFines.Text = "💰 Fines";
             this.btnFines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFines.UseVisualStyleBackColor = false;
             this.btnFines.Click += new System.EventHandler(this.btnFines_Click);
@@ -165,7 +165,7 @@
             this.btnReservations.Name = "btnReservations";
             this.btnReservations.Size = new System.Drawing.Size(180, 41);
             this.btnReservations.TabIndex = 6;
-            this.btnReservations.Text = "?? Reservations";
+            this.btnReservations.Text = "📋 Reservations";
             this.btnReservations.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReservations.UseVisualStyleBackColor = false;
             this.btnReservations.Click += new System.EventHandler(this.btnReservations_Click);
@@ -178,7 +178,7 @@
             this.btnCirculation.Name = "btnCirculation";
             this.btnCirculation.Size = new System.Drawing.Size(180, 41);
             this.btnCirculation.TabIndex = 5;
-            this.btnCirculation.Text = "?? Circulation";
+            this.btnCirculation.Text = "🔄 Circulation";
             this.btnCirculation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCirculation.UseVisualStyleBackColor = false;
             this.btnCirculation.Click += new System.EventHandler(this.btnCirculation_Click);
@@ -191,7 +191,7 @@
             this.btnCatalog.Name = "btnCatalog";
             this.btnCatalog.Size = new System.Drawing.Size(180, 41);
             this.btnCatalog.TabIndex = 4;
-            this.btnCatalog.Text = "?? Catalog";
+            this.btnCatalog.Text = "📚 Catalog";
             this.btnCatalog.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCatalog.UseVisualStyleBackColor = false;
             this.btnCatalog.Click += new System.EventHandler(this.btnCatalog_Click);
@@ -204,7 +204,7 @@
             this.btnMembers.Name = "btnMembers";
             this.btnMembers.Size = new System.Drawing.Size(180, 41);
             this.btnMembers.TabIndex = 3;
-            this.btnMembers.Text = "?? Members";
+            this.btnMembers.Text = "👥 Members";
             this.btnMembers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMembers.UseVisualStyleBackColor = false;
             this.btnMembers.Click += new System.EventHandler(this.btnMembers_Click);
@@ -217,7 +217,7 @@
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(180, 41);
             this.btnDashboard.TabIndex = 2;
-            this.btnDashboard.Text = "?? Dashboard";
+            this.btnDashboard.Text = "📊 Dashboard";
             this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDashboard.UseVisualStyleBackColor = false;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
@@ -291,7 +291,7 @@
             this.lblOverdueBooksTitle.Name = "lblOverdueBooksTitle";
             this.lblOverdueBooksTitle.Size = new System.Drawing.Size(175, 25);
             this.lblOverdueBooksTitle.TabIndex = 1;
-            this.lblOverdueBooksTitle.Text = "?? Overdue Books";
+            this.lblOverdueBooksTitle.Text = "⚠️ Overdue Books";
             this.panelRecentActivity.BackColor = System.Drawing.Color.White;
             this.panelRecentActivity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelRecentActivity.Controls.Add(this.lblRecentActivityTitle);
@@ -366,7 +366,7 @@
             this.lblPendingFinesTitle.Name = "lblPendingFinesTitle";
             this.lblPendingFinesTitle.Size = new System.Drawing.Size(144, 21);
             this.lblPendingFinesTitle.TabIndex = 0;
-            this.lblPendingFinesTitle.Text = "?? Pending Fines";
+            this.lblPendingFinesTitle.Text = "💰 Pending Fines";
             this.panelMetricActiveLoans.BackColor = System.Drawing.Color.White;
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansChange);
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansValue);
@@ -400,7 +400,7 @@
             this.lblActiveLoansTitle.Name = "lblActiveLoansTitle";
             this.lblActiveLoansTitle.Size = new System.Drawing.Size(133, 21);
             this.lblActiveLoansTitle.TabIndex = 0;
-            this.lblActiveLoansTitle.Text = "?? Active Loans";
+            this.lblActiveLoansTitle.Text = "📖 Active Loans";
             this.panelMetricBooksCatalog.BackColor = System.Drawing.Color.White;
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogChange);
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogValue);
@@ -433,7 +433,7 @@
             this.lblBooksCatalogTitle.Name = "lblBooksCatalogTitle";
             this.lblBooksCatalogTitle.Size = new System.Drawing.Size(161, 21);
             this.lblBooksCatalogTitle.TabIndex = 0;
-            this.lblBooksCatalogTitle.Text = "??Books in Catalog";
+            this.lblBooksCatalogTitle.Text = "📚 Books in Catalog";
             this.panelMetricTotalMembers.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalMembers.Controls.Add(this.lblTotalMembersChange);
             this.panelMetricTotalMembers.Controls.Add(this.lblTotalMembersValue);
@@ -466,7 +466,7 @@
             this.lblTotalMembersTitle.Name = "lblTotalMembersTitle";
             this.lblTotalMembersTitle.Size = new System.Drawing.Size(150, 21);
             this.lblTotalMembersTitle.TabIndex = 0;
-            this.lblTotalMembersTitle.Text = "?? Total Members";
+            this.lblTotalMembersTitle.Text = "👥 Total Members";
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;

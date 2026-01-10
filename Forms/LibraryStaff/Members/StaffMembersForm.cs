@@ -101,7 +101,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             DataGridViewButtonColumn colDelete = new DataGridViewButtonColumn
             {
                 Name = "Delete",
-                Text = "??",
+                Text = "👁️",
                 UseColumnTextForButtonValue = true,
                 Width = 50,
                 FlatStyle = FlatStyle.Flat
@@ -174,14 +174,12 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             {
                 conn.Open();
                 bool hasContact = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Contact");
-                bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                string typeColumn = hasMemberType ? "MemberType" : "Type";
                 string query = hasContact
-                    ? $@"SELECT
+                    ? @"SELECT
                             MemberID,
                             FirstName,
                             LastName,
-                            {typeColumn} as MemberType,
+                            COALESCE(Type, MemberType) as MemberType,
                             Email,
                             Contact,
                             RegistrationDate,
@@ -189,11 +187,11 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                             Status
                          FROM Members
                          ORDER BY LastName, FirstName"
-                    : $@"SELECT
+                    : @"SELECT
                             MemberID,
                             FirstName,
                             LastName,
-                            {typeColumn} as MemberType,
+                            COALESCE(Type, MemberType) as MemberType,
                             Email,
                             RegistrationDate,
                             ExpirationDate,
@@ -214,13 +212,13 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             string result = "";
             if (!string.IsNullOrEmpty(email))
             {
-                result = $"?? {email}";
+                result = $"📧 {email}";
             }
             if (!string.IsNullOrEmpty(contact))
             {
                 if (!string.IsNullOrEmpty(result))
                     result += "\n";
-                result += $"?? {contact}";
+                result += $"📞 {contact}";
             }
             return string.IsNullOrEmpty(result) ? "N/A" : result;
         }

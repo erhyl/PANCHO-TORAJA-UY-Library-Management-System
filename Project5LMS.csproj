@@ -213,8 +213,23 @@
     <Compile Include="Forms\Admin\Search\BrowseFiltersForm.Designer.cs">
       <DependentUpon>BrowseFiltersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Admin\Search\CategoryBrowseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Admin\Search\CategoryBrowseForm.Designer.cs">
+      <DependentUpon>CategoryBrowseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Admin\Search\BrowseResultsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Admin\Search\BrowseResultsForm.Designer.cs">
+      <DependentUpon>BrowseResultsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Admin\Search\TransactionStatusForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Admin\Search\TransactionStatusForm.Designer.cs">
+      <DependentUpon>TransactionStatusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LibraryStaff\Search\StaffSearchForm.cs">
       <SubType>Form</SubType>
@@ -470,6 +485,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Admin\Search\BrowseFiltersForm.resx">
       <DependentUpon>BrowseFiltersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Admin\Search\BrowseResultsForm.resx">
+      <DependentUpon>BrowseResultsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Admin\Search\CategoryBrowseForm.resx">
+      <DependentUpon>CategoryBrowseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Admin\Search\TransactionStatusForm.resx">
+      <DependentUpon>TransactionStatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Admin\UserManagement\AddUserForm.resx">
+      <DependentUpon>AddUserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LibraryStaff\Circulation\StaffCirculationForm.resx">
       <DependentUpon>StaffCirculationForm.cs</DependentUpon>

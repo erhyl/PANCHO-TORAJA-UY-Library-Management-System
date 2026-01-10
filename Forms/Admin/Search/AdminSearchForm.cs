@@ -133,7 +133,7 @@ namespace Project5LMS.Forms.Admin.Search
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                txtSearch.Text = "?? Search by title, author, ISBN, member name, or ID...";
+                txtSearch.Text = "🔍 Search by title, author, ISBN, member name, or ID...";
                 txtSearch.ForeColor = Color.Gray;
             }
         }
@@ -306,7 +306,10 @@ namespace Project5LMS.Forms.Admin.Search
         }
         private void lblCategoryLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadFormInParentPanel(new AdminCatalogForm());
+            using (var categoryForm = new CategoryBrowseForm())
+            {
+                categoryForm.ShowDialog();
+            }
         }
         private void lblAuthorLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

@@ -436,18 +436,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                    bool hasType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Type");
-                    if (!hasMemberType && !hasType)
-                    {
-                        return data;
-                    }
-                    string typeColumn = hasMemberType ? "m.MemberType" : "m.Type";
-                    string query = $@"SELECT {typeColumn} as MemberType, COUNT(DISTINCT t.TransactionID) as ActivityCount
+                    string query = @"SELECT COALESCE(m.Type, m.MemberType) as MemberType, COUNT(DISTINCT t.TransactionID) as ActivityCount
                                    FROM Transactions t
                                    INNER JOIN Members m ON t.MemberID = m.MemberID
                                    WHERE t.BorrowDate >= @StartDate AND t.BorrowDate <= @EndDate
-                                   GROUP BY {typeColumn}";
+                                   GROUP BY COALESCE(m.Type, m.MemberType)";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@StartDate", startDate);
@@ -679,25 +672,10 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
-                    bool hasType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Type");
-                    string typeColumn;
-                    if (hasMemberType)
-                    {
-                        typeColumn = "MemberType";
-                    }
-                    else if (hasType)
-                    {
-                        typeColumn = "Type";
-                    }
-                    else
-                    {
-                        typeColumn = "'N/A'";
-                    }
-                    string query = $@"SELECT
+                    string query = @"SELECT
                                     MemberID as 'MEMBER ID',
                                     CONCAT(FirstName, ' ', LastName) as 'NAME',
-                                    {typeColumn} as 'MEMBER TYPE',
+                                    COALESCE(Type, MemberType, 'N/A') as 'MEMBER TYPE',
                                     DATE(RegistrationDate) as 'REGISTRATION DATE'
                                     FROM Members
                                     WHERE RegistrationDate >= @StartDate AND RegistrationDate <= @EndDate

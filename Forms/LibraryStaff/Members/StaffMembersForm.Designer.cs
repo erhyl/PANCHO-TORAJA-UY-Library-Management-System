@@ -157,7 +157,7 @@
             this.colEdit.HeaderText = "ACTIONS";
             this.colEdit.MinimumWidth = 6;
             this.colEdit.Name = "colEdit";
-            this.colEdit.Text = "?";
+            this.colEdit.Text = "✏️";
             this.colEdit.UseColumnTextForButtonValue = true;
             this.colEdit.Width = 50;
             this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -168,7 +168,7 @@
             this.colDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.colDelete.MinimumWidth = 6;
             this.colDelete.Name = "colDelete";
-            this.colDelete.Text = "??";
+            this.colDelete.Text = "🗑️";
             this.colDelete.UseColumnTextForButtonValue = true;
             this.colDelete.Width = 50;
             this.panelSearchFilter.BackColor = System.Drawing.Color.White;

@@ -66,7 +66,7 @@
             this.lblHistoryTitle.Name = "lblHistoryTitle";
             this.lblHistoryTitle.Size = new System.Drawing.Size(267, 32);
             this.lblHistoryTitle.TabIndex = 0;
-            this.lblHistoryTitle.Text = "?? Borrowing History";
+            this.lblHistoryTitle.Text = "📚 Borrowing History";
             this.panelHistoryList.AutoScroll = true;
             this.panelHistoryList.BackColor = System.Drawing.Color.White;
             this.panelHistoryList.Location = new System.Drawing.Point(0, 50);
@@ -91,7 +91,7 @@
             this.lblCurrentlyBorrowedCount.Name = "lblCurrentlyBorrowedCount";
             this.lblCurrentlyBorrowedCount.Size = new System.Drawing.Size(359, 37);
             this.lblCurrentlyBorrowedCount.TabIndex = 1;
-            this.lblCurrentlyBorrowedCount.Text = "?? Currently Borrowed (0)";
+            this.lblCurrentlyBorrowedCount.Text = "📖 Currently Borrowed (0)";
             this.panelBorrowedList.AutoScroll = true;
             this.panelBorrowedList.BackColor = System.Drawing.Color.White;
             this.panelBorrowedList.Location = new System.Drawing.Point(20, 70);

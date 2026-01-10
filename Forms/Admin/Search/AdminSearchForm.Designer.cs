@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Search
+namespace Project5LMS.Forms.Admin.Search
 {
     partial class AdminSearchForm
     {
@@ -106,10 +106,10 @@
             this.lblPopularLink.Location = new System.Drawing.Point(20, 98);
             this.lblPopularLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPopularLink.Name = "lblPopularLink";
-            this.lblPopularLink.Size = new System.Drawing.Size(129, 23);
+            this.lblPopularLink.Size = new System.Drawing.Size(122, 23);
             this.lblPopularLink.TabIndex = 3;
             this.lblPopularLink.TabStop = true;
-            this.lblPopularLink.Text = "View Popular ?";
+            this.lblPopularLink.Text = "View Popular ??";
             this.lblPopularLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblPopularLink_LinkClicked);
             this.lblPopularDescription.AutoSize = true;
             this.lblPopularDescription.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -147,10 +147,10 @@
             this.lblNewLink.Location = new System.Drawing.Point(24, 98);
             this.lblNewLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNewLink.Name = "lblNewLink";
-            this.lblNewLink.Size = new System.Drawing.Size(155, 23);
+            this.lblNewLink.Size = new System.Drawing.Size(140, 23);
             this.lblNewLink.TabIndex = 3;
             this.lblNewLink.TabStop = true;
-            this.lblNewLink.Text = "View New Books ?";
+            this.lblNewLink.Text = "View New Books ";
             this.lblNewLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblNewLink_LinkClicked);
             this.lblNewDescription.AutoSize = true;
             this.lblNewDescription.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -197,10 +197,10 @@
             this.lblCategoryLink.Location = new System.Drawing.Point(29, 98);
             this.lblCategoryLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCategoryLink.Name = "lblCategoryLink";
-            this.lblCategoryLink.Size = new System.Drawing.Size(176, 23);
+            this.lblCategoryLink.Size = new System.Drawing.Size(156, 23);
             this.lblCategoryLink.TabIndex = 3;
             this.lblCategoryLink.TabStop = true;
-            this.lblCategoryLink.Text = "View All Categories ?";
+            this.lblCategoryLink.Text = "View All Categories";
             this.lblCategoryLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblCategoryLink_LinkClicked);
             this.lblCategoryDescription.AutoSize = true;
             this.lblCategoryDescription.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -332,10 +332,10 @@
             this.lblAuthorLink.Location = new System.Drawing.Point(40, 118);
             this.lblAuthorLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAuthorLink.Name = "lblAuthorLink";
-            this.lblAuthorLink.Size = new System.Drawing.Size(149, 23);
+            this.lblAuthorLink.Size = new System.Drawing.Size(142, 23);
             this.lblAuthorLink.TabIndex = 3;
             this.lblAuthorLink.TabStop = true;
-            this.lblAuthorLink.Text = "Browse Authors ?";
+            this.lblAuthorLink.Text = "Browse Authors ??";
             this.lblAuthorLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblAuthorLink_LinkClicked);
             this.lblAuthorDescription.AutoSize = true;
             this.lblAuthorDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -383,6 +383,7 @@
             this.cardBrowseAuthor.ResumeLayout(false);
             this.cardBrowseAuthor.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

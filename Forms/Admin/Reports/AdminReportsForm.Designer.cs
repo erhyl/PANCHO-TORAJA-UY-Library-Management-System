@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Reports
+namespace Project5LMS.Forms.Admin.Reports
 {
     partial class AdminReportsForm
     {
@@ -58,10 +58,9 @@
             this.panelContent.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelContent.Size = new System.Drawing.Size(1536, 728);
             this.panelContent.TabIndex = 3;
-            this.lblContentPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.lblContentPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblContentPlaceholder.AutoSize = false;
             this.lblContentPlaceholder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblContentPlaceholder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.lblContentPlaceholder.Location = new System.Drawing.Point(21, 20);
@@ -69,7 +68,8 @@
             this.lblContentPlaceholder.Name = "lblContentPlaceholder";
             this.lblContentPlaceholder.Size = new System.Drawing.Size(1494, 688);
             this.lblContentPlaceholder.TabIndex = 0;
-            this.lblContentPlaceholder.Text = "Report content will be displayed here.\r\nSelect a report category above to view statistics and data.";
+            this.lblContentPlaceholder.Text = "Report content will be displayed here.\r\nSelect a report category above to view st" +
+    "atistics and data.";
             this.lblContentPlaceholder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.panelDateFilter.Controls.Add(this.cmbDateRange);
             this.panelDateFilter.Dock = System.Windows.Forms.DockStyle.Top;
@@ -222,6 +222,7 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
         private System.Windows.Forms.Panel panelMainContainer;

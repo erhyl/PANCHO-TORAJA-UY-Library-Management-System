@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.UserManagement
+namespace Project5LMS.Forms.Admin.UserManagement
 {
     partial class AddUserForm
     {
@@ -113,10 +113,10 @@
             this.panelFormContent.Controls.Add(this.txtFirstName);
             this.panelFormContent.Controls.Add(this.lblFirstName);
             this.panelFormContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFormContent.Location = new System.Drawing.Point(40, 86);
+            this.panelFormContent.Location = new System.Drawing.Point(40, 30);
             this.panelFormContent.Margin = new System.Windows.Forms.Padding(4);
             this.panelFormContent.Name = "panelFormContent";
-            this.panelFormContent.Size = new System.Drawing.Size(420, 384);
+            this.panelFormContent.Size = new System.Drawing.Size(420, 490);
             this.panelFormContent.TabIndex = 1;
             this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -136,7 +136,7 @@
             this.lblRole.Location = new System.Drawing.Point(4, 340);
             this.lblRole.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(47, 24);
+            this.lblRole.Size = new System.Drawing.Size(49, 24);
             this.lblRole.TabIndex = 11;
             this.lblRole.Text = "Role";
             this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -145,7 +145,7 @@
             this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.PasswordChar = '*';
-            this.txtConfirmPassword.Size = new System.Drawing.Size(420, 28);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(416, 28);
             this.txtConfirmPassword.TabIndex = 4;
             this.lblConfirmPassword.AutoSize = true;
             this.lblConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -153,7 +153,7 @@
             this.lblConfirmPassword.Location = new System.Drawing.Point(4, 275);
             this.lblConfirmPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConfirmPassword.Name = "lblConfirmPassword";
-            this.lblConfirmPassword.Size = new System.Drawing.Size(155, 24);
+            this.lblConfirmPassword.Size = new System.Drawing.Size(162, 24);
             this.lblConfirmPassword.TabIndex = 9;
             this.lblConfirmPassword.Text = "Confirm Password";
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -162,7 +162,7 @@
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(420, 28);
+            this.txtPassword.Size = new System.Drawing.Size(416, 28);
             this.txtPassword.TabIndex = 3;
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -178,7 +178,7 @@
             this.txtEmail.Location = new System.Drawing.Point(0, 165);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(420, 28);
+            this.txtEmail.Size = new System.Drawing.Size(416, 28);
             this.txtEmail.TabIndex = 2;
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -194,7 +194,7 @@
             this.txtLastName.Location = new System.Drawing.Point(0, 96);
             this.txtLastName.Margin = new System.Windows.Forms.Padding(4);
             this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(420, 28);
+            this.txtLastName.Size = new System.Drawing.Size(416, 28);
             this.txtLastName.TabIndex = 1;
             this.lblLastName.AutoSize = true;
             this.lblLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -210,7 +210,7 @@
             this.txtFirstName.Location = new System.Drawing.Point(0, 28);
             this.txtFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(420, 28);
+            this.txtFirstName.Size = new System.Drawing.Size(416, 28);
             this.txtFirstName.TabIndex = 0;
             this.lblFirstName.AutoSize = true;
             this.lblFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -218,7 +218,7 @@
             this.lblFirstName.Location = new System.Drawing.Point(4, 0);
             this.lblFirstName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFirstName.Name = "lblFirstName";
-            this.lblFirstName.Size = new System.Drawing.Size(99, 24);
+            this.lblFirstName.Size = new System.Drawing.Size(101, 24);
             this.lblFirstName.TabIndex = 1;
             this.lblFirstName.Text = "First Name";
             this.lblTitle.AutoSize = true;
@@ -227,7 +227,7 @@
             this.lblTitle.Location = new System.Drawing.Point(44, 30);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(140, 31);
+            this.lblTitle.Size = new System.Drawing.Size(135, 31);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Add User";
             this.AcceptButton = this.btnSave;
@@ -249,6 +249,7 @@
             this.panelFormContent.ResumeLayout(false);
             this.panelFormContent.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
     }

@@ -24,19 +24,27 @@ namespace Project5LMS.Forms.Admin.Catalog
         }
         private void AdminCatalogForm_Load(object sender, EventArgs e)
         {
-            SetupDataGridView();
-            LoadResourceTypes();
-            LoadCategories();
-            if (cmbResourceTypeFilter.Items.Count > 0)
+            try
             {
-                cmbResourceTypeFilter.SelectedIndex = 0;
+                SetupDataGridView();
+                LoadResourceTypes();
+                LoadCategories();
+                if (cmbResourceTypeFilter.Items.Count > 0)
+                {
+                    cmbResourceTypeFilter.SelectedIndex = 0;
+                }
+                if (cmbCategoryFilter.Items.Count > 0)
+                {
+                    cmbCategoryFilter.SelectedIndex = 0;
+                }
+                LoadMetrics();
+                LoadBooks();
             }
-            if (cmbCategoryFilter.Items.Count > 0)
+            catch (Exception ex)
             {
-                cmbCategoryFilter.SelectedIndex = 0;
+                MessageBox.Show($"Error loading catalog form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Catalog form load error: {ex}");
             }
-            LoadMetrics();
-            LoadBooks();
         }
         private void SetupDataGridView()
         {
@@ -50,6 +58,13 @@ namespace Project5LMS.Forms.Admin.Catalog
             dataGridViewBooks.CellFormatting += DataGridViewBooks_CellFormatting;
             dataGridViewBooks.CellPainting -= DataGridViewBooks_CellPainting;
             dataGridViewBooks.CellPainting += DataGridViewBooks_CellPainting;
+            dataGridViewBooks.DataError -= DataGridViewBooks_DataError;
+            dataGridViewBooks.DataError += DataGridViewBooks_DataError;
+        }
+        private void DataGridViewBooks_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+            System.Diagnostics.Debug.WriteLine($"DataGridView error in row {e.RowIndex}, column {e.ColumnIndex}: {e.Exception.Message}");
         }
         private void DataGridViewBooks_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -86,8 +101,53 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             if (columnName == "Copies" && e.Value != null)
             {
-                string copies = e.Value.ToString();
-                e.FormattingApplied = true;
+                try
+                {
+                    if (row.DataBoundItem != null)
+                    {
+                        DataRowView rowView = row.DataBoundItem as DataRowView;
+                        if (rowView != null)
+                        {
+                            int totalCopies = 0;
+                            if (e.Value is int)
+                            {
+                                totalCopies = (int)e.Value;
+                            }
+                            else if (e.Value is decimal)
+                            {
+                                totalCopies = (int)(decimal)e.Value;
+                            }
+                            else if (int.TryParse(e.Value.ToString(), out int parsedCopies))
+                            {
+                                totalCopies = parsedCopies;
+                            }
+                            int available = 0;
+                            if (rowView.Row.Table.Columns.Contains("Available") && rowView["Available"] != DBNull.Value)
+                            {
+                                object availableValue = rowView["Available"];
+                                if (availableValue is int)
+                                {
+                                    available = (int)availableValue;
+                                }
+                                else if (availableValue is decimal)
+                                {
+                                    available = (int)(decimal)availableValue;
+                                }
+                                else if (int.TryParse(availableValue.ToString(), out int parsedAvailable))
+                                {
+                                    available = parsedAvailable;
+                                }
+                            }
+                            e.Value = $"{available}/{totalCopies} available";
+                        }
+                    }
+                    e.FormattingApplied = true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error formatting Copies column: {ex.Message}");
+                    e.FormattingApplied = false;
+                }
             }
             }
             catch (Exception ex)
@@ -256,10 +316,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 {
                     allBooksData.Columns.Add("Publisher", typeof(string));
                 }
-                if (!allBooksData.Columns.Contains("Copies"))
-                {
-                    allBooksData.Columns.Add("Copies", typeof(string));
-                }
                 if (!allBooksData.Columns.Contains("Location"))
                 {
                     allBooksData.Columns.Add("Location", typeof(string));
@@ -267,6 +323,10 @@ namespace Project5LMS.Forms.Admin.Catalog
                 if (!allBooksData.Columns.Contains("Status"))
                 {
                     allBooksData.Columns.Add("Status", typeof(string));
+                }
+                if (!allBooksData.Columns.Contains("TotalCopies"))
+                {
+                    allBooksData.Columns.Add("TotalCopies", typeof(int));
                 }
                 foreach (DataRow row in allBooksData.Rows)
                 {
@@ -282,7 +342,8 @@ namespace Project5LMS.Forms.Admin.Catalog
                     row["Publisher"] = !string.IsNullOrEmpty(year) ? $"{publisher}, {year}" : publisher;
                     int available = row["Available"] != DBNull.Value ? Convert.ToInt32(row["Available"]) : 0;
                     int totalCopies = row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 0;
-                    row["Copies"] = $"{available}/{totalCopies} available";
+                    row["TotalCopies"] = totalCopies;
+                    row["Copies"] = totalCopies;
                     if (allBooksData.Columns.Contains("Location") && row["Location"] != DBNull.Value)
                     {
                         row["Location"] = row["Location"].ToString();

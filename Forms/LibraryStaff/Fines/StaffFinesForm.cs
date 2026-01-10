@@ -38,8 +38,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
-                                              WHERE TABLE_SCHEMA = DATABASE()
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                              WHERE TABLE_SCHEMA = DATABASE() 
                                               AND TABLE_NAME = 'Fines'";
                     using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -160,7 +160,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                                 decimal total = Convert.ToDecimal(cmd.ExecuteScalar());
                                 lblMetricTotalFinesValue.Text = $"${total:F2}";
                             }
-                            string queryPending = @"SELECT COALESCE(SUM(Fine), 0) FROM Transactions
+                            string queryPending = @"SELECT COALESCE(SUM(Fine), 0) FROM Transactions 
                                                   WHERE ReturnDate IS NULL AND DueDate < NOW() AND Fine > 0";
                             using (MySqlCommand cmd = new MySqlCommand(queryPending, conn))
                             {
@@ -180,8 +180,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         }
         private bool CheckTableExists(MySqlConnection conn, string tableName)
         {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
-                           WHERE TABLE_SCHEMA = DATABASE()
+            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                           WHERE TABLE_SCHEMA = DATABASE() 
                            AND TABLE_NAME = @TableName";
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
@@ -239,15 +239,15 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 bool hasBookID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "BookID");
                 bool hasTransactionID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "TransactionID");
                 string bookIDSelect = hasBookID ? "f.BookID," : "NULL as BookID,";
-                string bookJoin = hasBookID
-                    ? "LEFT JOIN Books b ON f.BookID = b.BookID"
-                    : (hasTransactionID
+                string bookJoin = hasBookID 
+                    ? "LEFT JOIN Books b ON f.BookID = b.BookID" 
+                    : (hasTransactionID 
                         ? "LEFT JOIN Transactions t ON f.TransactionID = t.TransactionID LEFT JOIN Books b ON t.BookID = b.BookID"
                         : "LEFT JOIN Books b ON 1=0");
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasCreatedDate)
                 {
-                    query = $@"SELECT
+                    query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
                                 {bookIDSelect}
@@ -269,7 +269,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 }
                 else
                 {
-                    query = $@"SELECT
+                    query = $@"SELECT 
                                 f.FineID,
                                 f.MemberID,
                                 {bookIDSelect}

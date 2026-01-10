@@ -242,11 +242,11 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                                       CONCAT(m.FirstName, ' ', m.LastName) as Title,
                                       m.Email as Author,
                                       NULL as ISBN,
-                                      m.Type as Category,
+                                      COALESCE(m.Type, m.MemberType) as Category,
                                       m.Status as Status,
                                       m.MemberID as MemberID,
                                       CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
-                                      m.Type as MemberType
+                                      COALESCE(m.Type, m.MemberType) as MemberType
                                       FROM Members m
                                       WHERE (m.FirstName LIKE @SearchText
                                       OR m.LastName LIKE @SearchText
