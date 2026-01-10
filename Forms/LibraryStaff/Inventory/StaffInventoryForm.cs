@@ -831,5 +831,20 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         private void panelMainContainer_Paint(object sender, PaintEventArgs e)
         {
         }
+
+        private void cardReportLost_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtReportDamageBookID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

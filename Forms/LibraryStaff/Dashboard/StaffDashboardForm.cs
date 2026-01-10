@@ -288,5 +288,10 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
         private void lblSubtitleSidebar_Click(object sender, EventArgs e)
         {
         }
+
+        private void lblActiveLoansTitle_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

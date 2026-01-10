@@ -32,6 +32,9 @@ namespace Project5LMS
             this.panelEmail.SuspendLayout();
             this.panelPassword.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // cmbRole
+            // 
             this.cmbRole.BackColor = System.Drawing.Color.White;
             this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -44,10 +47,13 @@ namespace Project5LMS
             this.cmbRole.Location = new System.Drawing.Point(226, 485);
             this.cmbRole.Margin = new System.Windows.Forms.Padding(5);
             this.cmbRole.Name = "cmbRole";
-            this.cmbRole.Size = new System.Drawing.Size(345, 31);
+            this.cmbRole.Size = new System.Drawing.Size(345, 27);
             this.cmbRole.TabIndex = 3;
             this.cmbRole.SelectedIndexChanged += new System.EventHandler(this.cmbRole_SelectedIndexChanged);
             this.cmbRole.MouseLeave += new System.EventHandler(this.cmbRole_MouseLeave);
+            // 
+            // txtUsername
+            // 
             this.txtUsername.BackColor = System.Drawing.Color.White;
             this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtUsername.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -55,11 +61,14 @@ namespace Project5LMS
             this.txtUsername.Location = new System.Drawing.Point(12, 8);
             this.txtUsername.Margin = new System.Windows.Forms.Padding(5);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(319, 24);
+            this.txtUsername.Size = new System.Drawing.Size(319, 19);
             this.txtUsername.TabIndex = 1;
             this.txtUsername.TextChanged += new System.EventHandler(this.txtUsername_TextChanged);
             this.txtUsername.Enter += new System.EventHandler(this.txtUsername_Enter);
             this.txtUsername.Leave += new System.EventHandler(this.txtUsername_Leave);
+            // 
+            // txtPassword
+            // 
             this.txtPassword.BackColor = System.Drawing.Color.White;
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPassword.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -67,12 +76,15 @@ namespace Project5LMS
             this.txtPassword.Location = new System.Drawing.Point(12, 8);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(5);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(319, 24);
+            this.txtPassword.Size = new System.Drawing.Size(319, 19);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.UseSystemPasswordChar = true;
             this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             this.txtPassword.Enter += new System.EventHandler(this.txtPassword_Enter);
             this.txtPassword.Leave += new System.EventHandler(this.txtPassword_Leave);
+            // 
+            // btnSignin
+            // 
             this.btnSignin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSignin.FlatAppearance.BorderSize = 0;
             this.btnSignin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -90,6 +102,9 @@ namespace Project5LMS
             this.btnSignin.Click += new System.EventHandler(this.btnSignin_Click);
             this.btnSignin.MouseEnter += new System.EventHandler(this.btnSignin_MouseEnter);
             this.btnSignin.MouseLeave += new System.EventHandler(this.btnSignin_MouseLeave);
+            // 
+            // label1
+            // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
@@ -101,33 +116,45 @@ namespace Project5LMS
             this.label1.Text = "Library Management System";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // label4
+            // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(223, 293);
             this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 21);
+            this.label4.Size = new System.Drawing.Size(42, 17);
             this.label4.TabIndex = 10;
             this.label4.Text = "Email";
+            // 
+            // label5
+            // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(223, 376);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(82, 21);
+            this.label5.Size = new System.Drawing.Size(66, 17);
             this.label5.TabIndex = 11;
             this.label5.Text = "Password";
+            // 
+            // label6
+            // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(223, 462);
             this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 21);
+            this.label6.Size = new System.Drawing.Size(70, 17);
             this.label6.TabIndex = 12;
             this.label6.Text = "Sign in As";
+            // 
+            // pictureBox2
+            // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(312, 14);
@@ -137,6 +164,9 @@ namespace Project5LMS
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 13;
             this.pictureBox2.TabStop = false;
+            // 
+            // lnkShowHidePassword
+            // 
             this.lnkShowHidePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkShowHidePassword.AutoSize = true;
             this.lnkShowHidePassword.BackColor = System.Drawing.Color.Transparent;
@@ -146,7 +176,7 @@ namespace Project5LMS
             this.lnkShowHidePassword.Location = new System.Drawing.Point(286, 10);
             this.lnkShowHidePassword.Margin = new System.Windows.Forms.Padding(0);
             this.lnkShowHidePassword.Name = "lnkShowHidePassword";
-            this.lnkShowHidePassword.Size = new System.Drawing.Size(45, 20);
+            this.lnkShowHidePassword.Size = new System.Drawing.Size(36, 15);
             this.lnkShowHidePassword.TabIndex = 14;
             this.lnkShowHidePassword.TabStop = true;
             this.lnkShowHidePassword.Text = "Show";
@@ -154,6 +184,9 @@ namespace Project5LMS
             this.lnkShowHidePassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkShowHidePassword_LinkClicked);
             this.lnkShowHidePassword.MouseEnter += new System.EventHandler(this.lnkShowHidePassword_MouseEnter);
             this.lnkShowHidePassword.MouseLeave += new System.EventHandler(this.lnkShowHidePassword_MouseLeave);
+            // 
+            // lnkForgotPassword
+            // 
             this.lnkForgotPassword.ActiveLinkColor = System.Drawing.Color.White;
             this.lnkForgotPassword.AutoSize = true;
             this.lnkForgotPassword.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -161,7 +194,7 @@ namespace Project5LMS
             this.lnkForgotPassword.Location = new System.Drawing.Point(438, 441);
             this.lnkForgotPassword.Margin = new System.Windows.Forms.Padding(5, 4, 5, 0);
             this.lnkForgotPassword.Name = "lnkForgotPassword";
-            this.lnkForgotPassword.Size = new System.Drawing.Size(133, 21);
+            this.lnkForgotPassword.Size = new System.Drawing.Size(113, 17);
             this.lnkForgotPassword.TabIndex = 15;
             this.lnkForgotPassword.TabStop = true;
             this.lnkForgotPassword.Text = "Forgot Password?";
@@ -169,6 +202,9 @@ namespace Project5LMS
             this.lnkForgotPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkForgotPassword_LinkClicked);
             this.lnkForgotPassword.MouseEnter += new System.EventHandler(this.lnkForgotPassword_MouseEnter);
             this.lnkForgotPassword.MouseLeave += new System.EventHandler(this.lnkForgotPassword_MouseLeave);
+            // 
+            // panelEmail
+            // 
             this.panelEmail.BackColor = System.Drawing.Color.White;
             this.panelEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelEmail.Controls.Add(this.txtUsername);
@@ -178,6 +214,9 @@ namespace Project5LMS
             this.panelEmail.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
             this.panelEmail.Size = new System.Drawing.Size(345, 40);
             this.panelEmail.TabIndex = 16;
+            // 
+            // panelPassword
+            // 
             this.panelPassword.BackColor = System.Drawing.Color.White;
             this.panelPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPassword.Controls.Add(this.lnkShowHidePassword);
@@ -188,7 +227,10 @@ namespace Project5LMS
             this.panelPassword.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
             this.panelPassword.Size = new System.Drawing.Size(345, 40);
             this.panelPassword.TabIndex = 17;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            // 
+            // LoginForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;

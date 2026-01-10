@@ -457,5 +457,10 @@ namespace Project5LMS.Forms.Member.Fines
                 );
             }
         }
+
+        private void panelMainContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

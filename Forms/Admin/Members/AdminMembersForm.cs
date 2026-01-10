@@ -667,5 +667,10 @@ namespace Project5LMS.Forms.Admin.Members
                 MessageBox.Show($"Error opening add member form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void dataGridViewMembers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
