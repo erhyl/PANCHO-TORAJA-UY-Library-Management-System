@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Project5LMS.Models;
 using Project5LMS.Repositories;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Services
 {
     public class DashboardService : IDashboardService
@@ -14,7 +13,6 @@ namespace Project5LMS.Services
         private readonly IMemberRepository _memberRepository;
         private readonly ITransactionRepository _transactionRepository;
         private readonly DatabaseContext _dbContext;
-
         public DashboardService(
             IBookRepository bookRepository,
             IMemberRepository memberRepository,
@@ -26,12 +24,10 @@ namespace Project5LMS.Services
             _transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public int GetTotalBooks()
         {
             return _bookRepository.GetAll().Count();
         }
-
         public int GetBooksAddedThisMonth()
         {
             try
@@ -50,22 +46,18 @@ namespace Project5LMS.Services
             }
             return 0;
         }
-
         public int GetActiveMembers()
         {
             return _memberRepository.GetAll().Count(m => m.IsActive);
         }
-
         public int GetActiveBorrowings()
         {
             return _transactionRepository.GetByStatus("Borrowed").Count();
         }
-
         public int GetOverdueBooks()
         {
             return _transactionRepository.GetOverdue().Count();
         }
-
         public decimal GetPendingFines()
         {
             var overdue = _transactionRepository.GetOverdue();
@@ -79,21 +71,18 @@ namespace Project5LMS.Services
             }
             return total;
         }
-
         public int GetMembersAddedThisWeek()
         {
             var startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
             return _memberRepository.GetAll()
                 .Count(m => m.RegistrationDate >= startOfWeek && m.RegistrationDate <= DateTime.Now);
         }
-
         public int GetBorrowedToday()
         {
             var today = DateTime.Today;
             return _transactionRepository.GetByStatus("Borrowed")
                 .Count(t => t.BorrowDate.Date == today);
         }
-
         public decimal GetFinesCollectedToday()
         {
             var today = DateTime.Today;
@@ -101,7 +90,6 @@ namespace Project5LMS.Services
                 .Where(t => t.ReturnDate.HasValue && t.ReturnDate.Value.Date == today && t.Fine.HasValue)
                 .Sum(t => t.Fine.Value);
         }
-
         public int GetTotalReservations()
         {
             try
@@ -116,7 +104,6 @@ namespace Project5LMS.Services
             catch { }
             return 0;
         }
-
         public int GetPendingReservations()
         {
             try
@@ -131,17 +118,14 @@ namespace Project5LMS.Services
             catch { }
             return 0;
         }
-
         public List<DashboardActivity> GetRecentActivities(int limit = 20)
         {
             var activities = new List<DashboardActivity>();
-
             try
             {
                 var recentBorrows = _transactionRepository.GetByStatus("Borrowed")
                     .OrderByDescending(t => t.BorrowDate)
                     .Take(limit / 4);
-
                 foreach (var transaction in recentBorrows)
                 {
                     var member = _memberRepository.GetById(transaction.MemberID);
@@ -156,12 +140,10 @@ namespace Project5LMS.Services
                         });
                     }
                 }
-
                 var recentReturns = _transactionRepository.GetByStatus("Returned")
                     .Where(t => t.ReturnDate.HasValue)
                     .OrderByDescending(t => t.ReturnDate)
                     .Take(limit / 4);
-
                 foreach (var transaction in recentReturns)
                 {
                     var member = _memberRepository.GetById(transaction.MemberID);
@@ -176,11 +158,9 @@ namespace Project5LMS.Services
                         });
                     }
                 }
-
                 var recentMembers = _memberRepository.GetAll()
                     .OrderByDescending(m => m.RegistrationDate)
                     .Take(limit / 4);
-
                 foreach (var member in recentMembers)
                 {
                     activities.Add(new DashboardActivity
@@ -190,12 +170,10 @@ namespace Project5LMS.Services
                         Timestamp = member.RegistrationDate
                     });
                 }
-
                 var recentFines = _transactionRepository.GetByStatus("Returned")
                     .Where(t => t.ReturnDate.HasValue && t.Fine.HasValue && t.Fine.Value > 0)
                     .OrderByDescending(t => t.ReturnDate)
                     .Take(limit / 4);
-
                 foreach (var transaction in recentFines)
                 {
                     var member = _memberRepository.GetById(transaction.MemberID);
@@ -214,26 +192,21 @@ namespace Project5LMS.Services
             {
                 System.Diagnostics.Debug.WriteLine($"Error getting recent activities: {ex.Message}");
             }
-
             return activities.OrderByDescending(a => a.Timestamp).Take(limit).ToList();
         }
-
         public Dictionary<string, int> GetWeeklyBorrowData()
         {
             var data = new Dictionary<string, int>();
             var days = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-            
             foreach (var day in days)
             {
                 data[day] = 0;
             }
-
             try
             {
                 var startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
                 var transactions = _transactionRepository.GetByStatus("Borrowed")
                     .Where(t => t.BorrowDate >= startOfWeek && t.BorrowDate <= DateTime.Now);
-
                 foreach (var transaction in transactions)
                 {
                     string dayName = transaction.BorrowDate.DayOfWeek.ToString().Substring(0, 3);
@@ -244,28 +217,23 @@ namespace Project5LMS.Services
                 }
             }
             catch { }
-
             return data;
         }
-
         public Dictionary<string, int> GetWeeklyReturnData()
         {
             var data = new Dictionary<string, int>();
             var days = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-            
             foreach (var day in days)
             {
                 data[day] = 0;
             }
-
             try
             {
                 var startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
                 var transactions = _transactionRepository.GetByStatus("Returned")
-                    .Where(t => t.ReturnDate.HasValue && 
-                               t.ReturnDate.Value >= startOfWeek && 
+                    .Where(t => t.ReturnDate.HasValue &&
+                               t.ReturnDate.Value >= startOfWeek &&
                                t.ReturnDate.Value <= DateTime.Now);
-
                 foreach (var transaction in transactions)
                 {
                     string dayName = transaction.ReturnDate.Value.DayOfWeek.ToString().Substring(0, 3);
@@ -276,10 +244,8 @@ namespace Project5LMS.Services
                 }
             }
             catch { }
-
             return data;
         }
-
         public Dictionary<string, int> GetCategoryDistribution()
         {
             var distribution = new Dictionary<string, int>();
@@ -302,18 +268,15 @@ namespace Project5LMS.Services
             catch { }
             return distribution.OrderByDescending(kvp => kvp.Value).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
-
         public Dictionary<string, int> GetMonthlyBorrowData(int months = 6)
         {
             var data = new Dictionary<string, int>();
             var monthNames = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-            
             try
             {
                 var startDate = DateTime.Now.AddMonths(-months);
                 var transactions = _transactionRepository.GetByStatus("Borrowed")
                     .Where(t => t.BorrowDate >= startDate && t.BorrowDate <= DateTime.Now);
-
                 foreach (var transaction in transactions)
                 {
                     string monthKey = $"{monthNames[transaction.BorrowDate.Month - 1]} {transaction.BorrowDate.Year}";
@@ -328,23 +291,19 @@ namespace Project5LMS.Services
                 }
             }
             catch { }
-
             return data;
         }
-
         public Dictionary<string, int> GetMonthlyReturnData(int months = 6)
         {
             var data = new Dictionary<string, int>();
             var monthNames = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-            
             try
             {
                 var startDate = DateTime.Now.AddMonths(-months);
                 var transactions = _transactionRepository.GetByStatus("Returned")
-                    .Where(t => t.ReturnDate.HasValue && 
-                               t.ReturnDate.Value >= startDate && 
+                    .Where(t => t.ReturnDate.HasValue &&
+                               t.ReturnDate.Value >= startDate &&
                                t.ReturnDate.Value <= DateTime.Now);
-
                 foreach (var transaction in transactions)
                 {
                     string monthKey = $"{monthNames[transaction.ReturnDate.Value.Month - 1]} {transaction.ReturnDate.Value.Year}";
@@ -359,10 +318,7 @@ namespace Project5LMS.Services
                 }
             }
             catch { }
-
             return data;
         }
     }
-
 }
-

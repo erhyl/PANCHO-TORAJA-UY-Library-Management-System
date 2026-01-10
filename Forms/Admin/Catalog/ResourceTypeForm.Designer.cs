@@ -1,16 +1,8 @@
-namespace Project5LMS.Forms.Admin.Catalog
+﻿namespace Project5LMS.Forms.Admin.Catalog
 {
     partial class ResourceTypeForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,13 +11,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.panelMain = new System.Windows.Forms.Panel();
@@ -44,9 +30,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelHeader.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMain
-            // 
             this.panelMain.Controls.Add(this.panelContent);
             this.panelMain.Controls.Add(this.panelButtons);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -55,9 +38,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMain.Padding = new System.Windows.Forms.Padding(20);
             this.panelMain.Size = new System.Drawing.Size(600, 400);
             this.panelMain.TabIndex = 0;
-            // 
-            // panelContent
-            // 
             this.panelContent.Controls.Add(this.panelFieldsContainer);
             this.panelContent.Controls.Add(this.lblInstructions);
             this.panelContent.Controls.Add(this.panelSeparator);
@@ -68,9 +48,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelContent.Padding = new System.Windows.Forms.Padding(15);
             this.panelContent.Size = new System.Drawing.Size(560, 300);
             this.panelContent.TabIndex = 1;
-            // 
-            // panelFieldsContainer
-            // 
             this.panelFieldsContainer.AutoScroll = true;
             this.panelFieldsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFieldsContainer.Location = new System.Drawing.Point(15, 95);
@@ -78,9 +55,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelFieldsContainer.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panelFieldsContainer.Size = new System.Drawing.Size(530, 190);
             this.panelFieldsContainer.TabIndex = 3;
-            // 
-            // lblInstructions
-            // 
             this.lblInstructions.AutoSize = true;
             this.lblInstructions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInstructions.ForeColor = System.Drawing.Color.Gray;
@@ -90,27 +64,18 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblInstructions.TabIndex = 2;
             this.lblInstructions.Text = "Enter the resource-specific details below. All fields marked with * are required." +
     "";
-            // 
-            // panelSeparator
-            // 
             this.panelSeparator.BackColor = System.Drawing.Color.Silver;
             this.panelSeparator.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSeparator.Location = new System.Drawing.Point(15, 55);
             this.panelSeparator.Name = "panelSeparator";
             this.panelSeparator.Size = new System.Drawing.Size(530, 1);
             this.panelSeparator.TabIndex = 1;
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblFormTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(15, 15);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(530, 40);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblFormTitle
-            // 
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -119,9 +84,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblFormTitle.Size = new System.Drawing.Size(209, 24);
             this.lblFormTitle.TabIndex = 0;
             this.lblFormTitle.Text = "Resource Information";
-            // 
-            // panelButtons
-            // 
             this.panelButtons.Controls.Add(this.btnCancel);
             this.panelButtons.Controls.Add(this.btnSave);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -129,9 +91,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(560, 60);
             this.panelButtons.TabIndex = 0;
-            // 
-            // btnCancel
-            // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -143,9 +102,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
-            // 
-            // btnSave
-            // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.BackColor = System.Drawing.Color.Maroon;
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -157,9 +113,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
-            // 
-            // ResourceTypeForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -179,9 +132,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelHeader.PerformLayout();
             this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-
         protected System.Windows.Forms.Panel panelMain;
         protected System.Windows.Forms.Panel panelContent;
         protected System.Windows.Forms.Panel panelHeader;
@@ -192,8 +143,6 @@ namespace Project5LMS.Forms.Admin.Catalog
         protected System.Windows.Forms.Panel panelButtons;
         protected System.Windows.Forms.Button btnSave;
         protected System.Windows.Forms.Button btnCancel;
-
         #endregion
     }
 }
-

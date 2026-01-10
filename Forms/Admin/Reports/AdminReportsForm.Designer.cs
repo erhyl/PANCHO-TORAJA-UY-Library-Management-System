@@ -2,15 +2,7 @@
 {
     partial class AdminReportsForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,13 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -49,9 +35,6 @@
             this.panelReportButtons.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelContent);
@@ -65,9 +48,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelContent
-            // 
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelContent.Controls.Add(this.lblContentPlaceholder);
@@ -78,11 +58,8 @@
             this.panelContent.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelContent.Size = new System.Drawing.Size(1536, 728);
             this.panelContent.TabIndex = 3;
-            // 
-            // lblContentPlaceholder
-            // 
-            this.lblContentPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblContentPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblContentPlaceholder.AutoSize = false;
             this.lblContentPlaceholder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -94,9 +71,6 @@
             this.lblContentPlaceholder.TabIndex = 0;
             this.lblContentPlaceholder.Text = "Report content will be displayed here.\r\nSelect a report category above to view statistics and data.";
             this.lblContentPlaceholder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panelDateFilter
-            // 
             this.panelDateFilter.Controls.Add(this.cmbDateRange);
             this.panelDateFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelDateFilter.Location = new System.Drawing.Point(32, 180);
@@ -104,9 +78,6 @@
             this.panelDateFilter.Name = "panelDateFilter";
             this.panelDateFilter.Size = new System.Drawing.Size(1536, 47);
             this.panelDateFilter.TabIndex = 1;
-            // 
-            // cmbDateRange
-            // 
             this.cmbDateRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDateRange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbDateRange.FormattingEnabled = true;
@@ -116,9 +87,6 @@
             this.cmbDateRange.Size = new System.Drawing.Size(200, 31);
             this.cmbDateRange.TabIndex = 0;
             this.cmbDateRange.SelectedIndexChanged += new System.EventHandler(this.cmbDateRange_SelectedIndexChanged);
-            // 
-            // panelReportButtons
-            // 
             this.panelReportButtons.Controls.Add(this.btnExportReport);
             this.panelReportButtons.Controls.Add(this.btnStatisticalReports);
             this.panelReportButtons.Controls.Add(this.btnFinancialReports);
@@ -131,9 +99,6 @@
             this.panelReportButtons.Name = "panelReportButtons";
             this.panelReportButtons.Size = new System.Drawing.Size(1536, 60);
             this.panelReportButtons.TabIndex = 2;
-            // 
-            // btnExportReport
-            // 
             this.btnExportReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExportReport.BackColor = System.Drawing.Color.Green;
             this.btnExportReport.FlatAppearance.BorderSize = 0;
@@ -145,12 +110,9 @@
             this.btnExportReport.Name = "btnExportReport";
             this.btnExportReport.Size = new System.Drawing.Size(208, 42);
             this.btnExportReport.TabIndex = 2;
-            this.btnExportReport.Text = "📥 Export Report";
+            this.btnExportReport.Text = "?? Export Report";
             this.btnExportReport.UseVisualStyleBackColor = false;
             this.btnExportReport.Click += new System.EventHandler(this.btnExportReport_Click);
-            // 
-            // btnStatisticalReports
-            // 
             this.btnStatisticalReports.BackColor = System.Drawing.Color.Maroon;
             this.btnStatisticalReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnStatisticalReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -161,12 +123,9 @@
             this.btnStatisticalReports.Name = "btnStatisticalReports";
             this.btnStatisticalReports.Size = new System.Drawing.Size(200, 60);
             this.btnStatisticalReports.TabIndex = 4;
-            this.btnStatisticalReports.Text = "📈 Statistical Reports";
+            this.btnStatisticalReports.Text = "?? Statistical Reports";
             this.btnStatisticalReports.UseVisualStyleBackColor = false;
             this.btnStatisticalReports.Click += new System.EventHandler(this.btnStatisticalReports_Click);
-            // 
-            // btnFinancialReports
-            // 
             this.btnFinancialReports.BackColor = System.Drawing.Color.Maroon;
             this.btnFinancialReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnFinancialReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -177,12 +136,9 @@
             this.btnFinancialReports.Name = "btnFinancialReports";
             this.btnFinancialReports.Size = new System.Drawing.Size(200, 60);
             this.btnFinancialReports.TabIndex = 3;
-            this.btnFinancialReports.Text = "💰 Financial Reports";
+            this.btnFinancialReports.Text = "?? Financial Reports";
             this.btnFinancialReports.UseVisualStyleBackColor = false;
             this.btnFinancialReports.Click += new System.EventHandler(this.btnFinancialReports_Click);
-            // 
-            // btnCollectionReports
-            // 
             this.btnCollectionReports.BackColor = System.Drawing.Color.Maroon;
             this.btnCollectionReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnCollectionReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -193,12 +149,9 @@
             this.btnCollectionReports.Name = "btnCollectionReports";
             this.btnCollectionReports.Size = new System.Drawing.Size(200, 60);
             this.btnCollectionReports.TabIndex = 2;
-            this.btnCollectionReports.Text = "📦 Collection Reports";
+            this.btnCollectionReports.Text = "?? Collection Reports";
             this.btnCollectionReports.UseVisualStyleBackColor = false;
             this.btnCollectionReports.Click += new System.EventHandler(this.btnCollectionReports_Click);
-            // 
-            // btnMemberReports
-            // 
             this.btnMemberReports.BackColor = System.Drawing.Color.Maroon;
             this.btnMemberReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnMemberReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -209,12 +162,9 @@
             this.btnMemberReports.Name = "btnMemberReports";
             this.btnMemberReports.Size = new System.Drawing.Size(200, 60);
             this.btnMemberReports.TabIndex = 1;
-            this.btnMemberReports.Text = "👥 Member Reports";
+            this.btnMemberReports.Text = "?? Member Reports";
             this.btnMemberReports.UseVisualStyleBackColor = false;
             this.btnMemberReports.Click += new System.EventHandler(this.btnMemberReports_Click);
-            // 
-            // btnCirculationReports
-            // 
             this.btnCirculationReports.BackColor = System.Drawing.Color.Maroon;
             this.btnCirculationReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
             this.btnCirculationReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -225,12 +175,9 @@
             this.btnCirculationReports.Name = "btnCirculationReports";
             this.btnCirculationReports.Size = new System.Drawing.Size(200, 60);
             this.btnCirculationReports.TabIndex = 0;
-            this.btnCirculationReports.Text = "📚 Circulation Reports";
+            this.btnCirculationReports.Text = "?? Circulation Reports";
             this.btnCirculationReports.UseVisualStyleBackColor = false;
             this.btnCirculationReports.Click += new System.EventHandler(this.btnCirculationReports_Click);
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -239,9 +186,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 90);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -252,9 +196,6 @@
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Generate and view library reports";
             this.lblSubtitle.Click += new System.EventHandler(this.lblSubtitle_Click);
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -264,9 +205,6 @@
             this.lblTitle.Size = new System.Drawing.Size(434, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Reports and Analytics";
-            // 
-            // AdminReportsForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -284,11 +222,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

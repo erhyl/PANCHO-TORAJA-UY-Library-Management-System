@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Project5LMS.Models;
-
 namespace Project5LMS.Interfaces
 {
     public interface IMembersService

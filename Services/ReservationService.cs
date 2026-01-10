@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
 using Project5LMS.Models;
 using MySql.Data.MySqlClient;
-
 namespace Project5LMS.Services
 {
     public class ReservationService : IReservationService
@@ -13,29 +12,24 @@ namespace Project5LMS.Services
         private readonly DatabaseContext _dbContext;
         private readonly IMembersService _membersService;
         private readonly IBookService _bookService;
-
         public ReservationService(DatabaseContext dbContext, IMembersService membersService, IBookService bookService)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _membersService = membersService ?? throw new ArgumentNullException(nameof(membersService));
             _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
         }
-
         public bool CreateReservation(int memberId, int bookId)
         {
             if (!CanReserve(memberId, bookId))
                 return false;
-
             try
             {
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    // Check for existing active reservation
-                    string checkQuery = @"SELECT COUNT(*) FROM Reservations 
-                                        WHERE MemberID = @MemberID 
-                                        AND BookID = @BookID 
+                    string checkQuery = @"SELECT COUNT(*) FROM Reservations
+                                        WHERE MemberID = @MemberID
+                                        AND BookID = @BookID
                                         AND Status IN ('Pending', 'Active', 'Ready')";
                     using (var checkCmd = new MySqlCommand(checkQuery, conn))
                     {
@@ -43,12 +37,10 @@ namespace Project5LMS.Services
                         checkCmd.Parameters.AddWithValue("@BookID", bookId);
                         int existing = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (existing > 0)
-                            return false; // Already reserved
+                            return false;
                     }
-
-                    // Get priority (position in queue)
-                    string priorityQuery = @"SELECT COUNT(*) FROM Reservations 
-                                            WHERE BookID = @BookID 
+                    string priorityQuery = @"SELECT COUNT(*) FROM Reservations
+                                            WHERE BookID = @BookID
                                             AND Status IN ('Pending', 'Active')";
                     int priority = 0;
                     using (var priorityCmd = new MySqlCommand(priorityQuery, conn))
@@ -56,13 +48,10 @@ namespace Project5LMS.Services
                         priorityCmd.Parameters.AddWithValue("@BookID", bookId);
                         priority = Convert.ToInt32(priorityCmd.ExecuteScalar());
                     }
-
                     var reservation = Reservation.Create(memberId, bookId, priority);
-
-                    string insertQuery = @"INSERT INTO Reservations 
+                    string insertQuery = @"INSERT INTO Reservations
                                           (MemberID, BookID, ReservationDate, PickupDate, ExpiryDate, Status, Priority)
                                           VALUES (@MemberID, @BookID, @ReservationDate, @PickupDate, @ExpiryDate, @Status, @Priority)";
-
                     using (var cmd = new MySqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@MemberID", reservation.MemberID);
@@ -72,7 +61,6 @@ namespace Project5LMS.Services
                         cmd.Parameters.AddWithValue("@ExpiryDate", reservation.ExpiryDate);
                         cmd.Parameters.AddWithValue("@Status", reservation.Status);
                         cmd.Parameters.AddWithValue("@Priority", reservation.Priority);
-
                         return cmd.ExecuteNonQuery() > 0;
                     }
                 }
@@ -83,7 +71,6 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public bool CancelReservation(int reservationId, string reason = null)
         {
             try
@@ -91,11 +78,10 @@ namespace Project5LMS.Services
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"UPDATE Reservations 
-                                    SET Status = 'Cancelled', 
+                    string query = @"UPDATE Reservations
+                                    SET Status = 'Cancelled',
                                         Notes = @Notes
                                     WHERE ReservationID = @ReservationID";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@ReservationID", reservationId);
@@ -110,7 +96,6 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public bool FulfillReservation(int reservationId)
         {
             try
@@ -118,11 +103,10 @@ namespace Project5LMS.Services
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"UPDATE Reservations 
-                                    SET Status = 'Ready', 
+                    string query = @"UPDATE Reservations
+                                    SET Status = 'Ready',
                                         FulfilledDate = @FulfilledDate
                                     WHERE ReservationID = @ReservationID";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@ReservationID", reservationId);
@@ -137,7 +121,6 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public bool MarkAsPickedUp(int reservationId)
         {
             try
@@ -145,11 +128,10 @@ namespace Project5LMS.Services
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"UPDATE Reservations 
-                                    SET Status = 'Fulfilled', 
+                    string query = @"UPDATE Reservations
+                                    SET Status = 'Fulfilled',
                                         FulfilledDate = @FulfilledDate
                                     WHERE ReservationID = @ReservationID";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@ReservationID", reservationId);
@@ -164,27 +146,22 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public IEnumerable<Reservation> GetMemberReservations(int memberId)
         {
             return GetReservations("WHERE r.MemberID = @MemberID", new { MemberID = memberId });
         }
-
         public IEnumerable<Reservation> GetBookReservations(int bookId)
         {
             return GetReservations("WHERE r.BookID = @BookID", new { BookID = bookId });
         }
-
         public IEnumerable<Reservation> GetPendingReservations()
         {
             return GetReservations("WHERE r.Status = 'Pending'", null);
         }
-
         public IEnumerable<Reservation> GetReadyReservations()
         {
             return GetReservations("WHERE r.Status = 'Ready'", null);
         }
-
         public bool CanReserve(int memberId, int bookId)
         {
             try
@@ -192,23 +169,16 @@ namespace Project5LMS.Services
                 var member = _membersService.GetMember(memberId);
                 if (member == null || !member.IsActive)
                     return false;
-
                 var privileges = MemberTypePrivileges.GetDefaultPrivileges(member.Type);
                 if (!privileges.CanReserve)
                     return false;
-
-                // Check reservation limit
                 int currentReservations = GetMemberReservations(memberId)
                     .Count(r => r.IsPending || r.IsActive || r.IsReady);
-
                 if (currentReservations >= privileges.ReservationLimit)
                     return false;
-
-                // Check if book exists
                 var book = _bookService.GetBook(bookId);
                 if (book == null || !book.IsAvailable)
                     return false;
-
                 return true;
             }
             catch
@@ -216,18 +186,15 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public Reservation GetReservation(int reservationId)
         {
             var reservations = GetReservations("WHERE r.ReservationID = @ReservationID", new { ReservationID = reservationId });
             return reservations.FirstOrDefault();
         }
-
         public bool HasActiveReservations(int bookId)
         {
             return GetBookReservations(bookId).Any(r => r.IsPending || r.IsActive || r.IsReady);
         }
-
         private IEnumerable<Reservation> GetReservations(string whereClause, object parameters)
         {
             List<Reservation> reservations = new List<Reservation>();
@@ -236,7 +203,7 @@ namespace Project5LMS.Services
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = $@"SELECT r.*, 
+                    string query = $@"SELECT r.*,
                                       CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
                                       b.Title as BookTitle,
                                       b.AccessionNo as AccessionNumber
@@ -245,7 +212,6 @@ namespace Project5LMS.Services
                                       INNER JOIN Books b ON r.BookID = b.BookID
                                       {whereClause}
                                       ORDER BY r.Priority ASC, r.ReservationDate ASC";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         if (parameters != null)
@@ -255,7 +221,6 @@ namespace Project5LMS.Services
                                 cmd.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(parameters));
                             }
                         }
-
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -272,7 +237,6 @@ namespace Project5LMS.Services
             }
             return reservations;
         }
-
         private Reservation MapReaderToReservation(MySqlDataReader reader)
         {
             return new Reservation
@@ -294,4 +258,3 @@ namespace Project5LMS.Services
         }
     }
 }
-

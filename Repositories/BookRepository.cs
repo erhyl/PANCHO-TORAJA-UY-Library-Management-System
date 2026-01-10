@@ -1,23 +1,19 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
 using Project5LMS.Data;
 using Project5LMS.Models;
 using Project5LMS.Helpers;
-
 namespace Project5LMS.Repositories
 {
-
     public class BookRepository : IBookRepository
     {
         private readonly DatabaseContext _dbContext;
-
         public BookRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public Book GetById(int bookId)
         {
             try
@@ -48,7 +44,6 @@ namespace Project5LMS.Repositories
             }
             return null;
         }
-
         public Book GetByAccessionNumber(string accessionNumber)
         {
             try
@@ -78,7 +73,6 @@ namespace Project5LMS.Repositories
             }
             return null;
         }
-
         public IEnumerable<Book> GetAll()
         {
             List<Book> books = new List<Book>();
@@ -86,7 +80,6 @@ namespace Project5LMS.Repositories
             {
                 string query = "SELECT * FROM Books ORDER BY Title";
                 DataTable dt = _dbContext.ExecuteQuery(query);
-
                 foreach (DataRow row in dt.Rows)
                 {
                     books.Add(MapDataRowToBook(row));
@@ -98,7 +91,6 @@ namespace Project5LMS.Repositories
             }
             return books;
         }
-
         public IEnumerable<Book> Search(string searchTerm)
         {
             List<Book> books = new List<Book>();
@@ -107,10 +99,10 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT * FROM Books 
-                                    WHERE Title LIKE @SearchTerm 
-                                    OR Author LIKE @SearchTerm 
-                                    OR ISBN LIKE @SearchTerm 
+                    string query = @"SELECT * FROM Books
+                                    WHERE Title LIKE @SearchTerm
+                                    OR Author LIKE @SearchTerm
+                                    OR ISBN LIKE @SearchTerm
                                     OR AccessionNo LIKE @SearchTerm
                                     LIMIT 100";
                     using (var cmd = new MySqlCommand(query, conn))
@@ -134,7 +126,6 @@ namespace Project5LMS.Repositories
             }
             return books;
         }
-
         public IEnumerable<Book> GetByCategory(string category)
         {
             List<Book> books = new List<Book>();
@@ -165,7 +156,6 @@ namespace Project5LMS.Repositories
             }
             return books;
         }
-
         public IEnumerable<Book> GetByAuthor(string author)
         {
             List<Book> books = new List<Book>();
@@ -196,7 +186,6 @@ namespace Project5LMS.Repositories
             }
             return books;
         }
-
         public IEnumerable<string> GetAllAuthors()
         {
             var authors = new List<string>();
@@ -224,7 +213,6 @@ namespace Project5LMS.Repositories
             }
             return authors;
         }
-
         public IEnumerable<string> GetAllPublishers()
         {
             var publishers = new List<string>();
@@ -252,7 +240,6 @@ namespace Project5LMS.Repositories
             }
             return publishers;
         }
-
         public bool Add(Book book)
         {
             try
@@ -260,11 +247,10 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"INSERT INTO Books (Title, Author, ISBN, Category, Publisher, PublicationYear, 
+                    string query = @"INSERT INTO Books (Title, Author, ISBN, Category, Publisher, PublicationYear,
                                     Language, TotalCopies, Available, Location, Status, AccessionNo, CallNumber, BookType)
-                                    VALUES (@Title, @Author, @ISBN, @Category, @Publisher, @PublicationYear, 
+                                    VALUES (@Title, @Author, @ISBN, @Category, @Publisher, @PublicationYear,
                                     @Language, @TotalCopies, @Available, @Location, @Status, @AccessionNo, @CallNumber, @BookType)";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         MapBookToParameters(cmd, book);
@@ -279,7 +265,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Update(Book book)
         {
             try
@@ -289,16 +274,14 @@ namespace Project5LMS.Repositories
                     System.Diagnostics.Debug.WriteLine("Error updating book: AccessionNo is required");
                     return false;
                 }
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"UPDATE Books SET Title=@Title, Author=@Author, ISBN=@ISBN, Category=@Category,
                                     Publisher=@Publisher, PublicationYear=@PublicationYear, Language=@Language,
-                                    TotalCopies=@TotalCopies, Available=@Available, Location=@Location, 
+                                    TotalCopies=@TotalCopies, Available=@Available, Location=@Location,
                                     Status=@Status, CallNumber=@CallNumber, BookType=@BookType
                                     WHERE AccessionNo=@AccessionNo";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         MapBookToParameters(cmd, book);
@@ -313,7 +296,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Delete(string accessionNumber)
         {
             try
@@ -323,7 +305,6 @@ namespace Project5LMS.Repositories
                     System.Diagnostics.Debug.WriteLine("Error deleting book: AccessionNo is required");
                     return false;
                 }
-
                 string query = "DELETE FROM Books WHERE AccessionNo = @AccessionNo";
                 using (var conn = _dbContext.GetConnection())
                 {
@@ -342,7 +323,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool UpdateAvailability(string accessionNumber, int change)
         {
             try
@@ -352,14 +332,12 @@ namespace Project5LMS.Repositories
                     System.Diagnostics.Debug.WriteLine("Error updating book availability: AccessionNo is required");
                     return false;
                 }
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"UPDATE Books 
+                    string query = @"UPDATE Books
                                     SET Available = GREATEST(0, LEAST(Available + @Change, TotalCopies))
                                     WHERE AccessionNo = @AccessionNo AND Available + @Change >= 0 AND Available + @Change <= TotalCopies";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@AccessionNo", accessionNumber);
@@ -375,7 +353,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public int GetAvailableCount(string accessionNumber)
         {
             try
@@ -384,7 +361,6 @@ namespace Project5LMS.Repositories
                 {
                     return 0;
                 }
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
@@ -406,7 +382,6 @@ namespace Project5LMS.Repositories
             }
             return 0;
         }
-
         public IEnumerable<Book> GetNewArrivals(int limit = 20, DateTime? startDate = null, DateTime? endDate = null)
         {
             List<Book> books = new List<Book>();
@@ -415,14 +390,11 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    
-                    // Default to last 30 days if no dates provided
                     if (!startDate.HasValue)
                         startDate = DateTime.Now.AddDays(-30);
                     if (!endDate.HasValue)
                         endDate = DateTime.Now;
-
-                    string query = @"SELECT * FROM Books 
+                    string query = @"SELECT * FROM Books
                                    WHERE (CreatedDate >= @StartDate AND CreatedDate <= @EndDate)
                                    OR (CreatedDate IS NULL AND BookID IN (
                                        SELECT BookID FROM Books ORDER BY BookID DESC LIMIT @Limit
@@ -452,7 +424,6 @@ namespace Project5LMS.Repositories
             }
             return books;
         }
-
         public IEnumerable<Book> GetPopularBooks(int limit = 20, bool weightedByRecency = false)
         {
             List<Book> books = new List<Book>();
@@ -461,22 +432,17 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    
                     string query;
                     if (weightedByRecency)
                     {
-                        // Weighted popularity: recent borrowings count more
-                        // Formula: SUM(CASE WHEN BorrowDate >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 3 
-                        //                  WHEN BorrowDate >= DATE_SUB(NOW(), INTERVAL 90 DAY) THEN 2 
-                        //                  ELSE 1 END) as PopularityScore
-                        query = @"SELECT b.*, 
-                                   SUM(CASE 
+                        query = @"SELECT b.*,
+                                   SUM(CASE
                                        WHEN t.BorrowDate >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 3
                                        WHEN t.BorrowDate >= DATE_SUB(NOW(), INTERVAL 90 DAY) THEN 2
                                        ELSE 1
                                    END) as PopularityScore
                                    FROM Books b
-                                   LEFT JOIN Transactions t ON b.BookID = t.BookID 
+                                   LEFT JOIN Transactions t ON b.BookID = t.BookID
                                        AND (t.Status = 'Borrowed' OR t.Status = 'Returned')
                                    GROUP BY b.BookID
                                    ORDER BY PopularityScore DESC, b.Title ASC
@@ -484,16 +450,14 @@ namespace Project5LMS.Repositories
                     }
                     else
                     {
-                        // Simple count-based popularity
                         query = @"SELECT b.*, COUNT(t.TransactionID) as BorrowCount
                                    FROM Books b
-                                   LEFT JOIN Transactions t ON b.BookID = t.BookID 
+                                   LEFT JOIN Transactions t ON b.BookID = t.BookID
                                        AND (t.Status = 'Borrowed' OR t.Status = 'Returned')
                                    GROUP BY b.BookID
                                    ORDER BY BorrowCount DESC, b.Title ASC
                                    LIMIT @Limit";
                     }
-                    
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Limit", limit);
@@ -515,7 +479,6 @@ namespace Project5LMS.Repositories
             }
             return books;
         }
-
         private Book MapDataRowToBook(DataRow row)
         {
             return new Book
@@ -535,7 +498,6 @@ namespace Project5LMS.Repositories
                 AccessionNo = row["AccessionNo"]?.ToString() ?? string.Empty
             };
         }
-
         private void MapBookToParameters(MySqlCommand cmd, Book book)
         {
             cmd.Parameters.AddWithValue("@Title", book.Title);

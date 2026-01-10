@@ -1,25 +1,21 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
-
 namespace Project5LMS.Controller
 {
     public class CatalogController
     {
         private string connStr = "server=localhost;user=root;password=;database=library_db;";
-
         public List<Book> GetAllBooks()
         {
             List<Book> books = new List<Book>();
-
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
                 string query = "SELECT * FROM Books";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
                     books.Add(new Book
@@ -38,11 +34,9 @@ namespace Project5LMS.Controller
                     });
                 }
             }
-
             return books;
         }
     }
-
     public class Book
     {
         public int BookID { get; set; }
@@ -58,4 +52,3 @@ namespace Project5LMS.Controller
         public string CoverImagePath { get; set; }
     }
 }
-

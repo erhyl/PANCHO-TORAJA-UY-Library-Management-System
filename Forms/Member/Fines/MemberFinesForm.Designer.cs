@@ -3,7 +3,6 @@
     partial class MemberFinesForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -47,9 +44,6 @@
             this.panelTotalOutstanding.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelFineRates);
@@ -64,9 +58,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelFineRates
-            // 
             this.panelFineRates.BackColor = System.Drawing.Color.White;
             this.panelFineRates.Controls.Add(this.lblFineRatesTitle);
             this.panelFineRates.Controls.Add(this.lblRate3);
@@ -78,9 +69,6 @@
             this.panelFineRates.Padding = new System.Windows.Forms.Padding(25, 20, 25, 20);
             this.panelFineRates.Size = new System.Drawing.Size(480, 200);
             this.panelFineRates.TabIndex = 4;
-            // 
-            // lblFineRatesTitle
-            // 
             this.lblFineRatesTitle.AutoSize = true;
             this.lblFineRatesTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFineRatesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -90,9 +78,6 @@
             this.lblFineRatesTitle.Size = new System.Drawing.Size(130, 32);
             this.lblFineRatesTitle.TabIndex = 0;
             this.lblFineRatesTitle.Text = "Fine Rates";
-            // 
-            // lblRate3
-            // 
             this.lblRate3.AutoSize = true;
             this.lblRate3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRate3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -102,9 +87,6 @@
             this.lblRate3.Size = new System.Drawing.Size(361, 25);
             this.lblRate3.TabIndex = 3;
             this.lblRate3.Text = "Damaged Books: Repair/replacement cost";
-            // 
-            // lblRate2
-            // 
             this.lblRate2.AutoSize = true;
             this.lblRate2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -114,9 +96,6 @@
             this.lblRate2.Size = new System.Drawing.Size(407, 25);
             this.lblRate2.TabIndex = 2;
             this.lblRate2.Text = "Lost Books: Replacement cost + P10 processing";
-            // 
-            // lblRate1
-            // 
             this.lblRate1.AutoSize = true;
             this.lblRate1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRate1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -126,9 +105,6 @@
             this.lblRate1.Size = new System.Drawing.Size(261, 25);
             this.lblRate1.TabIndex = 1;
             this.lblRate1.Text = "Overdue Books: P1.00 per day";
-            // 
-            // panelPaymentHistory
-            // 
             this.panelPaymentHistory.BackColor = System.Drawing.Color.White;
             this.panelPaymentHistory.Controls.Add(this.panelPaymentHistoryHeader);
             this.panelPaymentHistory.Controls.Add(this.panelPaymentHistoryList);
@@ -137,9 +113,6 @@
             this.panelPaymentHistory.Name = "panelPaymentHistory";
             this.panelPaymentHistory.Size = new System.Drawing.Size(750, 300);
             this.panelPaymentHistory.TabIndex = 3;
-            // 
-            // panelPaymentHistoryHeader
-            // 
             this.panelPaymentHistoryHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelPaymentHistoryHeader.Controls.Add(this.panelDollarIcon);
             this.panelPaymentHistoryHeader.Controls.Add(this.lblPaymentHistoryTitle);
@@ -149,9 +122,6 @@
             this.panelPaymentHistoryHeader.Name = "panelPaymentHistoryHeader";
             this.panelPaymentHistoryHeader.Size = new System.Drawing.Size(750, 50);
             this.panelPaymentHistoryHeader.TabIndex = 1;
-            // 
-            // panelDollarIcon
-            // 
             this.panelDollarIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelDollarIcon.Location = new System.Drawing.Point(20, 10);
             this.panelDollarIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -159,9 +129,6 @@
             this.panelDollarIcon.Size = new System.Drawing.Size(30, 30);
             this.panelDollarIcon.TabIndex = 1;
             this.panelDollarIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelDollarIcon_Paint);
-            // 
-            // lblPaymentHistoryTitle
-            // 
             this.lblPaymentHistoryTitle.AutoSize = true;
             this.lblPaymentHistoryTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPaymentHistoryTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -171,9 +138,6 @@
             this.lblPaymentHistoryTitle.Size = new System.Drawing.Size(226, 32);
             this.lblPaymentHistoryTitle.TabIndex = 0;
             this.lblPaymentHistoryTitle.Text = "P Payment History";
-            // 
-            // panelPaymentHistoryList
-            // 
             this.panelPaymentHistoryList.AutoScroll = true;
             this.panelPaymentHistoryList.BackColor = System.Drawing.Color.White;
             this.panelPaymentHistoryList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -183,9 +147,6 @@
             this.panelPaymentHistoryList.Padding = new System.Windows.Forms.Padding(20);
             this.panelPaymentHistoryList.Size = new System.Drawing.Size(750, 300);
             this.panelPaymentHistoryList.TabIndex = 0;
-            // 
-            // panelOutstandingFines
-            // 
             this.panelOutstandingFines.BackColor = System.Drawing.Color.White;
             this.panelOutstandingFines.Controls.Add(this.lblOutstandingFinesCount);
             this.panelOutstandingFines.Controls.Add(this.panelOutstandingFinesList);
@@ -194,9 +155,6 @@
             this.panelOutstandingFines.Name = "panelOutstandingFines";
             this.panelOutstandingFines.Size = new System.Drawing.Size(1240, 280);
             this.panelOutstandingFines.TabIndex = 2;
-            // 
-            // lblOutstandingFinesCount
-            // 
             this.lblOutstandingFinesCount.AutoSize = true;
             this.lblOutstandingFinesCount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOutstandingFinesCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -206,9 +164,6 @@
             this.lblOutstandingFinesCount.Size = new System.Drawing.Size(291, 37);
             this.lblOutstandingFinesCount.TabIndex = 1;
             this.lblOutstandingFinesCount.Text = "Outstanding Fines (0)";
-            // 
-            // panelOutstandingFinesList
-            // 
             this.panelOutstandingFinesList.AutoScroll = true;
             this.panelOutstandingFinesList.BackColor = System.Drawing.Color.White;
             this.panelOutstandingFinesList.Location = new System.Drawing.Point(20, 70);
@@ -216,9 +171,6 @@
             this.panelOutstandingFinesList.Name = "panelOutstandingFinesList";
             this.panelOutstandingFinesList.Size = new System.Drawing.Size(1200, 190);
             this.panelOutstandingFinesList.TabIndex = 0;
-            // 
-            // panelTotalOutstanding
-            // 
             this.panelTotalOutstanding.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelTotalOutstanding.Controls.Add(this.btnPayNow);
             this.panelTotalOutstanding.Controls.Add(this.lblTotalAmount);
@@ -230,9 +182,6 @@
             this.panelTotalOutstanding.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
             this.panelTotalOutstanding.Size = new System.Drawing.Size(1240, 130);
             this.panelTotalOutstanding.TabIndex = 1;
-            // 
-            // btnPayNow
-            // 
             this.btnPayNow.BackColor = System.Drawing.Color.Maroon;
             this.btnPayNow.FlatAppearance.BorderSize = 0;
             this.btnPayNow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -246,9 +195,6 @@
             this.btnPayNow.Text = "Pay Now";
             this.btnPayNow.UseVisualStyleBackColor = false;
             this.btnPayNow.Click += new System.EventHandler(this.btnPayNow_Click);
-            // 
-            // lblTotalAmount
-            // 
             this.lblTotalAmount.AutoSize = true;
             this.lblTotalAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(60)))));
@@ -258,9 +204,6 @@
             this.lblTotalAmount.Size = new System.Drawing.Size(128, 54);
             this.lblTotalAmount.TabIndex = 2;
             this.lblTotalAmount.Text = "P0.00";
-            // 
-            // panelExclamationIcon
-            // 
             this.panelExclamationIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelExclamationIcon.Location = new System.Drawing.Point(30, 50);
             this.panelExclamationIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -268,9 +211,6 @@
             this.panelExclamationIcon.Size = new System.Drawing.Size(40, 40);
             this.panelExclamationIcon.TabIndex = 1;
             this.panelExclamationIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelExclamationIcon_Paint);
-            // 
-            // lblTotalOutstandingLabel
-            // 
             this.lblTotalOutstandingLabel.AutoSize = true;
             this.lblTotalOutstandingLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalOutstandingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -280,9 +220,6 @@
             this.lblTotalOutstandingLabel.Size = new System.Drawing.Size(266, 32);
             this.lblTotalOutstandingLabel.TabIndex = 0;
             this.lblTotalOutstandingLabel.Text = "Total Outstanding Fines";
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(40, 30);
@@ -290,9 +227,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1240, 108);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -302,9 +236,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(540, 32);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "View your outstanding fines and payment history";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -314,9 +245,6 @@
             this.lblTitle.Size = new System.Drawing.Size(442, 62);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Fines and Penalties";
-            // 
-            // MemberFinesForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
@@ -341,11 +269,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

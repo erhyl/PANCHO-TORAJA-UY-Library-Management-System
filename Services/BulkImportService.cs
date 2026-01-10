@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -7,26 +7,17 @@ using Project5LMS.Data;
 using Project5LMS.Interfaces;
 using Project5LMS.Models;
 using MySql.Data.MySqlClient;
-
 namespace Project5LMS.Services
 {
-    /// <summary>
-    /// Service for bulk importing books from CSV/Excel files
-    /// </summary>
     public class BulkImportService
     {
         private readonly DatabaseContext _dbContext;
         private readonly IBookService _bookService;
-
         public BulkImportService(DatabaseContext dbContext, IBookService bookService)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
         }
-
-        /// <summary>
-        /// Import books from CSV or Excel file
-        /// </summary>
         public BulkImportResult ImportFromFile(string filePath, bool skipHeader = true)
         {
             string extension = System.IO.Path.GetExtension(filePath).ToLower();
@@ -39,37 +30,27 @@ namespace Project5LMS.Services
                 return ImportFromCSV(filePath, skipHeader);
             }
         }
-
-        /// <summary>
-        /// Import books from CSV file
-        /// </summary>
         public BulkImportResult ImportFromCSV(string filePath, bool skipHeader = true)
         {
             var result = new BulkImportResult();
-
             try
             {
                 var books = ParseCSV(filePath, skipHeader);
                 result.TotalRecords = books.Count;
-
                 foreach (var book in books)
                 {
                     try
                     {
                         if (ValidateBook(book))
                         {
-                            // Generate accession number if not provided
                             if (string.IsNullOrWhiteSpace(book.AccessionNo))
                             {
                                 book.AccessionNo = GenerateAccessionNumber();
                             }
-
-                            // Generate barcode if not provided
                             if (string.IsNullOrWhiteSpace(book.Barcode))
                             {
                                 book.Barcode = Helpers.BarcodeGenerator.GenerateFromAccession(book.AccessionNo);
                             }
-
                             if (_bookService.AddBook(book))
                             {
                                 result.SuccessCount++;
@@ -97,30 +78,21 @@ namespace Project5LMS.Services
             {
                 result.Errors.Add($"Error reading CSV file: {ex.Message}");
             }
-
             return result;
         }
-
-        /// <summary>
-        /// Parse CSV file into Book objects
-        /// </summary>
         private List<Book> ParseCSV(string filePath, bool skipHeader)
         {
             var books = new List<Book>();
             var lines = File.ReadAllLines(filePath);
-
             int startIndex = skipHeader ? 1 : 0;
-
             for (int i = startIndex; i < lines.Length; i++)
             {
                 var line = lines[i].Trim();
                 if (string.IsNullOrEmpty(line))
                     continue;
-
                 var fields = ParseCSVLine(line);
-                if (fields.Count < 3) // Minimum: Title, Author, ISBN
+                if (fields.Count < 3)
                     continue;
-
                 var book = new Book
                 {
                     Title = GetField(fields, 0, "Title"),
@@ -143,19 +115,15 @@ namespace Project5LMS.Services
                     Available = ParseInt(GetField(fields, 16, "1")),
                     Status = "Available"
                 };
-
                 books.Add(book);
             }
-
             return books;
         }
-
         private List<string> ParseCSVLine(string line)
         {
             var fields = new List<string>();
             bool inQuotes = false;
             string currentField = "";
-
             foreach (char c in line)
             {
                 if (c == '"')
@@ -173,29 +141,24 @@ namespace Project5LMS.Services
                 }
             }
             fields.Add(currentField.Trim());
-
             return fields;
         }
-
         private string GetField(List<string> fields, int index, string defaultValue)
         {
-            return index < fields.Count && !string.IsNullOrWhiteSpace(fields[index]) 
-                ? fields[index] 
+            return index < fields.Count && !string.IsNullOrWhiteSpace(fields[index])
+                ? fields[index]
                 : defaultValue;
         }
-
         private int ParseInt(string value, int defaultValue = 0)
         {
             return int.TryParse(value, out int result) ? result : defaultValue;
         }
-
         private bool ValidateBook(Book book)
         {
             return !string.IsNullOrWhiteSpace(book.Title) &&
                    !string.IsNullOrWhiteSpace(book.Author) &&
                    book.TotalCopies > 0;
         }
-
         private string GenerateAccessionNumber()
         {
             try
@@ -217,32 +180,21 @@ namespace Project5LMS.Services
                 return $"ACC-{DateTime.Now:yyyyMMddHHmmss}";
             }
         }
-
-        /// <summary>
-        /// Import books from Excel file (.xlsx, .xls)
-        /// Uses ClosedXML library for Excel reading
-        /// </summary>
         public BulkImportResult ImportFromExcel(string filePath, bool skipHeader = true)
         {
             var result = new BulkImportResult();
-
             try
             {
-                // Try to use ClosedXML if available
                 var closedXmlType = Type.GetType("ClosedXML.Excel.XLWorkbook, ClosedXML");
                 if (closedXmlType != null)
                 {
                     return ImportFromExcelWithClosedXML(filePath, skipHeader);
                 }
-
-                // Fallback: Try to use Microsoft.Office.Interop.Excel if available
                 var interopType = Type.GetType("Microsoft.Office.Interop.Excel.ApplicationClass, Microsoft.Office.Interop.Excel");
                 if (interopType != null)
                 {
                     return ImportFromExcelWithInterop(filePath, skipHeader);
                 }
-
-                // If neither library is available, convert Excel to CSV and import
                 result.Errors.Add("Excel import libraries not found. Please install ClosedXML NuGet package or use CSV format.");
                 result.Errors.Add("To install ClosedXML: Install-Package ClosedXML -Version 0.95.4");
             }
@@ -250,70 +202,51 @@ namespace Project5LMS.Services
             {
                 result.Errors.Add($"Error reading Excel file: {ex.Message}");
             }
-
             return result;
         }
-
-        /// <summary>
-        /// Import from Excel using ClosedXML library
-        /// </summary>
         private BulkImportResult ImportFromExcelWithClosedXML(string filePath, bool skipHeader)
         {
             var result = new BulkImportResult();
-
             try
             {
                 var workbookType = Type.GetType("ClosedXML.Excel.XLWorkbook, ClosedXML");
                 var worksheetType = Type.GetType("ClosedXML.Excel.IXLWorksheet, ClosedXML");
-                
                 if (workbookType == null || worksheetType == null)
                 {
                     result.Errors.Add("ClosedXML library not properly loaded.");
                     return result;
                 }
-
-                // Create workbook instance
                 var workbook = Activator.CreateInstance(workbookType, filePath);
                 var worksheetsProperty = workbookType.GetProperty("Worksheets");
                 var worksheets = worksheetsProperty.GetValue(workbook);
                 var firstMethod = worksheets.GetType().GetMethod("First");
                 var worksheet = firstMethod.Invoke(worksheets, null);
-
-                // Get used range
                 var usedRangeProperty = worksheetType.GetProperty("RangeUsed");
                 var usedRange = usedRangeProperty.GetValue(worksheet);
-
                 if (usedRange == null)
                 {
                     result.Errors.Add("Excel file is empty.");
                     return result;
                 }
-
-                // Get rows
                 var rowsProperty = usedRange.GetType().GetProperty("Rows");
                 var rows = rowsProperty.GetValue(usedRange);
                 var countProperty = rows.GetType().GetProperty("Count");
                 int rowCount = (int)countProperty.GetValue(rows);
-
                 int startRow = skipHeader ? 2 : 1;
-
                 for (int rowNum = startRow; rowNum <= rowCount; rowNum++)
                 {
                     try
                     {
                         var cellMethod = worksheetType.GetMethod("Cell", new[] { typeof(int), typeof(int) });
-                        var cell1 = cellMethod.Invoke(worksheet, new object[] { rowNum, 1 }); // Title
-                        var cell2 = cellMethod.Invoke(worksheet, new object[] { rowNum, 2 }); // Author
-                        var cell3 = cellMethod.Invoke(worksheet, new object[] { rowNum, 3 }); // ISBN
-
+                        var cell1 = cellMethod.Invoke(worksheet, new object[] { rowNum, 1 });
+                        var cell2 = cellMethod.Invoke(worksheet, new object[] { rowNum, 2 });
+                        var cell3 = cellMethod.Invoke(worksheet, new object[] { rowNum, 3 });
                         var valueProperty = cell1.GetType().GetProperty("Value");
                         string title = valueProperty.GetValue(cell1)?.ToString() ?? "";
                         string author = valueProperty.GetValue(cell2)?.ToString() ?? "";
                         string isbn = valueProperty.GetValue(cell3)?.ToString() ?? "";
-
                         if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(author))
                             continue;
-
                         var book = new Book
                         {
                             Title = title,
@@ -336,21 +269,17 @@ namespace Project5LMS.Services
                             Available = ParseInt(GetExcelCellValue(worksheet, worksheetType, rowNum, 17)),
                             Status = "Available"
                         };
-
                         result.TotalRecords++;
-
                         if (ValidateBook(book))
                         {
                             if (string.IsNullOrWhiteSpace(book.AccessionNo))
                             {
                                 book.AccessionNo = GenerateAccessionNumber();
                             }
-
                             if (string.IsNullOrWhiteSpace(book.Barcode))
                             {
                                 book.Barcode = Helpers.BarcodeGenerator.GenerateFromAccession(book.AccessionNo);
                             }
-
                             if (_bookService.AddBook(book))
                             {
                                 result.SuccessCount++;
@@ -373,8 +302,6 @@ namespace Project5LMS.Services
                         result.Errors.Add($"Error importing row {rowNum}: {ex.Message}");
                     }
                 }
-
-                // Dispose workbook
                 var disposeMethod = workbookType.GetMethod("Dispose");
                 disposeMethod?.Invoke(workbook, null);
             }
@@ -382,10 +309,8 @@ namespace Project5LMS.Services
             {
                 result.Errors.Add($"Error reading Excel file with ClosedXML: {ex.Message}");
             }
-
             return result;
         }
-
         private string GetExcelCellValue(object worksheet, Type worksheetType, int row, int col)
         {
             try
@@ -400,10 +325,6 @@ namespace Project5LMS.Services
                 return "";
             }
         }
-
-        /// <summary>
-        /// Import from Excel using Microsoft.Office.Interop.Excel (fallback)
-        /// </summary>
         private BulkImportResult ImportFromExcelWithInterop(string filePath, bool skipHeader)
         {
             var result = new BulkImportResult();
@@ -411,19 +332,13 @@ namespace Project5LMS.Services
             return result;
         }
     }
-
-    /// <summary>
-    /// Result of bulk import operation
-    /// </summary>
     public class BulkImportResult
     {
         public int TotalRecords { get; set; }
         public int SuccessCount { get; set; }
         public int FailedCount { get; set; }
         public List<string> Errors { get; set; } = new List<string>();
-
         public bool HasErrors => Errors.Count > 0;
         public double SuccessRate => TotalRecords > 0 ? (SuccessCount * 100.0 / TotalRecords) : 0;
     }
 }
-

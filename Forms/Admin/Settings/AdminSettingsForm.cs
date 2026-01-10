@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,7 +8,6 @@ using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.UserManagement;
-
 namespace Project5LMS.Forms.Admin.Settings
 {
     public partial class AdminSettingsForm : Form
@@ -16,12 +15,10 @@ namespace Project5LMS.Forms.Admin.Settings
         private readonly ISettingsService _settingsService;
         private readonly IUserService _userService;
         private readonly DatabaseContext _dbContext;
-
         public AdminSettingsForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
-
             try
             {
                 AccessControlHelper.RequireRole("Admin");
@@ -34,11 +31,9 @@ namespace Project5LMS.Forms.Admin.Settings
                 this.Close();
                 return;
             }
-
             _settingsService = ServiceFactory.CreateSettingsService();
             _userService = ServiceFactory.CreateUserService();
         }
-
         private void AdminSettingsForm_Load(object sender, EventArgs e)
         {
             try
@@ -52,7 +47,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error in AdminSettingsForm_Load: {ex.Message}");
             }
         }
-
         private void tabControlSettings_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -66,7 +60,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error in tabControlSettings_SelectedIndexChanged: {ex.Message}");
             }
         }
-
         private string GetSectionFromIndex(int index)
         {
             switch (index)
@@ -81,7 +74,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 default: return "General";
             }
         }
-
         private void EnsureSettingsTableExists()
         {
             try
@@ -93,7 +85,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error ensuring settings table: {ex.Message}");
             }
         }
-
         private void LoadSection(string section)
         {
             try
@@ -136,27 +127,20 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error in LoadSection: {ex.Message}");
             }
         }
-
         private void LoadFineRatesSection()
         {
             try
             {
-
                 string studentRate = GetSetting("FineRate_Student", "1.00");
                 txtStudentFineRate.Text = studentRate.StartsWith("$") ? studentRate : "$ " + studentRate;
-
                 string facultyRate = GetSetting("FineRate_Faculty", "0.50");
                 txtFacultyFineRate.Text = facultyRate.StartsWith("$") ? facultyRate : "$ " + facultyRate;
-
                 string staffRate = GetSetting("FineRate_Staff", "0.75");
                 txtStaffFineRate.Text = staffRate.StartsWith("$") ? staffRate : "$ " + staffRate;
-
                 string guestRate = GetSetting("FineRate_Guest", "1.50");
                 txtGuestFineRate.Text = guestRate.StartsWith("$") ? guestRate : "$ " + guestRate;
-
                 string lostCard = GetSetting("LostCardReplacement", "10.00");
                 txtLostCardReplacement.Text = lostCard.StartsWith("$") ? lostCard : "$ " + lostCard;
-
                 string maxFine = GetSetting("MaxFineCap", "50.00");
                 txtMaxFineCap.Text = maxFine.StartsWith("$") ? maxFine : "$ " + maxFine;
             }
@@ -165,7 +149,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading fine rates settings: {ex.Message}");
             }
         }
-
         private void btnSaveFineRates_Click(object sender, EventArgs e)
         {
             try
@@ -177,7 +160,6 @@ namespace Project5LMS.Forms.Admin.Settings
                     { "Staff", txtStaffFineRate },
                     { "Guest", txtGuestFineRate }
                 };
-
                 SaveFineRates(fineRateBoxes, txtLostCardReplacement, txtMaxFineCap);
             }
             catch (Exception ex)
@@ -185,12 +167,10 @@ namespace Project5LMS.Forms.Admin.Settings
                 MessageBox.Show($"Error saving fine rates: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LoadUserManagementSection()
         {
             try
             {
-
                 int staffCount = GetStaffCount();
                 lblStaffStatus.Text = $"{staffCount} Users";
             }
@@ -199,26 +179,21 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading user management section: {ex.Message}");
             }
         }
-
         private void lnkAdminManage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             NavigateToUserManagement();
         }
-
         private void lnkStaffManage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             NavigateToUserManagement();
         }
-
         private void LoadNotificationsSection()
         {
             try
             {
-
                 chkOverdueReminders.Checked = GetSetting("OverdueReminders", "true").ToLower() == "true";
                 chkReservationNotifications.Checked = GetSetting("ReservationNotifications", "true").ToLower() == "true";
                 chkNewArrivals.Checked = GetSetting("NewArrivals", "false").ToLower() == "true";
-
                 UpdateNotificationButtons(chkOverdueReminders, btnTurnOnOverdueReminders, btnTurnOffOverdueReminders);
                 UpdateNotificationButtons(chkReservationNotifications, btnTurnOnReservationNotifications, btnTurnOffReservationNotifications);
                 UpdateNotificationButtons(chkNewArrivals, btnTurnOnNewArrivals, btnTurnOffNewArrivals);
@@ -228,14 +203,12 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading notifications section: {ex.Message}");
             }
         }
-
         private void UpdateNotificationButtons(CheckBox chk, Button btnTurnOn, Button btnTurnOff)
         {
             UpdateToggleSwitchAppearance(chk);
             btnTurnOn.Visible = !chk.Checked;
             btnTurnOff.Visible = chk.Checked;
         }
-
         private void UpdateToggleSwitchAppearance(CheckBox chk)
         {
             if (chk.Checked)
@@ -247,7 +220,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 chk.BackColor = Color.FromArgb(200, 200, 200);
             }
         }
-
         private void chkOverdueReminders_CheckedChanged(object sender, EventArgs e)
         {
             try
@@ -260,7 +232,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error saving overdue reminders setting: {ex.Message}");
             }
         }
-
         private void chkReservationNotifications_CheckedChanged(object sender, EventArgs e)
         {
             try
@@ -273,7 +244,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error saving reservation notifications setting: {ex.Message}");
             }
         }
-
         private void chkNewArrivals_CheckedChanged(object sender, EventArgs e)
         {
             try
@@ -286,7 +256,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error saving new arrivals setting: {ex.Message}");
             }
         }
-
         private void btnTurnOnOverdueReminders_Click(object sender, EventArgs e)
         {
             try
@@ -298,7 +267,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error turning on overdue reminders: {ex.Message}");
             }
         }
-
         private void btnTurnOffOverdueReminders_Click(object sender, EventArgs e)
         {
             try
@@ -310,7 +278,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error turning off overdue reminders: {ex.Message}");
             }
         }
-
         private void btnTurnOnReservationNotifications_Click(object sender, EventArgs e)
         {
             try
@@ -322,7 +289,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error turning on reservation notifications: {ex.Message}");
             }
         }
-
         private void btnTurnOffReservationNotifications_Click(object sender, EventArgs e)
         {
             try
@@ -334,7 +300,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error turning off reservation notifications: {ex.Message}");
             }
         }
-
         private void btnTurnOnNewArrivals_Click(object sender, EventArgs e)
         {
             try
@@ -346,7 +311,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error turning on new arrivals: {ex.Message}");
             }
         }
-
         private void btnTurnOffNewArrivals_Click(object sender, EventArgs e)
         {
             try
@@ -358,12 +322,10 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error turning off new arrivals: {ex.Message}");
             }
         }
-
         private void LoadSecuritySection()
         {
             try
             {
-
                 txtCurrentPassword.Text = "";
                 txtNewPassword.Text = "";
                 txtConfirmPassword.Text = "";
@@ -373,7 +335,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading security section: {ex.Message}");
             }
         }
-
         private void btnUpdatePassword_Click(object sender, EventArgs e)
         {
             try
@@ -385,22 +346,17 @@ namespace Project5LMS.Forms.Admin.Settings
                 MessageBox.Show($"Error updating password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LoadSystemSection()
         {
             try
             {
-
                 lblSystemVersionValue.Text = "v2.5.1";
-
                 bool isConnected = TestDatabaseConnection();
                 string dbStatus = isConnected ? "Connected" : "Disconnected";
                 lblDatabaseStatusValue.Text = dbStatus;
                 lblDatabaseStatusValue.BackColor = isConnected ? Color.FromArgb(40, 167, 69) : Color.FromArgb(220, 53, 69);
-
                 string lastBackup = GetSetting("LastBackup", DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd hh:mm tt"));
                 lblLastBackupValue.Text = lastBackup;
-
                 lblStorageUsedValue.Text = "245 GB / 500 GB";
             }
             catch (Exception ex)
@@ -408,7 +364,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading system section: {ex.Message}");
             }
         }
-
         private void LoadLibraryRulesSettings()
         {
             try
@@ -417,12 +372,10 @@ namespace Project5LMS.Forms.Admin.Settings
                 txtFacultyLimit.Text = GetSetting("BorrowLimit_Faculty", "10");
                 txtStaffLimit.Text = GetSetting("BorrowLimit_Staff", "7");
                 txtGuestLimit.Text = GetSetting("BorrowLimit_Guest", "3");
-
                 txtStudentPeriod.Text = GetSetting("BorrowPeriod_Student", "14");
                 txtFacultyPeriod.Text = GetSetting("BorrowPeriod_Faculty", "30");
                 txtStaffPeriod.Text = GetSetting("BorrowPeriod_Staff", "21");
                 txtGuestPeriod.Text = GetSetting("BorrowPeriod_Guest", "7");
-
                 txtMaxRenewals.Text = GetSetting("MaxRenewals", "2");
             }
             catch (Exception ex)
@@ -430,7 +383,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading library rules settings: {ex.Message}");
             }
         }
-
         private void btnSaveLibraryRules_Click(object sender, EventArgs e)
         {
             try
@@ -442,7 +394,6 @@ namespace Project5LMS.Forms.Admin.Settings
                     { "Staff", txtStaffLimit },
                     { "Guest", txtGuestLimit }
                 };
-
                 Dictionary<string, TextBox> borrowingPeriods = new Dictionary<string, TextBox>
                 {
                     { "Student", txtStudentPeriod },
@@ -450,7 +401,6 @@ namespace Project5LMS.Forms.Admin.Settings
                     { "Staff", txtStaffPeriod },
                     { "Guest", txtGuestPeriod }
                 };
-
                 SaveLibraryRules(borrowingLimits, borrowingPeriods, txtMaxRenewals);
             }
             catch (Exception ex)
@@ -458,7 +408,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 MessageBox.Show($"Error saving library rules: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LoadGeneralSettings()
         {
             try
@@ -474,22 +423,18 @@ namespace Project5LMS.Forms.Admin.Settings
                 System.Diagnostics.Debug.WriteLine($"Error loading general settings: {ex.Message}");
             }
         }
-
         private void btnSaveGeneral_Click(object sender, EventArgs e)
         {
             SaveGeneralSettings(txtLibraryName, txtLibraryCode, txtAddress, txtContactEmail, txtPhoneNumber);
         }
-
         private string GetSetting(string key, string defaultValue = "")
         {
             return _settingsService.GetSetting(key, defaultValue);
         }
-
         private void SaveSetting(string key, string value, string category = "General")
         {
             _settingsService.SaveSetting(key, value, category);
         }
-
         private void SaveGeneralSettings(TextBox txtLibraryName, TextBox txtLibraryCode, TextBox txtAddress, TextBox txtEmail, TextBox txtPhone)
         {
             SaveSetting("LibraryName", txtLibraryName.Text, "General");
@@ -499,7 +444,6 @@ namespace Project5LMS.Forms.Admin.Settings
             SaveSetting("PhoneNumber", txtPhone.Text, "General");
             MessageBox.Show("General settings saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void SaveLibraryRules(Dictionary<string, TextBox> borrowingLimits, Dictionary<string, TextBox> borrowingPeriods, TextBox txtMaxRenewals)
         {
             foreach (var kvp in borrowingLimits)
@@ -513,21 +457,17 @@ namespace Project5LMS.Forms.Admin.Settings
             SaveSetting("MaxRenewals", txtMaxRenewals.Text, "LibraryRules");
             MessageBox.Show("Library rules saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void SaveFineRates(Dictionary<string, TextBox> fineRates, TextBox txtLostCard, TextBox txtMaxFine)
         {
             try
             {
                 foreach (var kvp in fineRates)
                 {
-
                     string value = kvp.Value.Text.Replace("$ ", "").Trim();
                     SaveSetting($"FineRate_{kvp.Key}", value, "FineRates");
                 }
-
                 string lostCardValue = txtLostCard.Text.Replace("$ ", "").Trim();
                 string maxFineValue = txtMaxFine.Text.Replace("$ ", "").Trim();
-
                 SaveSetting("LostCardReplacement", lostCardValue, "FineRates");
                 SaveSetting("MaxFineCap", maxFineValue, "FineRates");
                 MessageBox.Show("Fine rates saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -537,7 +477,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 MessageBox.Show($"Error saving fine rates: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void UpdatePassword(TextBox txtCurrent, TextBox txtNew, TextBox txtConfirm)
         {
             if (string.IsNullOrWhiteSpace(txtCurrent.Text) || string.IsNullOrWhiteSpace(txtNew.Text) || string.IsNullOrWhiteSpace(txtConfirm.Text))
@@ -545,13 +484,11 @@ namespace Project5LMS.Forms.Admin.Settings
                 MessageBox.Show("Please fill in all password fields.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (txtNew.Text != txtConfirm.Text)
             {
                 MessageBox.Show("New password and confirmation do not match.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             try
             {
                 using (var conn = _dbContext.GetConnection())
@@ -565,13 +502,11 @@ namespace Project5LMS.Forms.Admin.Settings
                         object result = cmd.ExecuteScalar();
                         if (result != null) currentHash = result.ToString();
                     }
-
                     if (!PasswordHasher.Verify(txtCurrent.Text, currentHash))
                     {
                         MessageBox.Show("Current password is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-
                     string newHash = PasswordHasher.HashPassword(txtNew.Text);
                     string updateQuery = "UPDATE Users SET PasswordHash = @Hash WHERE UserID = @UserID";
                     using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
@@ -580,7 +515,6 @@ namespace Project5LMS.Forms.Admin.Settings
                         cmd.Parameters.AddWithValue("@UserID", CurrentUser.UserID);
                         cmd.ExecuteNonQuery();
                     }
-
                     MessageBox.Show("Password updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtCurrent.Clear();
                     txtNew.Clear();
@@ -592,7 +526,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 MessageBox.Show($"Error updating password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private int GetStaffCount()
         {
             try
@@ -608,12 +541,10 @@ namespace Project5LMS.Forms.Admin.Settings
             catch { }
             return 0;
         }
-
         private bool TestDatabaseConnection()
         {
             return DatabaseHelper.TestConnection(out _);
         }
-
         private void NavigateToUserManagement()
         {
             try
@@ -623,7 +554,6 @@ namespace Project5LMS.Forms.Admin.Settings
                 {
                     parent = parent.Parent;
                 }
-
                 if (parent is Form mainForm)
                 {
                     var method = mainForm.GetType().GetMethod("LoadFormInPanel");

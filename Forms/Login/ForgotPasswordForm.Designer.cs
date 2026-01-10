@@ -1,16 +1,8 @@
-namespace Project5LMS
+﻿namespace Project5LMS
 {
     partial class ForgotPasswordForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,13 +11,7 @@ namespace Project5LMS
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.panelMain = new System.Windows.Forms.Panel();
@@ -42,9 +28,6 @@ namespace Project5LMS
             this.panelContent.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMain
-            // 
             this.panelMain.BackColor = System.Drawing.Color.White;
             this.panelMain.Controls.Add(this.panelContent);
             this.panelMain.Controls.Add(this.panelHeader);
@@ -53,9 +36,6 @@ namespace Project5LMS
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(487, 286);
             this.panelMain.TabIndex = 0;
-            // 
-            // panelContent
-            // 
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.Controls.Add(this.btnResetPassword);
             this.panelContent.Controls.Add(this.btnCancel);
@@ -69,9 +49,6 @@ namespace Project5LMS
             this.panelContent.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.panelContent.Size = new System.Drawing.Size(487, 226);
             this.panelContent.TabIndex = 1;
-            // 
-            // btnResetPassword
-            // 
             this.btnResetPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnResetPassword.BackColor = System.Drawing.Color.Maroon;
             this.btnResetPassword.FlatAppearance.BorderSize = 0;
@@ -86,9 +63,6 @@ namespace Project5LMS
             this.btnResetPassword.Text = "Reset Password";
             this.btnResetPassword.UseVisualStyleBackColor = false;
             this.btnResetPassword.Click += new System.EventHandler(this.btnResetPassword_Click);
-            // 
-            // btnCancel
-            // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -103,9 +77,6 @@ namespace Project5LMS
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // txtEmail
-            // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmail.Location = new System.Drawing.Point(23, 78);
@@ -116,9 +87,6 @@ namespace Project5LMS
             this.txtEmail.Enter += new System.EventHandler(this.txtEmail_Enter);
             this.txtEmail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEmail_KeyDown);
             this.txtEmail.Leave += new System.EventHandler(this.txtEmail_Leave);
-            // 
-            // lblEmail
-            // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -128,9 +96,6 @@ namespace Project5LMS
             this.lblEmail.Size = new System.Drawing.Size(51, 23);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Email";
-            // 
-            // lblDescription
-            // 
             this.lblDescription.AutoSize = true;
             this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescription.ForeColor = System.Drawing.Color.Black;
@@ -140,9 +105,6 @@ namespace Project5LMS
             this.lblDescription.Size = new System.Drawing.Size(374, 20);
             this.lblDescription.TabIndex = 0;
             this.lblDescription.Text = "Enter your email address and we\'ll reset your password.";
-            // 
-            // panelHeader
-            // 
             this.panelHeader.BackColor = System.Drawing.Color.White;
             this.panelHeader.Controls.Add(this.btnClose);
             this.panelHeader.Controls.Add(this.lblTitle);
@@ -152,9 +114,6 @@ namespace Project5LMS
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(487, 60);
             this.panelHeader.TabIndex = 0;
-            // 
-            // btnClose
-            // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.FlatAppearance.BorderSize = 0;
@@ -169,9 +128,6 @@ namespace Project5LMS
             this.btnClose.Text = "×";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -181,9 +137,6 @@ namespace Project5LMS
             this.lblTitle.Size = new System.Drawing.Size(233, 37);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Forgot Password";
-            // 
-            // ForgotPasswordForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -203,11 +156,8 @@ namespace Project5LMS
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;
@@ -220,4 +170,3 @@ namespace Project5LMS
         private System.Windows.Forms.Button btnResetPassword;
     }
 }
-

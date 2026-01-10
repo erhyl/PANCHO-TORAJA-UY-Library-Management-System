@@ -3,7 +3,6 @@
     partial class StaffInventoryForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -91,9 +88,6 @@
             this.panelInventoryManagement.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelMainContainer.Controls.Add(this.panelInventoryTable);
@@ -110,9 +104,6 @@
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
             this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
-            // 
-            // panelInventoryTable
-            // 
             this.panelInventoryTable.Controls.Add(this.dataGridViewInventory);
             this.panelInventoryTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelInventoryTable.Location = new System.Drawing.Point(32, 558);
@@ -121,9 +112,6 @@
             this.panelInventoryTable.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.panelInventoryTable.Size = new System.Drawing.Size(1536, 397);
             this.panelInventoryTable.TabIndex = 5;
-            // 
-            // dataGridViewInventory
-            // 
             this.dataGridViewInventory.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewInventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -172,103 +160,67 @@
             this.dataGridViewInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewInventory.Size = new System.Drawing.Size(1536, 377);
             this.dataGridViewInventory.TabIndex = 0;
-            // 
-            // colBookID
-            // 
             this.colBookID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colBookID.DataPropertyName = "BookID";
             this.colBookID.HeaderText = "Book ID";
             this.colBookID.MinimumWidth = 6;
             this.colBookID.Name = "colBookID";
-            // 
-            // colTitle
-            // 
             this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTitle.DataPropertyName = "Title";
             this.colTitle.HeaderText = "Title";
             this.colTitle.MinimumWidth = 250;
             this.colTitle.Name = "colTitle";
-            // 
-            // colCategory
-            // 
             this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCategory.DataPropertyName = "Category";
             this.colCategory.HeaderText = "Category";
             this.colCategory.MinimumWidth = 6;
             this.colCategory.Name = "colCategory";
             this.colCategory.Width = 120;
-            // 
-            // colLocation
-            // 
             this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLocation.DataPropertyName = "Location";
             this.colLocation.HeaderText = "Location";
             this.colLocation.MinimumWidth = 6;
             this.colLocation.Name = "colLocation";
-            // 
-            // colTotal
-            // 
             this.colTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colTotal.DataPropertyName = "Total";
             this.colTotal.HeaderText = "Total";
             this.colTotal.MinimumWidth = 6;
             this.colTotal.Name = "colTotal";
             this.colTotal.Width = 80;
-            // 
-            // colAvailable
-            // 
             this.colAvailable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colAvailable.DataPropertyName = "Available";
             this.colAvailable.HeaderText = "Available";
             this.colAvailable.MinimumWidth = 6;
             this.colAvailable.Name = "colAvailable";
-            // 
-            // colCheckedOut
-            // 
             this.colCheckedOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCheckedOut.DataPropertyName = "CheckedOut";
             this.colCheckedOut.HeaderText = "Checked Out";
             this.colCheckedOut.MinimumWidth = 6;
             this.colCheckedOut.Name = "colCheckedOut";
             this.colCheckedOut.Width = 120;
-            // 
-            // colDamaged
-            // 
             this.colDamaged.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colDamaged.DataPropertyName = "Damaged";
             this.colDamaged.HeaderText = "Damaged";
             this.colDamaged.MinimumWidth = 6;
             this.colDamaged.Name = "colDamaged";
-            // 
-            // colLost
-            // 
             this.colLost.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLost.DataPropertyName = "Lost";
             this.colLost.HeaderText = "Lost";
             this.colLost.MinimumWidth = 6;
             this.colLost.Name = "colLost";
             this.colLost.Width = 80;
-            // 
-            // colLastUpdated
-            // 
             this.colLastUpdated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLastUpdated.DataPropertyName = "LastUpdated";
             this.colLastUpdated.HeaderText = "Last Updated";
             this.colLastUpdated.MinimumWidth = 6;
             this.colLastUpdated.Name = "colLastUpdated";
             this.colLastUpdated.Width = 130;
-            // 
-            // colStatus
-            // 
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "Status";
             this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
             this.colStatus.Width = 120;
-            // 
-            // panelFilter
-            // 
             this.panelFilter.BackColor = System.Drawing.Color.White;
             this.panelFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelFilter.Controls.Add(this.cmbCategoryFilter);
@@ -280,9 +232,6 @@
             this.panelFilter.Padding = new System.Windows.Forms.Padding(20);
             this.panelFilter.Size = new System.Drawing.Size(1536, 50);
             this.panelFilter.TabIndex = 4;
-            // 
-            // cmbCategoryFilter
-            // 
             this.cmbCategoryFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCategoryFilter.FormattingEnabled = true;
@@ -292,9 +241,6 @@
             this.cmbCategoryFilter.Size = new System.Drawing.Size(300, 31);
             this.cmbCategoryFilter.TabIndex = 1;
             this.cmbCategoryFilter.SelectedIndexChanged += new System.EventHandler(this.cmbCategoryFilter_SelectedIndexChanged);
-            // 
-            // lblCategoryFilter
-            // 
             this.lblCategoryFilter.AutoSize = true;
             this.lblCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCategoryFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -304,9 +250,6 @@
             this.lblCategoryFilter.Size = new System.Drawing.Size(148, 23);
             this.lblCategoryFilter.TabIndex = 0;
             this.lblCategoryFilter.Text = "Filter by Category:";
-            // 
-            // panelMetrics
-            // 
             this.panelMetrics.Controls.Add(this.cardLost);
             this.panelMetrics.Controls.Add(this.cardDamaged);
             this.panelMetrics.Controls.Add(this.cardCheckedOut);
@@ -318,9 +261,6 @@
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1536, 116);
             this.panelMetrics.TabIndex = 3;
-            // 
-            // cardLost
-            // 
             this.cardLost.BackColor = System.Drawing.Color.White;
             this.cardLost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardLost.Controls.Add(this.lblLostValue);
@@ -331,9 +271,6 @@
             this.cardLost.Padding = new System.Windows.Forms.Padding(20);
             this.cardLost.Size = new System.Drawing.Size(308, 114);
             this.cardLost.TabIndex = 4;
-            // 
-            // lblLostValue
-            // 
             this.lblLostValue.AutoSize = true;
             this.lblLostValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLostValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -343,9 +280,6 @@
             this.lblLostValue.Size = new System.Drawing.Size(46, 54);
             this.lblLostValue.TabIndex = 2;
             this.lblLostValue.Text = "0";
-            // 
-            // lblLostLabel
-            // 
             this.lblLostLabel.AutoSize = true;
             this.lblLostLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLostLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -354,10 +288,7 @@
             this.lblLostLabel.Name = "lblLostLabel";
             this.lblLostLabel.Size = new System.Drawing.Size(69, 23);
             this.lblLostLabel.TabIndex = 1;
-            this.lblLostLabel.Text = "❌ Lost";
-            // 
-            // cardDamaged
-            // 
+            this.lblLostLabel.Text = "? Lost";
             this.cardDamaged.BackColor = System.Drawing.Color.White;
             this.cardDamaged.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardDamaged.Controls.Add(this.lblDamagedValue);
@@ -368,9 +299,6 @@
             this.cardDamaged.Padding = new System.Windows.Forms.Padding(20);
             this.cardDamaged.Size = new System.Drawing.Size(308, 114);
             this.cardDamaged.TabIndex = 3;
-            // 
-            // lblDamagedValue
-            // 
             this.lblDamagedValue.AutoSize = true;
             this.lblDamagedValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDamagedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -380,9 +308,6 @@
             this.lblDamagedValue.Size = new System.Drawing.Size(46, 54);
             this.lblDamagedValue.TabIndex = 2;
             this.lblDamagedValue.Text = "0";
-            // 
-            // lblDamagedLabel
-            // 
             this.lblDamagedLabel.AutoSize = true;
             this.lblDamagedLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDamagedLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -391,10 +316,7 @@
             this.lblDamagedLabel.Name = "lblDamagedLabel";
             this.lblDamagedLabel.Size = new System.Drawing.Size(112, 23);
             this.lblDamagedLabel.TabIndex = 1;
-            this.lblDamagedLabel.Text = "⚠️ Damaged";
-            // 
-            // cardCheckedOut
-            // 
+            this.lblDamagedLabel.Text = "?? Damaged";
             this.cardCheckedOut.BackColor = System.Drawing.Color.White;
             this.cardCheckedOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardCheckedOut.Controls.Add(this.lblCheckedOutValue);
@@ -405,9 +327,6 @@
             this.cardCheckedOut.Padding = new System.Windows.Forms.Padding(20);
             this.cardCheckedOut.Size = new System.Drawing.Size(308, 114);
             this.cardCheckedOut.TabIndex = 2;
-            // 
-            // lblCheckedOutValue
-            // 
             this.lblCheckedOutValue.AutoSize = true;
             this.lblCheckedOutValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckedOutValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -417,9 +336,6 @@
             this.lblCheckedOutValue.Size = new System.Drawing.Size(46, 54);
             this.lblCheckedOutValue.TabIndex = 2;
             this.lblCheckedOutValue.Text = "0";
-            // 
-            // lblCheckedOutLabel
-            // 
             this.lblCheckedOutLabel.AutoSize = true;
             this.lblCheckedOutLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckedOutLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -428,10 +344,7 @@
             this.lblCheckedOutLabel.Name = "lblCheckedOutLabel";
             this.lblCheckedOutLabel.Size = new System.Drawing.Size(137, 23);
             this.lblCheckedOutLabel.TabIndex = 1;
-            this.lblCheckedOutLabel.Text = "📤 Checked Out";
-            // 
-            // cardAvailable
-            // 
+            this.lblCheckedOutLabel.Text = "?? Checked Out";
             this.cardAvailable.BackColor = System.Drawing.Color.White;
             this.cardAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardAvailable.Controls.Add(this.lblAvailableValue);
@@ -442,9 +355,6 @@
             this.cardAvailable.Padding = new System.Windows.Forms.Padding(20);
             this.cardAvailable.Size = new System.Drawing.Size(308, 114);
             this.cardAvailable.TabIndex = 1;
-            // 
-            // lblAvailableValue
-            // 
             this.lblAvailableValue.AutoSize = true;
             this.lblAvailableValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAvailableValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -454,9 +364,6 @@
             this.lblAvailableValue.Size = new System.Drawing.Size(46, 54);
             this.lblAvailableValue.TabIndex = 2;
             this.lblAvailableValue.Text = "0";
-            // 
-            // lblAvailableLabel
-            // 
             this.lblAvailableLabel.AutoSize = true;
             this.lblAvailableLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAvailableLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -465,10 +372,7 @@
             this.lblAvailableLabel.Name = "lblAvailableLabel";
             this.lblAvailableLabel.Size = new System.Drawing.Size(106, 23);
             this.lblAvailableLabel.TabIndex = 1;
-            this.lblAvailableLabel.Text = "🟢 Available";
-            // 
-            // cardTotalCopies
-            // 
+            this.lblAvailableLabel.Text = "?? Available";
             this.cardTotalCopies.BackColor = System.Drawing.Color.White;
             this.cardTotalCopies.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardTotalCopies.Controls.Add(this.lblTotalCopiesValue);
@@ -479,9 +383,6 @@
             this.cardTotalCopies.Padding = new System.Windows.Forms.Padding(20);
             this.cardTotalCopies.Size = new System.Drawing.Size(308, 114);
             this.cardTotalCopies.TabIndex = 0;
-            // 
-            // lblTotalCopiesValue
-            // 
             this.lblTotalCopiesValue.AutoSize = true;
             this.lblTotalCopiesValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalCopiesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -492,9 +393,6 @@
             this.lblTotalCopiesValue.TabIndex = 2;
             this.lblTotalCopiesValue.Text = "0";
             this.lblTotalCopiesValue.Click += new System.EventHandler(this.lblTotalCopiesValue_Click);
-            // 
-            // lblTotalCopiesLabel
-            // 
             this.lblTotalCopiesLabel.AutoSize = true;
             this.lblTotalCopiesLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalCopiesLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -503,10 +401,7 @@
             this.lblTotalCopiesLabel.Name = "lblTotalCopiesLabel";
             this.lblTotalCopiesLabel.Size = new System.Drawing.Size(130, 23);
             this.lblTotalCopiesLabel.TabIndex = 1;
-            this.lblTotalCopiesLabel.Text = "🗃️ Total Copies";
-            // 
-            // panelActionCards
-            // 
+            this.lblTotalCopiesLabel.Text = "??? Total Copies";
             this.panelActionCards.Controls.Add(this.cardReportLost);
             this.panelActionCards.Controls.Add(this.cardReportDamage);
             this.panelActionCards.Controls.Add(this.cardUpdateStock);
@@ -516,9 +411,6 @@
             this.panelActionCards.Name = "panelActionCards";
             this.panelActionCards.Size = new System.Drawing.Size(1536, 257);
             this.panelActionCards.TabIndex = 2;
-            // 
-            // cardReportLost
-            // 
             this.cardReportLost.BackColor = System.Drawing.Color.White;
             this.cardReportLost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardReportLost.Controls.Add(this.btnReportLost);
@@ -531,9 +423,6 @@
             this.cardReportLost.Padding = new System.Windows.Forms.Padding(30);
             this.cardReportLost.Size = new System.Drawing.Size(512, 257);
             this.cardReportLost.TabIndex = 2;
-            // 
-            // btnReportLost
-            // 
             this.btnReportLost.BackColor = System.Drawing.Color.Maroon;
             this.btnReportLost.FlatAppearance.BorderSize = 0;
             this.btnReportLost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -547,9 +436,6 @@
             this.btnReportLost.Text = "Report Lost";
             this.btnReportLost.UseVisualStyleBackColor = false;
             this.btnReportLost.Click += new System.EventHandler(this.btnReportLost_Click);
-            // 
-            // txtReportLostNotes
-            // 
             this.txtReportLostNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReportLostNotes.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReportLostNotes.ForeColor = System.Drawing.Color.Gray;
@@ -562,9 +448,6 @@
             this.txtReportLostNotes.Text = "Additional notes";
             this.txtReportLostNotes.Enter += new System.EventHandler(this.txtReportLostNotes_Enter);
             this.txtReportLostNotes.Leave += new System.EventHandler(this.txtReportLostNotes_Leave);
-            // 
-            // txtReportLostBookID
-            // 
             this.txtReportLostBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReportLostBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReportLostBookID.ForeColor = System.Drawing.Color.Gray;
@@ -576,9 +459,6 @@
             this.txtReportLostBookID.Text = "Book ID";
             this.txtReportLostBookID.Enter += new System.EventHandler(this.txtReportLostBookID_Enter);
             this.txtReportLostBookID.Leave += new System.EventHandler(this.txtReportLostBookID_Leave);
-            // 
-            // lblReportLostTitle
-            // 
             this.lblReportLostTitle.AutoSize = true;
             this.lblReportLostTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReportLostTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -588,9 +468,6 @@
             this.lblReportLostTitle.Size = new System.Drawing.Size(122, 28);
             this.lblReportLostTitle.TabIndex = 0;
             this.lblReportLostTitle.Text = "Report Lost";
-            // 
-            // cardReportDamage
-            // 
             this.cardReportDamage.BackColor = System.Drawing.Color.White;
             this.cardReportDamage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardReportDamage.Controls.Add(this.btnReportDamage);
@@ -603,9 +480,6 @@
             this.cardReportDamage.Padding = new System.Windows.Forms.Padding(30);
             this.cardReportDamage.Size = new System.Drawing.Size(512, 257);
             this.cardReportDamage.TabIndex = 1;
-            // 
-            // btnReportDamage
-            // 
             this.btnReportDamage.BackColor = System.Drawing.Color.Maroon;
             this.btnReportDamage.FlatAppearance.BorderSize = 0;
             this.btnReportDamage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -619,9 +493,6 @@
             this.btnReportDamage.Text = "Report Damage";
             this.btnReportDamage.UseVisualStyleBackColor = false;
             this.btnReportDamage.Click += new System.EventHandler(this.btnReportDamage_Click);
-            // 
-            // txtReportDamageDescription
-            // 
             this.txtReportDamageDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReportDamageDescription.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReportDamageDescription.ForeColor = System.Drawing.Color.Gray;
@@ -634,9 +505,6 @@
             this.txtReportDamageDescription.Text = "Damage description";
             this.txtReportDamageDescription.Enter += new System.EventHandler(this.txtReportDamageDescription_Enter);
             this.txtReportDamageDescription.Leave += new System.EventHandler(this.txtReportDamageDescription_Leave);
-            // 
-            // txtReportDamageBookID
-            // 
             this.txtReportDamageBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReportDamageBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReportDamageBookID.ForeColor = System.Drawing.Color.Gray;
@@ -648,9 +516,6 @@
             this.txtReportDamageBookID.Text = "Book ID";
             this.txtReportDamageBookID.Enter += new System.EventHandler(this.txtReportDamageBookID_Enter);
             this.txtReportDamageBookID.Leave += new System.EventHandler(this.txtReportDamageBookID_Leave);
-            // 
-            // lblReportDamageTitle
-            // 
             this.lblReportDamageTitle.AutoSize = true;
             this.lblReportDamageTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReportDamageTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -660,9 +525,6 @@
             this.lblReportDamageTitle.Size = new System.Drawing.Size(161, 28);
             this.lblReportDamageTitle.TabIndex = 0;
             this.lblReportDamageTitle.Text = "Report Damage";
-            // 
-            // cardUpdateStock
-            // 
             this.cardUpdateStock.BackColor = System.Drawing.Color.White;
             this.cardUpdateStock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cardUpdateStock.Controls.Add(this.btnAddCopies);
@@ -675,9 +537,6 @@
             this.cardUpdateStock.Padding = new System.Windows.Forms.Padding(30);
             this.cardUpdateStock.Size = new System.Drawing.Size(512, 257);
             this.cardUpdateStock.TabIndex = 0;
-            // 
-            // btnAddCopies
-            // 
             this.btnAddCopies.BackColor = System.Drawing.Color.Maroon;
             this.btnAddCopies.FlatAppearance.BorderSize = 0;
             this.btnAddCopies.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -691,9 +550,6 @@
             this.btnAddCopies.Text = "Add Copies";
             this.btnAddCopies.UseVisualStyleBackColor = false;
             this.btnAddCopies.Click += new System.EventHandler(this.btnAddCopies_Click);
-            // 
-            // txtUpdateStockQuantity
-            // 
             this.txtUpdateStockQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpdateStockQuantity.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUpdateStockQuantity.ForeColor = System.Drawing.Color.Gray;
@@ -706,9 +562,6 @@
             this.txtUpdateStockQuantity.Enter += new System.EventHandler(this.txtUpdateStockQuantity_Enter);
             this.txtUpdateStockQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUpdateStockQuantity_KeyPress);
             this.txtUpdateStockQuantity.Leave += new System.EventHandler(this.txtUpdateStockQuantity_Leave);
-            // 
-            // txtUpdateStockBookID
-            // 
             this.txtUpdateStockBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpdateStockBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUpdateStockBookID.ForeColor = System.Drawing.Color.Gray;
@@ -720,9 +573,6 @@
             this.txtUpdateStockBookID.Text = "Book ID";
             this.txtUpdateStockBookID.Enter += new System.EventHandler(this.txtUpdateStockBookID_Enter);
             this.txtUpdateStockBookID.Leave += new System.EventHandler(this.txtUpdateStockBookID_Leave);
-            // 
-            // lblUpdateStockTitle
-            // 
             this.lblUpdateStockTitle.AutoSize = true;
             this.lblUpdateStockTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpdateStockTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -732,9 +582,6 @@
             this.lblUpdateStockTitle.Size = new System.Drawing.Size(138, 28);
             this.lblUpdateStockTitle.TabIndex = 0;
             this.lblUpdateStockTitle.Text = "Update Stock";
-            // 
-            // panelInventoryManagement
-            // 
             this.panelInventoryManagement.Controls.Add(this.btnAddInventory);
             this.panelInventoryManagement.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelInventoryManagement.Location = new System.Drawing.Point(32, 135);
@@ -742,9 +589,6 @@
             this.panelInventoryManagement.Name = "panelInventoryManagement";
             this.panelInventoryManagement.Size = new System.Drawing.Size(1536, 820);
             this.panelInventoryManagement.TabIndex = 1;
-            // 
-            // btnAddInventory
-            // 
             this.btnAddInventory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
             this.btnAddInventory.FlatAppearance.BorderSize = 0;
             this.btnAddInventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -758,9 +602,6 @@
             this.btnAddInventory.Text = "+ Add Inventory";
             this.btnAddInventory.UseVisualStyleBackColor = false;
             this.btnAddInventory.Click += new System.EventHandler(this.btnAddInventory_Click);
-            // 
-            // panelHeader
-            // 
             this.panelHeader.BackColor = System.Drawing.Color.White;
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.lblSubtitle);
@@ -770,9 +611,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 105);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -782,9 +620,6 @@
             this.lblTitle.Size = new System.Drawing.Size(471, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Inventory Management";
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -795,9 +630,6 @@
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Track book copies and physical inventory";
             this.lblSubtitle.Click += new System.EventHandler(this.lblSubtitle_Click);
-            // 
-            // StaffInventoryForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -835,11 +667,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

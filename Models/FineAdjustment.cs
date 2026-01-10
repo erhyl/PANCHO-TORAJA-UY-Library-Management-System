@@ -1,10 +1,7 @@
-using System;
+﻿using System;
 
 namespace Project5LMS.Models
 {
-    /// <summary>
-    /// Represents an adjustment/waiver made to a fine with audit trail
-    /// </summary>
     public class FineAdjustment
     {
         public int AdjustmentID { get; set; }
@@ -13,13 +10,12 @@ namespace Project5LMS.Models
         public decimal OriginalAmount { get; set; }
         public decimal AdjustedAmount { get; set; }
         public decimal AdjustmentAmount { get; set; }
-        public string AdjustmentType { get; set; } // Waiver, Discount, Correction
+        public string AdjustmentType { get; set; }
         public string Reason { get; set; }
-        public string AdjustedBy { get; set; } // User who made the adjustment
+        public string AdjustedBy { get; set; }
         public DateTime AdjustmentDate { get; set; }
-        public string ApprovalRequired { get; set; } // Yes/No
+        public string ApprovalRequired { get; set; }
         public string ApprovedBy { get; set; }
         public DateTime? ApprovalDate { get; set; }
     }
 }
-

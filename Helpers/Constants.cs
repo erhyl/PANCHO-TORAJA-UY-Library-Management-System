@@ -1,4 +1,4 @@
-namespace Project5LMS.Helpers
+﻿namespace Project5LMS.Helpers
 {
     public static class Constants
     {
@@ -11,4 +11,3 @@ namespace Project5LMS.Helpers
         public const int GuestMaxBorrowings = 3;
     }
 }
-

@@ -3,7 +3,6 @@
     partial class MyBorrowingsForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -34,9 +31,6 @@
             this.panelCurrentlyBorrowed.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelBorrowingHistory);
@@ -49,9 +43,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelBorrowingHistory
-            // 
             this.panelBorrowingHistory.BackColor = System.Drawing.Color.White;
             this.panelBorrowingHistory.Controls.Add(this.panelHistoryHeader);
             this.panelBorrowingHistory.Controls.Add(this.panelHistoryList);
@@ -60,9 +51,6 @@
             this.panelBorrowingHistory.Name = "panelBorrowingHistory";
             this.panelBorrowingHistory.Size = new System.Drawing.Size(1240, 305);
             this.panelBorrowingHistory.TabIndex = 2;
-            // 
-            // panelHistoryHeader
-            // 
             this.panelHistoryHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelHistoryHeader.Controls.Add(this.lblHistoryTitle);
             this.panelHistoryHeader.Location = new System.Drawing.Point(0, 0);
@@ -70,9 +58,6 @@
             this.panelHistoryHeader.Name = "panelHistoryHeader";
             this.panelHistoryHeader.Size = new System.Drawing.Size(1240, 50);
             this.panelHistoryHeader.TabIndex = 1;
-            // 
-            // lblHistoryTitle
-            // 
             this.lblHistoryTitle.AutoSize = true;
             this.lblHistoryTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHistoryTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -81,10 +66,7 @@
             this.lblHistoryTitle.Name = "lblHistoryTitle";
             this.lblHistoryTitle.Size = new System.Drawing.Size(267, 32);
             this.lblHistoryTitle.TabIndex = 0;
-            this.lblHistoryTitle.Text = "📜 Borrowing History";
-            // 
-            // panelHistoryList
-            // 
+            this.lblHistoryTitle.Text = "?? Borrowing History";
             this.panelHistoryList.AutoScroll = true;
             this.panelHistoryList.BackColor = System.Drawing.Color.White;
             this.panelHistoryList.Location = new System.Drawing.Point(0, 50);
@@ -93,9 +75,6 @@
             this.panelHistoryList.Padding = new System.Windows.Forms.Padding(20);
             this.panelHistoryList.Size = new System.Drawing.Size(1240, 255);
             this.panelHistoryList.TabIndex = 0;
-            // 
-            // panelCurrentlyBorrowed
-            // 
             this.panelCurrentlyBorrowed.BackColor = System.Drawing.Color.White;
             this.panelCurrentlyBorrowed.Controls.Add(this.lblCurrentlyBorrowedCount);
             this.panelCurrentlyBorrowed.Controls.Add(this.panelBorrowedList);
@@ -104,9 +83,6 @@
             this.panelCurrentlyBorrowed.Name = "panelCurrentlyBorrowed";
             this.panelCurrentlyBorrowed.Size = new System.Drawing.Size(1240, 430);
             this.panelCurrentlyBorrowed.TabIndex = 1;
-            // 
-            // lblCurrentlyBorrowedCount
-            // 
             this.lblCurrentlyBorrowedCount.AutoSize = true;
             this.lblCurrentlyBorrowedCount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentlyBorrowedCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -115,10 +91,7 @@
             this.lblCurrentlyBorrowedCount.Name = "lblCurrentlyBorrowedCount";
             this.lblCurrentlyBorrowedCount.Size = new System.Drawing.Size(359, 37);
             this.lblCurrentlyBorrowedCount.TabIndex = 1;
-            this.lblCurrentlyBorrowedCount.Text = "📤 Currently Borrowed (0)";
-            // 
-            // panelBorrowedList
-            // 
+            this.lblCurrentlyBorrowedCount.Text = "?? Currently Borrowed (0)";
             this.panelBorrowedList.AutoScroll = true;
             this.panelBorrowedList.BackColor = System.Drawing.Color.White;
             this.panelBorrowedList.Location = new System.Drawing.Point(20, 70);
@@ -126,9 +99,6 @@
             this.panelBorrowedList.Name = "panelBorrowedList";
             this.panelBorrowedList.Size = new System.Drawing.Size(1200, 340);
             this.panelBorrowedList.TabIndex = 0;
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(40, 30);
@@ -136,9 +106,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1240, 106);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -148,9 +115,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(542, 32);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "View your borrowed books and borrowing history";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -160,9 +124,6 @@
             this.lblTitle.Size = new System.Drawing.Size(364, 62);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "My Borrowings";
-            // 
-            // MyBorrowingsForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -182,11 +143,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

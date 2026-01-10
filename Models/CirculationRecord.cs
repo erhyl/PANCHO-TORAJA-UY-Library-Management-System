@@ -1,8 +1,6 @@
-using System;
-
+﻿using System;
 namespace Project5LMS.Models
 {
-
     public class CirculationRecord
     {
         public int TransactionID { get; set; }

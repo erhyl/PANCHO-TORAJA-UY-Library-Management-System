@@ -1,12 +1,8 @@
-namespace Project5LMS.Forms.Admin.Catalog
+﻿namespace Project5LMS.Forms.Admin.Catalog
 {
     partial class AudioVisualForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         private new System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Label lblMediaType;
         private System.Windows.Forms.ComboBox cmbMediaType;
@@ -21,11 +17,6 @@ namespace Project5LMS.Forms.Admin.Catalog
         private System.Windows.Forms.ComboBox cmbRating;
         private new System.Windows.Forms.Button btnSave;
         private new System.Windows.Forms.Button btnCancel;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -34,13 +25,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.panelMain = new System.Windows.Forms.Panel();
@@ -59,9 +44,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMediaType = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMain
-            // 
             this.panelMain.Controls.Add(this.btnCancel);
             this.panelMain.Controls.Add(this.btnSave);
             this.panelMain.Controls.Add(this.cmbRating);
@@ -81,9 +63,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMain.Padding = new System.Windows.Forms.Padding(20);
             this.panelMain.Size = new System.Drawing.Size(500, 400);
             this.panelMain.TabIndex = 0;
-            // 
-            // btnCancel
-            // 
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
@@ -93,9 +72,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
-            // 
-            // btnSave
-            // 
             this.btnSave.BackColor = System.Drawing.Color.Maroon;
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.ForeColor = System.Drawing.Color.White;
@@ -106,9 +82,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
-            // 
-            // cmbRating
-            // 
             this.cmbRating.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRating.FormattingEnabled = true;
             this.cmbRating.Items.AddRange(new object[] {
@@ -122,18 +95,12 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbRating.Name = "cmbRating";
             this.cmbRating.Size = new System.Drawing.Size(300, 24);
             this.cmbRating.TabIndex = 10;
-            // 
-            // lblRating
-            // 
             this.lblRating.AutoSize = true;
             this.lblRating.Location = new System.Drawing.Point(20, 220);
             this.lblRating.Name = "lblRating";
             this.lblRating.Size = new System.Drawing.Size(49, 16);
             this.lblRating.TabIndex = 9;
             this.lblRating.Text = "Rating:";
-            // 
-            // chkHasSubtitles
-            // 
             this.chkHasSubtitles.AutoSize = true;
             this.chkHasSubtitles.Location = new System.Drawing.Point(143, 179);
             this.chkHasSubtitles.Name = "chkHasSubtitles";
@@ -141,9 +108,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.chkHasSubtitles.TabIndex = 8;
             this.chkHasSubtitles.Text = "Has Subtitles";
             this.chkHasSubtitles.UseVisualStyleBackColor = true;
-            // 
-            // cmbAudioLanguage
-            // 
             this.cmbAudioLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAudioLanguage.FormattingEnabled = true;
             this.cmbAudioLanguage.Items.AddRange(new object[] {
@@ -159,18 +123,12 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbAudioLanguage.Name = "cmbAudioLanguage";
             this.cmbAudioLanguage.Size = new System.Drawing.Size(300, 24);
             this.cmbAudioLanguage.TabIndex = 7;
-            // 
-            // lblAudioLang
-            // 
             this.lblAudioLang.AutoSize = true;
             this.lblAudioLang.Location = new System.Drawing.Point(20, 140);
             this.lblAudioLang.Name = "lblAudioLang";
             this.lblAudioLang.Size = new System.Drawing.Size(109, 16);
             this.lblAudioLang.TabIndex = 6;
             this.lblAudioLang.Text = "Audio Language:";
-            // 
-            // cmbFormat
-            // 
             this.cmbFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFormat.FormattingEnabled = true;
             this.cmbFormat.Items.AddRange(new object[] {
@@ -183,34 +141,22 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbFormat.Name = "cmbFormat";
             this.cmbFormat.Size = new System.Drawing.Size(300, 24);
             this.cmbFormat.TabIndex = 5;
-            // 
-            // lblFormat
-            // 
             this.lblFormat.AutoSize = true;
             this.lblFormat.Location = new System.Drawing.Point(20, 100);
             this.lblFormat.Name = "lblFormat";
             this.lblFormat.Size = new System.Drawing.Size(52, 16);
             this.lblFormat.TabIndex = 4;
             this.lblFormat.Text = "Format:";
-            // 
-            // txtDuration
-            // 
             this.txtDuration.Location = new System.Drawing.Point(143, 60);
             this.txtDuration.Name = "txtDuration";
             this.txtDuration.Size = new System.Drawing.Size(300, 22);
             this.txtDuration.TabIndex = 3;
-            // 
-            // lblDuration
-            // 
             this.lblDuration.AutoSize = true;
             this.lblDuration.Location = new System.Drawing.Point(20, 60);
             this.lblDuration.Name = "lblDuration";
             this.lblDuration.Size = new System.Drawing.Size(117, 16);
             this.lblDuration.TabIndex = 2;
             this.lblDuration.Text = "Duration (minutes):";
-            // 
-            // cmbMediaType
-            // 
             this.cmbMediaType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMediaType.FormattingEnabled = true;
             this.cmbMediaType.Items.AddRange(new object[] {
@@ -224,18 +170,12 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbMediaType.Name = "cmbMediaType";
             this.cmbMediaType.Size = new System.Drawing.Size(300, 24);
             this.cmbMediaType.TabIndex = 1;
-            // 
-            // lblMediaType
-            // 
             this.lblMediaType.AutoSize = true;
             this.lblMediaType.Location = new System.Drawing.Point(20, 20);
             this.lblMediaType.Name = "lblMediaType";
             this.lblMediaType.Size = new System.Drawing.Size(83, 16);
             this.lblMediaType.TabIndex = 0;
             this.lblMediaType.Text = "Media Type:";
-            // 
-            // AudioVisualForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 400);
@@ -245,10 +185,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
     }
 }
-

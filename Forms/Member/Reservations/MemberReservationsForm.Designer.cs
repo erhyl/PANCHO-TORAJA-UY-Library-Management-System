@@ -3,7 +3,6 @@
     partial class MemberReservationsForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -39,9 +36,6 @@
             this.panelReservationsHeader.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelInfo);
@@ -55,9 +49,6 @@
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
             this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
-            // 
-            // panelInfo
-            // 
             this.panelInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.panelInfo.Controls.Add(this.lblInfoTitle);
             this.panelInfo.Controls.Add(this.lblInfoRule5);
@@ -71,9 +62,6 @@
             this.panelInfo.Padding = new System.Windows.Forms.Padding(25, 20, 25, 20);
             this.panelInfo.Size = new System.Drawing.Size(714, 300);
             this.panelInfo.TabIndex = 2;
-            // 
-            // lblInfoTitle
-            // 
             this.lblInfoTitle.AutoSize = true;
             this.lblInfoTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -83,9 +71,6 @@
             this.lblInfoTitle.Size = new System.Drawing.Size(287, 32);
             this.lblInfoTitle.TabIndex = 0;
             this.lblInfoTitle.Text = "How Reservations Work";
-            // 
-            // lblInfoRule5
-            // 
             this.lblInfoRule5.AutoSize = true;
             this.lblInfoRule5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoRule5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -94,10 +79,7 @@
             this.lblInfoRule5.Name = "lblInfoRule5";
             this.lblInfoRule5.Size = new System.Drawing.Size(464, 25);
             this.lblInfoRule5.TabIndex = 4;
-            this.lblInfoRule5.Text = "• Maximum 5 active reservations allowed per member";
-            // 
-            // lblInfoRule4
-            // 
+            this.lblInfoRule5.Text = "� Maximum 5 active reservations allowed per member";
             this.lblInfoRule4.AutoSize = true;
             this.lblInfoRule4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoRule4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -106,10 +88,7 @@
             this.lblInfoRule4.Name = "lblInfoRule4";
             this.lblInfoRule4.Size = new System.Drawing.Size(519, 25);
             this.lblInfoRule4.TabIndex = 3;
-            this.lblInfoRule4.Text = "• You can cancel a reservation at any time before it\'s fulfilled";
-            // 
-            // lblInfoRule3
-            // 
+            this.lblInfoRule4.Text = "� You can cancel a reservation at any time before it\'s fulfilled";
             this.lblInfoRule3.AutoSize = true;
             this.lblInfoRule3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoRule3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -118,10 +97,7 @@
             this.lblInfoRule3.Name = "lblInfoRule3";
             this.lblInfoRule3.Size = new System.Drawing.Size(489, 25);
             this.lblInfoRule3.TabIndex = 2;
-            this.lblInfoRule3.Text = "• Reserved books will be held for 3 days after notification";
-            // 
-            // lblInfoRule2
-            // 
+            this.lblInfoRule3.Text = "� Reserved books will be held for 3 days after notification";
             this.lblInfoRule2.AutoSize = true;
             this.lblInfoRule2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoRule2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -130,10 +106,7 @@
             this.lblInfoRule2.Name = "lblInfoRule2";
             this.lblInfoRule2.Size = new System.Drawing.Size(536, 25);
             this.lblInfoRule2.TabIndex = 1;
-            this.lblInfoRule2.Text = "• You\'ll be notified via email when the book becomes available";
-            // 
-            // lblInfoRule1
-            // 
+            this.lblInfoRule2.Text = "� You\'ll be notified via email when the book becomes available";
             this.lblInfoRule1.AutoSize = true;
             this.lblInfoRule1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoRule1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -142,10 +115,7 @@
             this.lblInfoRule1.Name = "lblInfoRule1";
             this.lblInfoRule1.Size = new System.Drawing.Size(607, 25);
             this.lblInfoRule1.TabIndex = 0;
-            this.lblInfoRule1.Text = "• You can reserve books that are currently borrowed by other members";
-            // 
-            // panelActiveReservations
-            // 
+            this.lblInfoRule1.Text = "� You can reserve books that are currently borrowed by other members";
             this.panelActiveReservations.BackColor = System.Drawing.Color.White;
             this.panelActiveReservations.Controls.Add(this.panelReservationsHeader);
             this.panelActiveReservations.Controls.Add(this.panelReservationsList);
@@ -154,9 +124,6 @@
             this.panelActiveReservations.Name = "panelActiveReservations";
             this.panelActiveReservations.Size = new System.Drawing.Size(750, 500);
             this.panelActiveReservations.TabIndex = 1;
-            // 
-            // panelReservationsHeader
-            // 
             this.panelReservationsHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelReservationsHeader.Controls.Add(this.panelBookmarkIcon);
             this.panelReservationsHeader.Controls.Add(this.lblActiveReservationsCount);
@@ -166,9 +133,6 @@
             this.panelReservationsHeader.Name = "panelReservationsHeader";
             this.panelReservationsHeader.Size = new System.Drawing.Size(750, 50);
             this.panelReservationsHeader.TabIndex = 1;
-            // 
-            // panelBookmarkIcon
-            // 
             this.panelBookmarkIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelBookmarkIcon.Location = new System.Drawing.Point(20, 10);
             this.panelBookmarkIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -176,9 +140,6 @@
             this.panelBookmarkIcon.Size = new System.Drawing.Size(30, 30);
             this.panelBookmarkIcon.TabIndex = 1;
             this.panelBookmarkIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelBookmarkIcon_Paint);
-            // 
-            // lblActiveReservationsCount
-            // 
             this.lblActiveReservationsCount.AutoSize = true;
             this.lblActiveReservationsCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveReservationsCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -188,9 +149,6 @@
             this.lblActiveReservationsCount.Size = new System.Drawing.Size(277, 32);
             this.lblActiveReservationsCount.TabIndex = 0;
             this.lblActiveReservationsCount.Text = "Active Reservations (0)";
-            // 
-            // panelReservationsList
-            // 
             this.panelReservationsList.AutoScroll = true;
             this.panelReservationsList.BackColor = System.Drawing.Color.White;
             this.panelReservationsList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -200,9 +158,6 @@
             this.panelReservationsList.Padding = new System.Windows.Forms.Padding(20);
             this.panelReservationsList.Size = new System.Drawing.Size(750, 500);
             this.panelReservationsList.TabIndex = 0;
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(40, 30);
@@ -210,9 +165,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1474, 150);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -222,9 +174,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(456, 32);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "View and manage your book reservations";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -234,9 +183,6 @@
             this.lblTitle.Size = new System.Drawing.Size(307, 62);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Reservations";
-            // 
-            // MemberReservationsForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
@@ -256,11 +202,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

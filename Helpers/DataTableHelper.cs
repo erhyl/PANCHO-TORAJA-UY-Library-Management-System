@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using Project5LMS.Models;
-
 namespace Project5LMS.Helpers
 {
     public static class DataTableHelper
@@ -23,7 +22,6 @@ namespace Project5LMS.Helpers
             dt.Columns.Add("Barcode", typeof(string));
             dt.Columns.Add("Location", typeof(string));
             dt.Columns.Add("Status", typeof(string));
-
             foreach (var book in books)
             {
                 DataRow row = dt.NewRow();
@@ -41,10 +39,8 @@ namespace Project5LMS.Helpers
                 row["Status"] = book.Status ?? string.Empty;
                 dt.Rows.Add(row);
             }
-
             return dt;
         }
-
         public static DataTable MembersToDataTable(IEnumerable<Member> members, Func<Member, int> getBorrowingCount = null)
         {
             DataTable dt = new DataTable();
@@ -58,7 +54,6 @@ namespace Project5LMS.Helpers
             dt.Columns.Add("Email", typeof(string));
             dt.Columns.Add("RegistrationDate", typeof(DateTime));
             dt.Columns.Add("Address", typeof(string));
-
             foreach (var member in members)
             {
                 DataRow row = dt.NewRow();
@@ -74,7 +69,6 @@ namespace Project5LMS.Helpers
                 row["Address"] = member.Address ?? string.Empty;
                 dt.Rows.Add(row);
             }
-
             return dt;
         }
     }

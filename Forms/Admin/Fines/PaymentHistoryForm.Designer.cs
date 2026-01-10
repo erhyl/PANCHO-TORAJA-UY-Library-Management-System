@@ -1,16 +1,8 @@
-namespace Project5LMS.Forms.Admin.Fines
+﻿namespace Project5LMS.Forms.Admin.Fines
 {
     partial class PaymentHistoryForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,13 +11,7 @@ namespace Project5LMS.Forms.Admin.Fines
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -39,9 +25,6 @@ namespace Project5LMS.Forms.Admin.Fines
             ((System.ComponentModel.ISupportInitialize)(this.dgvPayments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdjustments)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tabControl
-            // 
             this.tabControl.Controls.Add(this.tabPagePayments);
             this.tabControl.Controls.Add(this.tabPageAdjustments);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -51,9 +34,6 @@ namespace Project5LMS.Forms.Admin.Fines
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(900, 600);
             this.tabControl.TabIndex = 0;
-            // 
-            // tabPagePayments
-            // 
             this.tabPagePayments.Controls.Add(this.dgvPayments);
             this.tabPagePayments.Location = new System.Drawing.Point(4, 28);
             this.tabPagePayments.Name = "tabPagePayments";
@@ -62,9 +42,6 @@ namespace Project5LMS.Forms.Admin.Fines
             this.tabPagePayments.TabIndex = 0;
             this.tabPagePayments.Text = "Payments";
             this.tabPagePayments.UseVisualStyleBackColor = true;
-            // 
-            // dgvPayments
-            // 
             this.dgvPayments.AllowUserToAddRows = false;
             this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPayments.BackgroundColor = System.Drawing.Color.White;
@@ -80,9 +57,6 @@ namespace Project5LMS.Forms.Admin.Fines
             this.dgvPayments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPayments.Size = new System.Drawing.Size(886, 562);
             this.dgvPayments.TabIndex = 0;
-            // 
-            // tabPageAdjustments
-            // 
             this.tabPageAdjustments.Controls.Add(this.dgvAdjustments);
             this.tabPageAdjustments.Location = new System.Drawing.Point(4, 28);
             this.tabPageAdjustments.Name = "tabPageAdjustments";
@@ -91,9 +65,6 @@ namespace Project5LMS.Forms.Admin.Fines
             this.tabPageAdjustments.TabIndex = 1;
             this.tabPageAdjustments.Text = "Adjustments";
             this.tabPageAdjustments.UseVisualStyleBackColor = true;
-            // 
-            // dgvAdjustments
-            // 
             this.dgvAdjustments.AllowUserToAddRows = false;
             this.dgvAdjustments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvAdjustments.BackgroundColor = System.Drawing.Color.White;
@@ -109,9 +80,6 @@ namespace Project5LMS.Forms.Admin.Fines
             this.dgvAdjustments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAdjustments.Size = new System.Drawing.Size(886, 562);
             this.dgvAdjustments.TabIndex = 0;
-            // 
-            // PaymentHistoryForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 600);
@@ -129,9 +97,7 @@ namespace Project5LMS.Forms.Admin.Fines
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdjustments)).EndInit();
             this.ResumeLayout(false);
         }
-
         #endregion
-
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPagePayments;
         private System.Windows.Forms.DataGridView dgvPayments;
@@ -139,4 +105,3 @@ namespace Project5LMS.Forms.Admin.Fines
         private System.Windows.Forms.DataGridView dgvAdjustments;
     }
 }
-

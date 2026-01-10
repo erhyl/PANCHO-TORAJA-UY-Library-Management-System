@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -9,7 +9,6 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Reports
 {
     public partial class AdminReportsForm : Form
@@ -18,19 +17,15 @@ namespace Project5LMS.Forms.Admin.Reports
         private string currentReportType = "Circulation";
         private DateTime startDate;
         private DateTime endDate;
-
         private Panel panelChart;
         private DataGridView dataGridViewReports;
-
         public AdminReportsForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
         }
-
         private void AdminReportsForm_Load(object sender, EventArgs e)
         {
-
             cmbDateRange.Items.AddRange(new string[] {
                 "Today",
                 "This Week",
@@ -45,7 +40,6 @@ namespace Project5LMS.Forms.Admin.Reports
             UpdateDateRange();
             LoadReportContent("Circulation");
         }
-
         private void UpdateDateRange()
         {
             DateTime now = DateTime.Now;
@@ -87,46 +81,38 @@ namespace Project5LMS.Forms.Admin.Reports
                     break;
             }
         }
-
         private void cmbDateRange_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateDateRange();
             LoadReportContent(currentReportType);
         }
-
         private void btnCirculationReports_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnCirculationReports);
             LoadReportContent("Circulation");
         }
-
         private void btnMemberReports_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnMemberReports);
             LoadReportContent("Member");
         }
-
         private void btnCollectionReports_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnCollectionReports);
             LoadReportContent("Collection");
         }
-
         private void btnFinancialReports_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnFinancialReports);
             LoadReportContent("Financial");
         }
-
         private void btnStatisticalReports_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnStatisticalReports);
             LoadReportContent("Statistical");
         }
-
         private void SetActiveButton(Button activeButton)
         {
-
             btnCirculationReports.BackColor = Color.White;
             btnCirculationReports.ForeColor = Color.FromArgb(64, 64, 64);
             btnMemberReports.BackColor = Color.White;
@@ -137,21 +123,17 @@ namespace Project5LMS.Forms.Admin.Reports
             btnFinancialReports.ForeColor = Color.FromArgb(64, 64, 64);
             btnStatisticalReports.BackColor = Color.White;
             btnStatisticalReports.ForeColor = Color.FromArgb(64, 64, 64);
-
             activeButton.BackColor = Color.FromArgb(13, 110, 253);
             activeButton.ForeColor = Color.White;
         }
-
         private void LoadReportContent(string reportType)
         {
             currentReportType = reportType;
             panelContent.Controls.Clear();
-            // Remove placeholder label if it exists
             if (lblContentPlaceholder != null && panelContent.Controls.Contains(lblContentPlaceholder))
             {
                 panelContent.Controls.Remove(lblContentPlaceholder);
             }
-
             switch (reportType)
             {
                 case "Circulation":
@@ -171,10 +153,8 @@ namespace Project5LMS.Forms.Admin.Reports
                     break;
             }
         }
-
         private void LoadCirculationReport()
         {
-
             panelChart = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -183,18 +163,15 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             panelChart.Paint += PanelChart_Circulation_Paint;
             panelContent.Controls.Add(panelChart);
-            panelChart.Invalidate(); // Force repaint to load data
+            panelChart.Invalidate();
         }
-
         private void PanelChart_Circulation_Paint(object sender, PaintEventArgs e)
         {
-            DrawLineChart(e.Graphics, panelChart, "Daily Borrowing & Return Trends", 
+            DrawLineChart(e.Graphics, panelChart, "Daily Borrowing & Return Trends",
                 GetDailyBorrowingData(), GetDailyReturnData());
         }
-
         private void LoadMemberReport()
         {
-
             TableLayoutPanel container = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -204,7 +181,6 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
-
             panelChart = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -213,7 +189,6 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             panelChart.Paint += PanelChart_Member_Paint;
             container.Controls.Add(panelChart, 0, 0);
-
             Panel tablePanel = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -230,20 +205,16 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             tablePanel.Controls.Add(dataGridViewReports);
             container.Controls.Add(tablePanel, 0, 1);
-
             panelContent.Controls.Add(container);
-            panelChart.Invalidate(); // Force repaint to load chart data
+            panelChart.Invalidate();
             LoadNewMemberRegistrations();
         }
-
         private void PanelChart_Member_Paint(object sender, PaintEventArgs e)
         {
             DrawBarChart(e.Graphics, panelChart, "Member Activity by Type", GetMemberActivityData());
         }
-
         private void LoadCollectionReport()
         {
-
             FlowLayoutPanel summaryPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -251,13 +222,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 FlowDirection = FlowDirection.LeftToRight,
                 Padding = new Padding(0, 0, 0, 20)
             };
-
             var summaryData = GetCollectionSummary();
             CreateSummaryCard(summaryPanel, "Total Books", summaryData["Total"].ToString(), Color.FromArgb(13, 110, 253));
             CreateSummaryCard(summaryPanel, "Available", summaryData["Available"].ToString(), Color.FromArgb(40, 167, 69));
             CreateSummaryCard(summaryPanel, "On Loan", summaryData["OnLoan"].ToString(), Color.FromArgb(255, 193, 7));
             panelContent.Controls.Add(summaryPanel);
-
             TableLayoutPanel container = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -267,7 +236,6 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-
             panelChart = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -276,7 +244,6 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             panelChart.Paint += PanelChart_Collection_Paint;
             container.Controls.Add(panelChart, 0, 0);
-
             Panel tablePanel = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -293,20 +260,16 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             tablePanel.Controls.Add(dataGridViewReports);
             container.Controls.Add(tablePanel, 0, 1);
-
             panelContent.Controls.Add(container);
-            panelChart.Invalidate(); // Force repaint to load chart data
+            panelChart.Invalidate();
             LoadMostBorrowedBooks();
         }
-
         private void PanelChart_Collection_Paint(object sender, PaintEventArgs e)
         {
             DrawBarChart(e.Graphics, panelChart, "Borrowing by Category", GetBorrowingByCategoryData());
         }
-
         private void LoadFinancialReport()
         {
-
             FlowLayoutPanel summaryPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -314,13 +277,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 FlowDirection = FlowDirection.LeftToRight,
                 Padding = new Padding(0, 0, 0, 20)
             };
-
             var summaryData = GetFinancialSummary();
             CreateSummaryCard(summaryPanel, "Fines Collected", "$" + summaryData["Collected"].ToString("F2"), Color.FromArgb(40, 167, 69));
             CreateSummaryCard(summaryPanel, "Pending Fines", "$" + summaryData["Pending"].ToString("F2"), Color.FromArgb(255, 193, 7));
             CreateSummaryCard(summaryPanel, "Waived Fines", "$" + summaryData["Waived"].ToString("F2"), Color.FromArgb(220, 53, 69));
             panelContent.Controls.Add(summaryPanel);
-
             Panel tablePanel = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -340,10 +301,8 @@ namespace Project5LMS.Forms.Admin.Reports
             panelContent.Controls.Add(tablePanel);
             LoadOverdueBooksReport();
         }
-
         private void LoadStatisticalReport()
         {
-
             FlowLayoutPanel summaryPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -351,7 +310,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 FlowDirection = FlowDirection.LeftToRight,
                 Padding = new Padding(0, 0, 0, 20)
             };
-
             var statsData = GetLibraryUsageStatistics();
             CreateSummaryCard(summaryPanel, "Daily Average Visits", Convert.ToString(statsData["DailyVisits"]), Color.FromArgb(13, 110, 253));
             CreateSummaryCard(summaryPanel, "Books Per Member", Convert.ToDouble(statsData["BooksPerMember"]).ToString("F1"), Color.FromArgb(40, 167, 69));
@@ -359,7 +317,6 @@ namespace Project5LMS.Forms.Admin.Reports
             CreateSummaryCard(summaryPanel, "Collection Turnover", Convert.ToString(statsData["Turnover"]) + "%", Color.FromArgb(220, 53, 69));
             panelContent.Controls.Add(summaryPanel);
         }
-
         private void CreateSummaryCard(FlowLayoutPanel parent, string title, string value, Color accentColor)
         {
             Panel card = new Panel
@@ -370,7 +327,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 Margin = new Padding(0, 0, 20, 0),
                 Padding = new Padding(20)
             };
-
             Label lblTitle = new Label
             {
                 Text = title,
@@ -379,7 +335,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 AutoSize = true,
                 Location = new Point(20, 20)
             };
-
             Label lblValue = new Label
             {
                 Text = value,
@@ -388,7 +343,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 AutoSize = true,
                 Location = new Point(20, 50)
             };
-
             Panel accentBar = new Panel
             {
                 Height = 4,
@@ -396,13 +350,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 BackColor = accentColor,
                 Dock = DockStyle.Bottom
             };
-
             card.Controls.Add(lblTitle);
             card.Controls.Add(lblValue);
             card.Controls.Add(accentBar);
             parent.Controls.Add(card);
         }
-
         private Dictionary<DateTime, int> GetDailyBorrowingData()
         {
             Dictionary<DateTime, int> data = new Dictionary<DateTime, int>();
@@ -439,7 +391,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return data;
         }
-
         private Dictionary<DateTime, int> GetDailyReturnData()
         {
             Dictionary<DateTime, int> data = new Dictionary<DateTime, int>();
@@ -477,7 +428,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return data;
         }
-
         private Dictionary<string, int> GetMemberActivityData()
         {
             Dictionary<string, int> data = new Dictionary<string, int>();
@@ -486,18 +436,13 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    // Check if MemberType or Type column exists
                     bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
                     bool hasType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Type");
-                    
                     if (!hasMemberType && !hasType)
                     {
-                        // If neither column exists, return empty data
                         return data;
                     }
-                    
                     string typeColumn = hasMemberType ? "m.MemberType" : "m.Type";
-                    
                     string query = $@"SELECT {typeColumn} as MemberType, COUNT(DISTINCT t.TransactionID) as ActivityCount
                                    FROM Transactions t
                                    INNER JOIN Members m ON t.MemberID = m.MemberID
@@ -526,7 +471,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return data;
         }
-
         private Dictionary<string, int> GetBorrowingByCategoryData()
         {
             Dictionary<string, int> data = new Dictionary<string, int>();
@@ -536,14 +480,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 {
                     conn.Open();
                     bool hasCategory = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Category");
-                    
                     if (!hasCategory)
                     {
-                        // If Category doesn't exist, return empty data or use a default
                         data["All Books"] = 0;
                         return data;
                     }
-                    
                     string query = @"SELECT b.Category, COUNT(*) as BorrowCount
                                    FROM Transactions t
                                    INNER JOIN Books b ON t.BookID = b.BookID
@@ -573,7 +514,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return data;
         }
-
         private Dictionary<string, object> GetCollectionSummary()
         {
             Dictionary<string, object> summary = new Dictionary<string, object>
@@ -588,12 +528,10 @@ namespace Project5LMS.Forms.Admin.Reports
                 {
                     conn.Open();
                     bool hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Status");
-                    
-                    string availableQuery = hasStatus 
+                    string availableQuery = hasStatus
                         ? "(SELECT COUNT(*) FROM Books WHERE Status = 'Available' OR Status IS NULL)"
-                        : "(SELECT COUNT(*) FROM Books)"; // If no Status column, assume all are available
-                    
-                    string query = $@"SELECT 
+                        : "(SELECT COUNT(*) FROM Books)";
+                    string query = $@"SELECT
                                     (SELECT COUNT(*) FROM Books) as Total,
                                     {availableQuery} as Available,
                                     (SELECT COUNT(*) FROM Transactions WHERE Status = 'Borrowed' AND ReturnDate IS NULL) as OnLoan";
@@ -618,7 +556,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return summary;
         }
-
         private Dictionary<string, decimal> GetFinancialSummary()
         {
             Dictionary<string, decimal> summary = new Dictionary<string, decimal>
@@ -638,7 +575,6 @@ namespace Project5LMS.Forms.Admin.Reports
                         bool hasPaidDate = CheckColumnExists(conn, "Fines", "PaidDate");
                         bool hasWaivedDate = CheckColumnExists(conn, "Fines", "WaivedDate");
                         bool hasAmount = CheckColumnExists(conn, "Fines", "Amount");
-
                         if (hasAmount)
                         {
                             string collectedQuery = hasPaidDate
@@ -650,7 +586,6 @@ namespace Project5LMS.Forms.Admin.Reports
                             string waivedQuery = hasWaivedDate
                                 ? "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE WaivedDate IS NOT NULL"
                                 : "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE Status = 'Waived'";
-
                             using (MySqlCommand cmd = new MySqlCommand(collectedQuery, conn))
                             {
                                 summary["Collected"] = Convert.ToDecimal(cmd.ExecuteScalar());
@@ -667,11 +602,10 @@ namespace Project5LMS.Forms.Admin.Reports
                     }
                     else
                     {
-
                         bool hasFine = CheckColumnExists(conn, "Transactions", "Fine");
                         if (hasFine)
                         {
-                            string query = @"SELECT 
+                            string query = @"SELECT
                                             COALESCE(SUM(CASE WHEN ReturnDate IS NOT NULL AND Fine > 0 THEN Fine ELSE 0 END), 0) as Collected,
                                             COALESCE(SUM(CASE WHEN ReturnDate IS NULL AND DueDate < NOW() AND Fine > 0 THEN Fine ELSE 0 END), 0) as Pending,
                                             0 as Waived
@@ -697,7 +631,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return summary;
         }
-
         private Dictionary<string, object> GetLibraryUsageStatistics()
         {
             Dictionary<string, object> stats = new Dictionary<string, object>
@@ -712,7 +645,7 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT 
+                    string query = @"SELECT
                                     (SELECT COUNT(DISTINCT DATE(BorrowDate)) FROM Transactions WHERE BorrowDate >= DATE_SUB(NOW(), INTERVAL 30 DAY)) * 30 / 30 as DailyVisits,
                                     (SELECT COUNT(*) FROM Transactions) / GREATEST((SELECT COUNT(*) FROM Members), 1) as BooksPerMember,
                                     (SELECT AVG(DATEDIFF(COALESCE(ReturnDate, NOW()), BorrowDate)) FROM Transactions WHERE ReturnDate IS NOT NULL) as AvgPeriod,
@@ -739,7 +672,6 @@ namespace Project5LMS.Forms.Admin.Reports
             }
             return stats;
         }
-
         private void LoadNewMemberRegistrations()
         {
             try
@@ -747,10 +679,8 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    // Check if MemberType or Type column exists
                     bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
                     bool hasType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Type");
-                    
                     string typeColumn;
                     if (hasMemberType)
                     {
@@ -764,8 +694,7 @@ namespace Project5LMS.Forms.Admin.Reports
                     {
                         typeColumn = "'N/A'";
                     }
-                    
-                    string query = $@"SELECT 
+                    string query = $@"SELECT
                                     MemberID as 'MEMBER ID',
                                     CONCAT(FirstName, ' ', LastName) as 'NAME',
                                     {typeColumn} as 'MEMBER TYPE',
@@ -793,7 +722,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 MessageBox.Show($"Error loading new member registrations: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
         private void LoadMostBorrowedBooks()
         {
             try
@@ -801,8 +729,7 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    // MySQL doesn't support ROW_NUMBER() in older versions, use alternative
-                    string query = @"SELECT 
+                    string query = @"SELECT
                                     @row_number := @row_number + 1 as '#',
                                     b.Title as 'TITLE',
                                     b.Author as 'AUTHOR',
@@ -830,13 +757,12 @@ namespace Project5LMS.Forms.Admin.Reports
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading most borrowed books: {ex.Message}");
-                // Try simpler query without ROW_NUMBER
                 try
                 {
                     using (var conn = _dbContext.GetConnection())
                     {
                         conn.Open();
-                        string simpleQuery = @"SELECT 
+                        string simpleQuery = @"SELECT
                                             b.Title as 'TITLE',
                                             b.Author as 'AUTHOR',
                                             COUNT(*) as 'TIMES BORROWED'
@@ -865,7 +791,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 }
             }
         }
-
         private void LoadOverdueBooksReport()
         {
             try
@@ -873,7 +798,7 @@ namespace Project5LMS.Forms.Admin.Reports
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT 
+                    string query = @"SELECT
                                     m.MemberID as 'MEMBER ID',
                                     CONCAT(m.FirstName, ' ', m.LastName) as 'MEMBER NAME',
                                     COUNT(*) as 'OVERDUE BOOKS',
@@ -881,7 +806,7 @@ namespace Project5LMS.Forms.Admin.Reports
                                     COALESCE(SUM(t.Fine), 0) as 'FINE AMOUNT'
                                     FROM Transactions t
                                     INNER JOIN Members m ON t.MemberID = m.MemberID
-                                    WHERE t.Status = 'Borrowed' 
+                                    WHERE t.Status = 'Borrowed'
                                     AND t.ReturnDate IS NULL
                                     AND t.DueDate < NOW()
                                     GROUP BY m.MemberID, m.FirstName, m.LastName
@@ -908,12 +833,10 @@ namespace Project5LMS.Forms.Admin.Reports
                 MessageBox.Show($"Error loading overdue books report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
         private void DrawLineChart(Graphics g, Panel panel, string title, Dictionary<DateTime, int> data1, Dictionary<DateTime, int> data2)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(panel.BackColor);
-
             int padding = 60;
             int chartWidth = panel.Width - (padding * 2);
             int chartHeight = panel.Height - (padding * 2) - 60;
@@ -921,24 +844,19 @@ namespace Project5LMS.Forms.Admin.Reports
             int startY = padding;
             int endX = panel.Width - padding;
             int endY = panel.Height - padding - 60;
-
             using (Font titleFont = new Font("Segoe UI", 14F, FontStyle.Bold))
             {
                 g.DrawString(title, titleFont, Brushes.Black, startX, 10);
             }
-
             var allDates = data1.Keys.Union(data2.Keys).OrderBy(d => d).ToList();
             if (allDates.Count == 0) return;
-
             int maxValue = Math.Max(
                 data1.Values.DefaultIfEmpty(0).Max(),
                 data2.Values.DefaultIfEmpty(0).Max()
             );
             maxValue = Math.Max(maxValue, 1);
-
             g.DrawLine(Pens.LightGray, startX, startY, startX, endY);
             g.DrawLine(Pens.LightGray, startX, endY, endX, endY);
-
             int gridLines = 5;
             for (int i = 0; i <= gridLines; i++)
             {
@@ -947,13 +865,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 int value = (int)(maxValue * i / gridLines);
                 g.DrawString(value.ToString(), new Font("Segoe UI", 9F), Brushes.Gray, 5, y - 10);
             }
-
             if (allDates.Count > 1)
             {
                 float stepX = (float)chartWidth / (allDates.Count - 1);
                 PointF[] points1 = new PointF[allDates.Count];
                 PointF[] points2 = new PointF[allDates.Count];
-
                 for (int i = 0; i < allDates.Count; i++)
                 {
                     float x = startX + i * stepX;
@@ -961,16 +877,13 @@ namespace Project5LMS.Forms.Admin.Reports
                     float y2 = endY - (data2.ContainsKey(allDates[i]) ? (float)data2[allDates[i]] / maxValue * chartHeight : 0);
                     points1[i] = new PointF(x, y1);
                     points2[i] = new PointF(x, y2);
-
                     string dateLabel = allDates[i].ToString("MM-dd");
                     g.DrawString(dateLabel, new Font("Segoe UI", 8F), Brushes.Gray, x - 15, endY + 5);
                 }
-
                 if (points1.Length > 1)
                 {
                     g.DrawLines(new Pen(Color.FromArgb(13, 110, 253), 2), points1);
                     g.DrawLines(new Pen(Color.FromArgb(40, 167, 69), 2), points2);
-
                     foreach (var point in points1)
                     {
                         g.FillEllipse(Brushes.Blue, point.X - 4, point.Y - 4, 8, 8);
@@ -981,19 +894,16 @@ namespace Project5LMS.Forms.Admin.Reports
                     }
                 }
             }
-
             int legendY = panel.Height - 50;
             g.FillEllipse(Brushes.Blue, startX, legendY, 10, 10);
             g.DrawString("Borrowed", new Font("Segoe UI", 9F), Brushes.Black, startX + 15, legendY - 2);
             g.FillEllipse(Brushes.Green, startX + 100, legendY, 10, 10);
             g.DrawString("Returned", new Font("Segoe UI", 9F), Brushes.Black, startX + 115, legendY - 2);
         }
-
         private void DrawBarChart(Graphics g, Panel panel, string title, Dictionary<string, int> data)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(panel.BackColor);
-
             int padding = 60;
             int chartWidth = panel.Width - (padding * 2);
             int chartHeight = panel.Height - (padding * 2) - 60;
@@ -1001,20 +911,15 @@ namespace Project5LMS.Forms.Admin.Reports
             int startY = padding;
             int endX = panel.Width - padding;
             int endY = panel.Height - padding - 60;
-
             using (Font titleFont = new Font("Segoe UI", 14F, FontStyle.Bold))
             {
                 g.DrawString(title, titleFont, Brushes.Black, startX, 10);
             }
-
             if (data.Count == 0) return;
-
             int maxValue = data.Values.DefaultIfEmpty(0).Max();
             maxValue = Math.Max(maxValue, 1);
-
             g.DrawLine(Pens.LightGray, startX, startY, startX, endY);
             g.DrawLine(Pens.LightGray, startX, endY, endX, endY);
-
             int gridLines = 5;
             for (int i = 0; i <= gridLines; i++)
             {
@@ -1023,32 +928,26 @@ namespace Project5LMS.Forms.Admin.Reports
                 int value = (int)(maxValue * i / gridLines);
                 g.DrawString(value.ToString(), new Font("Segoe UI", 9F), Brushes.Gray, 5, y - 10);
             }
-
             var items = data.OrderByDescending(x => x.Value).ToList();
             float barWidth = (float)chartWidth / items.Count - 20;
             float stepX = (float)chartWidth / items.Count;
             Color barColor = title.Contains("Category") ? Color.FromArgb(13, 110, 253) : Color.FromArgb(128, 0, 128);
-
             for (int i = 0; i < items.Count; i++)
             {
                 float x = startX + i * stepX + 10;
                 float barHeight = (float)items[i].Value / maxValue * chartHeight;
                 float y = endY - barHeight;
-
                 g.FillRectangle(new SolidBrush(barColor), x, y, barWidth, barHeight);
                 g.DrawRectangle(Pens.DarkBlue, x, y, barWidth, barHeight);
-
                 g.DrawString(items[i].Value.ToString(), new Font("Segoe UI", 9F), Brushes.Black, x + barWidth / 2 - 10, y - 20);
-
                 string label = items[i].Key.Length > 10 ? items[i].Key.Substring(0, 10) + "..." : items[i].Key;
                 g.DrawString(label, new Font("Segoe UI", 9F), Brushes.Black, x, endY + 5);
             }
         }
-
         private bool CheckTableExists(MySqlConnection conn, string tableName)
         {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                           WHERE TABLE_SCHEMA = DATABASE() 
+            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                           WHERE TABLE_SCHEMA = DATABASE()
                            AND TABLE_NAME = @TableName";
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
@@ -1056,12 +955,11 @@ namespace Project5LMS.Forms.Admin.Reports
                 return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
             }
         }
-
         private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
         {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                           WHERE TABLE_SCHEMA = DATABASE() 
-                           AND TABLE_NAME = @TableName 
+            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                           WHERE TABLE_SCHEMA = DATABASE()
+                           AND TABLE_NAME = @TableName
                            AND COLUMN_NAME = @ColumnName";
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
@@ -1070,7 +968,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
             }
         }
-
         private void btnExportReport_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog
@@ -1078,7 +975,6 @@ namespace Project5LMS.Forms.Admin.Reports
                 Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
                 FileName = $"{currentReportType}Report_{DateTime.Now:yyyyMMdd}.csv"
             };
-
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -1087,14 +983,12 @@ namespace Project5LMS.Forms.Admin.Reports
                     {
                         DataTable dt = (DataTable)dataGridViewReports.DataSource;
                         System.IO.StreamWriter sw = new System.IO.StreamWriter(saveDialog.FileName, false, System.Text.Encoding.UTF8);
-
                         for (int i = 0; i < dt.Columns.Count; i++)
                         {
                             sw.Write(dt.Columns[i].ColumnName);
                             if (i < dt.Columns.Count - 1) sw.Write(",");
                         }
                         sw.WriteLine();
-
                         foreach (DataRow row in dt.Rows)
                         {
                             for (int i = 0; i < dt.Columns.Count; i++)
@@ -1104,7 +998,6 @@ namespace Project5LMS.Forms.Admin.Reports
                             }
                             sw.WriteLine();
                         }
-
                         sw.Close();
                         MessageBox.Show("Report exported successfully!", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -1119,10 +1012,8 @@ namespace Project5LMS.Forms.Admin.Reports
                 }
             }
         }
-
         private void lblSubtitle_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

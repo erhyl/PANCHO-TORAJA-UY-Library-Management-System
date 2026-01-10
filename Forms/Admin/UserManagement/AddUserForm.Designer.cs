@@ -1,9 +1,8 @@
-namespace Project5LMS.Forms.Admin.UserManagement
+﻿namespace Project5LMS.Forms.Admin.UserManagement
 {
     partial class AddUserForm
     {
         private System.ComponentModel.IContainer components = null;
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel panelFormContent;
@@ -22,16 +21,13 @@ namespace Project5LMS.Forms.Admin.UserManagement
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -56,9 +52,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.panelButtons.SuspendLayout();
             this.panelFormContent.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.BackColor = System.Drawing.Color.White;
             this.panelMainContainer.Controls.Add(this.panelButtons);
             this.panelMainContainer.Controls.Add(this.panelFormContent);
@@ -71,9 +64,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(500, 550);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelButtons
-            // 
             this.panelButtons.Controls.Add(this.btnCancel);
             this.panelButtons.Controls.Add(this.btnSave);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -82,9 +72,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(420, 50);
             this.panelButtons.TabIndex = 2;
-            // 
-            // btnCancel
-            // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCancel.FlatAppearance.BorderSize = 0;
@@ -99,9 +86,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnSave
-            // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSave.FlatAppearance.BorderSize = 0;
@@ -116,9 +100,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // panelFormContent
-            // 
             this.panelFormContent.Controls.Add(this.cmbRole);
             this.panelFormContent.Controls.Add(this.lblRole);
             this.panelFormContent.Controls.Add(this.txtConfirmPassword);
@@ -137,9 +118,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.panelFormContent.Name = "panelFormContent";
             this.panelFormContent.Size = new System.Drawing.Size(420, 384);
             this.panelFormContent.TabIndex = 1;
-            // 
-            // cmbRole
-            // 
             this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbRole.FormattingEnabled = true;
@@ -152,9 +130,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.cmbRole.Name = "cmbRole";
             this.cmbRole.Size = new System.Drawing.Size(420, 30);
             this.cmbRole.TabIndex = 5;
-            // 
-            // lblRole
-            // 
             this.lblRole.AutoSize = true;
             this.lblRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -164,9 +139,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblRole.Size = new System.Drawing.Size(47, 24);
             this.lblRole.TabIndex = 11;
             this.lblRole.Text = "Role";
-            // 
-            // txtConfirmPassword
-            // 
             this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(0, 303);
@@ -175,9 +147,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.txtConfirmPassword.PasswordChar = '*';
             this.txtConfirmPassword.Size = new System.Drawing.Size(420, 28);
             this.txtConfirmPassword.TabIndex = 4;
-            // 
-            // lblConfirmPassword
-            // 
             this.lblConfirmPassword.AutoSize = true;
             this.lblConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConfirmPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -187,9 +156,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblConfirmPassword.Size = new System.Drawing.Size(155, 24);
             this.lblConfirmPassword.TabIndex = 9;
             this.lblConfirmPassword.Text = "Confirm Password";
-            // 
-            // txtPassword
-            // 
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(0, 234);
@@ -198,9 +164,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(420, 28);
             this.txtPassword.TabIndex = 3;
-            // 
-            // lblPassword
-            // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -210,9 +173,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblPassword.Size = new System.Drawing.Size(92, 24);
             this.lblPassword.TabIndex = 7;
             this.lblPassword.Text = "Password";
-            // 
-            // txtEmail
-            // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmail.Location = new System.Drawing.Point(0, 165);
@@ -220,9 +180,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(420, 28);
             this.txtEmail.TabIndex = 2;
-            // 
-            // lblEmail
-            // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -232,9 +189,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblEmail.Size = new System.Drawing.Size(57, 24);
             this.lblEmail.TabIndex = 5;
             this.lblEmail.Text = "Email";
-            // 
-            // txtLastName
-            // 
             this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLastName.Location = new System.Drawing.Point(0, 96);
@@ -242,9 +196,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(420, 28);
             this.txtLastName.TabIndex = 1;
-            // 
-            // lblLastName
-            // 
             this.lblLastName.AutoSize = true;
             this.lblLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -254,9 +205,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblLastName.Size = new System.Drawing.Size(99, 24);
             this.lblLastName.TabIndex = 3;
             this.lblLastName.Text = "Last Name";
-            // 
-            // txtFirstName
-            // 
             this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFirstName.Location = new System.Drawing.Point(0, 28);
@@ -264,9 +212,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(420, 28);
             this.txtFirstName.TabIndex = 0;
-            // 
-            // lblFirstName
-            // 
             this.lblFirstName.AutoSize = true;
             this.lblFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFirstName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -276,9 +221,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblFirstName.Size = new System.Drawing.Size(99, 24);
             this.lblFirstName.TabIndex = 1;
             this.lblFirstName.Text = "First Name";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -288,9 +230,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.lblTitle.Size = new System.Drawing.Size(140, 31);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Add User";
-            // 
-            // AddUserForm
-            // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -310,10 +249,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             this.panelFormContent.ResumeLayout(false);
             this.panelFormContent.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
     }
 }
-

@@ -1,21 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
 using Project5LMS.Data;
 using Project5LMS.Models;
-
 namespace Project5LMS.Repositories
 {
     public class BookCopyRepository : IBookCopyRepository
     {
         private readonly DatabaseContext _dbContext;
-
         public BookCopyRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public BookCopy GetById(int copyId)
         {
             try
@@ -45,7 +42,6 @@ namespace Project5LMS.Repositories
             }
             return null;
         }
-
         public BookCopy GetByAccessionNumber(string accessionNumber)
         {
             try
@@ -75,7 +71,6 @@ namespace Project5LMS.Repositories
             }
             return null;
         }
-
         public IEnumerable<BookCopy> GetByBookId(int bookId)
         {
             List<BookCopy> copies = new List<BookCopy>();
@@ -106,7 +101,6 @@ namespace Project5LMS.Repositories
             }
             return copies;
         }
-
         public IEnumerable<BookCopy> GetByStatus(string status)
         {
             List<BookCopy> copies = new List<BookCopy>();
@@ -137,7 +131,6 @@ namespace Project5LMS.Repositories
             }
             return copies;
         }
-
         public bool Add(BookCopy copy)
         {
             try
@@ -161,7 +154,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Update(BookCopy copy)
         {
             try
@@ -169,7 +161,7 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"UPDATE BookCopies SET BookID=@BookID, AccessionNumber=@AccessionNumber, 
+                    string query = @"UPDATE BookCopies SET BookID=@BookID, AccessionNumber=@AccessionNumber,
                                     Barcode=@Barcode, CopyStatus=@CopyStatus, Location=@Location, Notes=@Notes,
                                     LastCheckedOut=@LastCheckedOut, LastReturned=@LastReturned, ModifiedDate=@ModifiedDate
                                     WHERE CopyID=@CopyID";
@@ -189,7 +181,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Delete(int copyId)
         {
             try
@@ -212,7 +203,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool UpdateStatus(int copyId, string status)
         {
             try
@@ -237,7 +227,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         private BookCopy MapDataRowToCopy(DataRow row)
         {
             return new BookCopy
@@ -255,7 +244,6 @@ namespace Project5LMS.Repositories
                 ModifiedDate = row["ModifiedDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["ModifiedDate"]) : null
             };
         }
-
         private void MapCopyToParameters(MySqlCommand cmd, BookCopy copy)
         {
             cmd.Parameters.AddWithValue("@BookID", copy.BookID);
@@ -270,4 +258,3 @@ namespace Project5LMS.Repositories
         }
     }
 }
-

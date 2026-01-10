@@ -1,20 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Services
 {
     public class SettingsService : ISettingsService
     {
         private readonly DatabaseContext _dbContext;
-
         public SettingsService(DatabaseContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public string GetSetting(string key, string defaultValue = "")
         {
             try
@@ -36,12 +33,11 @@ namespace Project5LMS.Services
                 return defaultValue;
             }
         }
-
         public bool SaveSetting(string key, string value, string category = "General")
         {
             try
             {
-                string query = @"INSERT INTO Settings (SettingKey, SettingValue, Category) 
+                string query = @"INSERT INTO Settings (SettingKey, SettingValue, Category)
                                VALUES (@Key, @Value, @Category)
                                ON DUPLICATE KEY UPDATE SettingValue = @Value, Category = @Category";
                 using (var conn = _dbContext.GetConnection())
@@ -63,7 +59,6 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public Dictionary<string, string> GetSettingsByCategory(string category)
         {
             var settings = new Dictionary<string, string>();
@@ -91,7 +86,6 @@ namespace Project5LMS.Services
             catch { }
             return settings;
         }
-
         public bool EnsureSettingsTableExists()
         {
             try
@@ -99,8 +93,8 @@ namespace Project5LMS.Services
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Settings'";
                     using (var checkCmd = new MySql.Data.MySqlClient.MySqlCommand(checkTableQuery, conn))
                     {
@@ -126,4 +120,3 @@ namespace Project5LMS.Services
         }
     }
 }
-

@@ -1,44 +1,36 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using Project5LMS.Models;
 using Project5LMS.Data;
 using Project5LMS.Helpers;
 using Project5LMS.Interfaces;
 using System;
 using System.Linq;
-
 namespace Project5LMS.Services
 {
     public class UserService : IUserService
     {
         private readonly DatabaseContext _db;
-
         public UserService(DatabaseContext dbContext)
         {
             _db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public User Login(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
                 return null;
-
             try
             {
                 using (var conn = _db.GetConnection())
                 {
                     conn.Open();
-
                     string query = "SELECT UserID, Email, PasswordHash, FirstName, LastName, Role FROM Users WHERE Email = @email LIMIT 1";
-
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@email", email);
-
                         using (var reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-
                                 string storedHash = string.Empty;
                                 try
                                 {
@@ -50,19 +42,14 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-
                                     return null;
                                 }
-
                                 if (!PasswordHasher.Verify(password, storedHash))
                                 {
-
                                     return null;
                                 }
-
                                 string firstName = string.Empty;
                                 string lastName = string.Empty;
-
                                 try
                                 {
                                     int firstNameOrdinal = reader.GetOrdinal("FirstName");
@@ -73,9 +60,7 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-
                                 }
-
                                 try
                                 {
                                     int lastNameOrdinal = reader.GetOrdinal("LastName");
@@ -86,9 +71,7 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-
                                 }
-
                                 string emailValue = string.Empty;
                                 try
                                 {
@@ -96,18 +79,15 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-
                                     try
                                     {
                                         emailValue = reader.GetString("Username");
                                     }
-                                    catch 
-                                    { 
-
+                                    catch
+                                    {
                                         return null;
                                     }
                                 }
-
                                 string role = string.Empty;
                                 try
                                 {
@@ -115,10 +95,8 @@ namespace Project5LMS.Services
                                 }
                                 catch
                                 {
-
                                     return null;
                                 }
-
                                 return new User()
                                 {
                                     UserID = reader.GetInt32("UserID"),
@@ -134,13 +112,10 @@ namespace Project5LMS.Services
             }
             catch (Exception ex)
             {
-
                 System.Diagnostics.Debug.WriteLine($"Login error: {ex.Message}");
                 return null;
             }
-
             return null;
         }
     }
 }
-

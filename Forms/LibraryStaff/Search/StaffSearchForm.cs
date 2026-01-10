@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -13,7 +13,6 @@ using Project5LMS.Forms.LibraryStaff.Catalog;
 using Project5LMS.Forms.LibraryStaff.Members;
 using Project5LMS.Forms.Admin.Catalog;
 using Project5LMS.Forms.Admin.Members;
-
 namespace Project5LMS.Forms.LibraryStaff.Search
 {
     public partial class StaffSearchForm : Form
@@ -22,21 +21,17 @@ namespace Project5LMS.Forms.LibraryStaff.Search
         private string currentFilter = "All";
         private List<string> quickSearchExamples = new List<string> { "The Great Gatsby", "Orwell", "978-0", "Sarah Johnson", "M1001", "Fiction" };
         private readonly ISearchService _searchService;
-
         public StaffSearchForm()
         {
             InitializeComponent();
             _searchService = ServiceFactory.CreateSearchService();
         }
-
         private void StaffSearchForm_Load(object sender, EventArgs e)
         {
             SetupQuickSearchExamples();
             panelResults.Visible = false;
-
             SetActiveFilter(btnAll);
         }
-
         private void SetupQuickSearchExamples()
         {
             flowLayoutExamples.Controls.Clear();
@@ -59,14 +54,12 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 flowLayoutExamples.Controls.Add(btnExample);
             }
         }
-
         private void QuickSearchExample_Click(string searchText)
         {
             txtSearch.Text = searchText;
             txtSearch.ForeColor = Color.Black;
             PerformSearch();
         }
-
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (txtSearch.Text == "Search by title, author, ISBN, member name, email, or ID...")
@@ -75,7 +68,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 txtSearch.ForeColor = Color.Black;
             }
         }
-
         private void txtSearch_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
@@ -84,7 +76,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 txtSearch.ForeColor = Color.Gray;
             }
         }
-
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -93,12 +84,10 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 e.SuppressKeyPress = true;
             }
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             PerformSearch();
         }
-
         private void btnAll_Click(object sender, EventArgs e)
         {
             SetActiveFilter(btnAll);
@@ -108,7 +97,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 PerformSearch();
             }
         }
-
         private void btnBooksOnly_Click(object sender, EventArgs e)
         {
             SetActiveFilter(btnBooksOnly);
@@ -118,7 +106,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 PerformSearch();
             }
         }
-
         private void btnMembersOnly_Click(object sender, EventArgs e)
         {
             SetActiveFilter(btnMembersOnly);
@@ -128,21 +115,17 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 PerformSearch();
             }
         }
-
         private void SetActiveFilter(Button activeButton)
         {
-
             btnAll.BackColor = Color.Transparent;
             btnAll.ForeColor = Color.FromArgb(128, 128, 128);
             btnBooksOnly.BackColor = Color.Transparent;
             btnBooksOnly.ForeColor = Color.FromArgb(128, 128, 128);
             btnMembersOnly.BackColor = Color.Transparent;
             btnMembersOnly.ForeColor = Color.FromArgb(128, 128, 128);
-
             activeButton.BackColor = Color.FromArgb(178, 34, 34);
             activeButton.ForeColor = Color.White;
         }
-
         private void PerformSearch()
         {
             string searchText = txtSearch.Text.Trim();
@@ -151,14 +134,11 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 MessageBox.Show("Please enter a search term.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
             try
             {
                 string searchIn = currentFilter == "Books" ? "Books" : (currentFilter == "Members" ? "Members" : "All");
                 string category = "";
-                
                 SearchResults results;
-                
                 if (searchIn == "Books")
                 {
                     results = _searchService.SearchBooks(searchText);
@@ -171,13 +151,11 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 {
                     results = _searchService.SearchAll(searchText);
                 }
-
                 if (category != null && results.Books != null)
                 {
                     results.Books = results.Books.Where(b => b.Category == category).ToList();
                     results.TotalResults = results.Books.Count + results.Members.Count;
                 }
-
                 searchResults = ConvertSearchResultsToDataTable(results);
                 DisplaySearchResults();
             }
@@ -187,7 +165,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 System.Diagnostics.Debug.WriteLine($"Search error: {ex.Message}");
             }
         }
-
         private DataTable ConvertSearchResultsToDataTable(SearchResults results)
         {
             DataTable dt = new DataTable();
@@ -201,7 +178,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
             dt.Columns.Add("MemberID", typeof(int));
             dt.Columns.Add("MemberName", typeof(string));
             dt.Columns.Add("MemberType", typeof(string));
-
             foreach (var book in results.Books)
             {
                 DataRow row = dt.NewRow();
@@ -217,7 +193,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 row["MemberType"] = DBNull.Value;
                 dt.Rows.Add(row);
             }
-
             foreach (var member in results.Members)
             {
                 DataRow row = dt.NewRow();
@@ -233,17 +208,14 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 row["MemberType"] = member.Type;
                 dt.Rows.Add(row);
             }
-
             return dt;
         }
-
         private string BuildSearchQuery(string filter, string searchText)
         {
             List<string> queries = new List<string>();
-
             if (filter == "All" || filter == "Books")
             {
-                string bookQuery = @"SELECT 
+                string bookQuery = @"SELECT
                                     'Book' as Type,
                                     b.BookID as ID,
                                     b.Title as Title,
@@ -255,17 +227,16 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                                     NULL as MemberName,
                                     NULL as MemberType
                                     FROM Books b
-                                    WHERE (b.Title LIKE @SearchText 
-                                    OR b.Author LIKE @SearchText 
-                                    OR b.ISBN LIKE @SearchText 
+                                    WHERE (b.Title LIKE @SearchText
+                                    OR b.Author LIKE @SearchText
+                                    OR b.ISBN LIKE @SearchText
                                     OR b.AccessionNo LIKE @SearchText
                                     OR CAST(b.BookID AS CHAR) LIKE @SearchText)";
                 queries.Add(bookQuery);
             }
-
             if (filter == "All" || filter == "Members")
             {
-                string memberQuery = @"SELECT 
+                string memberQuery = @"SELECT
                                       'Member' as Type,
                                       m.MemberID as ID,
                                       CONCAT(m.FirstName, ' ', m.LastName) as Title,
@@ -277,21 +248,18 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                                       CONCAT(m.FirstName, ' ', m.LastName) as MemberName,
                                       m.Type as MemberType
                                       FROM Members m
-                                      WHERE (m.FirstName LIKE @SearchText 
-                                      OR m.LastName LIKE @SearchText 
-                                      OR m.Email LIKE @SearchText 
+                                      WHERE (m.FirstName LIKE @SearchText
+                                      OR m.LastName LIKE @SearchText
+                                      OR m.Email LIKE @SearchText
                                       OR CAST(m.MemberID AS CHAR) LIKE @SearchText)";
                 queries.Add(memberQuery);
             }
-
             if (queries.Count == 0)
             {
                 return "SELECT 'No Results' as Type, 0 as ID, 'No search criteria specified' as Title, NULL as Author, NULL as ISBN, NULL as Category, NULL as Status, NULL as MemberID, NULL as MemberName, NULL as MemberType WHERE 1=0";
             }
-
             return string.Join(" UNION ALL ", queries) + " ORDER BY Type, Title LIMIT 100";
         }
-
         private void DisplaySearchResults()
         {
             if (searchResults == null || searchResults.Rows.Count == 0)
@@ -301,13 +269,11 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 panelSearchGuidance.Visible = true;
                 return;
             }
-
             SetupResultsGrid();
             dataGridViewResults.DataSource = searchResults;
             panelResults.Visible = true;
             panelSearchGuidance.Visible = false;
         }
-
         private void SetupResultsGrid()
         {
             dataGridViewResults.AutoGenerateColumns = false;
@@ -325,7 +291,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
             dataGridViewResults.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
             dataGridViewResults.RowTemplate.Height = 40;
             dataGridViewResults.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
-
             dataGridViewResults.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Type",
@@ -333,7 +298,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 DataPropertyName = "Type",
                 Width = 80
             });
-
             dataGridViewResults.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Title",
@@ -341,7 +305,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 DataPropertyName = "Title",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
-
             dataGridViewResults.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Author",
@@ -349,7 +312,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 DataPropertyName = "Author",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
-
             dataGridViewResults.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "ISBN",
@@ -357,7 +319,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 DataPropertyName = "ISBN",
                 Width = 150
             });
-
             dataGridViewResults.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Category",
@@ -365,7 +326,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 DataPropertyName = "Category",
                 Width = 120
             });
-
             dataGridViewResults.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Status",
@@ -374,17 +334,13 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 Width = 100
             });
         }
-
         private void dataGridViewResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             DataRowView row = dataGridViewResults.Rows[e.RowIndex].DataBoundItem as DataRowView;
             if (row == null) return;
-
             string type = row["Type"]?.ToString();
             Form formToLoad = null;
-
             if (type == "Book")
             {
                 formToLoad = new AdminCatalogForm();
@@ -393,13 +349,11 @@ namespace Project5LMS.Forms.LibraryStaff.Search
             {
                 formToLoad = new AdminMembersForm();
             }
-
             if (formToLoad != null)
             {
                 LoadFormInParentPanel(formToLoad);
             }
         }
-
         private void LoadFormInParentPanel(Form formToLoad)
         {
             try
@@ -409,7 +363,6 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 {
                     parent = parent.Parent;
                 }
-
                 if (parent is Form mainForm)
                 {
                     var method = mainForm.GetType().GetMethod("LoadFormInPanel");
@@ -424,21 +377,17 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 System.Diagnostics.Debug.WriteLine($"Error loading form in panel: {ex.Message}");
             }
         }
-
         private void DrawSearchIcon(Graphics g, Panel panel, int size)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.FromArgb(128, 128, 128), 2))
             {
-
                 int circleSize = (int)(size * 0.6f);
                 int circleX = x + (size - circleSize) / 2;
                 int circleY = y + (size - circleSize) / 2;
                 g.DrawEllipse(pen, circleX, circleY, circleSize, circleSize);
-
                 float handleStartX = circleX + circleSize * 0.7f;
                 float handleStartY = circleY + circleSize * 0.7f;
                 float handleEndX = handleStartX + size * 0.3f;
@@ -446,22 +395,18 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 g.DrawLine(pen, handleStartX, handleStartY, handleEndX, handleEndY);
             }
         }
-
         private void DrawLargeSearchIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.FromArgb(200, 200, 200), 3))
             {
-
                 int circleSize = (int)(size * 0.6f);
                 int circleX = x + (size - circleSize) / 2;
                 int circleY = y + (size - circleSize) / 2;
                 g.DrawEllipse(pen, circleX, circleY, circleSize, circleSize);
-
                 float handleStartX = circleX + circleSize * 0.7f;
                 float handleStartY = circleY + circleSize * 0.7f;
                 float handleEndX = handleStartX + size * 0.3f;
@@ -469,15 +414,11 @@ namespace Project5LMS.Forms.LibraryStaff.Search
                 g.DrawLine(pen, handleStartX, handleStartY, handleEndX, handleEndY);
             }
         }
-
         private void lblQuickSearchTitle_Click(object sender, EventArgs e)
         {
-
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

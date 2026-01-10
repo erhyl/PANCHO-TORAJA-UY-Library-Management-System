@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -7,14 +7,12 @@ using System.Windows.Forms;
 using Project5LMS.Models;
 using Project5LMS.Services;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Forms.Admin.Fines
 {
     public partial class PaymentHistoryForm : Form
     {
         private readonly IPaymentService _paymentService;
         private readonly int _memberId;
-
         public PaymentHistoryForm(int memberId)
         {
             _memberId = memberId;
@@ -22,26 +20,21 @@ namespace Project5LMS.Forms.Admin.Fines
             InitializeComponent();
             LoadPaymentHistory();
         }
-
-        // Parameterless constructor for designer support
         public PaymentHistoryForm()
         {
             _memberId = 0;
-            _paymentService = null; // Will be null in designer mode
+            _paymentService = null;
             InitializeComponent();
-            // Don't load data in designer mode
             if (!this.DesignMode)
             {
                 _paymentService = ServiceFactory.CreatePaymentService();
                 LoadPaymentHistory();
             }
         }
-
         private void LoadPaymentHistory()
         {
             try
             {
-                // Load payments
                 var payments = _paymentService.GetPaymentsByMember(_memberId).ToList();
                 dgvPayments.DataSource = payments.Select(p => new
                 {
@@ -51,8 +44,6 @@ namespace Project5LMS.Forms.Admin.Fines
                     PaymentMode = p.PaymentMode ?? "Cash",
                     ProcessedBy = p.ProcessedBy ?? "System"
                 }).ToList();
-
-                // Load adjustments
                 var adjustments = _paymentService.GetAdjustmentsByMember(_memberId).ToList();
                 dgvAdjustments.DataSource = adjustments.Select(a => new
                 {
@@ -63,13 +54,10 @@ namespace Project5LMS.Forms.Admin.Fines
                     Reason = a.Reason ?? "",
                     AdjustedBy = a.AdjustedBy ?? "System"
                 }).ToList();
-
-                // Format columns
                 if (dgvPayments.Columns.Count > 0)
                 {
                     dgvPayments.Columns["AmountPaid"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 }
-
                 if (dgvAdjustments.Columns.Count > 0)
                 {
                     dgvAdjustments.Columns["OriginalAmount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -84,4 +72,3 @@ namespace Project5LMS.Forms.Admin.Fines
         }
     }
 }
-

@@ -1,9 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Project5LMS.Models;
-
 namespace Project5LMS.Repositories
 {
-
     public interface IMemberRepository
     {
         Member GetById(int memberId);

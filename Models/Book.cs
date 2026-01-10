@@ -1,11 +1,8 @@
-using System;
-
+﻿using System;
 namespace Project5LMS.Models
 {
-
     public class Book
     {
-
         public int BookID { get; set; }
         public string Title { get; set; }
         public string Subtitle { get; set; }
@@ -28,18 +25,15 @@ namespace Project5LMS.Models
         public string BookType { get; set; }
         public string CoverImagePath { get; set; }
         public string Barcode { get; set; }
-
         public bool IsAvailable => Available > 0;
-
         public bool IsValid()
         {
-            return !string.IsNullOrWhiteSpace(Title) && 
+            return !string.IsNullOrWhiteSpace(Title) &&
                    !string.IsNullOrWhiteSpace(Author) &&
                    TotalCopies > 0 &&
                    Available >= 0 &&
                    Available <= TotalCopies;
         }
-
         public static Book Create(string title, string author, int totalCopies)
         {
             var book = new Book
@@ -50,12 +44,10 @@ namespace Project5LMS.Models
                 Available = totalCopies,
                 Status = "Available"
             };
-
             if (!book.IsValid())
             {
                 throw new ArgumentException("Invalid book data");
             }
-
             return book;
         }
     }

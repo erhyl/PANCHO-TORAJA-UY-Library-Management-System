@@ -3,7 +3,6 @@
     partial class StaffDashboardForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelSidebar = new System.Windows.Forms.Panel();
@@ -74,9 +71,6 @@
             this.panelMetricTotalMembers.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelSidebar
-            // 
             this.panelSidebar.BackColor = System.Drawing.Color.Maroon;
             this.panelSidebar.Controls.Add(this.btnLogout);
             this.panelSidebar.Controls.Add(this.lblLibraryStaff);
@@ -97,9 +91,6 @@
             this.panelSidebar.Padding = new System.Windows.Forms.Padding(15, 24, 15, 24);
             this.panelSidebar.Size = new System.Drawing.Size(210, 800);
             this.panelSidebar.TabIndex = 0;
-            // 
-            // btnLogout
-            // 
             this.btnLogout.BackColor = System.Drawing.Color.Maroon;
             this.btnLogout.FlatAppearance.BorderSize = 0;
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -109,13 +100,10 @@
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(180, 37);
             this.btnLogout.TabIndex = 12;
-            this.btnLogout.Text = "🔓 Logout";
+            this.btnLogout.Text = "?? Logout";
             this.btnLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
-            // lblLibraryStaff
-            // 
             this.lblLibraryStaff.AutoSize = true;
             this.lblLibraryStaff.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLibraryStaff.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -124,17 +112,11 @@
             this.lblLibraryStaff.Size = new System.Drawing.Size(82, 19);
             this.lblLibraryStaff.TabIndex = 11;
             this.lblLibraryStaff.Text = "Library Staff";
-            // 
-            // panelSeparator
-            // 
             this.panelSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.panelSeparator.Location = new System.Drawing.Point(15, 674);
             this.panelSeparator.Name = "panelSeparator";
             this.panelSeparator.Size = new System.Drawing.Size(180, 1);
             this.panelSeparator.TabIndex = 10;
-            // 
-            // btnSearch
-            // 
             this.btnSearch.BackColor = System.Drawing.Color.Maroon;
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -144,13 +126,10 @@
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(180, 41);
             this.btnSearch.TabIndex = 9;
-            this.btnSearch.Text = "🔍 Search";
+            this.btnSearch.Text = "?? Search";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnInventory
-            // 
             this.btnInventory.BackColor = System.Drawing.Color.Maroon;
             this.btnInventory.FlatAppearance.BorderSize = 0;
             this.btnInventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -160,13 +139,10 @@
             this.btnInventory.Name = "btnInventory";
             this.btnInventory.Size = new System.Drawing.Size(180, 41);
             this.btnInventory.TabIndex = 8;
-            this.btnInventory.Text = "📦 Inventory";
+            this.btnInventory.Text = "?? Inventory";
             this.btnInventory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInventory.UseVisualStyleBackColor = false;
             this.btnInventory.Click += new System.EventHandler(this.btnInventory_Click);
-            // 
-            // btnFines
-            // 
             this.btnFines.BackColor = System.Drawing.Color.Maroon;
             this.btnFines.FlatAppearance.BorderSize = 0;
             this.btnFines.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -176,13 +152,10 @@
             this.btnFines.Name = "btnFines";
             this.btnFines.Size = new System.Drawing.Size(180, 41);
             this.btnFines.TabIndex = 7;
-            this.btnFines.Text = "💰 Fines";
+            this.btnFines.Text = "?? Fines";
             this.btnFines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFines.UseVisualStyleBackColor = false;
             this.btnFines.Click += new System.EventHandler(this.btnFines_Click);
-            // 
-            // btnReservations
-            // 
             this.btnReservations.BackColor = System.Drawing.Color.Maroon;
             this.btnReservations.FlatAppearance.BorderSize = 0;
             this.btnReservations.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -192,13 +165,10 @@
             this.btnReservations.Name = "btnReservations";
             this.btnReservations.Size = new System.Drawing.Size(180, 41);
             this.btnReservations.TabIndex = 6;
-            this.btnReservations.Text = "📅 Reservations";
+            this.btnReservations.Text = "?? Reservations";
             this.btnReservations.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReservations.UseVisualStyleBackColor = false;
             this.btnReservations.Click += new System.EventHandler(this.btnReservations_Click);
-            // 
-            // btnCirculation
-            // 
             this.btnCirculation.BackColor = System.Drawing.Color.Maroon;
             this.btnCirculation.FlatAppearance.BorderSize = 0;
             this.btnCirculation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -208,13 +178,10 @@
             this.btnCirculation.Name = "btnCirculation";
             this.btnCirculation.Size = new System.Drawing.Size(180, 41);
             this.btnCirculation.TabIndex = 5;
-            this.btnCirculation.Text = "🔄 Circulation";
+            this.btnCirculation.Text = "?? Circulation";
             this.btnCirculation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCirculation.UseVisualStyleBackColor = false;
             this.btnCirculation.Click += new System.EventHandler(this.btnCirculation_Click);
-            // 
-            // btnCatalog
-            // 
             this.btnCatalog.BackColor = System.Drawing.Color.Maroon;
             this.btnCatalog.FlatAppearance.BorderSize = 0;
             this.btnCatalog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -224,13 +191,10 @@
             this.btnCatalog.Name = "btnCatalog";
             this.btnCatalog.Size = new System.Drawing.Size(180, 41);
             this.btnCatalog.TabIndex = 4;
-            this.btnCatalog.Text = "📖 Catalog";
+            this.btnCatalog.Text = "?? Catalog";
             this.btnCatalog.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCatalog.UseVisualStyleBackColor = false;
             this.btnCatalog.Click += new System.EventHandler(this.btnCatalog_Click);
-            // 
-            // btnMembers
-            // 
             this.btnMembers.BackColor = System.Drawing.Color.Maroon;
             this.btnMembers.FlatAppearance.BorderSize = 0;
             this.btnMembers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -240,13 +204,10 @@
             this.btnMembers.Name = "btnMembers";
             this.btnMembers.Size = new System.Drawing.Size(180, 41);
             this.btnMembers.TabIndex = 3;
-            this.btnMembers.Text = "👥 Members";
+            this.btnMembers.Text = "?? Members";
             this.btnMembers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMembers.UseVisualStyleBackColor = false;
             this.btnMembers.Click += new System.EventHandler(this.btnMembers_Click);
-            // 
-            // btnDashboard
-            // 
             this.btnDashboard.BackColor = System.Drawing.Color.Maroon;
             this.btnDashboard.FlatAppearance.BorderSize = 0;
             this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -256,13 +217,10 @@
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(180, 41);
             this.btnDashboard.TabIndex = 2;
-            this.btnDashboard.Text = "🏠 Dashboard";
+            this.btnDashboard.Text = "?? Dashboard";
             this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDashboard.UseVisualStyleBackColor = false;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
-            // 
-            // lblSubtitleSidebar
-            // 
             this.lblSubtitleSidebar.AutoSize = true;
             this.lblSubtitleSidebar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitleSidebar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -272,9 +230,6 @@
             this.lblSubtitleSidebar.TabIndex = 1;
             this.lblSubtitleSidebar.Text = "Management System";
             this.lblSubtitleSidebar.Click += new System.EventHandler(this.lblSubtitleSidebar_Click);
-            // 
-            // lblTitleSidebar
-            // 
             this.lblTitleSidebar.AutoSize = true;
             this.lblTitleSidebar.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitleSidebar.ForeColor = System.Drawing.Color.White;
@@ -283,9 +238,6 @@
             this.lblTitleSidebar.Size = new System.Drawing.Size(149, 32);
             this.lblTitleSidebar.TabIndex = 0;
             this.lblTitleSidebar.Text = "UM Library ";
-            // 
-            // panelMainContent
-            // 
             this.panelMainContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContent.Controls.Add(this.panelMainContainer);
             this.panelMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -294,9 +246,6 @@
             this.panelMainContent.Name = "panelMainContent";
             this.panelMainContent.Size = new System.Drawing.Size(990, 800);
             this.panelMainContent.TabIndex = 1;
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelBottomSection);
@@ -309,9 +258,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelMainContainer.Size = new System.Drawing.Size(990, 800);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelBottomSection
-            // 
             this.panelBottomSection.Controls.Add(this.panelOverdueBooks);
             this.panelBottomSection.Controls.Add(this.panelRecentActivity);
             this.panelBottomSection.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -320,9 +266,6 @@
             this.panelBottomSection.Name = "panelBottomSection";
             this.panelBottomSection.Size = new System.Drawing.Size(960, 510);
             this.panelBottomSection.TabIndex = 2;
-            // 
-            // panelOverdueBooks
-            // 
             this.panelOverdueBooks.BackColor = System.Drawing.Color.White;
             this.panelOverdueBooks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOverdueBooks.Controls.Add(this.panelOverdueBooksList);
@@ -333,9 +276,6 @@
             this.panelOverdueBooks.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelOverdueBooks.Size = new System.Drawing.Size(477, 510);
             this.panelOverdueBooks.TabIndex = 1;
-            // 
-            // panelOverdueBooksList
-            // 
             this.panelOverdueBooksList.AutoScroll = true;
             this.panelOverdueBooksList.Controls.Add(this.lblOverdueBooksTitle);
             this.panelOverdueBooksList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -344,9 +284,6 @@
             this.panelOverdueBooksList.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panelOverdueBooksList.Size = new System.Drawing.Size(445, 476);
             this.panelOverdueBooksList.TabIndex = 0;
-            // 
-            // lblOverdueBooksTitle
-            // 
             this.lblOverdueBooksTitle.AutoSize = true;
             this.lblOverdueBooksTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOverdueBooksTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -354,10 +291,7 @@
             this.lblOverdueBooksTitle.Name = "lblOverdueBooksTitle";
             this.lblOverdueBooksTitle.Size = new System.Drawing.Size(175, 25);
             this.lblOverdueBooksTitle.TabIndex = 1;
-            this.lblOverdueBooksTitle.Text = "⚠️ Overdue Books";
-            // 
-            // panelRecentActivity
-            // 
+            this.lblOverdueBooksTitle.Text = "?? Overdue Books";
             this.panelRecentActivity.BackColor = System.Drawing.Color.White;
             this.panelRecentActivity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelRecentActivity.Controls.Add(this.lblRecentActivityTitle);
@@ -369,9 +303,6 @@
             this.panelRecentActivity.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelRecentActivity.Size = new System.Drawing.Size(960, 510);
             this.panelRecentActivity.TabIndex = 0;
-            // 
-            // lblRecentActivityTitle
-            // 
             this.lblRecentActivityTitle.AutoSize = true;
             this.lblRecentActivityTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -380,9 +311,6 @@
             this.lblRecentActivityTitle.Size = new System.Drawing.Size(143, 25);
             this.lblRecentActivityTitle.TabIndex = 1;
             this.lblRecentActivityTitle.Text = "Recent Activity";
-            // 
-            // listViewRecentActivity
-            // 
             this.listViewRecentActivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewRecentActivity.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewRecentActivity.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -396,9 +324,6 @@
             this.listViewRecentActivity.TabIndex = 0;
             this.listViewRecentActivity.UseCompatibleStateImageBehavior = false;
             this.listViewRecentActivity.View = System.Windows.Forms.View.Details;
-            // 
-            // panelMetricsContainer
-            // 
             this.panelMetricsContainer.Controls.Add(this.panelMetricPendingFines);
             this.panelMetricsContainer.Controls.Add(this.panelMetricActiveLoans);
             this.panelMetricsContainer.Controls.Add(this.panelMetricBooksCatalog);
@@ -409,9 +334,6 @@
             this.panelMetricsContainer.Name = "panelMetricsContainer";
             this.panelMetricsContainer.Size = new System.Drawing.Size(960, 179);
             this.panelMetricsContainer.TabIndex = 1;
-            // 
-            // panelMetricPendingFines
-            // 
             this.panelMetricPendingFines.BackColor = System.Drawing.Color.White;
             this.panelMetricPendingFines.Controls.Add(this.lblPendingFinesChange);
             this.panelMetricPendingFines.Controls.Add(this.lblPendingFinesValue);
@@ -421,9 +343,6 @@
             this.panelMetricPendingFines.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelMetricPendingFines.Size = new System.Drawing.Size(236, 163);
             this.panelMetricPendingFines.TabIndex = 3;
-            // 
-            // lblPendingFinesChange
-            // 
             this.lblPendingFinesChange.AutoSize = true;
             this.lblPendingFinesChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPendingFinesChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
@@ -432,9 +351,6 @@
             this.lblPendingFinesChange.Size = new System.Drawing.Size(34, 19);
             this.lblPendingFinesChange.TabIndex = 2;
             this.lblPendingFinesChange.Text = "-5%";
-            // 
-            // lblPendingFinesValue
-            // 
             this.lblPendingFinesValue.AutoSize = true;
             this.lblPendingFinesValue.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPendingFinesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -443,9 +359,6 @@
             this.lblPendingFinesValue.Size = new System.Drawing.Size(142, 51);
             this.lblPendingFinesValue.TabIndex = 1;
             this.lblPendingFinesValue.Text = "$1,240";
-            // 
-            // lblPendingFinesTitle
-            // 
             this.lblPendingFinesTitle.AutoSize = true;
             this.lblPendingFinesTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPendingFinesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -453,10 +366,7 @@
             this.lblPendingFinesTitle.Name = "lblPendingFinesTitle";
             this.lblPendingFinesTitle.Size = new System.Drawing.Size(144, 21);
             this.lblPendingFinesTitle.TabIndex = 0;
-            this.lblPendingFinesTitle.Text = "💰 Pending Fines";
-            // 
-            // panelMetricActiveLoans
-            // 
+            this.lblPendingFinesTitle.Text = "?? Pending Fines";
             this.panelMetricActiveLoans.BackColor = System.Drawing.Color.White;
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansChange);
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansValue);
@@ -466,9 +376,6 @@
             this.panelMetricActiveLoans.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelMetricActiveLoans.Size = new System.Drawing.Size(236, 163);
             this.panelMetricActiveLoans.TabIndex = 2;
-            // 
-            // lblActiveLoansChange
-            // 
             this.lblActiveLoansChange.AutoSize = true;
             this.lblActiveLoansChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveLoansChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
@@ -477,9 +384,6 @@
             this.lblActiveLoansChange.Size = new System.Drawing.Size(38, 19);
             this.lblActiveLoansChange.TabIndex = 2;
             this.lblActiveLoansChange.Text = "+8%";
-            // 
-            // lblActiveLoansValue
-            // 
             this.lblActiveLoansValue.AutoSize = true;
             this.lblActiveLoansValue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblActiveLoansValue.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -489,9 +393,6 @@
             this.lblActiveLoansValue.Size = new System.Drawing.Size(88, 51);
             this.lblActiveLoansValue.TabIndex = 1;
             this.lblActiveLoansValue.Text = "342";
-            // 
-            // lblActiveLoansTitle
-            // 
             this.lblActiveLoansTitle.AutoSize = true;
             this.lblActiveLoansTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveLoansTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -499,10 +400,7 @@
             this.lblActiveLoansTitle.Name = "lblActiveLoansTitle";
             this.lblActiveLoansTitle.Size = new System.Drawing.Size(133, 21);
             this.lblActiveLoansTitle.TabIndex = 0;
-            this.lblActiveLoansTitle.Text = "📈 Active Loans";
-            // 
-            // panelMetricBooksCatalog
-            // 
+            this.lblActiveLoansTitle.Text = "?? Active Loans";
             this.panelMetricBooksCatalog.BackColor = System.Drawing.Color.White;
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogChange);
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogValue);
@@ -512,9 +410,6 @@
             this.panelMetricBooksCatalog.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelMetricBooksCatalog.Size = new System.Drawing.Size(236, 163);
             this.panelMetricBooksCatalog.TabIndex = 1;
-            // 
-            // lblBooksCatalogChange
-            // 
             this.lblBooksCatalogChange.AutoSize = true;
             this.lblBooksCatalogChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBooksCatalogChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
@@ -523,9 +418,6 @@
             this.lblBooksCatalogChange.Size = new System.Drawing.Size(38, 19);
             this.lblBooksCatalogChange.TabIndex = 2;
             this.lblBooksCatalogChange.Text = "+3%";
-            // 
-            // lblBooksCatalogValue
-            // 
             this.lblBooksCatalogValue.AutoSize = true;
             this.lblBooksCatalogValue.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBooksCatalogValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -534,9 +426,6 @@
             this.lblBooksCatalogValue.Size = new System.Drawing.Size(120, 51);
             this.lblBooksCatalogValue.TabIndex = 1;
             this.lblBooksCatalogValue.Text = "8,932";
-            // 
-            // lblBooksCatalogTitle
-            // 
             this.lblBooksCatalogTitle.AutoSize = true;
             this.lblBooksCatalogTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBooksCatalogTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -544,10 +433,7 @@
             this.lblBooksCatalogTitle.Name = "lblBooksCatalogTitle";
             this.lblBooksCatalogTitle.Size = new System.Drawing.Size(161, 21);
             this.lblBooksCatalogTitle.TabIndex = 0;
-            this.lblBooksCatalogTitle.Text = "📖Books in Catalog";
-            // 
-            // panelMetricTotalMembers
-            // 
+            this.lblBooksCatalogTitle.Text = "??Books in Catalog";
             this.panelMetricTotalMembers.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalMembers.Controls.Add(this.lblTotalMembersChange);
             this.panelMetricTotalMembers.Controls.Add(this.lblTotalMembersValue);
@@ -557,9 +443,6 @@
             this.panelMetricTotalMembers.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelMetricTotalMembers.Size = new System.Drawing.Size(236, 163);
             this.panelMetricTotalMembers.TabIndex = 0;
-            // 
-            // lblTotalMembersChange
-            // 
             this.lblTotalMembersChange.AutoSize = true;
             this.lblTotalMembersChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalMembersChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
@@ -568,9 +451,6 @@
             this.lblTotalMembersChange.Size = new System.Drawing.Size(46, 19);
             this.lblTotalMembersChange.TabIndex = 2;
             this.lblTotalMembersChange.Text = "+12%";
-            // 
-            // lblTotalMembersValue
-            // 
             this.lblTotalMembersValue.AutoSize = true;
             this.lblTotalMembersValue.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalMembersValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -579,9 +459,6 @@
             this.lblTotalMembersValue.Size = new System.Drawing.Size(120, 51);
             this.lblTotalMembersValue.TabIndex = 1;
             this.lblTotalMembersValue.Text = "1,247";
-            // 
-            // lblTotalMembersTitle
-            // 
             this.lblTotalMembersTitle.AutoSize = true;
             this.lblTotalMembersTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalMembersTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -589,10 +466,7 @@
             this.lblTotalMembersTitle.Name = "lblTotalMembersTitle";
             this.lblTotalMembersTitle.Size = new System.Drawing.Size(150, 21);
             this.lblTotalMembersTitle.TabIndex = 0;
-            this.lblTotalMembersTitle.Text = "👥 Total Members";
-            // 
-            // panelHeader
-            // 
+            this.lblTotalMembersTitle.Text = "?? Total Members";
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -601,9 +475,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(960, 79);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -612,9 +483,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(270, 19);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Monitor library operations and key metrics";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -623,9 +491,6 @@
             this.lblTitle.Size = new System.Drawing.Size(184, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Dashboard";
-            // 
-            // StaffDashboardForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -657,11 +522,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelSidebar;
         private System.Windows.Forms.Label lblTitleSidebar;
         private System.Windows.Forms.Label lblSubtitleSidebar;

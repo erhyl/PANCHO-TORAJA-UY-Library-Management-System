@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -8,7 +8,6 @@ using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Forms.Admin.Circulation
 {
     public partial class AdminCirculationForm : Form
@@ -19,11 +18,9 @@ namespace Project5LMS.Forms.Admin.Circulation
         private readonly IBookService _bookService;
         private readonly IMembersService _membersService;
         private readonly DatabaseContext _dbContext;
-
         public AdminCirculationForm()
         {
             InitializeComponent();
-
             try
             {
                 AccessControlHelper.RequireAnyRole("Admin", "LibraryStaff");
@@ -36,14 +33,12 @@ namespace Project5LMS.Forms.Admin.Circulation
                 this.Close();
                 return;
             }
-
             _dbContext = ServiceFactory.GetDbContext();
             _circulationService = ServiceFactory.CreateCirculationService();
             _finesService = ServiceFactory.CreateFinesService();
             _bookService = ServiceFactory.CreateBookService();
             _membersService = ServiceFactory.CreateMembersService();
         }
-
         private void AdminCirculationForm_Load(object sender, EventArgs e)
         {
             EnsureTransactionsTableExists();
@@ -53,7 +48,6 @@ namespace Project5LMS.Forms.Admin.Circulation
             tabControl.SelectedIndex = 0;
             ShowTabContent(0);
         }
-
         private void EnsureTransactionsTableExists()
         {
             try
@@ -61,9 +55,8 @@ namespace Project5LMS.Forms.Admin.Circulation
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Transactions'";
                     using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -96,12 +89,10 @@ namespace Project5LMS.Forms.Admin.Circulation
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Transactions table exists: {ex.Message}");
             }
         }
-
         private void SetupDataGridView()
         {
             dataGridViewTransactions.Columns.Clear();
             dataGridViewTransactions.AutoGenerateColumns = false;
-
             DataGridViewTextBoxColumn colTransactionID = new DataGridViewTextBoxColumn
             {
                 Name = "TransactionID",
@@ -111,7 +102,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colTransactionID);
-
             DataGridViewColumn colType = new DataGridViewTextBoxColumn
             {
                 Name = "Type",
@@ -121,7 +111,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colType);
-
             DataGridViewTextBoxColumn colMember = new DataGridViewTextBoxColumn
             {
                 Name = "Member",
@@ -131,7 +120,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colMember);
-
             DataGridViewTextBoxColumn colBook = new DataGridViewTextBoxColumn
             {
                 Name = "Book",
@@ -141,7 +129,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colBook);
-
             DataGridViewTextBoxColumn colBorrowDate = new DataGridViewTextBoxColumn
             {
                 Name = "BorrowDate",
@@ -151,7 +138,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colBorrowDate);
-
             DataGridViewTextBoxColumn colDueDate = new DataGridViewTextBoxColumn
             {
                 Name = "DueDate",
@@ -161,7 +147,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colDueDate);
-
             DataGridViewColumn colStatus = new DataGridViewTextBoxColumn
             {
                 Name = "Status",
@@ -171,7 +156,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colStatus);
-
             DataGridViewTextBoxColumn colFine = new DataGridViewTextBoxColumn
             {
                 Name = "Fine",
@@ -181,7 +165,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colFine);
-
             dataGridViewTransactions.DefaultCellStyle.Font = new Font("Segoe UI", 10);
             dataGridViewTransactions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dataGridViewTransactions.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
@@ -192,14 +175,11 @@ namespace Project5LMS.Forms.Admin.Circulation
             dataGridViewTransactions.CellFormatting += DataGridViewTransactions_CellFormatting;
             dataGridViewTransactions.CellPainting += DataGridViewTransactions_CellPainting;
         }
-
         private void DataGridViewTransactions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             DataGridViewRow row = dataGridViewTransactions.Rows[e.RowIndex];
             string columnName = dataGridViewTransactions.Columns[e.ColumnIndex].Name;
-
             if (columnName == "TransactionID" && e.Value != null)
             {
                 string transactionIdStr = e.Value.ToString();
@@ -210,21 +190,16 @@ namespace Project5LMS.Forms.Admin.Circulation
                 e.FormattingApplied = true;
             }
         }
-
         private void DataGridViewTransactions_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             string columnName = dataGridViewTransactions.Columns[e.ColumnIndex].Name;
-
             if (columnName == "Type")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 string icon = "";
                 Color iconColor = Color.Black;
-
                 switch (value.ToLower())
                 {
                     case "borrow":
@@ -240,7 +215,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                         iconColor = Color.FromArgb(221, 160, 221);
                         break;
                 }
-
                 if (!string.IsNullOrEmpty(icon))
                 {
                     Rectangle iconRect = new Rectangle(
@@ -249,20 +223,17 @@ namespace Project5LMS.Forms.Admin.Circulation
                         20,
                         20
                     );
-
                     using (Font font = new Font("Segoe UI", 14, FontStyle.Bold))
                     using (Brush brush = new SolidBrush(iconColor))
                     {
                         e.Graphics.DrawString(icon, font, brush, iconRect);
                     }
-
                     Rectangle textRect = new Rectangle(
                         e.CellBounds.X + 35,
                         e.CellBounds.Y,
                         e.CellBounds.Width - 35,
                         e.CellBounds.Height
                     );
-
                     TextRenderer.DrawText(
                         e.Graphics,
                         value,
@@ -272,18 +243,14 @@ namespace Project5LMS.Forms.Admin.Circulation
                         TextFormatFlags.VerticalCenter
                     );
                 }
-
                 e.Handled = true;
             }
-
             if (columnName == "Status")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 Color bgColor = Color.LightGray;
                 Color textColor = Color.Black;
-
                 switch (value.ToLower())
                 {
                     case "active":
@@ -300,14 +267,12 @@ namespace Project5LMS.Forms.Admin.Circulation
                         textColor = Color.White;
                         break;
                 }
-
                 Rectangle badgeRect = new Rectangle(
                     e.CellBounds.X + 5,
                     e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
                     Math.Min(100, e.CellBounds.Width - 10),
                     25
                 );
-
                 using (GraphicsPath path = new GraphicsPath())
                 {
                     int radius = 12;
@@ -316,13 +281,11 @@ namespace Project5LMS.Forms.Admin.Circulation
                     path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
                     path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
                     path.CloseAllFigures();
-
                     using (SolidBrush brush = new SolidBrush(bgColor))
                     {
                         e.Graphics.FillPath(brush, path);
                     }
                 }
-
                 TextRenderer.DrawText(
                     e.Graphics,
                     value,
@@ -331,11 +294,9 @@ namespace Project5LMS.Forms.Admin.Circulation
                     textColor,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
                 );
-
                 e.Handled = true;
             }
         }
-
         private void LoadMetrics()
         {
             try
@@ -343,25 +304,22 @@ namespace Project5LMS.Forms.Admin.Circulation
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    string queryToday = @"SELECT COUNT(*) FROM Transactions 
-                                        WHERE DATE(BorrowDate) = CURDATE() 
+                    string queryToday = @"SELECT COUNT(*) FROM Transactions
+                                        WHERE DATE(BorrowDate) = CURDATE()
                                         OR DATE(ReturnDate) = CURDATE()";
                     using (MySqlCommand cmd = new MySqlCommand(queryToday, conn))
                     {
                         int todayActivity = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricTodayActivityValue.Text = todayActivity.ToString();
                     }
-
-                    string queryBorrowed = @"SELECT COUNT(*) FROM Transactions 
+                    string queryBorrowed = @"SELECT COUNT(*) FROM Transactions
                                             WHERE Status = 'Borrowed' OR Status = 'Active'";
                     using (MySqlCommand cmd = new MySqlCommand(queryBorrowed, conn))
                     {
                         int borrowed = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricCurrentlyBorrowedValue.Text = borrowed.ToString();
                     }
-
-                    string queryOverdue = @"SELECT COUNT(*) FROM Transactions 
+                    string queryOverdue = @"SELECT COUNT(*) FROM Transactions
                                           WHERE (Status = 'Borrowed' OR Status = 'Active')
                                           AND DueDate < CURDATE()";
                     using (MySqlCommand cmd = new MySqlCommand(queryOverdue, conn))
@@ -369,7 +327,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                         int overdue = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricOverdueValue.Text = overdue.ToString();
                     }
-
                     string queryTotal = "SELECT COUNT(*) FROM Transactions";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
@@ -383,13 +340,11 @@ namespace Project5LMS.Forms.Admin.Circulation
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadTransactions()
         {
             try
             {
                 allTransactionsData = GetTransactionsData();
-
                 if (!allTransactionsData.Columns.Contains("Type"))
                 {
                     allTransactionsData.Columns.Add("Type", typeof(string));
@@ -406,21 +361,16 @@ namespace Project5LMS.Forms.Admin.Circulation
                 {
                     allTransactionsData.Columns.Add("Fine", typeof(string));
                 }
-
                 foreach (DataRow row in allTransactionsData.Rows)
                 {
-
                     string transactionType = row["TransactionType"] != DBNull.Value ? row["TransactionType"].ToString() : "Borrow";
                     row["Type"] = transactionType;
-
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
                     string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     int memberId = Convert.ToInt32(row["MemberID"]);
                     row["Member"] = IDFormatter.FormatMemberDisplay(firstName, lastName, memberId);
-
                     string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    // Try to get Barcode or AccessionNo from the row
                     string barcode = "";
                     if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
                     {
@@ -432,7 +382,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                     }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? IDFormatter.FormatAccessionNumber(barcode) : IDFormatter.FormatAccessionNumber(bookId.ToString());
                     row["Book"] = IDFormatter.FormatBookDisplay(bookTitle, accessionNo);
-
                     if (row["Fine"] != DBNull.Value && Convert.ToDecimal(row["Fine"]) > 0)
                     {
                         row["Fine"] = $"${Convert.ToDecimal(row["Fine"]):F2}";
@@ -441,7 +390,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                     {
                         row["Fine"] = "-";
                     }
-
                     if (row["Status"].ToString() == "Borrowed" || row["Status"].ToString() == "Active")
                     {
                         if (row["DueDate"] != DBNull.Value)
@@ -458,7 +406,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                         }
                     }
                 }
-
                 dataGridViewTransactions.DataSource = allTransactionsData;
             }
             catch (Exception ex)
@@ -467,26 +414,21 @@ namespace Project5LMS.Forms.Admin.Circulation
                 MessageBox.Show($"Error loading transactions: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetTransactionsData()
         {
             using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
-
                 bool hasTransactionType = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "TransactionType");
                 bool hasFine = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "Fine");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
                 bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
-                
-                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
                 string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
                 string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
-
                 string query;
                 if (hasTransactionType && hasFine)
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 t.TransactionID,
                                 t.MemberID,
                                 t.BookID,
@@ -508,7 +450,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
                 else if (hasTransactionType)
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 t.TransactionID,
                                 t.MemberID,
                                 t.BookID,
@@ -530,7 +472,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
                 else
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 t.TransactionID,
                                 t.MemberID,
                                 t.BookID,
@@ -550,7 +492,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                              ORDER BY t.TransactionID DESC
                              LIMIT 100";
                 }
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
@@ -560,14 +501,13 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
             }
         }
-
         private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
         {
             try
             {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @tableName 
+                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                                WHERE TABLE_SCHEMA = DATABASE()
+                                AND TABLE_NAME = @tableName
                                 AND COLUMN_NAME = @columnName";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -582,17 +522,13 @@ namespace Project5LMS.Forms.Admin.Circulation
                 return false;
             }
         }
-
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowTabContent(tabControl.SelectedIndex);
         }
-
         private void ShowTabContent(int tabIndex)
         {
-
         }
-
         private void txtBorrowMemberID_Enter(object sender, EventArgs e)
         {
             if (txtBorrowMemberID.Text == "Scan or enter member ID...")
@@ -601,7 +537,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 txtBorrowMemberID.ForeColor = Color.Black;
             }
         }
-
         private void txtBorrowMemberID_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtBorrowMemberID.Text))
@@ -610,7 +545,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 txtBorrowMemberID.ForeColor = Color.Gray;
             }
         }
-
         private void txtBorrowMemberID_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -619,7 +553,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 e.SuppressKeyPress = true;
             }
         }
-
         private void txtBorrowBookAccession_Enter(object sender, EventArgs e)
         {
             if (txtBorrowBookAccession.Text == "Scan or enter book accession number...")
@@ -628,7 +561,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 txtBorrowBookAccession.ForeColor = Color.Black;
             }
         }
-
         private void txtBorrowBookAccession_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtBorrowBookAccession.Text))
@@ -637,7 +569,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 txtBorrowBookAccession.ForeColor = Color.Gray;
             }
         }
-
         private void txtBorrowBookAccession_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -646,7 +577,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 e.SuppressKeyPress = true;
             }
         }
-
         private void txtReturnBookAccession_Enter(object sender, EventArgs e)
         {
             if (txtReturnBookAccession.Text == "Scan or enter book accession number...")
@@ -655,7 +585,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 txtReturnBookAccession.ForeColor = Color.Black;
             }
         }
-
         private void txtReturnBookAccession_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtReturnBookAccession.Text))
@@ -664,7 +593,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                 txtReturnBookAccession.ForeColor = Color.Gray;
             }
         }
-
         private void txtReturnBookAccession_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -673,86 +601,71 @@ namespace Project5LMS.Forms.Admin.Circulation
                 e.SuppressKeyPress = true;
             }
         }
-
         private void btnProcessBorrowing_Click(object sender, EventArgs e)
         {
             string memberIdText = txtBorrowMemberID.Text.Trim();
             string bookAccessionText = txtBorrowBookAccession.Text.Trim();
-
             if (memberIdText == "Scan or enter member ID..." || string.IsNullOrWhiteSpace(memberIdText))
             {
                 MessageBox.Show("Please enter a Member ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtBorrowMemberID.Focus();
                 return;
             }
-
             if (bookAccessionText == "Scan or enter book accession number..." || string.IsNullOrWhiteSpace(bookAccessionText))
             {
                 MessageBox.Show("Please enter a Book Accession Number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtBorrowBookAccession.Focus();
                 return;
             }
-
             try
             {
-
                 int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdText);
-
                 if (memberId == 0)
                 {
                     MessageBox.Show("Invalid Member ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 int bookId = GetBookIdFromAccession(bookAccessionText);
                 if (bookId == 0)
                 {
                     MessageBox.Show("Book not found with the provided accession number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (!_membersService.MemberExists(memberId))
                 {
                     MessageBox.Show("Member not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (!_bookService.IsBookAvailable(bookId))
                 {
                     MessageBox.Show("Book is not available for borrowing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (!_circulationService.CanBorrow(memberId))
                 {
                     MessageBox.Show("Member has reached their borrowing limit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (_circulationService.BorrowBook(memberId, bookId, 14))
                 {
                     var transaction = _circulationService.GetActiveTransactionByBook(bookId);
                     DateTime dueDate = transaction != null ? transaction.DueDate : DateTime.Now.AddDays(14);
-
-                    AuditLogger.LogCirculation("Book Borrowed", 
-                        $"BookID: {bookId}, MemberID: {memberId}, DueDate: {dueDate:yyyy-MM-dd}", 
+                    AuditLogger.LogCirculation("Book Borrowed",
+                        $"BookID: {bookId}, MemberID: {memberId}, DueDate: {dueDate:yyyy-MM-dd}",
                         "Success");
                 }
                 else
                 {
-                    AuditLogger.LogCirculation("Book Borrow Failed", 
-                        $"BookID: {bookId}, MemberID: {memberId}", 
+                    AuditLogger.LogCirculation("Book Borrow Failed",
+                        $"BookID: {bookId}, MemberID: {memberId}",
                         "Failed");
                     throw new InvalidOperationException("Failed to borrow book. Please try again.");
                 }
-
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 txtBorrowMemberID.Text = "Scan or enter member ID...";
                 txtBorrowMemberID.ForeColor = Color.Gray;
                 txtBorrowBookAccession.Text = "Scan or enter book accession number...";
                 txtBorrowBookAccession.ForeColor = Color.Gray;
-
                 LoadMetrics();
                 LoadTransactions();
             }
@@ -761,66 +674,55 @@ namespace Project5LMS.Forms.Admin.Circulation
                 MessageBox.Show($"Error processing borrowing: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnProcessReturn_Click(object sender, EventArgs e)
         {
             string bookAccessionText = txtReturnBookAccession.Text.Trim();
-
             if (bookAccessionText == "Scan or enter book accession number..." || string.IsNullOrWhiteSpace(bookAccessionText))
             {
                 MessageBox.Show("Please enter a Book Accession Number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtReturnBookAccession.Focus();
                 return;
             }
-
             try
             {
-
                 int bookId = GetBookIdFromAccession(bookAccessionText);
                 if (bookId == 0)
                 {
                     MessageBox.Show("Book not found with the provided accession number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 var activeTransaction = _circulationService.GetActiveTransactionByBook(bookId);
                 if (activeTransaction == null)
                 {
                     MessageBox.Show("No active borrowing found for this book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 int transactionId = activeTransaction.TransactionID;
                 decimal fine = _finesService.CalculateFine(transactionId);
-
                 if (_circulationService.ReturnBook(transactionId))
                 {
                     if (fine > 0)
                     {
                         _finesService.UpdateTransactionFine(transactionId, fine);
                     }
-
                     string fineInfo = fine > 0 ? $", Fine: ${fine:F2}" : "";
-                    AuditLogger.LogCirculation("Book Returned", 
-                        $"BookID: {bookId}, TransactionID: {transactionId}{fineInfo}", 
+                    AuditLogger.LogCirculation("Book Returned",
+                        $"BookID: {bookId}, TransactionID: {transactionId}{fineInfo}",
                         "Success");
-
-                    string message = fine > 0 
-                        ? $"Book returned successfully!\n\nFine: ${fine:F2}" 
+                    string message = fine > 0
+                        ? $"Book returned successfully!\n\nFine: ${fine:F2}"
                         : "Book returned successfully!";
                     MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    AuditLogger.LogCirculation("Book Return Failed", 
-                        $"BookID: {bookId}, TransactionID: {transactionId}", 
+                    AuditLogger.LogCirculation("Book Return Failed",
+                        $"BookID: {bookId}, TransactionID: {transactionId}",
                         "Failed");
                     throw new InvalidOperationException("Failed to return book. Please try again.");
                 }
-
                 txtReturnBookAccession.Text = "Scan or enter book accession number...";
                 txtReturnBookAccession.ForeColor = Color.Gray;
-
                 LoadMetrics();
                 LoadTransactions();
             }
@@ -829,17 +731,13 @@ namespace Project5LMS.Forms.Admin.Circulation
                 MessageBox.Show($"Error processing return: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private int GetBookIdFromAccession(string accessionNo)
         {
             try
             {
-                // Try by accession number first (preferred)
                 var book = _bookService.GetBookByAccessionNumber(accessionNo);
                 if (book != null)
                     return book.BookID;
-
-                // Try parsing accession number
                 int parsedAccession = IDFormatter.ParseAccessionNumber(accessionNo);
                 if (parsedAccession > 0)
                 {
@@ -847,8 +745,6 @@ namespace Project5LMS.Forms.Admin.Circulation
                     if (bookByAcc != null)
                         return bookByAcc.BookID;
                 }
-
-                // Try as book ID
                 int bookId = IDFormatter.ParseBookID(accessionNo);
                 if (bookId > 0)
                 {
@@ -862,25 +758,17 @@ namespace Project5LMS.Forms.Admin.Circulation
                 return 0;
             }
         }
-
         private void txtBorrowMemberID_TextChanged(object sender, EventArgs e)
         {
-
         }
-
         private void lblBorrowBookAccession_Click(object sender, EventArgs e)
         {
-
         }
-
         private void dataGridViewTransactions_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
-
         private void dataGridViewTransactions_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-
         }
     }
 }

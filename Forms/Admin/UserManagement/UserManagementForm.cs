@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -11,7 +11,6 @@ using Project5LMS.Models;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Forms.Admin.UserManagement
 {
     public partial class UserManagementForm : Form
@@ -19,11 +18,9 @@ namespace Project5LMS.Forms.Admin.UserManagement
         private List<User> allUsers = new List<User>();
         private List<User> filteredUsers = new List<User>();
         private readonly IUserService _userService;
-
         public UserManagementForm()
         {
             InitializeComponent();
-
             try
             {
                 AccessControlHelper.RequireRole("Admin");
@@ -36,17 +33,14 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 this.Close();
                 return;
             }
-
             _userService = ServiceFactory.CreateUserService();
         }
-
         private void UserManagementForm_Load(object sender, EventArgs e)
         {
             cmbRoleFilter.SelectedIndex = 0;
             LoadMetrics();
             LoadUsers();
         }
-
         private void DrawMetricIcon(Graphics g, Panel panel, string icon)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -59,7 +53,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 g.DrawString(icon, font, brush, x, y);
             }
         }
-
         private void LoadMetrics()
         {
             try
@@ -67,28 +60,24 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 using (var conn = ServiceFactory.GetDbContext().GetConnection())
                 {
                     conn.Open();
-
                     string queryTotal = "SELECT COUNT(*) FROM Users";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
                         int total = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricTotalUsersValue.Text = total.ToString();
                     }
-
                     string queryActive = "SELECT COUNT(*) FROM Users WHERE Role IS NOT NULL";
                     using (MySqlCommand cmd = new MySqlCommand(queryActive, conn))
                     {
                         int active = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricActiveUsersValue.Text = active.ToString();
                     }
-
                     string queryAdmin = "SELECT COUNT(*) FROM Users WHERE Role = 'Admin'";
                     using (MySqlCommand cmd = new MySqlCommand(queryAdmin, conn))
                     {
                         int admin = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricAdministratorsValue.Text = admin.ToString();
                     }
-
                     try
                     {
                         string querySuspended = "SELECT COUNT(*) FROM Users WHERE Status = 'Suspended'";
@@ -100,7 +89,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     }
                     catch
                     {
-
                         lblMetricSuspendedValue.Text = "0";
                     }
                 }
@@ -110,19 +98,16 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadUsers()
         {
             try
             {
                 allUsers.Clear();
                 panelUsersContainer.Controls.Clear();
-
                 var dbContext = ServiceFactory.GetDbContext();
-                string query = @"SELECT UserID, Email, FirstName, LastName, Role 
-                                FROM Users 
+                string query = @"SELECT UserID, Email, FirstName, LastName, Role
+                                FROM Users
                                 ORDER BY FirstName, LastName";
-
                 var result = dbContext.ExecuteQuery(query);
                 foreach (DataRow row in result.Rows)
                 {
@@ -136,7 +121,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     };
                     allUsers.Add(user);
                 }
-
                 filteredUsers = allUsers.ToList();
                 RenderUserCards();
             }
@@ -146,21 +130,17 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 MessageBox.Show($"Error loading users: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void RenderUserCards()
         {
             panelUsersContainer.Controls.Clear();
-
             foreach (var user in filteredUsers)
             {
                 Panel userCard = CreateUserCard(user);
                 panelUsersContainer.Controls.Add(userCard);
             }
         }
-
         private Panel CreateUserCard(User user)
         {
-
             Panel card = new Panel
             {
                 BackColor = Color.White,
@@ -169,7 +149,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 Margin = new Padding(0, 0, 16, 16),
                 Padding = new Padding(20, 20, 20, 20)
             };
-
             Panel avatarPanel = new Panel
             {
                 BackColor = GetRoleColor(user.Role),
@@ -178,13 +157,11 @@ namespace Project5LMS.Forms.Admin.UserManagement
             };
             avatarPanel.Paint += (s, e) =>
             {
-
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 using (Brush brush = new SolidBrush(avatarPanel.BackColor))
                 {
                     e.Graphics.FillEllipse(brush, 0, 0, avatarPanel.Width, avatarPanel.Height);
                 }
-
                 string initials = GetInitials(user.FirstName, user.LastName);
                 using (Font font = new Font("Segoe UI", 18, FontStyle.Bold))
                 using (Brush brush = new SolidBrush(Color.White))
@@ -196,7 +173,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 }
             };
             card.Controls.Add(avatarPanel);
-
             Label lblName = new Label
             {
                 Text = $"{user.FirstName} {user.LastName}".Trim(),
@@ -206,7 +182,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblName);
-
             Label lblEmail = new Label
             {
                 Text = user.Email,
@@ -216,10 +191,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblEmail);
-
             int tagX = 95;
             int tagY = 80;
-
             Label lblRole = new Label
             {
                 Text = user.Role ?? "Member",
@@ -231,9 +204,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 Location = new Point(tagX, tagY)
             };
             card.Controls.Add(lblRole);
-
             tagX += lblRole.Width + 8;
-
             string status = "Active";
             Label lblStatus = new Label
             {
@@ -246,10 +217,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 Location = new Point(tagX, tagY)
             };
             card.Controls.Add(lblStatus);
-
             int detailY = 120;
             int detailSpacing = 25;
-
             Label lblUserIdLabel = new Label
             {
                 Text = "User ID:",
@@ -259,7 +228,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblUserIdLabel);
-
             Label lblUserId = new Label
             {
                 Text = $"USR-{user.UserID:D3}",
@@ -269,7 +237,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblUserId);
-
             Label lblCreatedLabel = new Label
             {
                 Text = "Created:",
@@ -279,7 +246,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblCreatedLabel);
-
             string createdDate = GetUserCreatedDate(user.UserID);
             Label lblCreated = new Label
             {
@@ -290,7 +256,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblCreated);
-
             Label lblLastLoginLabel = new Label
             {
                 Text = "Last Login:",
@@ -300,7 +265,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblLastLoginLabel);
-
             string lastLogin = GetUserLastLogin(user.UserID);
             Label lblLastLogin = new Label
             {
@@ -311,7 +275,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 AutoSize = true
             };
             card.Controls.Add(lblLastLogin);
-
             string[] permissions = GetPermissionsArray(user.Role);
             int permX = 20;
             int permY = detailY + detailSpacing * 3;
@@ -335,9 +298,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     permY += 25;
                 }
             }
-
             int buttonY = 240;
-
             Button btnResetPassword = new Button
             {
                 Text = "Reset Password",
@@ -352,7 +313,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             };
             btnResetPassword.Click += (s, e) => ResetPassword(user);
             card.Controls.Add(btnResetPassword);
-
             Button btnSuspend = new Button
             {
                 Text = "Suspend",
@@ -367,7 +327,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             };
             btnSuspend.Click += (s, e) => SuspendUser(user);
             card.Controls.Add(btnSuspend);
-
             Button btnEdit = new Button
             {
                 Text = "?",
@@ -382,7 +341,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             };
             btnEdit.Click += (s, e) => EditUser(user);
             card.Controls.Add(btnEdit);
-
             Button btnDelete = new Button
             {
                 Text = "??",
@@ -397,17 +355,14 @@ namespace Project5LMS.Forms.Admin.UserManagement
             };
             btnDelete.Click += (s, e) => DeleteUser(user);
             card.Controls.Add(btnDelete);
-
             return card;
         }
-
         private string GetInitials(string firstName, string lastName)
         {
             string first = !string.IsNullOrWhiteSpace(firstName) ? firstName[0].ToString().ToUpper() : "";
             string last = !string.IsNullOrWhiteSpace(lastName) ? lastName[0].ToString().ToUpper() : "";
             return first + last;
         }
-
         private Color GetRoleColor(string role)
         {
             switch (role?.ToLower())
@@ -420,7 +375,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     return Color.FromArgb(13, 110, 253);
             }
         }
-
         private Color GetRoleTagColor(string role)
         {
             switch (role?.ToLower())
@@ -433,7 +387,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     return Color.FromArgb(207, 226, 255);
             }
         }
-
         private Color GetRoleTextColor(string role)
         {
             switch (role?.ToLower())
@@ -446,7 +399,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     return Color.FromArgb(13, 110, 253);
             }
         }
-
         private string[] GetPermissionsArray(string role)
         {
             switch (role?.ToLower())
@@ -459,7 +411,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     return new string[] { "Basic Access" };
             }
         }
-
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (txtSearch.Text == "Search users...")
@@ -468,7 +419,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 txtSearch.ForeColor = Color.Black;
             }
         }
-
         private void txtSearch_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
@@ -477,27 +427,22 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 txtSearch.ForeColor = Color.Gray;
             }
         }
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             FilterUsers();
         }
-
         private void cmbRoleFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             FilterUsers();
         }
-
         private void FilterUsers()
         {
             string searchText = txtSearch.Text.ToLower();
             if (searchText == "search users...")
                 searchText = "";
-
             string selectedRole = cmbRoleFilter.SelectedItem?.ToString();
             if (selectedRole == "All Roles")
                 selectedRole = null;
-
             filteredUsers = allUsers.Where(u =>
                 (string.IsNullOrEmpty(searchText) ||
                  u.FirstName.ToLower().Contains(searchText) ||
@@ -505,10 +450,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
                  u.Email.ToLower().Contains(searchText)) &&
                 (selectedRole == null || u.Role == selectedRole)
             ).ToList();
-
             RenderUserCards();
         }
-
         private void btnAddNewUser_Click(object sender, EventArgs e)
         {
             try
@@ -527,13 +470,10 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 MessageBox.Show($"Error opening add user form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void EditUser(User user)
         {
-
             MessageBox.Show($"Edit user: {user.FirstName} {user.LastName}", "Edit User", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void DeleteUser(User user)
         {
             var result = MessageBox.Show(
@@ -541,7 +481,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 "Delete User",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
-
             if (result == DialogResult.Yes)
             {
                 try
@@ -557,11 +496,9 @@ namespace Project5LMS.Forms.Admin.UserManagement
                             cmd.ExecuteNonQuery();
                         }
                     }
-
-                    AuditLogger.LogDataModification("User Deleted", 
-                        $"UserID: {user.UserID}, Email: {user.Email}, Role: {user.Role}", 
+                    AuditLogger.LogDataModification("User Deleted",
+                        $"UserID: {user.UserID}, Email: {user.Email}, Role: {user.Role}",
                         "Success");
-
                     MessageBox.Show("User deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadUsers();
                     LoadMetrics();
@@ -572,7 +509,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 }
             }
         }
-
         private void ResetPassword(User user)
         {
             var result = MessageBox.Show(
@@ -580,14 +516,11 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 "Reset Password",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
-
             if (result == DialogResult.Yes)
             {
-
                 MessageBox.Show("Password reset functionality - to be implemented", "Reset Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
         private void SuspendUser(User user)
         {
             var result = MessageBox.Show(
@@ -595,7 +528,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 "Suspend User",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
-
             if (result == DialogResult.Yes)
             {
                 try
@@ -604,7 +536,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     using (var conn = dbContext.GetConnection())
                     {
                         conn.Open();
-
                         try
                         {
                             string query = "UPDATE Users SET Status = 'Suspended' WHERE UserID = @userId";
@@ -616,13 +547,11 @@ namespace Project5LMS.Forms.Admin.UserManagement
                         }
                         catch
                         {
-
-                            MessageBox.Show("Status column not found in Users table. Please add a Status column to enable this feature.", 
+                            MessageBox.Show("Status column not found in Users table. Please add a Status column to enable this feature.",
                                 "Feature Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
-
                     MessageBox.Show("User suspended successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadUsers();
                     LoadMetrics();
@@ -633,7 +562,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 }
             }
         }
-
         private string GetUserCreatedDate(int userId)
         {
             try
@@ -658,7 +586,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
             catch { }
             return DateTime.Now.ToString("yyyy-MM-dd");
         }
-
         private string GetUserLastLogin(int userId)
         {
             try

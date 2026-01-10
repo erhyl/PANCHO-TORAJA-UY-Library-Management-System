@@ -1,9 +1,8 @@
-namespace Project5LMS.Forms.LibraryStaff.Fines
+﻿namespace Project5LMS.Forms.LibraryStaff.Fines
 {
     public partial class StaffFinesForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -52,9 +49,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMetricTotalFines.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelContentContainer);
@@ -66,9 +60,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
             this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelContentContainer
-            // 
             this.panelContentContainer.Controls.Add(this.panelProcessPayment);
             this.panelContentContainer.Controls.Add(this.panelActiveFines);
             this.panelContentContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -76,9 +67,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelContentContainer.Name = "panelContentContainer";
             this.panelContentContainer.Size = new System.Drawing.Size(1152, 581);
             this.panelContentContainer.TabIndex = 2;
-            // 
-            // panelProcessPayment
-            // 
             this.panelProcessPayment.BackColor = System.Drawing.Color.White;
             this.panelProcessPayment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelProcessPayment.Controls.Add(this.lblProcessPaymentPlaceholder);
@@ -89,9 +77,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelProcessPayment.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelProcessPayment.Size = new System.Drawing.Size(680, 581);
             this.panelProcessPayment.TabIndex = 1;
-            // 
-            // lblProcessPaymentPlaceholder
-            // 
             this.lblProcessPaymentPlaceholder.AutoSize = true;
             this.lblProcessPaymentPlaceholder.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProcessPaymentPlaceholder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -100,9 +85,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblProcessPaymentPlaceholder.Size = new System.Drawing.Size(224, 20);
             this.lblProcessPaymentPlaceholder.TabIndex = 1;
             this.lblProcessPaymentPlaceholder.Text = "Select a fine to process payment";
-            // 
-            // lblProcessPaymentTitle
-            // 
             this.lblProcessPaymentTitle.AutoSize = true;
             this.lblProcessPaymentTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProcessPaymentTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -111,9 +93,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblProcessPaymentTitle.Size = new System.Drawing.Size(189, 25);
             this.lblProcessPaymentTitle.TabIndex = 0;
             this.lblProcessPaymentTitle.Text = "📅 Process Payment";
-            // 
-            // panelActiveFines
-            // 
             this.panelActiveFines.BackColor = System.Drawing.Color.White;
             this.panelActiveFines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelActiveFines.Controls.Add(this.panelActiveFinesList);
@@ -124,9 +103,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelActiveFines.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.panelActiveFines.Size = new System.Drawing.Size(472, 581);
             this.panelActiveFines.TabIndex = 0;
-            // 
-            // panelActiveFinesList
-            // 
             this.panelActiveFinesList.AutoScroll = true;
             this.panelActiveFinesList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelActiveFinesList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -136,9 +112,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelActiveFinesList.Size = new System.Drawing.Size(440, 547);
             this.panelActiveFinesList.TabIndex = 1;
             this.panelActiveFinesList.WrapContents = false;
-            // 
-            // lblActiveFinesTitle
-            // 
             this.lblActiveFinesTitle.AutoSize = true;
             this.lblActiveFinesTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveFinesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -147,9 +120,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblActiveFinesTitle.Size = new System.Drawing.Size(116, 25);
             this.lblActiveFinesTitle.TabIndex = 0;
             this.lblActiveFinesTitle.Text = "Active Fines";
-            // 
-            // panelMetrics
-            // 
             this.panelMetrics.Controls.Add(this.panelMetricCollected);
             this.panelMetrics.Controls.Add(this.panelMetricOverdue);
             this.panelMetrics.Controls.Add(this.panelMetricPending);
@@ -159,9 +129,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1152, 98);
             this.panelMetrics.TabIndex = 1;
-            // 
-            // panelMetricCollected
-            // 
             this.panelMetricCollected.BackColor = System.Drawing.Color.White;
             this.panelMetricCollected.Controls.Add(this.lblMetricCollectedValue);
             this.panelMetricCollected.Controls.Add(this.lblMetricCollectedTitle);
@@ -170,9 +137,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMetricCollected.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
             this.panelMetricCollected.Size = new System.Drawing.Size(236, 98);
             this.panelMetricCollected.TabIndex = 3;
-            // 
-            // lblMetricCollectedValue
-            // 
             this.lblMetricCollectedValue.AutoSize = true;
             this.lblMetricCollectedValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricCollectedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -181,9 +145,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricCollectedValue.Size = new System.Drawing.Size(89, 37);
             this.lblMetricCollectedValue.TabIndex = 1;
             this.lblMetricCollectedValue.Text = "P0.00";
-            // 
-            // lblMetricCollectedTitle
-            // 
             this.lblMetricCollectedTitle.AutoSize = true;
             this.lblMetricCollectedTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricCollectedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -192,9 +153,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricCollectedTitle.Size = new System.Drawing.Size(79, 19);
             this.lblMetricCollectedTitle.TabIndex = 0;
             this.lblMetricCollectedTitle.Text = "✓ Collected";
-            // 
-            // panelMetricOverdue
-            // 
             this.panelMetricOverdue.BackColor = System.Drawing.Color.White;
             this.panelMetricOverdue.Controls.Add(this.lblMetricOverdueValue);
             this.panelMetricOverdue.Controls.Add(this.lblMetricOverdueTitle);
@@ -203,9 +161,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
             this.panelMetricOverdue.Size = new System.Drawing.Size(236, 98);
             this.panelMetricOverdue.TabIndex = 2;
-            // 
-            // lblMetricOverdueValue
-            // 
             this.lblMetricOverdueValue.AutoSize = true;
             this.lblMetricOverdueValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricOverdueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -214,9 +169,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricOverdueValue.Size = new System.Drawing.Size(89, 37);
             this.lblMetricOverdueValue.TabIndex = 1;
             this.lblMetricOverdueValue.Text = "P0.00";
-            // 
-            // lblMetricOverdueTitle
-            // 
             this.lblMetricOverdueTitle.AutoSize = true;
             this.lblMetricOverdueTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricOverdueTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -225,9 +177,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricOverdueTitle.Size = new System.Drawing.Size(85, 19);
             this.lblMetricOverdueTitle.TabIndex = 0;
             this.lblMetricOverdueTitle.Text = "⚠️ Overdue";
-            // 
-            // panelMetricPending
-            // 
             this.panelMetricPending.BackColor = System.Drawing.Color.White;
             this.panelMetricPending.Controls.Add(this.lblMetricPendingValue);
             this.panelMetricPending.Controls.Add(this.lblMetricPendingTitle);
@@ -236,9 +185,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMetricPending.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
             this.panelMetricPending.Size = new System.Drawing.Size(236, 98);
             this.panelMetricPending.TabIndex = 1;
-            // 
-            // lblMetricPendingValue
-            // 
             this.lblMetricPendingValue.AutoSize = true;
             this.lblMetricPendingValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricPendingValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -247,9 +193,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricPendingValue.Size = new System.Drawing.Size(89, 37);
             this.lblMetricPendingValue.TabIndex = 1;
             this.lblMetricPendingValue.Text = "P0.00";
-            // 
-            // lblMetricPendingTitle
-            // 
             this.lblMetricPendingTitle.AutoSize = true;
             this.lblMetricPendingTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricPendingTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -258,9 +201,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricPendingTitle.Size = new System.Drawing.Size(81, 19);
             this.lblMetricPendingTitle.TabIndex = 0;
             this.lblMetricPendingTitle.Text = "⚠️ Pending";
-            // 
-            // panelMetricTotalFines
-            // 
             this.panelMetricTotalFines.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalFines.Controls.Add(this.lblMetricTotalFinesValue);
             this.panelMetricTotalFines.Controls.Add(this.lblMetricTotalFinesTitle);
@@ -269,9 +209,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelMetricTotalFines.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
             this.panelMetricTotalFines.Size = new System.Drawing.Size(236, 98);
             this.panelMetricTotalFines.TabIndex = 0;
-            // 
-            // lblMetricTotalFinesValue
-            // 
             this.lblMetricTotalFinesValue.AutoSize = true;
             this.lblMetricTotalFinesValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalFinesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -280,9 +217,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricTotalFinesValue.Size = new System.Drawing.Size(89, 37);
             this.lblMetricTotalFinesValue.TabIndex = 1;
             this.lblMetricTotalFinesValue.Text = "P0.00";
-            // 
-            // lblMetricTotalFinesTitle
-            // 
             this.lblMetricTotalFinesTitle.AutoSize = true;
             this.lblMetricTotalFinesTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalFinesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -291,9 +225,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblMetricTotalFinesTitle.Size = new System.Drawing.Size(96, 19);
             this.lblMetricTotalFinesTitle.TabIndex = 0;
             this.lblMetricTotalFinesTitle.Text = "💰 Total Fines";
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -301,9 +232,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1152, 73);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -312,9 +240,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblSubtitle.Size = new System.Drawing.Size(183, 19);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Track and collect library fines";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -323,9 +248,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.lblTitle.Size = new System.Drawing.Size(96, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Fines";
-            // 
-            // StaffFinesForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -353,11 +275,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;
@@ -384,4 +303,3 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         private System.Windows.Forms.Label lblProcessPaymentPlaceholder;
     }
 }
-

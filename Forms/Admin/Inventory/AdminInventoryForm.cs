@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -8,7 +8,6 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Inventory
 {
     public partial class AdminInventoryForm : Form
@@ -17,13 +16,11 @@ namespace Project5LMS.Forms.Admin.Inventory
         private string currentConditionFilter = "All Conditions";
         private string currentStatusFilter = "All Status";
         private readonly DatabaseContext _dbContext;
-
         public AdminInventoryForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
         }
-
         private void AdminInventoryForm_Load(object sender, EventArgs e)
         {
             EnsureInventoryTableExists();
@@ -31,7 +28,6 @@ namespace Project5LMS.Forms.Admin.Inventory
             LoadMetrics();
             LoadInventory();
         }
-
         private void EnsureInventoryTableExists()
         {
             try
@@ -40,9 +36,8 @@ namespace Project5LMS.Forms.Admin.Inventory
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Inventory'";
                     using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -63,8 +58,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                             try
                             {
                                 dbContext.ExecuteNonQuery(createTableQuery);
-                                
-                                // Try to populate inventory, but don't fail if this errors
                                 try
                                 {
                                     PopulateInventoryFromBooks(conn);
@@ -72,13 +65,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 catch (Exception populateEx)
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Warning: Could not populate inventory from books: {populateEx.Message}");
-                                    // Continue - table is created, just not populated
                                 }
                             }
                             catch (Exception createEx)
                             {
                                 System.Diagnostics.Debug.WriteLine($"Error creating Inventory table: {createEx.Message}");
-                                throw; // Re-throw to be caught by outer catch
+                                throw;
                             }
                         }
                         else
@@ -95,15 +87,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Inventory table exists: {ex.Message}");
             }
         }
-
         private void PopulateInventoryFromBooks(MySqlConnection conn)
         {
             try
             {
-                // Check which column exists: Copies or TotalCopies
                 bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
                 string copiesColumn = hasCopies ? "Copies" : "TotalCopies";
-                
                 string query = $"SELECT BookID, {copiesColumn} as Copies, Location FROM Books";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -117,7 +106,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                         books.Add(new Tuple<int, int, string>(bookId, copies, location));
                     }
                     reader.Close();
-
                     foreach (var book in books)
                     {
                         for (int i = 1; i <= book.Item2; i++)
@@ -141,14 +129,13 @@ namespace Project5LMS.Forms.Admin.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error populating inventory: {ex.Message}");
             }
         }
-
         private void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
         {
             try
             {
-                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                          WHERE TABLE_SCHEMA = DATABASE() 
-                                          AND TABLE_NAME = @tableName 
+                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                                          WHERE TABLE_SCHEMA = DATABASE()
+                                          AND TABLE_NAME = @tableName
                                           AND COLUMN_NAME = @columnName";
                 using (MySqlCommand checkCmd = new MySqlCommand(checkColumnQuery, conn))
                 {
@@ -170,7 +157,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error adding column {columnName}: {ex.Message}");
             }
         }
-
         private void DrawMetricIcon(Graphics g, Panel panel, string icon)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -183,12 +169,10 @@ namespace Project5LMS.Forms.Admin.Inventory
                 g.DrawString(icon, font, brush, x, y);
             }
         }
-
         private void SetupDataGridView()
         {
             dataGridViewInventory.Columns.Clear();
             dataGridViewInventory.AutoGenerateColumns = false;
-
             DataGridViewTextBoxColumn colInventoryID = new DataGridViewTextBoxColumn
             {
                 Name = "InventoryID",
@@ -198,7 +182,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colInventoryID);
-
             DataGridViewTextBoxColumn colBookDetails = new DataGridViewTextBoxColumn
             {
                 Name = "BookDetails",
@@ -208,7 +191,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colBookDetails);
-
             DataGridViewTextBoxColumn colCategory = new DataGridViewTextBoxColumn
             {
                 Name = "Category",
@@ -218,7 +200,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCategory);
-
             DataGridViewTextBoxColumn colLocation = new DataGridViewTextBoxColumn
             {
                 Name = "Location",
@@ -228,7 +209,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colLocation);
-
             DataGridViewTextBoxColumn colCopy = new DataGridViewTextBoxColumn
             {
                 Name = "Copy",
@@ -238,7 +218,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCopy);
-
             DataGridViewColumn colCondition = new DataGridViewTextBoxColumn
             {
                 Name = "Condition",
@@ -248,7 +227,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCondition);
-
             DataGridViewColumn colStatus = new DataGridViewTextBoxColumn
             {
                 Name = "Status",
@@ -258,7 +236,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colStatus);
-
             DataGridViewTextBoxColumn colLastVerified = new DataGridViewTextBoxColumn
             {
                 Name = "LastVerified",
@@ -268,7 +245,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colLastVerified);
-
             DataGridViewColumn colActions = new DataGridViewTextBoxColumn
             {
                 Name = "Actions",
@@ -278,7 +254,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colActions);
-
             dataGridViewInventory.DefaultCellStyle.Font = new Font("Segoe UI", 10);
             dataGridViewInventory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dataGridViewInventory.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
@@ -290,14 +265,11 @@ namespace Project5LMS.Forms.Admin.Inventory
             dataGridViewInventory.CellPainting += DataGridViewInventory_CellPainting;
             dataGridViewInventory.CellContentClick += DataGridViewInventory_CellContentClick;
         }
-
         private void DataGridViewInventory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
             string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
-
             if (columnName == "InventoryID" && e.Value != null)
             {
                 string inventoryIdStr = e.Value.ToString();
@@ -307,7 +279,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 }
                 e.FormattingApplied = true;
             }
-
             if (columnName == "LastVerified" && e.Value != null && e.Value != DBNull.Value)
             {
                 if (DateTime.TryParse(e.Value.ToString(), out DateTime date))
@@ -321,22 +292,17 @@ namespace Project5LMS.Forms.Admin.Inventory
                 e.FormattingApplied = true;
             }
         }
-
         private void DataGridViewInventory_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
             DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
-
             if (columnName == "Condition")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 Color bgColor = Color.LightGray;
                 Color textColor = Color.Black;
-
                 switch (value.ToLower())
                 {
                     case "excellent":
@@ -356,14 +322,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                         textColor = Color.White;
                         break;
                 }
-
                 Rectangle badgeRect = new Rectangle(
                     e.CellBounds.X + 5,
                     e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
                     Math.Min(100, e.CellBounds.Width - 10),
                     25
                 );
-
                 using (GraphicsPath path = new GraphicsPath())
                 {
                     int radius = 12;
@@ -372,13 +336,11 @@ namespace Project5LMS.Forms.Admin.Inventory
                     path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
                     path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
                     path.CloseAllFigures();
-
                     using (SolidBrush brush = new SolidBrush(bgColor))
                     {
                         e.Graphics.FillPath(brush, path);
                     }
                 }
-
                 TextRenderer.DrawText(
                     e.Graphics,
                     value,
@@ -387,18 +349,14 @@ namespace Project5LMS.Forms.Admin.Inventory
                     textColor,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
                 );
-
                 e.Handled = true;
             }
-
             if (columnName == "Status")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 Color bgColor = Color.LightGray;
                 Color textColor = Color.Black;
-
                 switch (value.ToLower())
                 {
                     case "available":
@@ -418,14 +376,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                         textColor = Color.White;
                         break;
                 }
-
                 Rectangle badgeRect = new Rectangle(
                     e.CellBounds.X + 5,
                     e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
                     Math.Min(100, e.CellBounds.Width - 10),
                     25
                 );
-
                 using (GraphicsPath path = new GraphicsPath())
                 {
                     int radius = 12;
@@ -434,13 +390,11 @@ namespace Project5LMS.Forms.Admin.Inventory
                     path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
                     path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
                     path.CloseAllFigures();
-
                     using (SolidBrush brush = new SolidBrush(bgColor))
                     {
                         e.Graphics.FillPath(brush, path);
                     }
                 }
-
                 TextRenderer.DrawText(
                     e.Graphics,
                     value,
@@ -449,30 +403,23 @@ namespace Project5LMS.Forms.Admin.Inventory
                     textColor,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
                 );
-
                 e.Handled = true;
             }
-
             if (columnName == "Actions")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 int buttonY = e.CellBounds.Y + (e.CellBounds.Height - 30) / 2;
                 int buttonHeight = 30;
                 int buttonWidth = 80;
                 int spacing = 5;
                 int xOffset = e.CellBounds.X + 5;
-
                 Rectangle btnVerifyRect = new Rectangle(xOffset, buttonY, buttonWidth, buttonHeight);
                 DrawButton(e.Graphics, btnVerifyRect, "Verify", Color.FromArgb(13, 110, 253), Color.White);
-
                 Rectangle btnUpdateRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, buttonHeight);
                 DrawButton(e.Graphics, btnUpdateRect, "Update", Color.FromArgb(40, 167, 69), Color.White);
-
                 e.Handled = true;
             }
         }
-
         private void DrawButton(Graphics g, Rectangle rect, string text, Color bgColor, Color textColor)
         {
             using (GraphicsPath path = new GraphicsPath())
@@ -483,13 +430,11 @@ namespace Project5LMS.Forms.Admin.Inventory
                 path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90);
                 path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90);
                 path.CloseAllFigures();
-
                 using (SolidBrush brush = new SolidBrush(bgColor))
                 {
                     g.FillPath(brush, path);
                 }
             }
-
             TextRenderer.DrawText(
                 g,
                 text,
@@ -499,16 +444,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
             );
         }
-
         private void DataGridViewInventory_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
             if (columnName != "Actions") return;
-
             DataGridViewRow row = dataGridViewInventory.Rows[e.RowIndex];
-
             int inventoryId = 0;
             if (row.DataBoundItem is DataRowView drv)
             {
@@ -527,18 +468,14 @@ namespace Project5LMS.Forms.Admin.Inventory
                     int.TryParse(inventoryIdStr, out inventoryId);
                 }
             }
-
             Point clickPoint = dataGridViewInventory.PointToClient(Control.MousePosition);
             Rectangle cellRect = dataGridViewInventory.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-
             int buttonY = cellRect.Y + (cellRect.Height - 30) / 2;
             int buttonWidth = 80;
             int spacing = 5;
             int xOffset = cellRect.X + 5;
-
             Rectangle btnVerifyRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
             Rectangle btnUpdateRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
-
             if (btnVerifyRect.Contains(clickPoint))
             {
                 VerifyInventory(inventoryId);
@@ -548,7 +485,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 UpdateInventory(inventoryId);
             }
         }
-
         private void LoadMetrics()
         {
             try
@@ -556,31 +492,27 @@ namespace Project5LMS.Forms.Admin.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string queryTotal = "SELECT COUNT(*) FROM Inventory";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
                         int total = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricTotalValue.Text = total.ToString();
                     }
-
                     string queryNeedsRepair = "SELECT COUNT(*) FROM Inventory WHERE Status = 'For Repair'";
                     using (MySqlCommand cmd = new MySqlCommand(queryNeedsRepair, conn))
                     {
                         int needsRepair = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricNeedsRepairValue.Text = needsRepair.ToString();
                     }
-
                     bool hasCondition = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Condition");
-                    string queryDamaged = hasCondition 
+                    string queryDamaged = hasCondition
                         ? "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'"
-                        : "SELECT 0"; // Return 0 if Condition column doesn't exist
+                        : "SELECT 0";
                     using (MySqlCommand cmd = new MySqlCommand(queryDamaged, conn))
                     {
                         int damaged = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricDamagedValue.Text = damaged.ToString();
                     }
-
                     string queryLost = "SELECT COUNT(*) FROM Inventory WHERE Status = 'Lost'";
                     using (MySqlCommand cmd = new MySqlCommand(queryLost, conn))
                     {
@@ -594,13 +526,11 @@ namespace Project5LMS.Forms.Admin.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadInventory()
         {
             try
             {
                 allInventoryData = GetInventoryData();
-
                 if (!allInventoryData.Columns.Contains("BookDetails"))
                 {
                     allInventoryData.Columns.Add("BookDetails", typeof(string));
@@ -609,7 +539,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 {
                     allInventoryData.Columns.Add("Copy", typeof(string));
                 }
-
                 foreach (DataRow row in allInventoryData.Rows)
                 {
                     string title = "";
@@ -617,15 +546,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                     {
                         title = row["Title"].ToString();
                     }
-                    
                     string author = "";
                     if (row.Table.Columns.Contains("Author") && row["Author"] != DBNull.Value)
                     {
                         author = row["Author"].ToString();
                     }
-                    
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    // Try to get Barcode or AccessionNo from the row
                     string barcode = "";
                     if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
                     {
@@ -640,8 +566,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                         barcode = $"BOOK-{bookId}";
                     }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
-                    
-                    // Build book details string
                     string bookDetails;
                     if (!string.IsNullOrEmpty(title))
                     {
@@ -659,19 +583,15 @@ namespace Project5LMS.Forms.Admin.Inventory
                         bookDetails = $"Book ID: {bookId} ({accessionNo})";
                     }
                     row["BookDetails"] = bookDetails;
-
                     int copyNumber = Convert.ToInt32(row["CopyNumber"]);
                     int totalCopies = row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 1;
                     row["Copy"] = $"{copyNumber}/{totalCopies}";
-
                     if (row["Location"] == DBNull.Value || string.IsNullOrEmpty(row["Location"].ToString()))
                     {
                         row["Location"] = GenerateLocation(bookId, copyNumber);
                     }
                 }
-
                 ApplyFilters();
-
                 dataGridViewInventory.DataSource = allInventoryData;
             }
             catch (Exception ex)
@@ -680,23 +600,19 @@ namespace Project5LMS.Forms.Admin.Inventory
                 MessageBox.Show($"Error loading inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetInventoryData()
         {
             using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
-
-                // Check if Inventory table exists first
-                string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                          WHERE TABLE_SCHEMA = DATABASE() 
+                string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                          WHERE TABLE_SCHEMA = DATABASE()
                                           AND TABLE_NAME = 'Inventory'";
                 using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                 {
                     int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
                     if (tableExists == 0)
                     {
-                        // Table doesn't exist, create it inline
                         try
                         {
                             string createTableQuery = @"CREATE TABLE IF NOT EXISTS Inventory (
@@ -718,7 +634,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                         catch (Exception ex)
                         {
                             System.Diagnostics.Debug.WriteLine($"Error creating Inventory table in GetInventoryData: {ex.Message}");
-                            // Return empty table if creation fails
                             DataTable emptyTable = new DataTable();
                             emptyTable.Columns.Add("InventoryID", typeof(int));
                             emptyTable.Columns.Add("BookID", typeof(int));
@@ -730,7 +645,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                         }
                     }
                 }
-
                 bool hasCopyNumber = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "CopyNumber");
                 bool hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
@@ -739,24 +653,17 @@ namespace Project5LMS.Forms.Admin.Inventory
                 bool hasTitle = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Title");
                 bool hasAuthor = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Author");
                 bool hasCategory = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Category");
-                
-                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
                 string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
                 string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
-                
-                // Use Title if it exists, otherwise use a default
                 string titleSelect = hasTitle ? "b.Title," : "'N/A' as Title,";
                 string authorSelect = hasAuthor ? "b.Author," : "'N/A' as Author,";
                 string categorySelect = hasCategory ? "b.Category," : "'N/A' as Category,";
-                
-                // Use Copies if it exists, otherwise use TotalCopies
                 string copiesColumn = hasCopies ? "b.Copies" : (DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies") ? "b.TotalCopies" : "1");
                 string copiesAlias = "Copies";
-
                 string query;
                 if (hasCopyNumber && hasLastVerified)
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 i.InventoryID,
                                 i.BookID,
                                 i.CopyNumber,
@@ -775,7 +682,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 }
                 else if (hasCopyNumber)
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 i.InventoryID,
                                 i.BookID,
                                 i.CopyNumber,
@@ -794,7 +701,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 }
                 else
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 i.InventoryID,
                                 i.BookID,
                                 1 as CopyNumber,
@@ -811,7 +718,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                              INNER JOIN Books b ON i.BookID = b.BookID
                              ORDER BY i.InventoryID DESC";
                 }
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
@@ -821,11 +727,8 @@ namespace Project5LMS.Forms.Admin.Inventory
                 }
             }
         }
-
-
         private string GenerateLocation(int bookId, int copyNumber)
         {
-
             try
             {
                 using (var conn = _dbContext.GetConnection())
@@ -847,18 +750,14 @@ namespace Project5LMS.Forms.Admin.Inventory
             }
             catch
             {
-
             }
             return $"A-{bookId.ToString().PadLeft(2, '0')}-{copyNumber}";
         }
-
         private void ApplyFilters()
         {
             if (allInventoryData == null) return;
-
             DataView dv = allInventoryData.DefaultView;
             string rowFilter = "";
-
             if (currentConditionFilter != "All Conditions")
             {
                 rowFilter = $"Condition = '{currentConditionFilter}'";
@@ -869,7 +768,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                     rowFilter += " AND ";
                 rowFilter += $"Status = '{currentStatusFilter}'";
             }
-
             string searchText = txtSearch.Text.Trim();
             if (!string.IsNullOrEmpty(searchText) && searchText != "?? Search inventory...")
             {
@@ -877,11 +775,9 @@ namespace Project5LMS.Forms.Admin.Inventory
                     rowFilter += " AND ";
                 rowFilter += $"(Title LIKE '%{searchText}%' OR Author LIKE '%{searchText}%' OR Barcode LIKE '%{searchText}%')";
             }
-
             dv.RowFilter = rowFilter;
             allInventoryData = dv.ToTable();
         }
-
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (txtSearch.Text == "?? Search inventory...")
@@ -890,7 +786,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 txtSearch.ForeColor = Color.Black;
             }
         }
-
         private void txtSearch_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
@@ -899,12 +794,10 @@ namespace Project5LMS.Forms.Admin.Inventory
                 txtSearch.ForeColor = Color.Gray;
             }
         }
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             LoadInventory();
         }
-
         private void btnFilterCondition_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
@@ -913,10 +806,8 @@ namespace Project5LMS.Forms.Admin.Inventory
             filterMenu.Items.Add("Good", null, (s, args) => { currentConditionFilter = "Good"; btnFilterCondition.Text = "?? Good"; LoadInventory(); });
             filterMenu.Items.Add("Fair", null, (s, args) => { currentConditionFilter = "Fair"; btnFilterCondition.Text = "?? Fair"; LoadInventory(); });
             filterMenu.Items.Add("Damaged", null, (s, args) => { currentConditionFilter = "Damaged"; btnFilterCondition.Text = "?? Damaged"; LoadInventory(); });
-
             filterMenu.Show(btnFilterCondition, new Point(0, btnFilterCondition.Height));
         }
-
         private void btnFilterStatus_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
@@ -925,10 +816,8 @@ namespace Project5LMS.Forms.Admin.Inventory
             filterMenu.Items.Add("Borrowed", null, (s, args) => { currentStatusFilter = "Borrowed"; btnFilterStatus.Text = "?? Borrowed"; LoadInventory(); });
             filterMenu.Items.Add("For Repair", null, (s, args) => { currentStatusFilter = "For Repair"; btnFilterStatus.Text = "?? For Repair"; LoadInventory(); });
             filterMenu.Items.Add("Lost", null, (s, args) => { currentStatusFilter = "Lost"; btnFilterStatus.Text = "?? Lost"; LoadInventory(); });
-
             filterMenu.Show(btnFilterStatus, new Point(0, btnFilterStatus.Height));
         }
-
         private void VerifyInventory(int inventoryId)
         {
             try
@@ -936,7 +825,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     bool hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
                     string updateQuery;
                     if (hasLastVerified)
@@ -945,11 +833,9 @@ namespace Project5LMS.Forms.Admin.Inventory
                     }
                     else
                     {
-
                         AddColumnIfNotExists(conn, "Inventory", "LastVerified", "DATETIME NULL");
                         updateQuery = "UPDATE Inventory SET LastVerified = @LastVerified WHERE InventoryID = @InventoryID";
                     }
-
                     using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@InventoryID", inventoryId);
@@ -957,7 +843,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                         cmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show("Inventory item verified successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadInventory();
             }
@@ -966,12 +851,10 @@ namespace Project5LMS.Forms.Admin.Inventory
                 MessageBox.Show($"Error verifying inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void UpdateInventory(int inventoryId)
         {
             try
             {
-
                 DataRow inventoryRow = null;
                 foreach (DataRow row in allInventoryData.Rows)
                 {
@@ -981,13 +864,11 @@ namespace Project5LMS.Forms.Admin.Inventory
                         break;
                     }
                 }
-
                 if (inventoryRow == null)
                 {
                     MessageBox.Show("Inventory item not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
                 using (Form updateForm = new Form())
                 {
                     updateForm.Text = "Update Inventory";
@@ -996,7 +877,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                     updateForm.FormBorderStyle = FormBorderStyle.FixedDialog;
                     updateForm.MaximizeBox = false;
                     updateForm.MinimizeBox = false;
-
                     Label lblCondition = new Label { Text = "Condition:", Location = new Point(20, 20), AutoSize = true };
                     ComboBox cmbCondition = new ComboBox
                     {
@@ -1006,7 +886,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                     };
                     cmbCondition.Items.AddRange(new[] { "Excellent", "Good", "Fair", "Damaged" });
                     cmbCondition.SelectedItem = inventoryRow["Condition"]?.ToString() ?? "Good";
-
                     Label lblStatus = new Label { Text = "Status:", Location = new Point(20, 60), AutoSize = true };
                     ComboBox cmbStatus = new ComboBox
                     {
@@ -1016,7 +895,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                     };
                     cmbStatus.Items.AddRange(new[] { "Available", "Borrowed", "For Repair", "Lost" });
                     cmbStatus.SelectedItem = inventoryRow["Status"]?.ToString() ?? "Available";
-
                     Label lblLocation = new Label { Text = "Location:", Location = new Point(20, 100), AutoSize = true };
                     TextBox txtLocation = new TextBox
                     {
@@ -1024,7 +902,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                         Size = new Size(200, 25)
                     };
                     txtLocation.Text = inventoryRow["Location"]?.ToString() ?? "";
-
                     Button btnSave = new Button
                     {
                         Text = "Save",
@@ -1039,11 +916,9 @@ namespace Project5LMS.Forms.Admin.Inventory
                         Size = new Size(80, 30),
                         DialogResult = DialogResult.Cancel
                     };
-
                     updateForm.Controls.AddRange(new Control[] { lblCondition, cmbCondition, lblStatus, cmbStatus, lblLocation, txtLocation, btnSave, btnCancel });
                     updateForm.AcceptButton = btnSave;
                     updateForm.CancelButton = btnCancel;
-
                     if (updateForm.ShowDialog() == DialogResult.OK)
                     {
                         using (var conn = _dbContext.GetConnection())
@@ -1059,7 +934,6 @@ namespace Project5LMS.Forms.Admin.Inventory
                                 cmd.ExecuteNonQuery();
                             }
                         }
-
                         MessageBox.Show("Inventory item updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadMetrics();
                         LoadInventory();
@@ -1071,10 +945,8 @@ namespace Project5LMS.Forms.Admin.Inventory
                 MessageBox.Show($"Error updating inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void dataGridViewInventory_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-
         }
     }
 }

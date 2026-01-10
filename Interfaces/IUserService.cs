@@ -1,5 +1,4 @@
-using Project5LMS.Models;
-
+﻿using Project5LMS.Models;
 namespace Project5LMS.Interfaces
 {
     public interface IUserService

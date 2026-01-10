@@ -1,9 +1,8 @@
-using Project5LMS.Models;
+﻿using Project5LMS.Models;
 using System;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Configuration;
-
 namespace Project5LMS.Helpers
 {
     public static class CurrentUser
@@ -13,9 +12,7 @@ namespace Project5LMS.Helpers
         public static string LastName { get; set; }
         public static string Email { get; set; }
         public static string Role { get; set; }
-
         public static string FullName => string.Join(" ", new[] { FirstName, LastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
-
         public static void Set(User user)
         {
             UserID = user.UserID;
@@ -24,7 +21,6 @@ namespace Project5LMS.Helpers
             Email = user.Email;
             Role = user.Role;
         }
-
         public static void Clear()
         {
             UserID = 0;
@@ -33,12 +29,10 @@ namespace Project5LMS.Helpers
             Email = null;
             Role = null;
         }
-
         public static int GetMemberID()
         {
             if (string.IsNullOrWhiteSpace(Email))
                 return 0;
-
             try
             {
                 string connectionString = DatabaseHelper.GetConnectionString();

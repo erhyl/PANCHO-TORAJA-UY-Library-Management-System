@@ -1,16 +1,14 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Project5LMS.Helpers;
-
 namespace Project5LMS.Helpers
 {
     public static class AuditLogger
     {
         private static readonly string LogDirectory = Path.Combine(Application.StartupPath, "Logs");
         private static readonly string AuditLogFile = Path.Combine(LogDirectory, $"Audit_{DateTime.Now:yyyyMMdd}.log");
-
         static AuditLogger()
         {
             if (!Directory.Exists(LogDirectory))
@@ -18,7 +16,6 @@ namespace Project5LMS.Helpers
                 Directory.CreateDirectory(LogDirectory);
             }
         }
-
         public static void Log(string action, string details = "", string result = "Success")
         {
             try
@@ -31,27 +28,22 @@ namespace Project5LMS.Helpers
                 System.Diagnostics.Debug.WriteLine($"Audit logging error: {ex.Message}");
             }
         }
-
         public static void LogSecurity(string action, string details = "", string result = "Success")
         {
             Log($"SECURITY: {action}", details, result);
         }
-
         public static void LogDataModification(string action, string details = "", string result = "Success")
         {
             Log($"DATA_MODIFICATION: {action}", details, result);
         }
-
         public static void LogCirculation(string action, string details = "", string result = "Success")
         {
             Log($"CIRCULATION: {action}", details, result);
         }
-
         public static void LogAccessControl(string action, string details = "", string result = "Success")
         {
             Log($"ACCESS_CONTROL: {action}", details, result);
         }
-
         private static string FormatLogEntry(string action, string details, string result)
         {
             StringBuilder sb = new StringBuilder();
@@ -65,7 +57,6 @@ namespace Project5LMS.Helpers
             sb.Append($"Result: {result}");
             return sb.ToString();
         }
-
         private static void WriteToFile(string logEntry)
         {
             lock (typeof(AuditLogger))
@@ -76,7 +67,6 @@ namespace Project5LMS.Helpers
                 }
             }
         }
-
         public static string GetTodayLogPath()
         {
             return AuditLogFile;

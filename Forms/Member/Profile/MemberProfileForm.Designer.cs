@@ -3,7 +3,6 @@
     partial class MemberProfileForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -94,9 +91,6 @@
             this.panelProfileSummary.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelAccountStatistics);
@@ -112,9 +106,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelAccountStatistics
-            // 
             this.panelAccountStatistics.BackColor = System.Drawing.Color.White;
             this.panelAccountStatistics.Controls.Add(this.panelStat4);
             this.panelAccountStatistics.Controls.Add(this.panelStat3);
@@ -127,9 +118,6 @@
             this.panelAccountStatistics.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
             this.panelAccountStatistics.Size = new System.Drawing.Size(1240, 200);
             this.panelAccountStatistics.TabIndex = 5;
-            // 
-            // panelStat4
-            // 
             this.panelStat4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelStat4.Controls.Add(this.lblActiveReservationsValue);
             this.panelStat4.Controls.Add(this.lblActiveReservationsLabel);
@@ -139,9 +127,6 @@
             this.panelStat4.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelStat4.Size = new System.Drawing.Size(280, 110);
             this.panelStat4.TabIndex = 4;
-            // 
-            // lblActiveReservationsValue
-            // 
             this.lblActiveReservationsValue.AutoSize = true;
             this.lblActiveReservationsValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveReservationsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -151,9 +136,6 @@
             this.lblActiveReservationsValue.Size = new System.Drawing.Size(40, 46);
             this.lblActiveReservationsValue.TabIndex = 1;
             this.lblActiveReservationsValue.Text = "0";
-            // 
-            // lblActiveReservationsLabel
-            // 
             this.lblActiveReservationsLabel.AutoSize = true;
             this.lblActiveReservationsLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveReservationsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -163,9 +145,6 @@
             this.lblActiveReservationsLabel.Size = new System.Drawing.Size(173, 25);
             this.lblActiveReservationsLabel.TabIndex = 0;
             this.lblActiveReservationsLabel.Text = "Active Reservations";
-            // 
-            // panelStat3
-            // 
             this.panelStat3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelStat3.Controls.Add(this.lblTotalReservationsValue);
             this.panelStat3.Controls.Add(this.lblTotalReservationsLabel);
@@ -175,9 +154,6 @@
             this.panelStat3.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelStat3.Size = new System.Drawing.Size(280, 110);
             this.panelStat3.TabIndex = 3;
-            // 
-            // lblTotalReservationsValue
-            // 
             this.lblTotalReservationsValue.AutoSize = true;
             this.lblTotalReservationsValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalReservationsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -187,9 +163,6 @@
             this.lblTotalReservationsValue.Size = new System.Drawing.Size(40, 46);
             this.lblTotalReservationsValue.TabIndex = 1;
             this.lblTotalReservationsValue.Text = "0";
-            // 
-            // lblTotalReservationsLabel
-            // 
             this.lblTotalReservationsLabel.AutoSize = true;
             this.lblTotalReservationsLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalReservationsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -199,9 +172,6 @@
             this.lblTotalReservationsLabel.Size = new System.Drawing.Size(215, 25);
             this.lblTotalReservationsLabel.TabIndex = 0;
             this.lblTotalReservationsLabel.Text = "Total Reservations Made";
-            // 
-            // panelStat2
-            // 
             this.panelStat2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelStat2.Controls.Add(this.lblCurrentBorrowingsValue);
             this.panelStat2.Controls.Add(this.lblCurrentBorrowingsLabel);
@@ -211,9 +181,6 @@
             this.panelStat2.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelStat2.Size = new System.Drawing.Size(280, 110);
             this.panelStat2.TabIndex = 2;
-            // 
-            // lblCurrentBorrowingsValue
-            // 
             this.lblCurrentBorrowingsValue.AutoSize = true;
             this.lblCurrentBorrowingsValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentBorrowingsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -223,9 +190,6 @@
             this.lblCurrentBorrowingsValue.Size = new System.Drawing.Size(40, 46);
             this.lblCurrentBorrowingsValue.TabIndex = 1;
             this.lblCurrentBorrowingsValue.Text = "0";
-            // 
-            // lblCurrentBorrowingsLabel
-            // 
             this.lblCurrentBorrowingsLabel.AutoSize = true;
             this.lblCurrentBorrowingsLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentBorrowingsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -235,9 +199,6 @@
             this.lblCurrentBorrowingsLabel.Size = new System.Drawing.Size(177, 25);
             this.lblCurrentBorrowingsLabel.TabIndex = 0;
             this.lblCurrentBorrowingsLabel.Text = "Current Borrowings";
-            // 
-            // panelStat1
-            // 
             this.panelStat1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelStat1.Controls.Add(this.lblTotalBorrowedValue);
             this.panelStat1.Controls.Add(this.lblTotalBorrowedLabel);
@@ -247,9 +208,6 @@
             this.panelStat1.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelStat1.Size = new System.Drawing.Size(280, 110);
             this.panelStat1.TabIndex = 1;
-            // 
-            // lblTotalBorrowedValue
-            // 
             this.lblTotalBorrowedValue.AutoSize = true;
             this.lblTotalBorrowedValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalBorrowedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -259,9 +217,6 @@
             this.lblTotalBorrowedValue.Size = new System.Drawing.Size(40, 46);
             this.lblTotalBorrowedValue.TabIndex = 1;
             this.lblTotalBorrowedValue.Text = "0";
-            // 
-            // lblTotalBorrowedLabel
-            // 
             this.lblTotalBorrowedLabel.AutoSize = true;
             this.lblTotalBorrowedLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalBorrowedLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -271,9 +226,6 @@
             this.lblTotalBorrowedLabel.Size = new System.Drawing.Size(194, 25);
             this.lblTotalBorrowedLabel.TabIndex = 0;
             this.lblTotalBorrowedLabel.Text = "Total Books Borrowed";
-            // 
-            // lblAccountStatisticsTitle
-            // 
             this.lblAccountStatisticsTitle.AutoSize = true;
             this.lblAccountStatisticsTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAccountStatisticsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -283,9 +235,6 @@
             this.lblAccountStatisticsTitle.Size = new System.Drawing.Size(244, 37);
             this.lblAccountStatisticsTitle.TabIndex = 0;
             this.lblAccountStatisticsTitle.Text = "Account Statistics";
-            // 
-            // panelBorrowingPrivileges
-            // 
             this.panelBorrowingPrivileges.BackColor = System.Drawing.Color.White;
             this.panelBorrowingPrivileges.Controls.Add(this.lblFineRateValue);
             this.panelBorrowingPrivileges.Controls.Add(this.lblFineRateLabel);
@@ -304,9 +253,6 @@
             this.panelBorrowingPrivileges.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
             this.panelBorrowingPrivileges.Size = new System.Drawing.Size(1240, 180);
             this.panelBorrowingPrivileges.TabIndex = 4;
-            // 
-            // lblFineRateValue
-            // 
             this.lblFineRateValue.AutoSize = true;
             this.lblFineRateValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFineRateValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -316,9 +262,6 @@
             this.lblFineRateValue.Size = new System.Drawing.Size(142, 28);
             this.lblFineRateValue.TabIndex = 10;
             this.lblFineRateValue.Text = "$1.00 per day";
-            // 
-            // lblFineRateLabel
-            // 
             this.lblFineRateLabel.AutoSize = true;
             this.lblFineRateLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFineRateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -328,9 +271,6 @@
             this.lblFineRateLabel.Size = new System.Drawing.Size(166, 25);
             this.lblFineRateLabel.TabIndex = 9;
             this.lblFineRateLabel.Text = "Overdue Fine Rate";
-            // 
-            // lblReservationLimitValue
-            // 
             this.lblReservationLimitValue.AutoSize = true;
             this.lblReservationLimitValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReservationLimitValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -340,9 +280,6 @@
             this.lblReservationLimitValue.Size = new System.Drawing.Size(86, 28);
             this.lblReservationLimitValue.TabIndex = 8;
             this.lblReservationLimitValue.Text = "5 books";
-            // 
-            // lblReservationLimitLabel
-            // 
             this.lblReservationLimitLabel.AutoSize = true;
             this.lblReservationLimitLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReservationLimitLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -352,9 +289,6 @@
             this.lblReservationLimitLabel.Size = new System.Drawing.Size(155, 25);
             this.lblReservationLimitLabel.TabIndex = 7;
             this.lblReservationLimitLabel.Text = "Reservation Limit";
-            // 
-            // lblRenewalLimitValue
-            // 
             this.lblRenewalLimitValue.AutoSize = true;
             this.lblRenewalLimitValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRenewalLimitValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -364,9 +298,6 @@
             this.lblRenewalLimitValue.Size = new System.Drawing.Size(82, 28);
             this.lblRenewalLimitValue.TabIndex = 6;
             this.lblRenewalLimitValue.Text = "3 times";
-            // 
-            // lblRenewalLimitLabel
-            // 
             this.lblRenewalLimitLabel.AutoSize = true;
             this.lblRenewalLimitLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRenewalLimitLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -376,9 +307,6 @@
             this.lblRenewalLimitLabel.Size = new System.Drawing.Size(128, 25);
             this.lblRenewalLimitLabel.TabIndex = 5;
             this.lblRenewalLimitLabel.Text = "Renewal Limit";
-            // 
-            // lblBorrowingPeriodValue
-            // 
             this.lblBorrowingPeriodValue.AutoSize = true;
             this.lblBorrowingPeriodValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowingPeriodValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -388,9 +316,6 @@
             this.lblBorrowingPeriodValue.Size = new System.Drawing.Size(85, 28);
             this.lblBorrowingPeriodValue.TabIndex = 4;
             this.lblBorrowingPeriodValue.Text = "14 days";
-            // 
-            // lblBorrowingPeriodLabel
-            // 
             this.lblBorrowingPeriodLabel.AutoSize = true;
             this.lblBorrowingPeriodLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowingPeriodLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -400,9 +325,6 @@
             this.lblBorrowingPeriodLabel.Size = new System.Drawing.Size(159, 25);
             this.lblBorrowingPeriodLabel.TabIndex = 3;
             this.lblBorrowingPeriodLabel.Text = "Borrowing Period";
-            // 
-            // lblMaxBooksValue
-            // 
             this.lblMaxBooksValue.AutoSize = true;
             this.lblMaxBooksValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxBooksValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -412,9 +334,6 @@
             this.lblMaxBooksValue.Size = new System.Drawing.Size(86, 28);
             this.lblMaxBooksValue.TabIndex = 2;
             this.lblMaxBooksValue.Text = "5 books";
-            // 
-            // lblMaxBooksLabel
-            // 
             this.lblMaxBooksLabel.AutoSize = true;
             this.lblMaxBooksLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxBooksLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -424,9 +343,6 @@
             this.lblMaxBooksLabel.Size = new System.Drawing.Size(176, 25);
             this.lblMaxBooksLabel.TabIndex = 1;
             this.lblMaxBooksLabel.Text = "Max Books Allowed";
-            // 
-            // lblBorrowingPrivilegesTitle
-            // 
             this.lblBorrowingPrivilegesTitle.AutoSize = true;
             this.lblBorrowingPrivilegesTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowingPrivilegesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -436,9 +352,6 @@
             this.lblBorrowingPrivilegesTitle.Size = new System.Drawing.Size(286, 37);
             this.lblBorrowingPrivilegesTitle.TabIndex = 0;
             this.lblBorrowingPrivilegesTitle.Text = "Borrowing Privileges";
-            // 
-            // panelMembershipDetails
-            // 
             this.panelMembershipDetails.BackColor = System.Drawing.Color.White;
             this.panelMembershipDetails.Controls.Add(this.panelShieldIcon);
             this.panelMembershipDetails.Controls.Add(this.lblAccountStatusBadge);
@@ -460,9 +373,6 @@
             this.panelMembershipDetails.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
             this.panelMembershipDetails.Size = new System.Drawing.Size(640, 381);
             this.panelMembershipDetails.TabIndex = 3;
-            // 
-            // panelShieldIcon
-            // 
             this.panelShieldIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelShieldIcon.Location = new System.Drawing.Point(34, 322);
             this.panelShieldIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -470,9 +380,6 @@
             this.panelShieldIcon.Size = new System.Drawing.Size(30, 30);
             this.panelShieldIcon.TabIndex = 13;
             this.panelShieldIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelShieldIcon_Paint);
-            // 
-            // lblAccountStatusBadge
-            // 
             this.lblAccountStatusBadge.AutoSize = true;
             this.lblAccountStatusBadge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
             this.lblAccountStatusBadge.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -484,9 +391,6 @@
             this.lblAccountStatusBadge.Size = new System.Drawing.Size(69, 28);
             this.lblAccountStatusBadge.TabIndex = 12;
             this.lblAccountStatusBadge.Text = "Active";
-            // 
-            // lblAccountStatusValue
-            // 
             this.lblAccountStatusValue.AutoSize = true;
             this.lblAccountStatusValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAccountStatusValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -496,9 +400,6 @@
             this.lblAccountStatusValue.Size = new System.Drawing.Size(152, 28);
             this.lblAccountStatusValue.TabIndex = 11;
             this.lblAccountStatusValue.Text = "Good Standing";
-            // 
-            // lblAccountStatusLabel
-            // 
             this.lblAccountStatusLabel.AutoSize = true;
             this.lblAccountStatusLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAccountStatusLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -508,9 +409,6 @@
             this.lblAccountStatusLabel.Size = new System.Drawing.Size(136, 25);
             this.lblAccountStatusLabel.TabIndex = 10;
             this.lblAccountStatusLabel.Text = "Account Status";
-            // 
-            // panelCalendarIcon2
-            // 
             this.panelCalendarIcon2.BackColor = System.Drawing.Color.Transparent;
             this.panelCalendarIcon2.Location = new System.Drawing.Point(34, 234);
             this.panelCalendarIcon2.Margin = new System.Windows.Forms.Padding(4);
@@ -518,9 +416,6 @@
             this.panelCalendarIcon2.Size = new System.Drawing.Size(30, 30);
             this.panelCalendarIcon2.TabIndex = 9;
             this.panelCalendarIcon2.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCalendarIcon_Paint);
-            // 
-            // lblExpirationDateValue
-            // 
             this.lblExpirationDateValue.AutoSize = true;
             this.lblExpirationDateValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExpirationDateValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -530,9 +425,6 @@
             this.lblExpirationDateValue.Size = new System.Drawing.Size(124, 28);
             this.lblExpirationDateValue.TabIndex = 8;
             this.lblExpirationDateValue.Text = "2026-09-01";
-            // 
-            // lblExpirationDateLabel
-            // 
             this.lblExpirationDateLabel.AutoSize = true;
             this.lblExpirationDateLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExpirationDateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -542,9 +434,6 @@
             this.lblExpirationDateLabel.Size = new System.Drawing.Size(141, 25);
             this.lblExpirationDateLabel.TabIndex = 7;
             this.lblExpirationDateLabel.Text = "Expiration Date";
-            // 
-            // panelCalendarIcon1
-            // 
             this.panelCalendarIcon1.BackColor = System.Drawing.Color.Transparent;
             this.panelCalendarIcon1.Location = new System.Drawing.Point(34, 153);
             this.panelCalendarIcon1.Margin = new System.Windows.Forms.Padding(4);
@@ -552,9 +441,6 @@
             this.panelCalendarIcon1.Size = new System.Drawing.Size(30, 30);
             this.panelCalendarIcon1.TabIndex = 6;
             this.panelCalendarIcon1.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCalendarIcon_Paint);
-            // 
-            // lblRegistrationDateValue
-            // 
             this.lblRegistrationDateValue.AutoSize = true;
             this.lblRegistrationDateValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRegistrationDateValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -564,9 +450,6 @@
             this.lblRegistrationDateValue.Size = new System.Drawing.Size(124, 28);
             this.lblRegistrationDateValue.TabIndex = 5;
             this.lblRegistrationDateValue.Text = "2024-09-01";
-            // 
-            // lblRegistrationDateLabel
-            // 
             this.lblRegistrationDateLabel.AutoSize = true;
             this.lblRegistrationDateLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRegistrationDateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -576,9 +459,6 @@
             this.lblRegistrationDateLabel.Size = new System.Drawing.Size(156, 25);
             this.lblRegistrationDateLabel.TabIndex = 4;
             this.lblRegistrationDateLabel.Text = "Registration Date";
-            // 
-            // panelCardIcon
-            // 
             this.panelCardIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelCardIcon.Location = new System.Drawing.Point(34, 80);
             this.panelCardIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -586,9 +466,6 @@
             this.panelCardIcon.Size = new System.Drawing.Size(30, 30);
             this.panelCardIcon.TabIndex = 3;
             this.panelCardIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCardIcon_Paint);
-            // 
-            // lblMemberTypeValue
-            // 
             this.lblMemberTypeValue.AutoSize = true;
             this.lblMemberTypeValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberTypeValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -598,9 +475,6 @@
             this.lblMemberTypeValue.Size = new System.Drawing.Size(86, 28);
             this.lblMemberTypeValue.TabIndex = 2;
             this.lblMemberTypeValue.Text = "Student";
-            // 
-            // lblMemberTypeLabel
-            // 
             this.lblMemberTypeLabel.AutoSize = true;
             this.lblMemberTypeLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberTypeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -610,9 +484,6 @@
             this.lblMemberTypeLabel.Size = new System.Drawing.Size(127, 25);
             this.lblMemberTypeLabel.TabIndex = 1;
             this.lblMemberTypeLabel.Text = "Member Type";
-            // 
-            // lblMembershipDetailsTitle
-            // 
             this.lblMembershipDetailsTitle.AutoSize = true;
             this.lblMembershipDetailsTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMembershipDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -622,9 +493,6 @@
             this.lblMembershipDetailsTitle.Size = new System.Drawing.Size(275, 37);
             this.lblMembershipDetailsTitle.TabIndex = 0;
             this.lblMembershipDetailsTitle.Text = "Membership Details";
-            // 
-            // panelPersonalInfo
-            // 
             this.panelPersonalInfo.BackColor = System.Drawing.Color.White;
             this.panelPersonalInfo.Controls.Add(this.panelLocationIcon);
             this.panelPersonalInfo.Controls.Add(this.lblAddressValue);
@@ -645,9 +513,6 @@
             this.panelPersonalInfo.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
             this.panelPersonalInfo.Size = new System.Drawing.Size(580, 381);
             this.panelPersonalInfo.TabIndex = 2;
-            // 
-            // panelLocationIcon
-            // 
             this.panelLocationIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelLocationIcon.Location = new System.Drawing.Point(30, 322);
             this.panelLocationIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -655,9 +520,6 @@
             this.panelLocationIcon.Size = new System.Drawing.Size(30, 30);
             this.panelLocationIcon.TabIndex = 12;
             this.panelLocationIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLocationIcon_Paint);
-            // 
-            // lblAddressValue
-            // 
             this.lblAddressValue.AutoSize = true;
             this.lblAddressValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddressValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -667,9 +529,6 @@
             this.lblAddressValue.Size = new System.Drawing.Size(51, 28);
             this.lblAddressValue.TabIndex = 11;
             this.lblAddressValue.Text = "N/A";
-            // 
-            // lblAddressLabel
-            // 
             this.lblAddressLabel.AutoSize = true;
             this.lblAddressLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddressLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -680,9 +539,6 @@
             this.lblAddressLabel.TabIndex = 10;
             this.lblAddressLabel.Text = "Address";
             this.lblAddressLabel.Click += new System.EventHandler(this.lblAddressLabel_Click);
-            // 
-            // panelPhoneIcon
-            // 
             this.panelPhoneIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelPhoneIcon.Location = new System.Drawing.Point(30, 237);
             this.panelPhoneIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -690,9 +546,6 @@
             this.panelPhoneIcon.Size = new System.Drawing.Size(30, 30);
             this.panelPhoneIcon.TabIndex = 9;
             this.panelPhoneIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPhoneIcon_Paint);
-            // 
-            // lblPhoneValue
-            // 
             this.lblPhoneValue.AutoSize = true;
             this.lblPhoneValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPhoneValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -703,9 +556,6 @@
             this.lblPhoneValue.TabIndex = 8;
             this.lblPhoneValue.Text = "N/A";
             this.lblPhoneValue.Click += new System.EventHandler(this.lblPhoneValue_Click);
-            // 
-            // lblPhoneLabel
-            // 
             this.lblPhoneLabel.AutoSize = true;
             this.lblPhoneLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPhoneLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -715,9 +565,6 @@
             this.lblPhoneLabel.Size = new System.Drawing.Size(140, 25);
             this.lblPhoneLabel.TabIndex = 7;
             this.lblPhoneLabel.Text = "Phone Number";
-            // 
-            // panelEnvelopeIcon
-            // 
             this.panelEnvelopeIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelEnvelopeIcon.Location = new System.Drawing.Point(30, 161);
             this.panelEnvelopeIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -725,9 +572,6 @@
             this.panelEnvelopeIcon.Size = new System.Drawing.Size(30, 30);
             this.panelEnvelopeIcon.TabIndex = 6;
             this.panelEnvelopeIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEnvelopeIcon_Paint);
-            // 
-            // lblEmailValue
-            // 
             this.lblEmailValue.AutoSize = true;
             this.lblEmailValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmailValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -737,9 +581,6 @@
             this.lblEmailValue.Size = new System.Drawing.Size(51, 28);
             this.lblEmailValue.TabIndex = 5;
             this.lblEmailValue.Text = "N/A";
-            // 
-            // lblEmailLabel
-            // 
             this.lblEmailLabel.AutoSize = true;
             this.lblEmailLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -749,9 +590,6 @@
             this.lblEmailLabel.Size = new System.Drawing.Size(130, 25);
             this.lblEmailLabel.TabIndex = 4;
             this.lblEmailLabel.Text = "Email Address";
-            // 
-            // panelPersonIcon
-            // 
             this.panelPersonIcon.BackColor = System.Drawing.Color.Transparent;
             this.panelPersonIcon.Location = new System.Drawing.Point(30, 93);
             this.panelPersonIcon.Margin = new System.Windows.Forms.Padding(4);
@@ -759,9 +597,6 @@
             this.panelPersonIcon.Size = new System.Drawing.Size(30, 30);
             this.panelPersonIcon.TabIndex = 3;
             this.panelPersonIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPersonIcon_Paint);
-            // 
-            // lblFullNameValue
-            // 
             this.lblFullNameValue.AutoSize = true;
             this.lblFullNameValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFullNameValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -771,9 +606,6 @@
             this.lblFullNameValue.Size = new System.Drawing.Size(51, 28);
             this.lblFullNameValue.TabIndex = 2;
             this.lblFullNameValue.Text = "N/A";
-            // 
-            // lblFullNameLabel
-            // 
             this.lblFullNameLabel.AutoSize = true;
             this.lblFullNameLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFullNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -783,9 +615,6 @@
             this.lblFullNameLabel.Size = new System.Drawing.Size(97, 25);
             this.lblFullNameLabel.TabIndex = 1;
             this.lblFullNameLabel.Text = "Full Name";
-            // 
-            // lblPersonalInfoTitle
-            // 
             this.lblPersonalInfoTitle.AutoSize = true;
             this.lblPersonalInfoTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPersonalInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -795,9 +624,6 @@
             this.lblPersonalInfoTitle.Size = new System.Drawing.Size(289, 37);
             this.lblPersonalInfoTitle.TabIndex = 0;
             this.lblPersonalInfoTitle.Text = "Personal Information";
-            // 
-            // panelProfileSummary
-            // 
             this.panelProfileSummary.BackColor = System.Drawing.Color.White;
             this.panelProfileSummary.Controls.Add(this.lblGoodStanding);
             this.panelProfileSummary.Controls.Add(this.lblMemberID);
@@ -810,9 +636,6 @@
             this.panelProfileSummary.Padding = new System.Windows.Forms.Padding(30, 25, 30, 25);
             this.panelProfileSummary.Size = new System.Drawing.Size(1240, 80);
             this.panelProfileSummary.TabIndex = 1;
-            // 
-            // lblGoodStanding
-            // 
             this.lblGoodStanding.AutoSize = true;
             this.lblGoodStanding.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGoodStanding.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -822,9 +645,6 @@
             this.lblGoodStanding.Size = new System.Drawing.Size(124, 23);
             this.lblGoodStanding.TabIndex = 3;
             this.lblGoodStanding.Text = "Good Standing";
-            // 
-            // lblMemberID
-            // 
             this.lblMemberID.AutoSize = true;
             this.lblMemberID.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -834,9 +654,6 @@
             this.lblMemberID.Size = new System.Drawing.Size(227, 25);
             this.lblMemberID.TabIndex = 2;
             this.lblMemberID.Text = "Member ID: MEM-000000";
-            // 
-            // lblStatusBadge
-            // 
             this.lblStatusBadge.AutoSize = true;
             this.lblStatusBadge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
             this.lblStatusBadge.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -848,9 +665,6 @@
             this.lblStatusBadge.Size = new System.Drawing.Size(69, 28);
             this.lblStatusBadge.TabIndex = 1;
             this.lblStatusBadge.Text = "Active";
-            // 
-            // lblProfileName
-            // 
             this.lblProfileName.AutoSize = true;
             this.lblProfileName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProfileName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -860,9 +674,6 @@
             this.lblProfileName.Size = new System.Drawing.Size(149, 41);
             this.lblProfileName.TabIndex = 0;
             this.lblProfileName.Text = "John Doe";
-            // 
-            // panelAvatar
-            // 
             this.panelAvatar.BackColor = System.Drawing.Color.Transparent;
             this.panelAvatar.Location = new System.Drawing.Point(30, 12);
             this.panelAvatar.Margin = new System.Windows.Forms.Padding(4);
@@ -870,9 +681,6 @@
             this.panelAvatar.Size = new System.Drawing.Size(60, 50);
             this.panelAvatar.TabIndex = 0;
             this.panelAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.panelAvatar_Paint);
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(40, 30);
@@ -880,9 +688,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1240, 97);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -892,9 +697,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(614, 32);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "View your personal information and membership details";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -904,9 +706,6 @@
             this.lblTitle.Size = new System.Drawing.Size(255, 62);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "My Profile";
-            // 
-            // MemberProfileForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
@@ -939,11 +738,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

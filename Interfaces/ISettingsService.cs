@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 namespace Project5LMS.Interfaces
 {
     public interface ISettingsService
@@ -10,4 +9,3 @@ namespace Project5LMS.Interfaces
         bool EnsureSettingsTableExists();
     }
 }
-

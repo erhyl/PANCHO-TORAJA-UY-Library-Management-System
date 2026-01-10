@@ -3,7 +3,6 @@
     partial class StaffMembersForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,9 +42,6 @@
             this.panelSearchFilter.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelTableContainer);
@@ -60,9 +54,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelTableContainer
-            // 
             this.panelTableContainer.BackColor = System.Drawing.Color.White;
             this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTableContainer.Controls.Add(this.dataGridViewMembers);
@@ -73,9 +64,6 @@
             this.panelTableContainer.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
             this.panelTableContainer.Size = new System.Drawing.Size(1536, 865);
             this.panelTableContainer.TabIndex = 2;
-            // 
-            // dataGridViewMembers
-            // 
             this.dataGridViewMembers.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewMembers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -124,63 +112,42 @@
             this.dataGridViewMembers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMembers_CellContentClick);
             this.dataGridViewMembers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewMembers_CellFormatting);
             this.dataGridViewMembers.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridViewMembers_CellPainting);
-            // 
-            // colMemberID
-            // 
             this.colMemberID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMemberID.DataPropertyName = "MemberID";
             this.colMemberID.HeaderText = "MEMBER ID";
             this.colMemberID.MinimumWidth = 6;
             this.colMemberID.Name = "colMemberID";
             this.colMemberID.Width = 120;
-            // 
-            // colName
-            // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colName.DataPropertyName = "Name";
             this.colName.HeaderText = "NAME";
             this.colName.MinimumWidth = 6;
             this.colName.Name = "colName";
             this.colName.Width = 200;
-            // 
-            // colContact
-            // 
             this.colContact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colContact.DataPropertyName = "Contact";
             this.colContact.HeaderText = "CONTACT";
             this.colContact.MinimumWidth = 6;
             this.colContact.Name = "colContact";
             this.colContact.Width = 250;
-            // 
-            // colMemberSince
-            // 
             this.colMemberSince.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMemberSince.DataPropertyName = "MemberSince";
             this.colMemberSince.HeaderText = "MEMBER SINCE";
             this.colMemberSince.MinimumWidth = 6;
             this.colMemberSince.Name = "colMemberSince";
             this.colMemberSince.Width = 150;
-            // 
-            // colActiveLoans
-            // 
             this.colActiveLoans.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colActiveLoans.DataPropertyName = "ActiveLoans";
             this.colActiveLoans.HeaderText = "ACTIVE LOANS";
             this.colActiveLoans.MinimumWidth = 6;
             this.colActiveLoans.Name = "colActiveLoans";
             this.colActiveLoans.Width = 120;
-            // 
-            // colStatus
-            // 
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "STATUS";
             this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
             this.colStatus.Width = 120;
-            // 
-            // colEdit
-            // 
             this.colEdit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
@@ -190,12 +157,9 @@
             this.colEdit.HeaderText = "ACTIONS";
             this.colEdit.MinimumWidth = 6;
             this.colEdit.Name = "colEdit";
-            this.colEdit.Text = "✏";
+            this.colEdit.Text = "?";
             this.colEdit.UseColumnTextForButtonValue = true;
             this.colEdit.Width = 50;
-            // 
-            // colDelete
-            // 
             this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
@@ -204,12 +168,9 @@
             this.colDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.colDelete.MinimumWidth = 6;
             this.colDelete.Name = "colDelete";
-            this.colDelete.Text = "🗑";
+            this.colDelete.Text = "??";
             this.colDelete.UseColumnTextForButtonValue = true;
             this.colDelete.Width = 50;
-            // 
-            // panelSearchFilter
-            // 
             this.panelSearchFilter.BackColor = System.Drawing.Color.White;
             this.panelSearchFilter.Controls.Add(this.txtSearch);
             this.panelSearchFilter.Dock = System.Windows.Forms.DockStyle.Top;
@@ -219,9 +180,6 @@
             this.panelSearchFilter.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
             this.panelSearchFilter.Size = new System.Drawing.Size(1536, 60);
             this.panelSearchFilter.TabIndex = 1;
-            // 
-            // txtSearch
-            // 
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -235,10 +193,7 @@
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
-            // 
-            // panelHeader
-            // 
-            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHeader.Controls.Add(this.btnAddNewMember);
             this.panelHeader.Controls.Add(this.lblSubtitle);
@@ -248,9 +203,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 90);
             this.panelHeader.TabIndex = 0;
-            // 
-            // btnAddNewMember
-            // 
             this.btnAddNewMember.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNewMember.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
             this.btnAddNewMember.FlatAppearance.BorderSize = 0;
@@ -265,9 +217,6 @@
             this.btnAddNewMember.Text = "+ Add New Member";
             this.btnAddNewMember.UseVisualStyleBackColor = false;
             this.btnAddNewMember.Click += new System.EventHandler(this.btnAddNewMember_Click);
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -277,9 +226,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(368, 23);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Manage library members and their information";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -289,9 +235,6 @@
             this.lblTitle.Size = new System.Drawing.Size(201, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Members";
-            // 
-            // StaffMembersForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -309,11 +252,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

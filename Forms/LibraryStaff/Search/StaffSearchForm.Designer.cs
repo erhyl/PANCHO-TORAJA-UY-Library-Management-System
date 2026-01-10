@@ -3,7 +3,6 @@
     partial class StaffSearchForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -57,9 +54,6 @@
             this.panelSearchInput.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelResults);
@@ -74,9 +68,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelResults
-            // 
             this.panelResults.BackColor = System.Drawing.Color.White;
             this.panelResults.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelResults.Controls.Add(this.dataGridViewResults);
@@ -88,9 +79,6 @@
             this.panelResults.Size = new System.Drawing.Size(1536, 428);
             this.panelResults.TabIndex = 4;
             this.panelResults.Visible = false;
-            // 
-            // dataGridViewResults
-            // 
             this.dataGridViewResults.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewResults.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -135,60 +123,39 @@
             this.dataGridViewResults.Size = new System.Drawing.Size(1494, 386);
             this.dataGridViewResults.TabIndex = 0;
             this.dataGridViewResults.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResults_CellDoubleClick);
-            // 
-            // colType
-            // 
             this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colType.DataPropertyName = "Type";
             this.colType.HeaderText = "Type";
             this.colType.MinimumWidth = 6;
             this.colType.Name = "colType";
             this.colType.Width = 80;
-            // 
-            // colTitle
-            // 
             this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTitle.DataPropertyName = "Title";
             this.colTitle.HeaderText = "Title/Name";
             this.colTitle.MinimumWidth = 6;
             this.colTitle.Name = "colTitle";
-            // 
-            // colAuthor
-            // 
             this.colAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAuthor.DataPropertyName = "Author";
             this.colAuthor.HeaderText = "Author/Email";
             this.colAuthor.MinimumWidth = 6;
             this.colAuthor.Name = "colAuthor";
-            // 
-            // colISBN
-            // 
             this.colISBN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colISBN.DataPropertyName = "ISBN";
             this.colISBN.HeaderText = "ISBN";
             this.colISBN.MinimumWidth = 6;
             this.colISBN.Name = "colISBN";
             this.colISBN.Width = 150;
-            // 
-            // colCategory
-            // 
             this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCategory.DataPropertyName = "Category";
             this.colCategory.HeaderText = "Category/Type";
             this.colCategory.MinimumWidth = 6;
             this.colCategory.Name = "colCategory";
             this.colCategory.Width = 120;
-            // 
-            // colStatus
-            // 
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "Status";
             this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
-            // 
-            // panelQuickSearchExamples
-            // 
             this.panelQuickSearchExamples.BackColor = System.Drawing.Color.White;
             this.panelQuickSearchExamples.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelQuickSearchExamples.Controls.Add(this.flowLayoutExamples);
@@ -200,9 +167,6 @@
             this.panelQuickSearchExamples.Padding = new System.Windows.Forms.Padding(30);
             this.panelQuickSearchExamples.Size = new System.Drawing.Size(1536, 150);
             this.panelQuickSearchExamples.TabIndex = 3;
-            // 
-            // flowLayoutExamples
-            // 
             this.flowLayoutExamples.AutoSize = true;
             this.flowLayoutExamples.Location = new System.Drawing.Point(30, 30);
             this.flowLayoutExamples.Margin = new System.Windows.Forms.Padding(4);
@@ -210,9 +174,6 @@
             this.flowLayoutExamples.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.flowLayoutExamples.Size = new System.Drawing.Size(1474, 90);
             this.flowLayoutExamples.TabIndex = 1;
-            // 
-            // lblQuickSearchTitle
-            // 
             this.lblQuickSearchTitle.AutoSize = true;
             this.lblQuickSearchTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblQuickSearchTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -223,9 +184,6 @@
             this.lblQuickSearchTitle.TabIndex = 0;
             this.lblQuickSearchTitle.Text = "Quick Search Examples";
             this.lblQuickSearchTitle.Click += new System.EventHandler(this.lblQuickSearchTitle_Click);
-            // 
-            // panelSearchGuidance
-            // 
             this.panelSearchGuidance.BackColor = System.Drawing.Color.White;
             this.panelSearchGuidance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelSearchGuidance.Controls.Add(this.lblGuidanceSubtext);
@@ -237,9 +195,6 @@
             this.panelSearchGuidance.Padding = new System.Windows.Forms.Padding(30);
             this.panelSearchGuidance.Size = new System.Drawing.Size(1536, 94);
             this.panelSearchGuidance.TabIndex = 2;
-            // 
-            // lblGuidanceSubtext
-            // 
             this.lblGuidanceSubtext.AutoSize = true;
             this.lblGuidanceSubtext.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGuidanceSubtext.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -249,9 +204,6 @@
             this.lblGuidanceSubtext.Size = new System.Drawing.Size(432, 23);
             this.lblGuidanceSubtext.TabIndex = 2;
             this.lblGuidanceSubtext.Text = "Enter a search query above to find books and members";
-            // 
-            // lblGuidanceTitle
-            // 
             this.lblGuidanceTitle.AutoSize = true;
             this.lblGuidanceTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGuidanceTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -261,9 +213,6 @@
             this.lblGuidanceTitle.Size = new System.Drawing.Size(187, 32);
             this.lblGuidanceTitle.TabIndex = 1;
             this.lblGuidanceTitle.Text = "Start Searching";
-            // 
-            // panelAdvancedSearch
-            // 
             this.panelAdvancedSearch.BackColor = System.Drawing.Color.White;
             this.panelAdvancedSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelAdvancedSearch.Controls.Add(this.panelFilterButtons);
@@ -275,9 +224,6 @@
             this.panelAdvancedSearch.Padding = new System.Windows.Forms.Padding(30);
             this.panelAdvancedSearch.Size = new System.Drawing.Size(1536, 170);
             this.panelAdvancedSearch.TabIndex = 1;
-            // 
-            // panelFilterButtons
-            // 
             this.panelFilterButtons.Controls.Add(this.btnMembersOnly);
             this.panelFilterButtons.Controls.Add(this.btnBooksOnly);
             this.panelFilterButtons.Controls.Add(this.btnAll);
@@ -287,9 +233,6 @@
             this.panelFilterButtons.Name = "panelFilterButtons";
             this.panelFilterButtons.Size = new System.Drawing.Size(1476, 50);
             this.panelFilterButtons.TabIndex = 3;
-            // 
-            // btnMembersOnly
-            // 
             this.btnMembersOnly.BackColor = System.Drawing.Color.Transparent;
             this.btnMembersOnly.FlatAppearance.BorderSize = 0;
             this.btnMembersOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -303,9 +246,6 @@
             this.btnMembersOnly.Text = "Members Only";
             this.btnMembersOnly.UseVisualStyleBackColor = false;
             this.btnMembersOnly.Click += new System.EventHandler(this.btnMembersOnly_Click);
-            // 
-            // btnBooksOnly
-            // 
             this.btnBooksOnly.BackColor = System.Drawing.Color.Transparent;
             this.btnBooksOnly.FlatAppearance.BorderSize = 0;
             this.btnBooksOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -319,9 +259,6 @@
             this.btnBooksOnly.Text = "Books Only";
             this.btnBooksOnly.UseVisualStyleBackColor = false;
             this.btnBooksOnly.Click += new System.EventHandler(this.btnBooksOnly_Click);
-            // 
-            // btnAll
-            // 
             this.btnAll.FlatAppearance.BorderSize = 0;
             this.btnAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAll.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -334,9 +271,6 @@
             this.btnAll.Text = "All";
             this.btnAll.UseVisualStyleBackColor = false;
             this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
-            // 
-            // lblSearchIn
-            // 
             this.lblSearchIn.AutoSize = true;
             this.lblSearchIn.BackColor = System.Drawing.Color.White;
             this.lblSearchIn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -346,10 +280,7 @@
             this.lblSearchIn.Name = "lblSearchIn";
             this.lblSearchIn.Size = new System.Drawing.Size(112, 23);
             this.lblSearchIn.TabIndex = 0;
-            this.lblSearchIn.Text = "🔍 Search in:";
-            // 
-            // panelSearchInput
-            // 
+            this.lblSearchIn.Text = "?? Search in:";
             this.panelSearchInput.Controls.Add(this.btnSearch);
             this.panelSearchInput.Controls.Add(this.txtSearch);
             this.panelSearchInput.Location = new System.Drawing.Point(30, 16);
@@ -357,9 +288,6 @@
             this.panelSearchInput.Name = "panelSearchInput";
             this.panelSearchInput.Size = new System.Drawing.Size(1476, 60);
             this.panelSearchInput.TabIndex = 2;
-            // 
-            // btnSearch
-            // 
             this.btnSearch.BackColor = System.Drawing.Color.Maroon;
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -373,9 +301,6 @@
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // txtSearch
-            // 
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
@@ -388,9 +313,6 @@
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.lblAdvancedSearchSubtitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -399,9 +321,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 83);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -411,9 +330,6 @@
             this.lblTitle.Size = new System.Drawing.Size(148, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Search";
-            // 
-            // lblAdvancedSearchSubtitle
-            // 
             this.lblAdvancedSearchSubtitle.AutoSize = true;
             this.lblAdvancedSearchSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAdvancedSearchSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -423,9 +339,6 @@
             this.lblAdvancedSearchSubtitle.Size = new System.Drawing.Size(304, 23);
             this.lblAdvancedSearchSubtitle.TabIndex = 1;
             this.lblAdvancedSearchSubtitle.Text = "Search for books, members, and more.";
-            // 
-            // StaffSearchForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -451,11 +364,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

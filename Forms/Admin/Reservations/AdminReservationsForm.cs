@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -9,7 +9,6 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Reservations
 {
     public partial class AdminReservationsForm : Form
@@ -17,13 +16,11 @@ namespace Project5LMS.Forms.Admin.Reservations
         private readonly DatabaseContext _dbContext;
         private DataTable allReservationsData;
         private string currentFilter = "All Status";
-
         public AdminReservationsForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
         }
-
         private void AdminReservationsForm_Load(object sender, EventArgs e)
         {
             EnsureReservationsTableExists();
@@ -31,7 +28,6 @@ namespace Project5LMS.Forms.Admin.Reservations
             LoadMetrics();
             LoadReservations();
         }
-
         private void EnsureReservationsTableExists()
         {
             try
@@ -40,9 +36,8 @@ namespace Project5LMS.Forms.Admin.Reservations
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Reservations'";
                     using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -78,7 +73,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Reservations table exists: {ex.Message}");
             }
         }
-
         private void DrawMetricIcon(Graphics g, Panel panel, string icon)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -91,12 +85,10 @@ namespace Project5LMS.Forms.Admin.Reservations
                 g.DrawString(icon, font, brush, x, y);
             }
         }
-
         private void SetupDataGridView()
         {
             dataGridViewReservations.Columns.Clear();
             dataGridViewReservations.AutoGenerateColumns = false;
-
             DataGridViewTextBoxColumn colReservationID = new DataGridViewTextBoxColumn
             {
                 Name = "ReservationID",
@@ -106,7 +98,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colReservationID);
-
             DataGridViewTextBoxColumn colMember = new DataGridViewTextBoxColumn
             {
                 Name = "Member",
@@ -116,7 +107,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colMember);
-
             DataGridViewTextBoxColumn colBook = new DataGridViewTextBoxColumn
             {
                 Name = "Book",
@@ -126,7 +116,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colBook);
-
             DataGridViewTextBoxColumn colReservedDate = new DataGridViewTextBoxColumn
             {
                 Name = "ReservedDate",
@@ -136,7 +125,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colReservedDate);
-
             DataGridViewTextBoxColumn colExpiryDate = new DataGridViewTextBoxColumn
             {
                 Name = "ExpiryDate",
@@ -146,7 +134,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colExpiryDate);
-
             DataGridViewColumn colPriority = new DataGridViewTextBoxColumn
             {
                 Name = "Priority",
@@ -156,7 +143,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colPriority);
-
             DataGridViewColumn colStatus = new DataGridViewTextBoxColumn
             {
                 Name = "Status",
@@ -166,7 +152,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colStatus);
-
             DataGridViewColumn colActions = new DataGridViewTextBoxColumn
             {
                 Name = "Actions",
@@ -176,7 +161,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colActions);
-
             dataGridViewReservations.DefaultCellStyle.Font = new Font("Segoe UI", 10);
             dataGridViewReservations.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dataGridViewReservations.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
@@ -188,14 +172,11 @@ namespace Project5LMS.Forms.Admin.Reservations
             dataGridViewReservations.CellPainting += DataGridViewReservations_CellPainting;
             dataGridViewReservations.CellContentClick += DataGridViewReservations_CellContentClick;
         }
-
         private void DataGridViewReservations_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             DataGridViewRow row = dataGridViewReservations.Rows[e.RowIndex];
             string columnName = dataGridViewReservations.Columns[e.ColumnIndex].Name;
-
             if (columnName == "ReservationID" && e.Value != null)
             {
                 string reservationIdStr = e.Value.ToString();
@@ -206,29 +187,23 @@ namespace Project5LMS.Forms.Admin.Reservations
                 e.FormattingApplied = true;
             }
         }
-
         private void DataGridViewReservations_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             string columnName = dataGridViewReservations.Columns[e.ColumnIndex].Name;
             DataGridViewRow row = dataGridViewReservations.Rows[e.RowIndex];
-
             if (columnName == "Priority")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(value) && value != "0")
                 {
-
                     Rectangle badgeRect = new Rectangle(
                         e.CellBounds.X + 5,
                         e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
                         Math.Min(60, e.CellBounds.Width - 10),
                         25
                     );
-
                     using (GraphicsPath path = new GraphicsPath())
                     {
                         int radius = 12;
@@ -237,13 +212,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                         path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
                         path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
                         path.CloseAllFigures();
-
                         using (SolidBrush brush = new SolidBrush(Color.FromArgb(221, 160, 221)))
                         {
                             e.Graphics.FillPath(brush, path);
                         }
                     }
-
                     TextRenderer.DrawText(
                         e.Graphics,
                         $"#{value}",
@@ -253,19 +226,15 @@ namespace Project5LMS.Forms.Admin.Reservations
                         TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
                     );
                 }
-
                 e.Handled = true;
             }
-
             if (columnName == "Status")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 Color bgColor = Color.LightGray;
                 Color textColor = Color.Black;
                 string icon = "";
-
                 switch (value.ToLower())
                 {
                     case "pending":
@@ -289,14 +258,12 @@ namespace Project5LMS.Forms.Admin.Reservations
                         icon = "?";
                         break;
                 }
-
                 Rectangle badgeRect = new Rectangle(
                     e.CellBounds.X + 5,
                     e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
                     Math.Min(100, e.CellBounds.Width - 10),
                     25
                 );
-
                 using (GraphicsPath path = new GraphicsPath())
                 {
                     int radius = 12;
@@ -305,13 +272,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                     path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
                     path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
                     path.CloseAllFigures();
-
                     using (SolidBrush brush = new SolidBrush(bgColor))
                     {
                         e.Graphics.FillPath(brush, path);
                     }
                 }
-
                 if (!string.IsNullOrEmpty(icon))
                 {
                     Rectangle iconRect = new Rectangle(badgeRect.X + 5, badgeRect.Y, 15, badgeRect.Height);
@@ -320,7 +285,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                     {
                         e.Graphics.DrawString(icon, iconFont, brush, iconRect);
                     }
-
                     Rectangle textRect = new Rectangle(badgeRect.X + 20, badgeRect.Y, badgeRect.Width - 25, badgeRect.Height);
                     TextRenderer.DrawText(
                         e.Graphics,
@@ -342,46 +306,35 @@ namespace Project5LMS.Forms.Admin.Reservations
                         TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
                     );
                 }
-
                 e.Handled = true;
             }
-
             if (columnName == "Actions")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string status = row.Cells["Status"]?.Value?.ToString() ?? "";
                 int reservationId = Convert.ToInt32(row.Cells["ReservationID"]?.Value ?? 0);
-
                 int buttonY = e.CellBounds.Y + (e.CellBounds.Height - 30) / 2;
                 int buttonHeight = 30;
                 int buttonWidth = 80;
                 int spacing = 5;
                 int xOffset = e.CellBounds.X + 5;
-
                 if (status.ToLower() == "pending")
                 {
-
                     Rectangle btnReadyRect = new Rectangle(xOffset, buttonY, buttonWidth, buttonHeight);
                     DrawButton(e.Graphics, btnReadyRect, "Mark Ready", Color.FromArgb(40, 167, 69), Color.White);
-
                     Rectangle btnCancelRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, buttonHeight);
                     DrawButton(e.Graphics, btnCancelRect, "Cancel", Color.FromArgb(220, 53, 69), Color.White);
                 }
                 else if (status.ToLower() == "ready")
                 {
-
                     Rectangle btnFulfillRect = new Rectangle(xOffset, buttonY, buttonWidth, buttonHeight);
                     DrawButton(e.Graphics, btnFulfillRect, "Fulfill", Color.FromArgb(13, 110, 253), Color.White);
-
                     Rectangle btnCancelRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, buttonHeight);
                     DrawButton(e.Graphics, btnCancelRect, "Cancel", Color.FromArgb(220, 53, 69), Color.White);
                 }
-
                 e.Handled = true;
             }
         }
-
         private void DrawButton(Graphics g, Rectangle rect, string text, Color bgColor, Color textColor)
         {
             using (GraphicsPath path = new GraphicsPath())
@@ -392,13 +345,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                 path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90);
                 path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90);
                 path.CloseAllFigures();
-
                 using (SolidBrush brush = new SolidBrush(bgColor))
                 {
                     g.FillPath(brush, path);
                 }
             }
-
             TextRenderer.DrawText(
                 g,
                 text,
@@ -408,16 +359,12 @@ namespace Project5LMS.Forms.Admin.Reservations
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
             );
         }
-
         private void DataGridViewReservations_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             string columnName = dataGridViewReservations.Columns[e.ColumnIndex].Name;
             if (columnName != "Actions") return;
-
             DataGridViewRow row = dataGridViewReservations.Rows[e.RowIndex];
-
             int reservationId = 0;
             if (row.DataBoundItem is DataRowView drv)
             {
@@ -429,29 +376,23 @@ namespace Project5LMS.Forms.Admin.Reservations
             }
             else
             {
-
                 object reservationIdObj = row.Cells["ReservationID"].Value;
                 if (reservationIdObj != null)
                 {
                     int.TryParse(reservationIdObj.ToString(), out reservationId);
                 }
             }
-
             string status = row.Cells["Status"].Value?.ToString() ?? "";
-
             Point clickPoint = dataGridViewReservations.PointToClient(Control.MousePosition);
             Rectangle cellRect = dataGridViewReservations.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-
             int buttonY = cellRect.Y + (cellRect.Height - 30) / 2;
             int buttonWidth = 80;
             int spacing = 5;
             int xOffset = cellRect.X + 5;
-
             if (status.ToLower() == "pending")
             {
                 Rectangle btnReadyRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
                 Rectangle btnCancelRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
-
                 if (btnReadyRect.Contains(clickPoint))
                 {
                     MarkAsReady(reservationId);
@@ -465,7 +406,6 @@ namespace Project5LMS.Forms.Admin.Reservations
             {
                 Rectangle btnFulfillRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
                 Rectangle btnCancelRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
-
                 if (btnFulfillRect.Contains(clickPoint))
                 {
                     FulfillReservation(reservationId);
@@ -476,7 +416,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 }
             }
         }
-
         private void LoadMetrics()
         {
             try
@@ -484,35 +423,30 @@ namespace Project5LMS.Forms.Admin.Reservations
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string queryTotal = "SELECT COUNT(*) FROM Reservations";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
                         int total = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricTotalValue.Text = total.ToString();
                     }
-
                     string queryPending = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Pending'";
                     using (MySqlCommand cmd = new MySqlCommand(queryPending, conn))
                     {
                         int pending = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricPendingValue.Text = pending.ToString();
                     }
-
                     string queryReady = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Ready'";
                     using (MySqlCommand cmd = new MySqlCommand(queryReady, conn))
                     {
                         int ready = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricReadyValue.Text = ready.ToString();
                     }
-
                     string queryFulfilled = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Fulfilled'";
                     using (MySqlCommand cmd = new MySqlCommand(queryFulfilled, conn))
                     {
                         int fulfilled = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricFulfilledValue.Text = fulfilled.ToString();
                     }
-
                     string queryExpired = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Expired'";
                     using (MySqlCommand cmd = new MySqlCommand(queryExpired, conn))
                     {
@@ -526,13 +460,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadReservations()
         {
             try
             {
                 allReservationsData = GetReservationsData();
-
                 if (!allReservationsData.Columns.Contains("Member"))
                 {
                     allReservationsData.Columns.Add("Member", typeof(string));
@@ -545,19 +477,15 @@ namespace Project5LMS.Forms.Admin.Reservations
                 {
                     allReservationsData.Columns.Add("Priority", typeof(int));
                 }
-
                 List<DataRow> pendingRows = new List<DataRow>();
                 foreach (DataRow row in allReservationsData.Rows)
                 {
-
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
                     string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     int memberId = Convert.ToInt32(row["MemberID"]);
                     row["Member"] = Project5LMS.Helpers.IDFormatter.FormatMemberDisplay(firstName, lastName, memberId);
-
                     string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    // Try to get Barcode or AccessionNo from the row
                     string barcode = "";
                     if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
                     {
@@ -569,8 +497,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                     }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? IDFormatter.FormatAccessionNumber(barcode) : IDFormatter.FormatAccessionNumber(bookId.ToString());
                     row["Book"] = $"{bookTitle} ({accessionNo})";
-
-                    // Try to get ReservationDate or ReservedDate from the row
                     DateTime? reservationDate = null;
                     if (row.Table.Columns.Contains("ReservationDate") && row["ReservationDate"] != DBNull.Value)
                     {
@@ -580,12 +506,10 @@ namespace Project5LMS.Forms.Admin.Reservations
                     {
                         reservationDate = Convert.ToDateTime(row["ReservedDate"]);
                     }
-                    
                     if (row["ExpiryDate"] == DBNull.Value && reservationDate.HasValue)
                     {
                         row["ExpiryDate"] = reservationDate.Value.AddDays(7);
                     }
-
                     string currentStatus = row["Status"] != DBNull.Value ? row["Status"].ToString() : "Pending";
                     if ((currentStatus == "Pending" || currentStatus == "Ready") && row["ExpiryDate"] != DBNull.Value)
                     {
@@ -595,15 +519,12 @@ namespace Project5LMS.Forms.Admin.Reservations
                             row["Status"] = "Expired";
                         }
                     }
-
                     if (row["Status"].ToString() == "Pending")
                     {
                         pendingRows.Add(row);
                     }
                 }
-
-                // Order by ReservationDate or ReservedDate
-                pendingRows = pendingRows.OrderBy(r => 
+                pendingRows = pendingRows.OrderBy(r =>
                 {
                     if (r.Table.Columns.Contains("ReservationDate") && r["ReservationDate"] != DBNull.Value)
                         return Convert.ToDateTime(r["ReservationDate"]);
@@ -616,7 +537,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 {
                     pendingRows[i]["Priority"] = i + 1;
                 }
-
                 DataView dv = allReservationsData.DefaultView;
                 if (currentFilter != "All Status")
                 {
@@ -634,13 +554,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                 MessageBox.Show($"Error loading reservations: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetReservationsData()
         {
             using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
-
                 bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
                 bool hasPriority = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Priority");
                 bool hasFulfilledDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "FulfilledDate");
@@ -648,25 +566,18 @@ namespace Project5LMS.Forms.Admin.Reservations
                 bool hasPickupDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "PickupDate");
                 bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
                 bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
-                
-                // Use ReservationDate if it exists, otherwise try alternative column names
-                string reservationDateColumn = hasReservationDate ? "r.ReservationDate" : 
-                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "r.ReservedDate" : 
+                string reservationDateColumn = hasReservationDate ? "r.ReservationDate" :
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "r.ReservedDate" :
                     (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Date") ? "r.Date" : "NOW()"));
-                string reservationDateAlias = hasReservationDate ? "ReservationDate" : 
+                string reservationDateAlias = hasReservationDate ? "ReservationDate" :
                     (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "ReservedDate" : "ReservationDate");
-                
-                // Use PickupDate if it exists, otherwise use NULL
                 string pickupDateSelect = hasPickupDate ? "r.PickupDate," : "NULL as PickupDate,";
-                
-                // Use Barcode if it exists, otherwise use AccessionNo if it exists, otherwise use BookID
                 string bookIdentifier = hasBarcode ? "b.Barcode" : (hasAccessionNo ? "b.AccessionNo" : "CAST(b.BookID AS CHAR)");
                 string bookIdentifierAlias = hasBarcode ? "Barcode" : (hasAccessionNo ? "AccessionNo" : "BookID");
-
                 string query;
                 if (hasExpiryDate && hasPriority && hasFulfilledDate)
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 r.ReservationID,
                                 r.MemberID,
                                 r.BookID,
@@ -687,7 +598,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 }
                 else
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 r.ReservationID,
                                 r.MemberID,
                                 r.BookID,
@@ -706,7 +617,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                              INNER JOIN Books b ON r.BookID = b.BookID
                              ORDER BY {reservationDateColumn} DESC";
                 }
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
@@ -716,12 +626,9 @@ namespace Project5LMS.Forms.Admin.Reservations
                 }
             }
         }
-
-
         private void ApplyFilter()
         {
             if (allReservationsData == null) return;
-
             DataView dv = allReservationsData.DefaultView;
             if (currentFilter == "All Status")
             {
@@ -733,7 +640,6 @@ namespace Project5LMS.Forms.Admin.Reservations
             }
             dataGridViewReservations.DataSource = dv;
         }
-
         private void btnFilter_Click(object sender, EventArgs e)
         {
             ContextMenuStrip filterMenu = new ContextMenuStrip();
@@ -742,10 +648,8 @@ namespace Project5LMS.Forms.Admin.Reservations
             filterMenu.Items.Add("Ready", null, (s, args) => { currentFilter = "Ready"; btnFilter.Text = "?? Ready"; LoadReservations(); });
             filterMenu.Items.Add("Fulfilled", null, (s, args) => { currentFilter = "Fulfilled"; btnFilter.Text = "?? Fulfilled"; LoadReservations(); });
             filterMenu.Items.Add("Expired", null, (s, args) => { currentFilter = "Expired"; btnFilter.Text = "?? Expired"; LoadReservations(); });
-
             filterMenu.Show(btnFilter, new Point(0, btnFilter.Height));
         }
-
         private void MarkAsReady(int reservationId)
         {
             try
@@ -754,7 +658,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 {
                     conn.Open();
                     bool hasPickupDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "PickupDate");
-                    string query = hasPickupDate 
+                    string query = hasPickupDate
                         ? "UPDATE Reservations SET Status = 'Ready', PickupDate = @PickupDate WHERE ReservationID = @ReservationID"
                         : "UPDATE Reservations SET Status = 'Ready' WHERE ReservationID = @ReservationID";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -767,7 +671,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                         cmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show("Reservation marked as ready for pickup.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadMetrics();
                 LoadReservations();
@@ -777,7 +680,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 MessageBox.Show($"Error marking reservation as ready: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void FulfillReservation(int reservationId)
         {
             try
@@ -785,7 +687,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string getBookQuery = "SELECT BookID FROM Reservations WHERE ReservationID = @ReservationID";
                     int bookId = 0;
                     using (MySqlCommand getCmd = new MySqlCommand(getBookQuery, conn))
@@ -797,7 +698,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                             bookId = Convert.ToInt32(result);
                         }
                     }
-
                     bool hasFulfilledDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "FulfilledDate");
                     string updateQuery;
                     if (hasFulfilledDate)
@@ -808,7 +708,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                     {
                         updateQuery = "UPDATE Reservations SET Status = 'Fulfilled' WHERE ReservationID = @ReservationID";
                     }
-
                     using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@ReservationID", reservationId);
@@ -818,7 +717,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                         }
                         cmd.ExecuteNonQuery();
                     }
-
                     if (bookId > 0)
                     {
                         string updateBookQuery = "UPDATE Books SET Available = Available - 1 WHERE BookID = @BookID AND Available > 0";
@@ -829,7 +727,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                         }
                     }
                 }
-
                 MessageBox.Show("Reservation fulfilled successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadMetrics();
                 LoadReservations();
@@ -839,12 +736,10 @@ namespace Project5LMS.Forms.Admin.Reservations
                 MessageBox.Show($"Error fulfilling reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void CancelReservation(int reservationId)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to cancel this reservation?", "Confirm Cancellation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes) return;
-
             try
             {
                 using (var conn = _dbContext.GetConnection())
@@ -857,7 +752,6 @@ namespace Project5LMS.Forms.Admin.Reservations
                         cmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show("Reservation cancelled successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadMetrics();
                 LoadReservations();
@@ -867,15 +761,11 @@ namespace Project5LMS.Forms.Admin.Reservations
                 MessageBox.Show($"Error cancelling reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void lblSubtitle_Click(object sender, EventArgs e)
         {
-
         }
-
         private void lblMetricReadyValue_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

@@ -1,15 +1,13 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using System;
 using System.Data;
-
 namespace Project5LMS.Data
 {
     public class DatabaseContext : IDisposable
     {
         private readonly string connectionString;
         private bool disposed = false;
-
         public DatabaseContext()
         {
             try
@@ -22,7 +20,6 @@ namespace Project5LMS.Data
                 connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
             }
         }
-
         public MySqlConnection GetConnection()
         {
             try
@@ -35,7 +32,6 @@ namespace Project5LMS.Data
                 throw new Exception("Unable to establish database connection. Please check your database settings.", ex);
             }
         }
-
         public DataTable ExecuteQuery(string query)
         {
             try
@@ -65,7 +61,6 @@ namespace Project5LMS.Data
                 throw new Exception("An error occurred while executing the database query.", ex);
             }
         }
-
         public int ExecuteNonQuery(string query)
         {
             try
@@ -90,10 +85,6 @@ namespace Project5LMS.Data
                 throw new Exception("An error occurred while executing the database operation.", ex);
             }
         }
-
-        /// <summary>
-        /// Execute multiple commands within a transaction
-        /// </summary>
         public bool ExecuteInTransaction(Action<MySqlConnection, MySqlTransaction> action)
         {
             MySqlConnection conn = null;
@@ -103,9 +94,7 @@ namespace Project5LMS.Data
                 conn = GetConnection();
                 conn.Open();
                 transaction = conn.BeginTransaction();
-
                 action(conn, transaction);
-
                 transaction.Commit();
                 return true;
             }
@@ -129,10 +118,6 @@ namespace Project5LMS.Data
                 conn?.Dispose();
             }
         }
-
-        /// <summary>
-        /// Execute a stored procedure
-        /// </summary>
         public DataTable ExecuteStoredProcedure(string procedureName, params MySqlParameter[] parameters)
         {
             try
@@ -167,10 +152,6 @@ namespace Project5LMS.Data
                 throw new Exception($"An error occurred while executing stored procedure '{procedureName}'.", ex);
             }
         }
-
-        /// <summary>
-        /// Execute a stored procedure that returns no data
-        /// </summary>
         public int ExecuteStoredProcedureNonQuery(string procedureName, params MySqlParameter[] parameters)
         {
             try
@@ -200,13 +181,11 @@ namespace Project5LMS.Data
                 throw new Exception($"An error occurred while executing stored procedure '{procedureName}'.", ex);
             }
         }
-
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)

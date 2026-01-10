@@ -1,16 +1,14 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
-
 namespace Project5LMS
 {
     public partial class ForgotPasswordForm : Form
     {
         private string connectionString;
-
         public ForgotPasswordForm()
         {
             InitializeComponent();
@@ -23,51 +21,43 @@ namespace Project5LMS
                 connectionString = "Server=localhost;Database=librarydb;Uid=root;Pwd=;";
             }
         }
-
         private void ForgotPasswordForm_Load(object sender, EventArgs e)
         {
             txtEmail.Focus();
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
         private void btnResetPassword_Click(object sender, EventArgs e)
         {
             try
             {
                 string email = txtEmail.Text.Trim();
-
                 if (string.IsNullOrWhiteSpace(email))
                 {
                     MessageBox.Show("Please enter your email address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtEmail.Focus();
                     return;
                 }
-
                 if (!InputValidator.IsValidEmail(email))
                 {
                     MessageBox.Show("Please enter a valid email address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtEmail.Focus();
                     return;
                 }
-
                 if (!UserExists(email))
                 {
                     MessageBox.Show("No account found with this email address.", "Account Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-
                 string newPassword = GenerateRandomPassword();
-
                 if (UpdatePassword(email, newPassword))
                 {
-                    MessageBox.Show($"Password reset successful!\n\nYour new password is: {newPassword}\n\nPlease change this password after logging in.", 
-                        "Password Reset", 
-                        MessageBoxButtons.OK, 
+                    MessageBox.Show($"Password reset successful!\n\nYour new password is: {newPassword}\n\nPlease change this password after logging in.",
+                        "Password Reset",
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -82,7 +72,6 @@ namespace Project5LMS
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private bool UserExists(string email)
         {
             try
@@ -105,7 +94,6 @@ namespace Project5LMS
                 return false;
             }
         }
-
         private bool UpdatePassword(string email, string newPassword)
         {
             try
@@ -115,7 +103,6 @@ namespace Project5LMS
                     conn.Open();
                     string hashedPassword = PasswordHasher.HashPassword(newPassword);
                     string query = "UPDATE Users SET PasswordHash = @passwordHash WHERE Email = @email";
-
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@passwordHash", hashedPassword);
@@ -131,33 +118,26 @@ namespace Project5LMS
                 return false;
             }
         }
-
         private string GenerateRandomPassword()
         {
-
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
             char[] password = new char[8];
-
             for (int i = 0; i < 8; i++)
             {
                 password[i] = chars[random.Next(chars.Length)];
             }
-
             return new string(password);
         }
-
         private void txtEmail_Enter(object sender, EventArgs e)
         {
             txtEmail.BackColor = Color.FromArgb(255, 255, 250);
             txtEmail.BorderStyle = BorderStyle.FixedSingle;
         }
-
         private void txtEmail_Leave(object sender, EventArgs e)
         {
             txtEmail.BackColor = Color.White;
         }
-
         private void txtEmail_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

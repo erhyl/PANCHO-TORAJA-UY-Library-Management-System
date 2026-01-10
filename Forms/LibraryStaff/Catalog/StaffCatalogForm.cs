@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -9,7 +9,6 @@ using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Forms.LibraryStaff.Catalog
 {
     public partial class StaffCatalogForm : Form
@@ -20,33 +19,28 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
         private const int CardWidth = 600;
         private const int CardHeight = 280;
         private const int CardSpacing = 20;
-
         public StaffCatalogForm()
         {
             InitializeComponent();
             _bookService = ServiceFactory.CreateBookService();
         }
-
         private void StaffCatalogForm_Load(object sender, EventArgs e)
         {
             LoadCategories();
             LoadMetrics();
             LoadBooks();
         }
-
         private void LoadCategories()
         {
             try
             {
                 cmbCategoryFilter.Items.Clear();
                 cmbCategoryFilter.Items.Add("All");
-
                 var categories = _bookService.GetAllCategories();
                 foreach (var category in categories)
                 {
                     cmbCategoryFilter.Items.Add(category);
                 }
-
                 cmbCategoryFilter.SelectedIndex = 0;
             }
             catch (Exception ex)
@@ -54,7 +48,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 System.Diagnostics.Debug.WriteLine($"Error loading categories: {ex.Message}");
             }
         }
-
         private void LoadMetrics()
         {
             try
@@ -62,13 +55,10 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 var allBooks = _bookService.GetAllBooks();
                 int totalBooks = allBooks.Count();
                 lblMetricTotalBooksValue.Text = totalBooks.ToString();
-
                 int totalCopies = allBooks.Sum(b => b.TotalCopies);
                 lblMetricTotalCopiesValue.Text = totalCopies.ToString();
-
                 int available = allBooks.Sum(b => b.Available);
                 lblMetricAvailableValue.Text = available.ToString();
-
                 int checkedOut = totalCopies - available;
                 lblMetricCheckedOutValue.Text = checkedOut.ToString();
             }
@@ -77,7 +67,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadBooks()
         {
             try
@@ -91,17 +80,14 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 MessageBox.Show($"Error loading books: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetBooksData()
         {
             var books = _bookService.GetAllBooks();
             return Helpers.DataTableHelper.BooksToDataTable(books);
         }
-
         private void DisplayBooks(DataTable booksData)
         {
             panelBooksContainer.Controls.Clear();
-
             if (booksData == null || booksData.Rows.Count == 0)
             {
                 Label lblNoBooks = new Label
@@ -115,14 +101,12 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 panelBooksContainer.Controls.Add(lblNoBooks);
                 return;
             }
-
             foreach (DataRow row in booksData.Rows)
             {
                 Panel bookCard = CreateBookCard(row);
                 panelBooksContainer.Controls.Add(bookCard);
             }
         }
-
         private Panel CreateBookCard(DataRow bookRow)
         {
             Panel card = new Panel
@@ -133,7 +117,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Margin = new Padding(0, 0, CardSpacing, CardSpacing),
                 Padding = new Padding(20)
             };
-
             Panel iconPanel = new Panel
             {
                 BackColor = Color.FromArgb(139, 0, 0),
@@ -142,7 +125,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
             };
             iconPanel.Paint += (s, e) => DrawBookIcon(e.Graphics, iconPanel);
             card.Controls.Add(iconPanel);
-
             string category = bookRow["Category"] != DBNull.Value ? bookRow["Category"].ToString() : "General";
             Label lblGenre = new Label
             {
@@ -155,7 +137,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Location = new Point(CardWidth - 120, 20)
             };
             card.Controls.Add(lblGenre);
-
             string title = bookRow["Title"] != DBNull.Value ? bookRow["Title"].ToString() : "Unknown";
             Label lblTitle = new Label
             {
@@ -167,7 +148,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 MaximumSize = new Size(CardWidth - 140, 0)
             };
             card.Controls.Add(lblTitle);
-
             string author = bookRow["Author"] != DBNull.Value ? bookRow["Author"].ToString() : "Unknown";
             Label lblAuthor = new Label
             {
@@ -179,7 +159,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 MaximumSize = new Size(CardWidth - 140, 0)
             };
             card.Controls.Add(lblAuthor);
-
             int detailY = 80;
             string isbn = bookRow["ISBN"] != DBNull.Value ? bookRow["ISBN"].ToString() : "N/A";
             Label lblISBN = new Label
@@ -191,7 +170,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Location = new Point(20, detailY)
             };
             card.Controls.Add(lblISBN);
-
             string publisher = bookRow["Publisher"] != DBNull.Value ? bookRow["Publisher"].ToString() : "N/A";
             Label lblPublisher = new Label
             {
@@ -202,7 +180,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Location = new Point(20, detailY + 20)
             };
             card.Controls.Add(lblPublisher);
-
             string year = bookRow["YearPublished"] != DBNull.Value ? bookRow["YearPublished"].ToString() : "N/A";
             Label lblYear = new Label
             {
@@ -213,7 +190,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Location = new Point(20, detailY + 40)
             };
             card.Controls.Add(lblYear);
-
             if (bookRow.Table.Columns.Contains("Location") && bookRow["Location"] != DBNull.Value)
             {
                 string location = bookRow["Location"].ToString();
@@ -227,7 +203,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 };
                 card.Controls.Add(lblLocation);
             }
-
             int totalCopies = bookRow["Copies"] != DBNull.Value ? Convert.ToInt32(bookRow["Copies"]) : 0;
             int available = bookRow["Available"] != DBNull.Value ? Convert.ToInt32(bookRow["Available"]) : 0;
             Label lblCopies = new Label
@@ -239,7 +214,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Location = new Point(20, CardHeight - 60)
             };
             card.Controls.Add(lblCopies);
-
             Label lblAvailable = new Label
             {
                 Text = $"{available} Available",
@@ -249,7 +223,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 Location = new Point(lblCopies.Right, CardHeight - 60)
             };
             card.Controls.Add(lblAvailable);
-
             Button btnCheckOut = new Button
             {
                 Text = "Check Out",
@@ -264,10 +237,8 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
             btnCheckOut.FlatAppearance.BorderSize = 0;
             btnCheckOut.Click += (s, e) => CheckOutBook(Convert.ToInt32(bookRow["BookID"]), title);
             card.Controls.Add(btnCheckOut);
-
             return card;
         }
-
         private void DrawBookIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -280,19 +251,16 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 g.DrawString("📖", font, brush, x, y);
             }
         }
-
         private void CheckOutBook(int bookId, string bookTitle)
         {
-
-            MessageBox.Show($"Check out functionality for '{bookTitle}' would be implemented here.", 
+            MessageBox.Show($"Check out functionality for '{bookTitle}' would be implemented here.",
                 "Check Out", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private bool CheckColumnExists(MySqlConnection conn, string tableName, string columnName)
         {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                           WHERE TABLE_SCHEMA = DATABASE() 
-                           AND TABLE_NAME = @TableName 
+            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                           WHERE TABLE_SCHEMA = DATABASE()
+                           AND TABLE_NAME = @TableName
                            AND COLUMN_NAME = @ColumnName";
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
@@ -301,7 +269,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
             }
         }
-
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (txtSearch.Text == SearchPlaceholder)
@@ -310,7 +277,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 txtSearch.ForeColor = Color.Black;
             }
         }
-
         private void txtSearch_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
@@ -319,7 +285,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 txtSearch.ForeColor = Color.FromArgb(128, 128, 128);
             }
         }
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             if (txtSearch.Text != SearchPlaceholder && allBooksData != null)
@@ -327,7 +292,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 ApplyFilters();
             }
         }
-
         private void cmbCategoryFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (allBooksData != null)
@@ -335,7 +299,6 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 ApplyFilters();
             }
         }
-
         private void ApplyFilters()
         {
             try
@@ -345,9 +308,7 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 {
                     searchText = "";
                 }
-
                 string selectedCategory = cmbCategoryFilter.SelectedItem?.ToString() ?? "All";
-
                 DataTable filteredData = allBooksData.Clone();
                 foreach (DataRow row in allBooksData.Rows)
                 {
@@ -358,23 +319,19 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                         string author = row["Author"]?.ToString().ToLower() ?? "";
                         string isbn = row["ISBN"]?.ToString().ToLower() ?? "";
                         string bookId = row["BookID"]?.ToString() ?? "";
-
-                        matchesSearch = title.Contains(searchText) || 
-                                      author.Contains(searchText) || 
-                                      isbn.Contains(searchText) || 
+                        matchesSearch = title.Contains(searchText) ||
+                                      author.Contains(searchText) ||
+                                      isbn.Contains(searchText) ||
                                       bookId.Contains(searchText);
                     }
-
-                    bool matchesCategory = selectedCategory == "All" || 
-                                          (row["Category"] != DBNull.Value && 
+                    bool matchesCategory = selectedCategory == "All" ||
+                                          (row["Category"] != DBNull.Value &&
                                            row["Category"].ToString() == selectedCategory);
-
                     if (matchesSearch && matchesCategory)
                     {
                         filteredData.ImportRow(row);
                     }
                 }
-
                 DisplayBooks(filteredData);
             }
             catch (Exception ex)
@@ -382,10 +339,9 @@ namespace Project5LMS.Forms.LibraryStaff.Catalog
                 System.Diagnostics.Debug.WriteLine($"Error applying filters: {ex.Message}");
             }
         }
-
         private void btnAddNewBook_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Add New Book functionality would be implemented here.", 
+            MessageBox.Show("Add New Book functionality would be implemented here.",
                 "Add New Book", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

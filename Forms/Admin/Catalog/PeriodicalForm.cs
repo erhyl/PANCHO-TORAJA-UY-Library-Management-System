@@ -1,26 +1,19 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Project5LMS.Models;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Catalog
 {
-    /// <summary>
-    /// Form for adding Periodical resources.
-    /// </summary>
     public partial class PeriodicalForm : ResourceTypeForm
     {
         private DatabaseContext _dbContext;
-
         public PeriodicalForm(Book book = null) : base(book, "Periodical")
         {
             _dbContext = ServiceFactory.GetDbContext();
             InitializeComponent();
-            // Set default frequency selection
             if (cmbFrequency.Items.Count > 0) cmbFrequency.SelectedIndex = 0;
         }
-
         protected override void BtnSave_Click(object sender, EventArgs e)
         {
             if (ValidateInputs())
@@ -28,7 +21,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 this.DialogResult = DialogResult.OK;
             }
         }
-
         protected override bool ValidateInputs()
         {
             if (string.IsNullOrWhiteSpace(txtISSN.Text))
@@ -38,12 +30,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             return true;
         }
-
         public Periodical GetPeriodical(Book baseBook)
         {
             return new Periodical
             {
-                // Copy base book properties
                 BookID = baseBook.BookID,
                 Title = baseBook.Title,
                 Author = baseBook.Author,
@@ -52,7 +42,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 PublicationYear = baseBook.PublicationYear,
                 Category = baseBook.Category,
                 Language = baseBook.Language,
-                // Periodical-specific properties
                 ISSN = txtISSN.Text.Trim(),
                 VolumeNumber = txtVolume.Text.Trim(),
                 IssueNumber = txtIssue.Text.Trim(),
@@ -62,4 +51,3 @@ namespace Project5LMS.Forms.Admin.Catalog
         }
     }
 }
-

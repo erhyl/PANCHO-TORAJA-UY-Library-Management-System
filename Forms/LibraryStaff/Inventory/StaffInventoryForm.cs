@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -7,7 +7,6 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.LibraryStaff.Inventory
 {
     public partial class StaffInventoryForm : Form
@@ -15,13 +14,11 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         private DataTable inventoryData;
         private string currentCategoryFilter = "All";
         private readonly DatabaseContext _dbContext;
-
         public StaffInventoryForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
         }
-
         private void StaffInventoryForm_Load(object sender, EventArgs e)
         {
             EnsureInventoryTableExists();
@@ -30,7 +27,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
             LoadMetrics();
             LoadInventory();
         }
-
         private void EnsureInventoryTableExists()
         {
             try
@@ -38,8 +34,8 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Inventory'";
                     using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -67,7 +63,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Inventory table exists: {ex.Message}");
             }
         }
-
         private void SetupDataGridView()
         {
             dataGridViewInventory.AutoGenerateColumns = false;
@@ -86,9 +81,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
             dataGridViewInventory.RowTemplate.Height = 40;
             dataGridViewInventory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
             dataGridViewInventory.CellFormatting += DataGridViewInventory_CellFormatting;
-
             dataGridViewInventory.Columns.Clear();
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "BookID",
@@ -96,7 +89,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "BookID",
                 Width = 100
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Title",
@@ -105,7 +97,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 Width = 250,
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Category",
@@ -113,7 +104,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "Category",
                 Width = 120
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Location",
@@ -121,7 +111,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "Location",
                 Width = 100
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Total",
@@ -129,7 +118,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "Total",
                 Width = 80
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Available",
@@ -137,7 +125,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "Available",
                 Width = 100
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CheckedOut",
@@ -145,7 +132,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "CheckedOut",
                 Width = 120
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Damaged",
@@ -153,7 +139,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "Damaged",
                 Width = 100
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Lost",
@@ -161,7 +146,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "Lost",
                 Width = 80
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "LastUpdated",
@@ -169,7 +153,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 DataPropertyName = "LastUpdated",
                 Width = 130
             });
-
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Status",
@@ -178,13 +161,10 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 Width = 120
             });
         }
-
         private void DataGridViewInventory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
-
             if (columnName == "BookID" && e.Value != null)
             {
                 string bookIdStr = e.Value.ToString();
@@ -194,19 +174,16 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 }
                 e.FormattingApplied = true;
             }
-
             if (columnName == "Available" && e.Value != null)
             {
                 e.CellStyle.ForeColor = Color.FromArgb(40, 167, 69);
                 e.FormattingApplied = true;
             }
-
             if (columnName == "CheckedOut" && e.Value != null)
             {
                 e.CellStyle.ForeColor = Color.FromArgb(13, 110, 253);
                 e.FormattingApplied = true;
             }
-
             if (columnName == "Status" && e.Value != null)
             {
                 string status = e.Value.ToString();
@@ -218,14 +195,12 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 e.FormattingApplied = true;
             }
         }
-
         private void LoadCategories()
         {
             try
             {
                 cmbCategoryFilter.Items.Clear();
                 cmbCategoryFilter.Items.Add("All");
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
@@ -241,7 +216,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         }
                     }
                 }
-
                 cmbCategoryFilter.SelectedIndex = 0;
             }
             catch (Exception ex)
@@ -249,7 +223,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error loading categories: {ex.Message}");
             }
         }
-
         private void LoadMetrics()
         {
             try
@@ -257,31 +230,26 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string queryTotal = "SELECT COALESCE(SUM(Copies), 0) FROM Books";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
                         int total = Convert.ToInt32(cmd.ExecuteScalar());
                         lblTotalCopiesValue.Text = total.ToString();
                     }
-
                     string queryAvailable = "SELECT COALESCE(SUM(Available), 0) FROM Books";
                     using (MySqlCommand cmd = new MySqlCommand(queryAvailable, conn))
                     {
                         int available = Convert.ToInt32(cmd.ExecuteScalar());
                         lblAvailableValue.Text = available.ToString();
                     }
-
                     int checkedOut = Convert.ToInt32(lblTotalCopiesValue.Text) - Convert.ToInt32(lblAvailableValue.Text);
                     lblCheckedOutValue.Text = checkedOut.ToString();
-
                     string queryDamaged = "SELECT COUNT(*) FROM Inventory WHERE Condition = 'Damaged'";
                     using (MySqlCommand cmd = new MySqlCommand(queryDamaged, conn))
                     {
                         int damaged = Convert.ToInt32(cmd.ExecuteScalar());
                         lblDamagedValue.Text = damaged.ToString();
                     }
-
                     string queryLost = "SELECT COUNT(*) FROM Inventory WHERE Status = 'Lost'";
                     using (MySqlCommand cmd = new MySqlCommand(queryLost, conn))
                     {
@@ -295,7 +263,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadInventory()
         {
             try
@@ -303,52 +270,42 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    
-                    // Check if Inventory table exists
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Inventory'";
                     bool hasInventoryTable = false;
                     using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
                         hasInventoryTable = Convert.ToInt32(checkCmd.ExecuteScalar()) > 0;
                     }
-                    
                     bool hasCondition = false;
                     bool hasStatus = false;
                     bool hasLastVerified = false;
-                    
                     if (hasInventoryTable)
                     {
                         hasCondition = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Condition");
                         hasStatus = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "Status");
                         hasLastVerified = DatabaseSchemaHelper.CheckColumnExists(conn, "Inventory", "LastVerified");
                     }
-                    
-                    // Build damaged subquery - check Condition column if it exists
                     string damagedSubquery = hasInventoryTable && hasCondition
-                        ? @"(SELECT BookID, COUNT(*) as DamagedCount 
-                            FROM Inventory 
-                            WHERE Condition = 'Damaged' 
+                        ? @"(SELECT BookID, COUNT(*) as DamagedCount
+                            FROM Inventory
+                            WHERE Condition = 'Damaged'
                             GROUP BY BookID)"
-                        : @"(SELECT BookID, 0 as DamagedCount 
-                            FROM (SELECT 1) as dummy 
-                            WHERE 1=0)"; // Empty result if column doesn't exist
-                    
-                    // Build lost subquery - check Status column if it exists
+                        : @"(SELECT BookID, 0 as DamagedCount
+                            FROM (SELECT 1) as dummy
+                            WHERE 1=0)";
                     string lostSubquery = hasInventoryTable && hasStatus
-                        ? @"(SELECT BookID, COUNT(*) as LostCount 
-                            FROM Inventory 
-                            WHERE Status = 'Lost' 
+                        ? @"(SELECT BookID, COUNT(*) as LostCount
+                            FROM Inventory
+                            WHERE Status = 'Lost'
                             GROUP BY BookID)"
-                        : @"(SELECT BookID, 0 as LostCount 
-                            FROM (SELECT 1) as dummy 
-                            WHERE 1=0)"; // Empty result if column doesn't exist
-                    
+                        : @"(SELECT BookID, 0 as LostCount
+                            FROM (SELECT 1) as dummy
+                            WHERE 1=0)";
                     string lastVerifiedSelect = hasLastVerified ? "COALESCE(MAX(i.LastVerified), b.DateAdded)" : "b.DateAdded";
                     string inventoryJoin = hasInventoryTable ? "LEFT JOIN Inventory i ON b.BookID = i.BookID" : "";
-                    
-                    string query = $@"SELECT 
+                    string query = $@"SELECT
                                     b.BookID,
                                     b.Title,
                                     b.Category,
@@ -359,7 +316,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                                     COALESCE(damaged.DamagedCount, 0) as Damaged,
                                     COALESCE(lost.LostCount, 0) as Lost,
                                     {lastVerifiedSelect} as LastUpdated,
-                                    CASE 
+                                    CASE
                                         WHEN COALESCE(damaged.DamagedCount, 0) = 0 AND COALESCE(lost.LostCount, 0) = 0 THEN 'Good'
                                         ELSE 'Needs Attention'
                                     END as Status
@@ -367,22 +324,18 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                                     LEFT JOIN {damagedSubquery} damaged ON b.BookID = damaged.BookID
                                     LEFT JOIN {lostSubquery} lost ON b.BookID = lost.BookID
                                     {inventoryJoin}";
-
                     if (currentCategoryFilter != "All")
                     {
                         query += " WHERE b.Category = @Category";
                     }
-
                     query += " GROUP BY b.BookID, b.Title, b.Category, b.Location, b.Copies, b.Available, damaged.DamagedCount, lost.LostCount, b.DateAdded";
                     query += " ORDER BY b.BookID";
-
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         if (currentCategoryFilter != "All")
                         {
                             cmd.Parameters.AddWithValue("@Category", currentCategoryFilter);
                         }
-
                         using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                         {
                             inventoryData = new DataTable();
@@ -390,7 +343,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         }
                     }
                 }
-
                 dataGridViewInventory.DataSource = inventoryData;
             }
             catch (Exception ex)
@@ -399,7 +351,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 System.Diagnostics.Debug.WriteLine($"Error loading inventory: {ex.Message}");
             }
         }
-
         private void cmbCategoryFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbCategoryFilter.SelectedItem != null)
@@ -408,7 +359,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 LoadInventory();
             }
         }
-
         private void txtUpdateStockBookID_Enter(object sender, EventArgs e)
         {
             if (txtUpdateStockBookID.Text == "Book ID")
@@ -417,7 +367,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtUpdateStockBookID.ForeColor = Color.Black;
             }
         }
-
         private void txtUpdateStockBookID_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUpdateStockBookID.Text))
@@ -426,7 +375,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtUpdateStockBookID.ForeColor = Color.Gray;
             }
         }
-
         private void txtUpdateStockQuantity_Enter(object sender, EventArgs e)
         {
             if (txtUpdateStockQuantity.Text == "Quantity")
@@ -435,7 +383,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtUpdateStockQuantity.ForeColor = Color.Black;
             }
         }
-
         private void txtUpdateStockQuantity_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUpdateStockQuantity.Text))
@@ -444,7 +391,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtUpdateStockQuantity.ForeColor = Color.Gray;
             }
         }
-
         private void txtUpdateStockQuantity_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -452,33 +398,27 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 e.Handled = true;
             }
         }
-
         private void btnAddCopies_Click(object sender, EventArgs e)
         {
             string bookIdText = txtUpdateStockBookID.Text.Trim();
             string quantityText = txtUpdateStockQuantity.Text.Trim();
-
             if (bookIdText == "Book ID" || string.IsNullOrWhiteSpace(bookIdText))
             {
                 MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (quantityText == "Quantity" || string.IsNullOrWhiteSpace(quantityText))
             {
                 MessageBox.Show("Please enter a Quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (!int.TryParse(quantityText, out int quantity) || quantity <= 0)
             {
                 MessageBox.Show("Please enter a valid quantity (greater than 0).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             try
             {
-                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
                 var book = bookService.GetBookByAccessionNumber(bookIdText);
@@ -488,7 +428,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 }
                 else
                 {
-                    // Try parsing as book ID
                     bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
                     if (bookId > 0)
                     {
@@ -497,13 +436,11 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             bookId = 0;
                     }
                 }
-
                 if (bookId == 0)
                 {
                     MessageBox.Show("Invalid Book ID or Accession Number format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
@@ -518,7 +455,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             return;
                         }
                     }
-
                     string getBookQuery = "SELECT Copies, Location FROM Books WHERE BookID = @BookID";
                     int currentCopies = 0;
                     string location = "";
@@ -534,7 +470,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             }
                         }
                     }
-
                     for (int i = 1; i <= quantity; i++)
                     {
                         string insertQuery = @"INSERT INTO Inventory (BookID, CopyNumber, Location, Condition, Status, LastVerified)
@@ -548,7 +483,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             insertCmd.ExecuteNonQuery();
                         }
                     }
-
                     string updateQuery = "UPDATE Books SET Copies = Copies + @Quantity, Available = Available + @Quantity WHERE BookID = @BookID";
                     using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn))
                     {
@@ -557,14 +491,11 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         updateCmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show($"{quantity} copy/copies added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 txtUpdateStockBookID.Text = "Book ID";
                 txtUpdateStockBookID.ForeColor = Color.Gray;
                 txtUpdateStockQuantity.Text = "Quantity";
                 txtUpdateStockQuantity.ForeColor = Color.Gray;
-
                 LoadMetrics();
                 LoadInventory();
             }
@@ -573,7 +504,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 MessageBox.Show($"Error adding copies: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void txtReportDamageBookID_Enter(object sender, EventArgs e)
         {
             if (txtReportDamageBookID.Text == "Book ID")
@@ -582,7 +512,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportDamageBookID.ForeColor = Color.Black;
             }
         }
-
         private void txtReportDamageBookID_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtReportDamageBookID.Text))
@@ -591,7 +520,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportDamageBookID.ForeColor = Color.Gray;
             }
         }
-
         private void txtReportDamageDescription_Enter(object sender, EventArgs e)
         {
             if (txtReportDamageDescription.Text == "Damage description")
@@ -600,7 +528,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportDamageDescription.ForeColor = Color.Black;
             }
         }
-
         private void txtReportDamageDescription_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtReportDamageDescription.Text))
@@ -609,27 +536,22 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportDamageDescription.ForeColor = Color.Gray;
             }
         }
-
         private void btnReportDamage_Click(object sender, EventArgs e)
         {
             string bookIdText = txtReportDamageBookID.Text.Trim();
             string description = txtReportDamageDescription.Text.Trim();
-
             if (bookIdText == "Book ID" || string.IsNullOrWhiteSpace(bookIdText))
             {
                 MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (description == "Damage description" || string.IsNullOrWhiteSpace(description))
             {
                 MessageBox.Show("Please enter a damage description.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             try
             {
-                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
                 var book = bookService.GetBookByAccessionNumber(bookIdText);
@@ -639,7 +561,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 }
                 else
                 {
-                    // Try parsing as book ID
                     bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
                     if (bookId > 0)
                     {
@@ -648,20 +569,17 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             bookId = 0;
                     }
                 }
-
                 if (bookId == 0)
                 {
                     MessageBox.Show("Invalid Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    string findQuery = @"SELECT InventoryID FROM Inventory 
-                                        WHERE BookID = @BookID 
-                                        AND Status = 'Available' 
+                    string findQuery = @"SELECT InventoryID FROM Inventory
+                                        WHERE BookID = @BookID
+                                        AND Status = 'Available'
                                         AND Condition = 'Good'
                                         LIMIT 1";
                     int inventoryId = 0;
@@ -674,15 +592,13 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             inventoryId = Convert.ToInt32(result);
                         }
                     }
-
                     if (inventoryId == 0)
                     {
                         MessageBox.Show("No available copy found for this book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
-                    string updateQuery = @"UPDATE Inventory 
-                                          SET Condition = 'Damaged', 
+                    string updateQuery = @"UPDATE Inventory
+                                          SET Condition = 'Damaged',
                                               Status = 'For Repair',
                                               Notes = @Notes,
                                               LastVerified = @LastVerified
@@ -694,7 +610,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         updateCmd.Parameters.AddWithValue("@InventoryID", inventoryId);
                         updateCmd.ExecuteNonQuery();
                     }
-
                     string updateBookQuery = "UPDATE Books SET Available = Available - 1 WHERE BookID = @BookID AND Available > 0";
                     using (MySqlCommand updateBookCmd = new MySqlCommand(updateBookQuery, conn))
                     {
@@ -702,14 +617,11 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         updateBookCmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show("Damage reported successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 txtReportDamageBookID.Text = "Book ID";
                 txtReportDamageBookID.ForeColor = Color.Gray;
                 txtReportDamageDescription.Text = "Damage description";
                 txtReportDamageDescription.ForeColor = Color.Gray;
-
                 LoadMetrics();
                 LoadInventory();
             }
@@ -718,7 +630,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 MessageBox.Show($"Error reporting damage: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void txtReportLostBookID_Enter(object sender, EventArgs e)
         {
             if (txtReportLostBookID.Text == "Book ID")
@@ -727,7 +638,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportLostBookID.ForeColor = Color.Black;
             }
         }
-
         private void txtReportLostBookID_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtReportLostBookID.Text))
@@ -736,7 +646,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportLostBookID.ForeColor = Color.Gray;
             }
         }
-
         private void txtReportLostNotes_Enter(object sender, EventArgs e)
         {
             if (txtReportLostNotes.Text == "Additional notes")
@@ -745,7 +654,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportLostNotes.ForeColor = Color.Black;
             }
         }
-
         private void txtReportLostNotes_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtReportLostNotes.Text))
@@ -754,26 +662,21 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 txtReportLostNotes.ForeColor = Color.Gray;
             }
         }
-
         private void btnReportLost_Click(object sender, EventArgs e)
         {
             string bookIdText = txtReportLostBookID.Text.Trim();
             string notes = txtReportLostNotes.Text.Trim();
-
             if (bookIdText == "Book ID" || string.IsNullOrWhiteSpace(bookIdText))
             {
                 MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (notes == "Additional notes" || string.IsNullOrWhiteSpace(notes))
             {
                 notes = "Reported as lost";
             }
-
             try
             {
-                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
                 var book = bookService.GetBookByAccessionNumber(bookIdText);
@@ -783,7 +686,6 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 }
                 else
                 {
-                    // Try parsing as book ID
                     bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
                     if (bookId > 0)
                     {
@@ -792,20 +694,17 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             bookId = 0;
                     }
                 }
-
                 if (bookId == 0)
                 {
                     MessageBox.Show("Invalid Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    string findQuery = @"SELECT InventoryID FROM Inventory 
-                                        WHERE BookID = @BookID 
-                                        AND Status = 'Available' 
+                    string findQuery = @"SELECT InventoryID FROM Inventory
+                                        WHERE BookID = @BookID
+                                        AND Status = 'Available'
                                         AND Condition = 'Good'
                                         LIMIT 1";
                     int inventoryId = 0;
@@ -818,14 +717,12 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             inventoryId = Convert.ToInt32(result);
                         }
                     }
-
                     if (inventoryId == 0)
                     {
                         MessageBox.Show("No available copy found for this book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
-                    string updateQuery = @"UPDATE Inventory 
+                    string updateQuery = @"UPDATE Inventory
                                           SET Status = 'Lost',
                                               Notes = @Notes,
                                               LastVerified = @LastVerified
@@ -837,9 +734,8 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         updateCmd.Parameters.AddWithValue("@InventoryID", inventoryId);
                         updateCmd.ExecuteNonQuery();
                     }
-
-                    string updateBookQuery = @"UPDATE Books 
-                                               SET Available = Available - 1, 
+                    string updateBookQuery = @"UPDATE Books
+                                               SET Available = Available - 1,
                                                    Copies = Copies - 1
                                                WHERE BookID = @BookID AND Available > 0 AND Copies > 0";
                     using (MySqlCommand updateBookCmd = new MySqlCommand(updateBookQuery, conn))
@@ -848,14 +744,11 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         updateBookCmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show("Lost book reported successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 txtReportLostBookID.Text = "Book ID";
                 txtReportLostBookID.ForeColor = Color.Gray;
                 txtReportLostNotes.Text = "Additional notes";
                 txtReportLostNotes.ForeColor = Color.Gray;
-
                 LoadMetrics();
                 LoadInventory();
             }
@@ -864,32 +757,27 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 MessageBox.Show($"Error reporting lost book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnAddInventory_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Add Inventory feature - This would open a dialog to add new inventory items.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void DrawBoxIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 3))
             {
                 g.DrawRectangle(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
             }
         }
-
         private void DrawUpArrowIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 3))
             {
                 g.DrawLine(pen, x + size * 0.5f, y + size * 0.7f, x + size * 0.5f, y + size * 0.3f);
@@ -897,17 +785,14 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 g.DrawLine(pen, x + size * 0.7f, y + size * 0.5f, x + size * 0.5f, y + size * 0.3f);
             }
         }
-
         private void DrawWavyArrowIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 3))
             {
-
                 PointF[] points = new PointF[]
                 {
                     new PointF(x + size * 0.2f, y + size * 0.5f),
@@ -918,17 +803,14 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 g.DrawLines(pen, points);
             }
         }
-
         private void DrawWarningIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 3))
             {
-
                 PointF[] points = new PointF[]
                 {
                     new PointF(x + size * 0.5f, y + size * 0.2f),
@@ -936,25 +818,18 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     new PointF(x + size * 0.8f, y + size * 0.8f)
                 };
                 g.DrawPolygon(pen, points);
-
                 g.DrawLine(pen, x + size * 0.5f, y + size * 0.4f, x + size * 0.5f, y + size * 0.6f);
                 g.DrawLine(pen, x + size * 0.5f, y + size * 0.7f, x + size * 0.5f, y + size * 0.75f);
             }
         }
-
         private void lblSubtitle_Click(object sender, EventArgs e)
         {
-
         }
-
         private void lblTotalCopiesValue_Click(object sender, EventArgs e)
         {
-
         }
-
         private void panelMainContainer_Paint(object sender, PaintEventArgs e)
         {
-
         }
     }
 }

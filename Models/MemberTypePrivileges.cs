@@ -1,39 +1,23 @@
-using System;
-
+﻿using System;
 namespace Project5LMS.Models
 {
-    /// <summary>
-    /// Defines borrowing privileges and limits for different member types
-    /// </summary>
     public class MemberTypePrivileges
     {
         public string MemberType { get; set; }
-        
-        // Borrowing Limits
         public int MaxBooksAllowed { get; set; }
         public int BorrowingPeriodDays { get; set; }
         public int RenewalLimit { get; set; }
         public int ReservationLimit { get; set; }
-        
-        // Fine Rates
         public decimal FineRatePerDay { get; set; }
         public decimal MaxFineCap { get; set; }
-        
-        // Privileges
         public bool CanReserve { get; set; }
         public bool CanRenew { get; set; }
         public bool CanBorrowReference { get; set; }
-        
-        /// <summary>
-        /// Get default privileges for a member type
-        /// </summary>
         public static MemberTypePrivileges GetDefaultPrivileges(string memberType)
         {
             if (string.IsNullOrWhiteSpace(memberType))
                 memberType = "Student";
-
             string type = memberType.ToLower();
-
             if (type.Contains("faculty"))
             {
                 return new MemberTypePrivileges
@@ -82,7 +66,7 @@ namespace Project5LMS.Models
                     CanBorrowReference = false
                 };
             }
-            else // Guest
+            else
             {
                 return new MemberTypePrivileges
                 {
@@ -101,4 +85,3 @@ namespace Project5LMS.Models
         }
     }
 }
-

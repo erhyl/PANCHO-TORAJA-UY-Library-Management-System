@@ -1,46 +1,36 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
 using Project5LMS.Data;
 using Project5LMS.Models;
 using Project5LMS.Interfaces;
-
 namespace Project5LMS.Services
 {
     public class PaymentService : IPaymentService
     {
         private readonly DatabaseContext _dbContext;
-
         public PaymentService(DatabaseContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public bool ProcessPayment(FinePayment payment)
         {
             try
             {
                 if (payment == null || payment.AmountPaid <= 0)
                     return false;
-
-                // Generate receipt number if not provided
                 if (string.IsNullOrWhiteSpace(payment.ReceiptNumber))
                 {
                     payment.ReceiptNumber = GenerateReceiptNumber();
                 }
-
                 payment.PaymentDate = DateTime.Now;
-
-                // Use transaction management for atomic operation
                 return _dbContext.ExecuteInTransaction((conn, trans) =>
                 {
-                    // Insert payment record
-                    string query = @"INSERT INTO FinePayments (TransactionID, MemberID, AmountPaid, PaymentMode, 
+                    string query = @"INSERT INTO FinePayments (TransactionID, MemberID, AmountPaid, PaymentMode,
                                     PaymentDate, ReceiptNumber, ProcessedBy, Notes)
-                                    VALUES (@TransactionID, @MemberID, @AmountPaid, @PaymentMode, 
+                                    VALUES (@TransactionID, @MemberID, @AmountPaid, @PaymentMode,
                                     @PaymentDate, @ReceiptNumber, @ProcessedBy, @Notes)";
-                    
                     using (var cmd = new MySqlCommand(query, conn, trans))
                     {
                         cmd.Parameters.AddWithValue("@TransactionID", payment.TransactionID);
@@ -53,8 +43,6 @@ namespace Project5LMS.Services
                         cmd.Parameters.AddWithValue("@Notes", payment.Notes ?? (object)DBNull.Value);
                         cmd.ExecuteNonQuery();
                     }
-
-                    // Update transaction fine if applicable
                     if (payment.TransactionID > 0)
                     {
                         UpdateTransactionAfterPayment(conn, trans, payment.TransactionID, payment.AmountPaid);
@@ -67,26 +55,21 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public bool WaiveFine(FineAdjustment adjustment)
         {
             try
             {
                 if (adjustment == null)
                     return false;
-
                 adjustment.AdjustmentDate = DateTime.Now;
-
-                // Use transaction management for atomic operation
                 return _dbContext.ExecuteInTransaction((conn, trans) =>
                 {
-                    string query = @"INSERT INTO FineAdjustments (TransactionID, MemberID, OriginalAmount, 
-                                    AdjustedAmount, AdjustmentAmount, AdjustmentType, Reason, AdjustedBy, 
+                    string query = @"INSERT INTO FineAdjustments (TransactionID, MemberID, OriginalAmount,
+                                    AdjustedAmount, AdjustmentAmount, AdjustmentType, Reason, AdjustedBy,
                                     AdjustmentDate, ApprovalRequired, ApprovedBy, ApprovalDate)
-                                    VALUES (@TransactionID, @MemberID, @OriginalAmount, @AdjustedAmount, 
-                                    @AdjustmentAmount, @AdjustmentType, @Reason, @AdjustedBy, 
+                                    VALUES (@TransactionID, @MemberID, @OriginalAmount, @AdjustedAmount,
+                                    @AdjustmentAmount, @AdjustmentType, @Reason, @AdjustedBy,
                                     @AdjustmentDate, @ApprovalRequired, @ApprovedBy, @ApprovalDate)";
-                    
                     using (var cmd = new MySqlCommand(query, conn, trans))
                     {
                         cmd.Parameters.AddWithValue("@TransactionID", adjustment.TransactionID);
@@ -103,8 +86,6 @@ namespace Project5LMS.Services
                         cmd.Parameters.AddWithValue("@ApprovalDate", adjustment.ApprovalDate.HasValue ? adjustment.ApprovalDate.Value : (object)DBNull.Value);
                         cmd.ExecuteNonQuery();
                     }
-
-                    // Update transaction fine
                     if (adjustment.TransactionID > 0)
                     {
                         UpdateTransactionAfterAdjustment(conn, trans, adjustment.TransactionID, adjustment.AdjustedAmount);
@@ -117,7 +98,6 @@ namespace Project5LMS.Services
                 return false;
             }
         }
-
         public IEnumerable<FinePayment> GetPaymentsByMember(int memberId)
         {
             List<FinePayment> payments = new List<FinePayment>();
@@ -148,7 +128,6 @@ namespace Project5LMS.Services
             }
             return payments;
         }
-
         public IEnumerable<FineAdjustment> GetAdjustmentsByMember(int memberId)
         {
             List<FineAdjustment> adjustments = new List<FineAdjustment>();
@@ -179,20 +158,16 @@ namespace Project5LMS.Services
             }
             return adjustments;
         }
-
         private string GenerateReceiptNumber()
         {
             return $"RCP-{DateTime.Now:yyyyMMdd}-{DateTime.Now.Ticks % 1000000:D6}";
         }
-
         private void UpdateTransactionAfterPayment(MySqlConnection conn, MySqlTransaction trans, int transactionId, decimal amountPaid)
         {
             try
             {
-                // Get current fine amount
                 string getFineQuery = "SELECT Fine FROM Transactions WHERE TransactionID = @TransactionID";
                 decimal currentFine = 0m;
-                
                 using (var cmd = new MySqlCommand(getFineQuery, conn, trans))
                 {
                     cmd.Parameters.AddWithValue("@TransactionID", transactionId);
@@ -202,11 +177,8 @@ namespace Project5LMS.Services
                         currentFine = Convert.ToDecimal(result);
                     }
                 }
-
-                // Update fine amount
                 decimal newFine = Math.Max(0, currentFine - amountPaid);
                 string updateQuery = "UPDATE Transactions SET Fine = @Fine WHERE TransactionID = @TransactionID";
-                
                 using (var cmd = new MySqlCommand(updateQuery, conn, trans))
                 {
                     cmd.Parameters.AddWithValue("@TransactionID", transactionId);
@@ -220,7 +192,6 @@ namespace Project5LMS.Services
                 throw;
             }
         }
-
         private void UpdateTransactionAfterAdjustment(MySqlConnection conn, MySqlTransaction trans, int transactionId, decimal adjustedAmount)
         {
             try
@@ -239,7 +210,6 @@ namespace Project5LMS.Services
                 throw;
             }
         }
-
         private FinePayment MapDataRowToPayment(DataRow row)
         {
             return new FinePayment
@@ -259,7 +229,6 @@ namespace Project5LMS.Services
                 WaiverDate = row.Table.Columns.Contains("WaiverDate") && row["WaiverDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["WaiverDate"]) : null
             };
         }
-
         private FineAdjustment MapDataRowToAdjustment(DataRow row)
         {
             return new FineAdjustment
@@ -281,4 +250,3 @@ namespace Project5LMS.Services
         }
     }
 }
-

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -11,7 +11,6 @@ using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.Members;
-
 namespace Project5LMS.Forms.LibraryStaff.Members
 {
     public partial class StaffMembersForm : Form
@@ -19,24 +18,20 @@ namespace Project5LMS.Forms.LibraryStaff.Members
         private DataTable allMembersData;
         private readonly IMembersService _membersService;
         private const string SearchPlaceholder = "Search by name, ID, or email...";
-
         public StaffMembersForm()
         {
             InitializeComponent();
             _membersService = ServiceFactory.CreateMembersService();
         }
-
         private void StaffMembersForm_Load(object sender, EventArgs e)
         {
             SetupDataGridView();
             LoadMembers();
         }
-
         private void SetupDataGridView()
         {
             dataGridViewMembers.Columns.Clear();
             dataGridViewMembers.AutoGenerateColumns = false;
-
             DataGridViewTextBoxColumn colMemberId = new DataGridViewTextBoxColumn
             {
                 Name = "MemberID",
@@ -46,7 +41,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ReadOnly = true
             };
             dataGridViewMembers.Columns.Add(colMemberId);
-
             DataGridViewTextBoxColumn colName = new DataGridViewTextBoxColumn
             {
                 Name = "Name",
@@ -56,7 +50,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ReadOnly = true
             };
             dataGridViewMembers.Columns.Add(colName);
-
             DataGridViewTextBoxColumn colContact = new DataGridViewTextBoxColumn
             {
                 Name = "Contact",
@@ -66,7 +59,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ReadOnly = true
             };
             dataGridViewMembers.Columns.Add(colContact);
-
             DataGridViewTextBoxColumn colMemberSince = new DataGridViewTextBoxColumn
             {
                 Name = "MemberSince",
@@ -76,7 +68,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ReadOnly = true
             };
             dataGridViewMembers.Columns.Add(colMemberSince);
-
             DataGridViewTextBoxColumn colActiveLoans = new DataGridViewTextBoxColumn
             {
                 Name = "ActiveLoans",
@@ -86,7 +77,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ReadOnly = true
             };
             dataGridViewMembers.Columns.Add(colActiveLoans);
-
             DataGridViewTextBoxColumn colStatus = new DataGridViewTextBoxColumn
             {
                 Name = "Status",
@@ -96,7 +86,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ReadOnly = true
             };
             dataGridViewMembers.Columns.Add(colStatus);
-
             DataGridViewButtonColumn colEdit = new DataGridViewButtonColumn
             {
                 Name = "Edit",
@@ -109,7 +98,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             colEdit.DefaultCellStyle.ForeColor = Color.FromArgb(13, 110, 253);
             colEdit.DefaultCellStyle.BackColor = Color.White;
             dataGridViewMembers.Columns.Add(colEdit);
-
             DataGridViewButtonColumn colDelete = new DataGridViewButtonColumn
             {
                 Name = "Delete",
@@ -121,20 +109,17 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             colDelete.DefaultCellStyle.ForeColor = Color.FromArgb(220, 53, 69);
             colDelete.DefaultCellStyle.BackColor = Color.White;
             dataGridViewMembers.Columns.Add(colDelete);
-
             dataGridViewMembers.DefaultCellStyle.Font = new Font("Segoe UI", 10);
             dataGridViewMembers.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dataGridViewMembers.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
             dataGridViewMembers.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
             dataGridViewMembers.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
         }
-
         private void LoadMembers()
         {
             try
             {
                 allMembersData = GetMembersWithContact();
-
                 if (!allMembersData.Columns.Contains("Name"))
                 {
                     allMembersData.Columns.Add("Name", typeof(string));
@@ -151,14 +136,11 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 {
                     allMembersData.Columns.Add("ActiveLoans", typeof(int));
                 }
-
                 foreach (DataRow row in allMembersData.Rows)
                 {
-
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
                     string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     row["Name"] = $"{firstName} {lastName}".Trim();
-
                     string email = row["Email"] != DBNull.Value ? row["Email"].ToString() : "";
                     string contact = "";
                     if (allMembersData.Columns.Contains("Contact") && row["Contact"] != DBNull.Value && !string.IsNullOrEmpty(row["Contact"].ToString()))
@@ -166,7 +148,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                         contact = row["Contact"].ToString();
                     }
                     row["Contact"] = FormatContact(email, contact);
-
                     if (row["RegistrationDate"] != DBNull.Value)
                     {
                         DateTime regDate = Convert.ToDateTime(row["RegistrationDate"]);
@@ -176,11 +157,9 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                     {
                         row["MemberSince"] = "N/A";
                     }
-
                     int memberId = Convert.ToInt32(row["MemberID"]);
                     row["ActiveLoans"] = _membersService.GetActiveBorrowingCount(memberId);
                 }
-
                 dataGridViewMembers.DataSource = allMembersData;
             }
             catch (Exception ex)
@@ -189,19 +168,16 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 MessageBox.Show($"Error loading members: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetMembersWithContact()
         {
             using (var conn = ServiceFactory.GetDbContext().GetConnection())
             {
                 conn.Open();
-
                 bool hasContact = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "Contact");
                 bool hasMemberType = DatabaseSchemaHelper.CheckColumnExists(conn, "Members", "MemberType");
                 string typeColumn = hasMemberType ? "MemberType" : "Type";
-
                 string query = hasContact
-                    ? $@"SELECT 
+                    ? $@"SELECT
                             MemberID,
                             FirstName,
                             LastName,
@@ -213,7 +189,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                             Status
                          FROM Members
                          ORDER BY LastName, FirstName"
-                    : $@"SELECT 
+                    : $@"SELECT
                             MemberID,
                             FirstName,
                             LastName,
@@ -224,7 +200,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                             Status
                          FROM Members
                          ORDER BY LastName, FirstName";
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
@@ -234,7 +209,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 }
             }
         }
-
         private string FormatContact(string email, string contact)
         {
             string result = "";
@@ -250,8 +224,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             }
             return string.IsNullOrEmpty(result) ? "N/A" : result;
         }
-
-
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (txtSearch.Text == SearchPlaceholder)
@@ -260,7 +232,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 txtSearch.ForeColor = Color.Black;
             }
         }
-
         private void txtSearch_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
@@ -269,7 +240,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 txtSearch.ForeColor = Color.FromArgb(128, 128, 128);
             }
         }
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             if (txtSearch.Text != SearchPlaceholder && allMembersData != null)
@@ -277,7 +247,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 ApplySearch();
             }
         }
-
         private void ApplySearch()
         {
             try
@@ -288,20 +257,17 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                     dataGridViewMembers.DataSource = allMembersData;
                     return;
                 }
-
                 DataTable filteredData = allMembersData.Clone();
                 foreach (DataRow row in allMembersData.Rows)
                 {
                     string memberId = row["MemberID"]?.ToString() ?? "";
                     string name = row["Name"]?.ToString().ToLower() ?? "";
                     string email = row["Email"]?.ToString().ToLower() ?? "";
-
                     if (memberId.Contains(searchText) || name.Contains(searchText) || email.Contains(searchText))
                     {
                         filteredData.ImportRow(row);
                     }
                 }
-
                 dataGridViewMembers.DataSource = filteredData;
             }
             catch (Exception ex)
@@ -309,14 +275,11 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 System.Diagnostics.Debug.WriteLine($"Error applying search: {ex.Message}");
             }
         }
-
         private void dataGridViewMembers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             DataGridViewRow row = dataGridViewMembers.Rows[e.RowIndex];
             string columnName = dataGridViewMembers.Columns[e.ColumnIndex].Name;
-
             if (columnName == "MemberID" && e.Value != null)
             {
                 string memberIdStr = e.Value.ToString();
@@ -327,21 +290,16 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 e.FormattingApplied = true;
             }
         }
-
         private void dataGridViewMembers_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             string columnName = dataGridViewMembers.Columns[e.ColumnIndex].Name;
-
             if (columnName == "Status")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-
                 string value = e.Value?.ToString() ?? "";
                 Color bgColor = Color.LightGray;
                 Color textColor = Color.Black;
-
                 switch (value.ToLower())
                 {
                     case "active":
@@ -357,14 +315,12 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                         textColor = Color.White;
                         break;
                 }
-
                 Rectangle badgeRect = new Rectangle(
                     e.CellBounds.X + 5,
                     e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
                     Math.Min(100, e.CellBounds.Width - 10),
                     25
                 );
-
                 using (GraphicsPath path = new GraphicsPath())
                 {
                     int radius = 12;
@@ -373,30 +329,24 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                     path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
                     path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
                     path.CloseAllFigures();
-
                     using (SolidBrush brush = new SolidBrush(bgColor))
                     {
                         e.Graphics.FillPath(brush, path);
                     }
                 }
-
                 using (SolidBrush textBrush = new SolidBrush(textColor))
                 using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
                 {
                     e.Graphics.DrawString(value, e.CellStyle.Font, textBrush, badgeRect, format);
                 }
-
                 e.Handled = true;
             }
         }
-
         private void dataGridViewMembers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             string columnName = dataGridViewMembers.Columns[e.ColumnIndex].Name;
             int memberId = Convert.ToInt32(dataGridViewMembers.Rows[e.RowIndex].Cells["MemberID"].Value);
-
             if (columnName == "Edit")
             {
                 EditMember(memberId);
@@ -406,7 +356,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 DeleteMember(memberId);
             }
         }
-
         private void EditMember(int memberId)
         {
             try
@@ -422,7 +371,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 MessageBox.Show($"Error opening edit form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void DeleteMember(int memberId)
         {
             DialogResult result = MessageBox.Show(
@@ -430,19 +378,15 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 "Confirm Delete",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
-
             if (result == DialogResult.Yes)
             {
                 try
                 {
-
                     DataRow memberRow = allMembersData.AsEnumerable()
                         .FirstOrDefault(r => Convert.ToInt32(r["MemberID"]) == memberId);
-
-                    string memberName = memberRow != null 
-                        ? $"{memberRow["FirstName"]} {memberRow["LastName"]}" 
+                    string memberName = memberRow != null
+                        ? $"{memberRow["FirstName"]} {memberRow["LastName"]}"
                         : "this member";
-
                     int activeLoans = _membersService.GetActiveBorrowingCount(memberId);
                     if (activeLoans > 0)
                     {
@@ -453,7 +397,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                             MessageBoxIcon.Warning);
                         return;
                     }
-
                     using (var conn = ServiceFactory.GetDbContext().GetConnection())
                     {
                         conn.Open();
@@ -464,7 +407,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                             cmd.ExecuteNonQuery();
                         }
                     }
-
                     MessageBox.Show($"Member {memberName} has been deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadMembers();
                 }
@@ -474,7 +416,6 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 }
             }
         }
-
         private void btnAddNewMember_Click(object sender, EventArgs e)
         {
             try

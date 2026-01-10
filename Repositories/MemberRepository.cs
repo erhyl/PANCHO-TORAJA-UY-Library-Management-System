@@ -1,21 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
 using Project5LMS.Data;
 using Project5LMS.Models;
-
 namespace Project5LMS.Repositories
 {
     public class MemberRepository : IMemberRepository
     {
         private readonly DatabaseContext _dbContext;
-
         public MemberRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
         public Member GetById(int memberId)
         {
             try
@@ -23,9 +20,8 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    // Use COALESCE to handle both Type and MemberType columns
-                    string query = @"SELECT 
-                                    MemberID, FirstName, LastName, Email, 
+                    string query = @"SELECT
+                                    MemberID, FirstName, LastName, Email,
                                     COALESCE(Type, MemberType) as Type,
                                     RegistrationDate, ExpirationDate, Status,
                                     Contact, Address, PhotoPath, ValidIDPath, MemberCardNumber
@@ -51,7 +47,6 @@ namespace Project5LMS.Repositories
             }
             return null;
         }
-
         public Member GetByEmail(string email)
         {
             try
@@ -59,9 +54,8 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    // Use COALESCE to handle both Type and MemberType columns
-                    string query = @"SELECT 
-                                    MemberID, FirstName, LastName, Email, 
+                    string query = @"SELECT
+                                    MemberID, FirstName, LastName, Email,
                                     COALESCE(Type, MemberType) as Type,
                                     RegistrationDate, ExpirationDate, Status,
                                     Contact, Address, PhotoPath, ValidIDPath, MemberCardNumber
@@ -87,15 +81,13 @@ namespace Project5LMS.Repositories
             }
             return null;
         }
-
         public IEnumerable<Member> GetAll()
         {
             List<Member> members = new List<Member>();
             try
             {
-                // Use COALESCE to handle both Type and MemberType columns
-                string query = @"SELECT 
-                                MemberID, FirstName, LastName, Email, 
+                string query = @"SELECT
+                                MemberID, FirstName, LastName, Email,
                                 COALESCE(Type, MemberType) as Type,
                                 RegistrationDate, ExpirationDate, Status,
                                 Contact, Address, PhotoPath, ValidIDPath, MemberCardNumber
@@ -112,7 +104,6 @@ namespace Project5LMS.Repositories
             }
             return members;
         }
-
         public IEnumerable<Member> Search(string searchTerm)
         {
             List<Member> members = new List<Member>();
@@ -121,9 +112,9 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT * FROM Members 
-                                    WHERE FirstName LIKE @SearchTerm 
-                                    OR LastName LIKE @SearchTerm 
+                    string query = @"SELECT * FROM Members
+                                    WHERE FirstName LIKE @SearchTerm
+                                    OR LastName LIKE @SearchTerm
                                     OR Email LIKE @SearchTerm
                                     OR MemberID LIKE @SearchTerm
                                     LIMIT 100";
@@ -148,7 +139,6 @@ namespace Project5LMS.Repositories
             }
             return members;
         }
-
         public bool Add(Member member)
         {
             try
@@ -156,9 +146,9 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"INSERT INTO Members (FirstName, LastName, Email, Type, RegistrationDate, 
+                    string query = @"INSERT INTO Members (FirstName, LastName, Email, Type, RegistrationDate,
                                     ExpirationDate, Status, Contact, Address)
-                                    VALUES (@FirstName, @LastName, @Email, @Type, @RegistrationDate, 
+                                    VALUES (@FirstName, @LastName, @Email, @Type, @RegistrationDate,
                                     @ExpirationDate, @Status, @Contact, @Address)";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
@@ -174,7 +164,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Update(Member member)
         {
             try
@@ -182,14 +171,12 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    // Check if Type or MemberType column exists
                     string typeColumn = "Type";
                     using (var checkCmd = new MySqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'Members' AND COLUMN_NAME = 'Type'", conn))
                     {
                         int hasType = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (hasType == 0)
                         {
-                            // Check for MemberType
                             using (var checkCmd2 = new MySqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'Members' AND COLUMN_NAME = 'MemberType'", conn))
                             {
                                 int hasMemberType = Convert.ToInt32(checkCmd2.ExecuteScalar());
@@ -200,9 +187,8 @@ namespace Project5LMS.Repositories
                             }
                         }
                     }
-
-                    string query = $@"UPDATE Members SET FirstName=@FirstName, LastName=@LastName, 
-                                    Email=@Email, {typeColumn}=@Type, ExpirationDate=@ExpirationDate, 
+                    string query = $@"UPDATE Members SET FirstName=@FirstName, LastName=@LastName,
+                                    Email=@Email, {typeColumn}=@Type, ExpirationDate=@ExpirationDate,
                                     Status=@Status, Contact=@Contact, Address=@Address
                                     WHERE MemberID=@MemberID";
                     using (var cmd = new MySqlCommand(query, conn))
@@ -220,7 +206,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Delete(int memberId)
         {
             try
@@ -243,7 +228,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public bool Exists(int memberId)
         {
             try
@@ -266,7 +250,6 @@ namespace Project5LMS.Repositories
                 return false;
             }
         }
-
         public int GetActiveBorrowingCount(int memberId)
         {
             try
@@ -292,10 +275,8 @@ namespace Project5LMS.Repositories
             }
             return 0;
         }
-
         private Member MapDataRowToMember(DataRow row)
         {
-            // Handle both Type and MemberType columns for backward compatibility
             string memberType = string.Empty;
             if (row.Table.Columns.Contains("Type") && row["Type"] != DBNull.Value)
             {
@@ -305,7 +286,6 @@ namespace Project5LMS.Repositories
             {
                 memberType = row["MemberType"].ToString();
             }
-
             return new Member
             {
                 MemberID = Convert.ToInt32(row["MemberID"]),
@@ -323,7 +303,6 @@ namespace Project5LMS.Repositories
                 MemberCardNumber = row.Table.Columns.Contains("MemberCardNumber") && row["MemberCardNumber"] != DBNull.Value ? row["MemberCardNumber"].ToString() : null
             };
         }
-
         private void MapMemberToParameters(MySqlCommand cmd, Member member)
         {
             cmd.Parameters.AddWithValue("@FirstName", member.FirstName);
@@ -338,4 +317,3 @@ namespace Project5LMS.Repositories
         }
     }
 }
-

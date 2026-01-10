@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Project5LMS.Helpers;
-
 namespace Project5LMS.Base
 {
     public abstract class BaseStaffForm : BaseForm
@@ -10,7 +9,6 @@ namespace Project5LMS.Base
         {
             ValidateAccess();
         }
-
         protected override void ValidateAccess()
         {
             try
@@ -25,7 +23,6 @@ namespace Project5LMS.Base
                 this.Close();
             }
         }
-
         protected override string[] GetRequiredRoles()
         {
             return new[] { "Admin", "LibraryStaff" };

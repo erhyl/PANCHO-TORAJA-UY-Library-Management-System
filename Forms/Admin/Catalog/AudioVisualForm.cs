@@ -1,29 +1,22 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Project5LMS.Models;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Catalog
 {
-    /// <summary>
-    /// Form for adding Audio-Visual resources.
-    /// </summary>
     public partial class AudioVisualForm : ResourceTypeForm
     {
         private DatabaseContext _dbContext;
-
         public AudioVisualForm(Book book = null) : base(book, "AudioVisual")
         {
             _dbContext = ServiceFactory.GetDbContext();
             InitializeComponent();
-            // Set default selections
             if (cmbMediaType.Items.Count > 0) cmbMediaType.SelectedIndex = 0;
             if (cmbFormat.Items.Count > 0) cmbFormat.SelectedIndex = 0;
             if (cmbAudioLanguage.Items.Count > 0) cmbAudioLanguage.SelectedIndex = 0;
             if (cmbRating.Items.Count > 0) cmbRating.SelectedIndex = 0;
         }
-
         protected override void BtnSave_Click(object sender, EventArgs e)
         {
             if (ValidateInputs())
@@ -31,7 +24,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 this.DialogResult = DialogResult.OK;
             }
         }
-
         protected override bool ValidateInputs()
         {
             if (string.IsNullOrWhiteSpace(txtDuration.Text) || !int.TryParse(txtDuration.Text, out int duration))
@@ -41,12 +33,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             return true;
         }
-
         public AudioVisual GetAudioVisual(Book baseBook)
         {
             return new AudioVisual
             {
-                // Copy base book properties
                 BookID = baseBook.BookID,
                 Title = baseBook.Title,
                 Author = baseBook.Author,
@@ -55,7 +45,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 PublicationYear = baseBook.PublicationYear,
                 Category = baseBook.Category,
                 Language = baseBook.Language,
-                // AudioVisual-specific properties
                 MediaType = cmbMediaType.SelectedItem?.ToString() ?? "DVD",
                 DurationMinutes = int.TryParse(txtDuration.Text, out int dur) ? dur : 0,
                 Format = cmbFormat.SelectedItem?.ToString() ?? "NTSC",
@@ -66,4 +55,3 @@ namespace Project5LMS.Forms.Admin.Catalog
         }
     }
 }
-

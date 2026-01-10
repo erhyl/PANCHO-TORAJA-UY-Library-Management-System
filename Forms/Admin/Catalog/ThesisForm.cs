@@ -1,24 +1,18 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Project5LMS.Models;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Catalog
 {
-    /// <summary>
-    /// Form for adding Thesis/Dissertation resources.
-    /// </summary>
     public partial class ThesisForm : ResourceTypeForm
     {
         private DatabaseContext _dbContext;
-
         public ThesisForm(Book book = null) : base(book, "Thesis")
         {
             _dbContext = ServiceFactory.GetDbContext();
             InitializeComponent();
         }
-
         protected override void BtnSave_Click(object sender, EventArgs e)
         {
             if (ValidateInputs())
@@ -26,7 +20,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 this.DialogResult = DialogResult.OK;
             }
         }
-
         protected override bool ValidateInputs()
         {
             if (string.IsNullOrWhiteSpace(txtStudentName.Text))
@@ -41,12 +34,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             return true;
         }
-
         public Thesis GetThesis(Book baseBook)
         {
             return new Thesis
             {
-                // Copy base book properties
                 BookID = baseBook.BookID,
                 Title = baseBook.Title,
                 Author = baseBook.Author,
@@ -55,7 +46,6 @@ namespace Project5LMS.Forms.Admin.Catalog
                 PublicationYear = baseBook.PublicationYear,
                 Category = baseBook.Category,
                 Language = baseBook.Language,
-                // Thesis-specific properties
                 StudentName = txtStudentName.Text.Trim(),
                 StudentID = txtStudentID.Text.Trim(),
                 Degree = txtDegree.Text.Trim(),
@@ -68,4 +58,3 @@ namespace Project5LMS.Forms.Admin.Catalog
         }
     }
 }
-

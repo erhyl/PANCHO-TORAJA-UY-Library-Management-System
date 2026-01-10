@@ -1,27 +1,20 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Project5LMS.Models;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.Admin.Search
 {
-    /// <summary>
-    /// Form for filtering browse results (new arrivals, popular books)
-    /// </summary>
     public partial class BrowseFiltersForm : Form
     {
         public DateTime? StartDate { get; private set; }
         public DateTime? EndDate { get; private set; }
         public bool UseWeightedPopularity { get; private set; }
         public DialogResult Result { get; private set; } = DialogResult.Cancel;
-
         public BrowseFiltersForm(string browseType)
         {
             InitializeComponent();
             lblBrowseType.Text = browseType;
-            
-            // Set default dates
             if (browseType.Contains("New Arrivals"))
             {
                 dtpStartDate.Value = DateTime.Now.AddDays(-30);
@@ -31,12 +24,11 @@ namespace Project5LMS.Forms.Admin.Search
             else if (browseType.Contains("Popular"))
             {
                 chkWeightedPopularity.Visible = true;
-                chkWeightedPopularity.Checked = true; // Default to weighted
+                chkWeightedPopularity.Checked = true;
                 dtpStartDate.Enabled = false;
                 dtpEndDate.Enabled = false;
             }
         }
-
         private void btnApply_Click(object sender, EventArgs e)
         {
             if (lblBrowseType.Text.Contains("New Arrivals"))
@@ -48,11 +40,9 @@ namespace Project5LMS.Forms.Admin.Search
             {
                 UseWeightedPopularity = chkWeightedPopularity.Checked;
             }
-
             Result = DialogResult.OK;
             this.Close();
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Result = DialogResult.Cancel;
@@ -60,4 +50,3 @@ namespace Project5LMS.Forms.Admin.Search
         }
     }
 }
-

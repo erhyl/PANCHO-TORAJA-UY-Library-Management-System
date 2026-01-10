@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Project5LMS.Models;
-
 namespace Project5LMS.Repositories
 {
     public interface IBookCopyRepository
@@ -15,4 +14,3 @@ namespace Project5LMS.Repositories
         bool UpdateStatus(int copyId, string status);
     }
 }
-

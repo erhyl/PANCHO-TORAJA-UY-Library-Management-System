@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -18,19 +18,16 @@ using Project5LMS.Forms.LibraryStaff.Reservations;
 using Project5LMS.Forms.LibraryStaff.Fines;
 using Project5LMS.Forms.LibraryStaff.Inventory;
 using Project5LMS.Forms.LibraryStaff.Search;
-
 namespace Project5LMS.Forms.LibraryStaff.Dashboard
 {
     public partial class StaffDashboardForm : Form
     {
         private readonly IDashboardService _dashboardService;
-
         public StaffDashboardForm()
         {
             InitializeComponent();
             _dashboardService = ServiceFactory.CreateDashboardService();
         }
-
         private void StaffDashboardForm_Load(object sender, EventArgs e)
         {
             SetupListView();
@@ -39,7 +36,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             LoadOverdueBooks();
             SetActiveButton(btnDashboard);
         }
-
         private void LoadFormInPanel(Form form)
         {
             panelMainContent.Controls.Clear();
@@ -50,10 +46,8 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             panelMainContent.Tag = form;
             form.Show();
         }
-
         private void SetActiveButton(Button activeButton)
         {
-
             btnDashboard.BackColor = Color.Transparent;
             btnMembers.BackColor = Color.Transparent;
             btnCatalog.BackColor = Color.Transparent;
@@ -62,10 +56,8 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             btnFines.BackColor = Color.Transparent;
             btnInventory.BackColor = Color.Transparent;
             btnSearch.BackColor = Color.Transparent;
-
             activeButton.BackColor = Color.FromArgb(178, 34, 34);
         }
-
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnDashboard);
@@ -76,56 +68,47 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             LoadRecentActivity();
             LoadOverdueBooks();
         }
-
         private void btnMembers_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnMembers);
             LoadFormInPanel(new StaffMembersForm());
         }
-
         private void btnCatalog_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnCatalog);
             LoadFormInPanel(new StaffCatalogForm());
         }
-
         private void btnCirculation_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnCirculation);
             LoadFormInPanel(new StaffCirculationForm());
         }
-
         private void btnReservations_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnReservations);
             LoadFormInPanel(new StaffReservationsForm());
         }
-
         private void btnFines_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnFines);
             LoadFormInPanel(new StaffFinesForm());
         }
-
         private void btnInventory_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnInventory);
             LoadFormInPanel(new StaffInventoryForm());
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             SetActiveButton(btnSearch);
             LoadFormInPanel(new StaffSearchForm());
         }
-
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Hide();
             Project5LMS.LoginForm login = new Project5LMS.LoginForm();
             login.Show();
         }
-
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
@@ -136,7 +119,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 LoadOverdueBooks();
             }
         }
-
         private void SetupListView()
         {
             listViewRecentActivity.Columns.Clear();
@@ -148,22 +130,18 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             listViewRecentActivity.DrawSubItem += ListViewRecentActivity_DrawSubItem;
             listViewRecentActivity.DrawColumnHeader += ListViewRecentActivity_DrawColumnHeader;
         }
-
         private void ListViewRecentActivity_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
             e.DrawDefault = true;
         }
-
         private void ListViewRecentActivity_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
             e.DrawDefault = true;
         }
-
         private void ListViewRecentActivity_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
             e.DrawDefault = true;
         }
-
         private void LoadMetrics()
         {
             try
@@ -183,18 +161,15 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                     lblTotalMembersChange.Text = "+12%";
                     lblTotalMembersChange.ForeColor = Color.FromArgb(40, 167, 69);
                 }
-
                 int totalBooks = _dashboardService.GetTotalBooks();
                 lblBooksCatalogValue.Text = totalBooks.ToString("N0");
                 int booksThisMonth = _dashboardService.GetBooksAddedThisMonth();
                 lblBooksCatalogChange.Text = booksThisMonth > 0 ? "+3%" : "0%";
                 lblBooksCatalogChange.ForeColor = booksThisMonth > 0 ? Color.FromArgb(40, 167, 69) : Color.FromArgb(128, 128, 128);
-
                 int activeLoans = _dashboardService.GetActiveBorrowings();
                 lblActiveLoansValue.Text = activeLoans.ToString("N0");
                 lblActiveLoansChange.Text = "+8%";
                 lblActiveLoansChange.ForeColor = Color.FromArgb(40, 167, 69);
-
                 decimal pendingFines = _dashboardService.GetPendingFines();
                 lblPendingFinesValue.Text = $"${pendingFines:N0}";
                 lblPendingFinesChange.Text = "-5%";
@@ -205,15 +180,12 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
-
         private void LoadRecentActivity()
         {
             try
             {
                 listViewRecentActivity.Items.Clear();
                 var activities = _dashboardService.GetRecentActivities();
-                
                 foreach (var activity in activities.Take(5))
                 {
                     ListViewItem item = new ListViewItem($"{activity.Type}: {activity.Details}");
@@ -226,7 +198,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 System.Diagnostics.Debug.WriteLine($"Error loading recent activity: {ex.Message}");
             }
         }
-
         private void LoadOverdueBooks()
         {
             try
@@ -237,20 +208,16 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 var bookService = ServiceFactory.CreateBookService();
                 var membersService = ServiceFactory.CreateMembersService();
                 var overdueTransactions = transactionRepository.GetOverdue().Take(10);
-                
                 int yPos = 0;
                 int spacing = 10;
-                
                 foreach (var transaction in overdueTransactions)
                 {
                     var book = bookService.GetBook(transaction.BookID);
                     var member = membersService.GetMember(transaction.MemberID);
-                    
                     string title = book?.Title ?? "Unknown Book";
                     string borrower = member != null ? $"{member.FirstName} {member.LastName}" : "Unknown Member";
                     DateTime dueDate = transaction.DueDate;
                     int daysOverdue = (DateTime.Now - dueDate).Days;
-                    
                     Panel card = CreateOverdueBookCard(title, borrower, dueDate, daysOverdue, yPos);
                     panelOverdueBooksList.Controls.Add(card);
                     yPos += 120 + spacing;
@@ -261,7 +228,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 System.Diagnostics.Debug.WriteLine($"Error loading overdue books: {ex.Message}");
             }
         }
-
         private Panel CreateOverdueBookCard(string title, string borrower, DateTime dueDate, int daysOverdue, int yPos)
         {
             Panel card = new Panel
@@ -272,7 +238,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 Location = new Point(0, yPos),
                 Padding = new Padding(15)
             };
-
             Label lblTitle = new Label
             {
                 Text = title,
@@ -281,7 +246,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 AutoSize = true,
                 Location = new Point(15, 15)
             };
-
             Label lblBorrower = new Label
             {
                 Text = $"Borrower: {borrower}",
@@ -290,7 +254,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 AutoSize = true,
                 Location = new Point(15, 45)
             };
-
             Label lblDue = new Label
             {
                 Text = $"Due: {dueDate:yyyy-MM-dd}",
@@ -299,7 +262,6 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 AutoSize = true,
                 Location = new Point(15, 70)
             };
-
             Label lblStatus = new Label
             {
                 Text = $"{daysOverdue} days overdue",
@@ -308,15 +270,12 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                 AutoSize = true,
                 Location = new Point(15, 95)
             };
-
             card.Controls.AddRange(new Control[] { lblTitle, lblBorrower, lblDue, lblStatus });
             return card;
         }
-
         private string GetTimeAgo(DateTime dateTime)
         {
             TimeSpan timeSpan = DateTime.Now - dateTime;
-
             if (timeSpan.TotalMinutes < 1)
                 return "Just now";
             else if (timeSpan.TotalMinutes < 60)
@@ -326,11 +285,8 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
             else
                 return $"{(int)timeSpan.TotalDays} day{((int)timeSpan.TotalDays > 1 ? "s" : "")} ago";
         }
-
-
         private void lblSubtitleSidebar_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

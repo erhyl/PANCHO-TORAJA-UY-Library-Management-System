@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using MySql.Data.MySqlClient;
-
 namespace Project5LMS.Helpers
 {
     public static class DatabaseSchemaHelper
@@ -9,9 +8,9 @@ namespace Project5LMS.Helpers
         {
             try
             {
-                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                WHERE TABLE_SCHEMA = DATABASE() 
-                                AND TABLE_NAME = @TableName 
+                string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                                WHERE TABLE_SCHEMA = DATABASE()
+                                AND TABLE_NAME = @TableName
                                 AND COLUMN_NAME = @ColumnName";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -26,7 +25,6 @@ namespace Project5LMS.Helpers
                 return false;
             }
         }
-
         public static void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
         {
             try
@@ -47,4 +45,3 @@ namespace Project5LMS.Helpers
         }
     }
 }
-

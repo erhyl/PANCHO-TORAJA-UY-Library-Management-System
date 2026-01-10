@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Project5LMS.Services;
-
 namespace Project5LMS.Interfaces
 {
     public interface ISearchService

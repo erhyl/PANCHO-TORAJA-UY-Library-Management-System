@@ -1,16 +1,8 @@
-﻿namespace Project5LMS.Registration
+namespace Project5LMS.Registration
 {
     partial class RegistrationForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,13 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrationForm));
@@ -43,9 +29,6 @@
             this.btnRegister = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.BackColor = System.Drawing.Color.White;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -56,9 +39,6 @@
             this.lblTitle.Size = new System.Drawing.Size(389, 29);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "NEW MEMBER REGISTRATION";
-            // 
-            // txtMemberID
-            // 
             this.txtMemberID.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtMemberID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMemberID.Location = new System.Drawing.Point(180, 95);
@@ -67,9 +47,6 @@
             this.txtMemberID.Size = new System.Drawing.Size(230, 23);
             this.txtMemberID.TabIndex = 1;
             this.txtMemberID.Text = "Member ID";
-            // 
-            // txtFullName
-            // 
             this.txtFullName.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtFullName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFullName.Location = new System.Drawing.Point(180, 136);
@@ -78,9 +55,6 @@
             this.txtFullName.Size = new System.Drawing.Size(230, 23);
             this.txtFullName.TabIndex = 2;
             this.txtFullName.Text = "Full Name";
-            // 
-            // txtAddress
-            // 
             this.txtAddress.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAddress.Location = new System.Drawing.Point(180, 263);
@@ -90,9 +64,6 @@
             this.txtAddress.Size = new System.Drawing.Size(230, 43);
             this.txtAddress.TabIndex = 3;
             this.txtAddress.Text = "Address";
-            // 
-            // txtContact
-            // 
             this.txtContact.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtContact.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtContact.Location = new System.Drawing.Point(180, 179);
@@ -101,9 +72,6 @@
             this.txtContact.Size = new System.Drawing.Size(230, 23);
             this.txtContact.TabIndex = 4;
             this.txtContact.Text = "Contact";
-            // 
-            // txtEmail
-            // 
             this.txtEmail.BackColor = System.Drawing.Color.PapayaWhip;
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmail.Location = new System.Drawing.Point(180, 218);
@@ -112,9 +80,6 @@
             this.txtEmail.Size = new System.Drawing.Size(230, 23);
             this.txtEmail.TabIndex = 5;
             this.txtEmail.Text = "Email";
-            // 
-            // cmbMemberType
-            // 
             this.cmbMemberType.BackColor = System.Drawing.Color.PapayaWhip;
             this.cmbMemberType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMemberType.FormattingEnabled = true;
@@ -124,9 +89,6 @@
             this.cmbMemberType.Size = new System.Drawing.Size(101, 25);
             this.cmbMemberType.TabIndex = 6;
             this.cmbMemberType.Text = "Member Type";
-            // 
-            // dtpExpDate
-            // 
             this.dtpExpDate.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpExpDate.CalendarMonthBackground = System.Drawing.Color.White;
             this.dtpExpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -135,9 +97,6 @@
             this.dtpExpDate.Name = "dtpExpDate";
             this.dtpExpDate.Size = new System.Drawing.Size(218, 23);
             this.dtpExpDate.TabIndex = 7;
-            // 
-            // dtpRegDate
-            // 
             this.dtpRegDate.CalendarMonthBackground = System.Drawing.Color.White;
             this.dtpRegDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpRegDate.Location = new System.Drawing.Point(514, 179);
@@ -145,9 +104,6 @@
             this.dtpRegDate.Name = "dtpRegDate";
             this.dtpRegDate.Size = new System.Drawing.Size(218, 23);
             this.dtpRegDate.TabIndex = 8;
-            // 
-            // lblRegTitle
-            // 
             this.lblRegTitle.AutoSize = true;
             this.lblRegTitle.BackColor = System.Drawing.Color.PapayaWhip;
             this.lblRegTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -157,9 +113,6 @@
             this.lblRegTitle.Size = new System.Drawing.Size(118, 17);
             this.lblRegTitle.TabIndex = 9;
             this.lblRegTitle.Text = "Registration Date";
-            // 
-            // lblExpDate
-            // 
             this.lblExpDate.AutoSize = true;
             this.lblExpDate.BackColor = System.Drawing.Color.PapayaWhip;
             this.lblExpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -169,9 +122,6 @@
             this.lblExpDate.Size = new System.Drawing.Size(104, 17);
             this.lblExpDate.TabIndex = 10;
             this.lblExpDate.Text = "Expiration Date";
-            // 
-            // btnRegister
-            // 
             this.btnRegister.BackColor = System.Drawing.Color.Maroon;
             this.btnRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegister.ForeColor = System.Drawing.Color.White;
@@ -182,9 +132,6 @@
             this.btnRegister.TabIndex = 11;
             this.btnRegister.Text = "Register";
             this.btnRegister.UseVisualStyleBackColor = false;
-            // 
-            // btnCancel
-            // 
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
@@ -195,9 +142,6 @@
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
-            // 
-            // RegistrationForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
@@ -222,11 +166,8 @@
             this.Load += new System.EventHandler(this.RegistrationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
         #endregion
-
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox txtMemberID;
         private System.Windows.Forms.TextBox txtFullName;

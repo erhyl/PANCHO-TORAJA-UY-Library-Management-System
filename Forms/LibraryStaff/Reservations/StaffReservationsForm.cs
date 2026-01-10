@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -8,7 +8,6 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
-
 namespace Project5LMS.Forms.LibraryStaff.Reservations
 {
     public partial class StaffReservationsForm : Form
@@ -17,13 +16,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         private string currentFilter = "All";
         private Dictionary<int, Panel> reservationCards = new Dictionary<int, Panel>();
         private readonly DatabaseContext _dbContext;
-
         public StaffReservationsForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
         }
-
         private void StaffReservationsForm_Load(object sender, EventArgs e)
         {
             EnsureReservationsTableExists();
@@ -32,7 +29,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             LoadReservations();
             SetActiveFilter(btnFilterAll);
         }
-
         private void EnsureReservationsTableExists()
         {
             try
@@ -40,8 +36,8 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Reservations'";
                     using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -80,14 +76,13 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Reservations table exists: {ex.Message}");
             }
         }
-
         private void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
         {
             try
             {
-                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS 
-                                          WHERE TABLE_SCHEMA = DATABASE() 
-                                          AND TABLE_NAME = @tableName 
+                string checkColumnQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                                          WHERE TABLE_SCHEMA = DATABASE()
+                                          AND TABLE_NAME = @tableName
                                           AND COLUMN_NAME = @columnName";
                 using (MySqlCommand checkCmd = new MySqlCommand(checkColumnQuery, conn))
                 {
@@ -109,13 +104,9 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 System.Diagnostics.Debug.WriteLine($"Error adding column {columnName}: {ex.Message}");
             }
         }
-
-
         private void SetupMetricIcons()
         {
-
         }
-
         private void LoadMetrics()
         {
             try
@@ -123,14 +114,12 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string queryTotal = "SELECT COUNT(*) FROM Reservations";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
                         int total = Convert.ToInt32(cmd.ExecuteScalar());
                         lblMetricTotalValue.Text = total.ToString();
                     }
-
                     string queryActive = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Pending' OR Status = 'Active'";
                     using (MySqlCommand cmd = new MySqlCommand(queryActive, conn))
                     {
@@ -138,7 +127,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         lblMetricActiveValue.Text = active.ToString();
                         btnFilterActive.Text = $"Active ({active})";
                     }
-
                     string queryReady = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Ready'";
                     using (MySqlCommand cmd = new MySqlCommand(queryReady, conn))
                     {
@@ -146,7 +134,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         lblMetricReadyValue.Text = ready.ToString();
                         btnFilterReady.Text = $"Ready ({ready})";
                     }
-
                     string queryExpired = "SELECT COUNT(*) FROM Reservations WHERE Status = 'Expired'";
                     using (MySqlCommand cmd = new MySqlCommand(queryExpired, conn))
                     {
@@ -154,7 +141,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         lblMetricExpiredValue.Text = expired.ToString();
                         btnFilterExpired.Text = $"Expired ({expired})";
                     }
-
                     int totalCount = Convert.ToInt32(lblMetricTotalValue.Text);
                     btnFilterAll.Text = $"All ({totalCount})";
                 }
@@ -164,7 +150,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private void LoadReservations()
         {
             try
@@ -178,7 +163,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show($"Error loading reservations: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetReservationsData()
         {
             using (var conn = _dbContext.GetConnection())
@@ -187,15 +171,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
                 bool hasPriority = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Priority");
                 bool hasReservationDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservationDate");
-                
-                // Use ReservationDate if it exists, otherwise try alternative column names
-                // Always alias as "ReservationDate" so the rest of the code works correctly
-                string reservationDateColumn = hasReservationDate ? "r.ReservationDate" : 
-                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "r.ReservedDate" : 
+                string reservationDateColumn = hasReservationDate ? "r.ReservationDate" :
+                    (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "r.ReservedDate" :
                     (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "Date") ? "r.Date" : "NOW()"));
-                string reservationDateAlias = "ReservationDate"; // Always use this alias for consistency
-
-                string query = $@"SELECT 
+                string reservationDateAlias = "ReservationDate";
+                string query = $@"SELECT
                                 r.ReservationID,
                                 r.MemberID,
                                 r.BookID,
@@ -212,7 +192,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                                 INNER JOIN Members m ON r.MemberID = m.MemberID
                                 INNER JOIN Books b ON r.BookID = b.BookID
                                 ORDER BY " + reservationDateColumn + " DESC";
-
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
                 {
                     DataTable dt = new DataTable();
@@ -221,7 +200,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 }
             }
         }
-
         private void UpdateReservationStatuses()
         {
             foreach (DataRow row in allReservationsData.Rows)
@@ -232,7 +210,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                     DateTime expiryDate = Convert.ToDateTime(row["ExpiryDate"]);
                     if (expiryDate < DateTime.Now)
                     {
-
                         try
                         {
                             using (var conn = _dbContext.GetConnection())
@@ -250,7 +227,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         catch { }
                     }
                 }
-
                 if (row["ExpiryDate"] == DBNull.Value && row["ReservationDate"] != DBNull.Value)
                 {
                     DateTime reservationDate = Convert.ToDateTime(row["ReservationDate"]);
@@ -258,14 +234,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 }
             }
         }
-
         private void RenderReservationCards()
         {
             panelReservationsList.Controls.Clear();
-
             panelReservationsList.Controls.Add(panelCreateReservation);
             reservationCards.Clear();
-
             DataView dv = allReservationsData.DefaultView;
             if (currentFilter == "Active")
             {
@@ -283,7 +256,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             {
                 dv.RowFilter = "";
             }
-
             foreach (DataRowView rowView in dv)
             {
                 DataRow row = rowView.Row;
@@ -292,7 +264,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 reservationCards[Convert.ToInt32(row["ReservationID"])] = card;
             }
         }
-
         private Panel CreateReservationCard(DataRow row)
         {
             int reservationId = Convert.ToInt32(row["ReservationID"]);
@@ -304,7 +275,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             DateTime reservationDate = row["ReservationDate"] != DBNull.Value ? Convert.ToDateTime(row["ReservationDate"]) : DateTime.Now;
             DateTime expiryDate = row["ExpiryDate"] != DBNull.Value ? Convert.ToDateTime(row["ExpiryDate"]) : reservationDate.AddDays(7);
             int priority = row["Priority"] != DBNull.Value ? Convert.ToInt32(row["Priority"]) : 0;
-
             Panel card = new Panel
             {
                 BackColor = Color.White,
@@ -313,7 +283,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 Margin = new Padding(10),
                 Tag = reservationId
             };
-
             Panel iconPanel = new Panel
             {
                 Location = new Point(20, 20),
@@ -322,7 +291,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             };
             iconPanel.Paint += (s, e) => DrawStatusIcon(e.Graphics, iconPanel, status);
             card.Controls.Add(iconPanel);
-
             Label lblBookTitle = new Label
             {
                 Text = bookTitle,
@@ -332,7 +300,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 AutoSize = true
             };
             card.Controls.Add(lblBookTitle);
-
             Panel statusBadge = new Panel
             {
                 Location = new Point(250, 15),
@@ -355,7 +322,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                     statusBadge.ClientRectangle, Color.White, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             };
             card.Controls.Add(statusBadge);
-
             if (status == "Pending" || status == "Active")
             {
                 Label lblQueue = new Label
@@ -368,7 +334,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 };
                 card.Controls.Add(lblQueue);
             }
-
             Label lblMember = new Label
             {
                 Text = $"{firstName} {lastName} (M{memberId})",
@@ -378,7 +343,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 AutoSize = true
             };
             card.Controls.Add(lblMember);
-
             Label lblReserved = new Label
             {
                 Text = $"Reserved: {reservationDate:yyyy-MM-dd}",
@@ -388,7 +352,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 AutoSize = true
             };
             card.Controls.Add(lblReserved);
-
             Label lblExpires = new Label
             {
                 Text = $"Expires: {expiryDate:yyyy-MM-dd}",
@@ -398,13 +361,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 AutoSize = true
             };
             card.Controls.Add(lblExpires);
-
             int buttonX = 1200;
             int buttonY = 30;
             int buttonWidth = 100;
             int buttonHeight = 35;
             int spacing = 10;
-
             if (status == "Pending" || status == "Active")
             {
                 Button btnMarkReady = new Button
@@ -421,7 +382,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 };
                 btnMarkReady.Click += (s, e) => MarkAsReady(reservationId);
                 card.Controls.Add(btnMarkReady);
-
                 Button btnCancel = new Button
                 {
                     Text = "Cancel",
@@ -453,7 +413,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 };
                 btnCheckOut.Click += (s, e) => CheckOutReservation(reservationId);
                 card.Controls.Add(btnCheckOut);
-
                 Button btnCancel = new Button
                 {
                     Text = "Cancel",
@@ -485,7 +444,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 };
                 btnRemove.Click += (s, e) => RemoveReservation(reservationId);
                 card.Controls.Add(btnRemove);
-
                 Button btnCancel = new Button
                 {
                     Text = "Cancel",
@@ -501,10 +459,8 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 btnCancel.Click += (s, e) => CancelReservation(reservationId);
                 card.Controls.Add(btnCancel);
             }
-
             return card;
         }
-
         private Color GetStatusColor(string status)
         {
             switch (status.ToLower())
@@ -520,33 +476,28 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                     return Color.LightGray;
             }
         }
-
         private void DrawStatusIcon(Graphics g, Panel panel, string status)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 5;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(GetStatusColor(status), 3))
             {
                 switch (status.ToLower())
                 {
                     case "pending":
                     case "active":
-
                         g.DrawEllipse(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
                         g.DrawLine(pen, x + size * 0.5f, y + size * 0.5f, x + size * 0.5f, y + size * 0.35f);
                         g.DrawLine(pen, x + size * 0.5f, y + size * 0.5f, x + size * 0.65f, y + size * 0.5f);
                         break;
                     case "ready":
-
                         g.DrawEllipse(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
                         g.DrawLine(pen, x + size * 0.35f, y + size * 0.5f, x + size * 0.45f, y + size * 0.6f);
                         g.DrawLine(pen, x + size * 0.45f, y + size * 0.6f, x + size * 0.65f, y + size * 0.4f);
                         break;
                     case "expired":
-
                         g.DrawEllipse(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
                         g.DrawLine(pen, x + size * 0.35f, y + size * 0.35f, x + size * 0.65f, y + size * 0.65f);
                         g.DrawLine(pen, x + size * 0.65f, y + size * 0.35f, x + size * 0.35f, y + size * 0.65f);
@@ -554,35 +505,30 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 }
             }
         }
-
         private void btnFilterAll_Click(object sender, EventArgs e)
         {
             currentFilter = "All";
             SetActiveFilter(btnFilterAll);
             RenderReservationCards();
         }
-
         private void btnFilterActive_Click(object sender, EventArgs e)
         {
             currentFilter = "Active";
             SetActiveFilter(btnFilterActive);
             RenderReservationCards();
         }
-
         private void btnFilterReady_Click(object sender, EventArgs e)
         {
             currentFilter = "Ready";
             SetActiveFilter(btnFilterReady);
             RenderReservationCards();
         }
-
         private void btnFilterExpired_Click(object sender, EventArgs e)
         {
             currentFilter = "Expired";
             SetActiveFilter(btnFilterExpired);
             RenderReservationCards();
         }
-
         private void SetActiveFilter(Button activeButton)
         {
             btnFilterAll.BackColor = Color.Transparent;
@@ -597,12 +543,10 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             btnFilterExpired.BackColor = Color.Transparent;
             btnFilterExpired.ForeColor = Color.FromArgb(128, 128, 128);
             btnFilterExpired.Font = new Font("Segoe UI", 10F);
-
             activeButton.BackColor = Color.Transparent;
             activeButton.ForeColor = Color.FromArgb(178, 34, 34);
             activeButton.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
         }
-
         private void MarkAsReady(int reservationId)
         {
             try
@@ -626,7 +570,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show($"Error marking reservation as ready: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void CheckOutReservation(int reservationId)
         {
             try
@@ -634,7 +577,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     string getBookQuery = "SELECT BookID FROM Reservations WHERE ReservationID = @ReservationID";
                     int bookId = 0;
                     using (MySqlCommand getCmd = new MySqlCommand(getBookQuery, conn))
@@ -646,7 +588,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                             bookId = Convert.ToInt32(result);
                         }
                     }
-
                     string updateQuery = "UPDATE Reservations SET Status = 'Fulfilled', FulfilledDate = @FulfilledDate WHERE ReservationID = @ReservationID";
                     using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
                     {
@@ -654,7 +595,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         cmd.Parameters.AddWithValue("@FulfilledDate", DateTime.Now);
                         cmd.ExecuteNonQuery();
                     }
-
                     if (bookId > 0)
                     {
                         string updateBookQuery = "UPDATE Books SET Available = Available - 1 WHERE BookID = @BookID AND Available > 0";
@@ -674,12 +614,10 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show($"Error checking out reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void CancelReservation(int reservationId)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to cancel this reservation?", "Confirm Cancellation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes) return;
-
             try
             {
                 using (var conn = _dbContext.GetConnection())
@@ -701,12 +639,10 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show($"Error cancelling reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void RemoveReservation(int reservationId)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to remove this expired reservation?", "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes) return;
-
             try
             {
                 using (var conn = _dbContext.GetConnection())
@@ -728,7 +664,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show($"Error removing reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void txtMemberID_Enter(object sender, EventArgs e)
         {
             if (txtMemberID.Text == "Enter member ID")
@@ -737,7 +672,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtMemberID.ForeColor = Color.Black;
             }
         }
-
         private void txtMemberID_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMemberID.Text))
@@ -746,7 +680,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtMemberID.ForeColor = Color.Gray;
             }
         }
-
         private void txtBookID_Enter(object sender, EventArgs e)
         {
             if (txtBookID.Text == "Enter book ID")
@@ -755,7 +688,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtBookID.ForeColor = Color.Black;
             }
         }
-
         private void txtBookID_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtBookID.Text))
@@ -764,30 +696,23 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtBookID.ForeColor = Color.Gray;
             }
         }
-
         private void btnCreateReservation_Click(object sender, EventArgs e)
         {
             string memberIdText = txtMemberID.Text.Trim();
             string bookIdText = txtBookID.Text.Trim();
-
             if (memberIdText == "Enter member ID" || string.IsNullOrWhiteSpace(memberIdText))
             {
                 MessageBox.Show("Please enter a Member ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (bookIdText == "Enter book ID" || string.IsNullOrWhiteSpace(bookIdText))
             {
                 MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             try
             {
-
                 int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdText);
-                
-                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
                 var book = bookService.GetBookByAccessionNumber(bookIdText);
@@ -797,7 +722,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 }
                 else
                 {
-                    // Try parsing as book ID
                     bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
                     if (bookId > 0)
                     {
@@ -806,13 +730,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                             bookId = 0;
                     }
                 }
-
                 if (memberId == 0 || bookId == 0)
                 {
                     MessageBox.Show("Invalid Member ID or Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 bool memberExists = false;
                 using (var conn = _dbContext.GetConnection())
                 {
@@ -823,13 +745,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         cmd.Parameters.AddWithValue("@MemberID", memberId);
                         memberExists = Convert.ToInt32(cmd.ExecuteScalar()) > 0;
                     }
-
                     if (!memberExists)
                     {
                         MessageBox.Show("Member not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
                     string checkBookQuery = "SELECT COUNT(*) FROM Books WHERE BookID = @BookID";
                     bool bookExists = false;
                     using (MySqlCommand cmd = new MySqlCommand(checkBookQuery, conn))
@@ -837,13 +757,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         cmd.Parameters.AddWithValue("@BookID", bookId);
                         bookExists = Convert.ToInt32(cmd.ExecuteScalar()) > 0;
                     }
-
                     if (!bookExists)
                     {
                         MessageBox.Show("Book not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
                     string checkReservationQuery = "SELECT COUNT(*) FROM Reservations WHERE MemberID = @MemberID AND BookID = @BookID AND Status IN ('Pending', 'Ready', 'Active')";
                     bool reservationExists = false;
                     using (MySqlCommand cmd = new MySqlCommand(checkReservationQuery, conn))
@@ -852,30 +770,26 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         cmd.Parameters.AddWithValue("@BookID", bookId);
                         reservationExists = Convert.ToInt32(cmd.ExecuteScalar()) > 0;
                     }
-
                     if (reservationExists)
                     {
                         MessageBox.Show("An active reservation already exists for this member and book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
                     bool hasExpiryDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ExpiryDate");
                     bool hasReservationDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservationDate");
-                    string dateColumn = hasReservationDate ? "ReservationDate" : 
+                    string dateColumn = hasReservationDate ? "ReservationDate" :
                         (DatabaseSchemaHelper.CheckColumnExists(conn, "Reservations", "ReservedDate") ? "ReservedDate" : "Date");
-                    
                     string insertQuery;
                     if (hasExpiryDate)
                     {
-                        insertQuery = $@"INSERT INTO Reservations (MemberID, BookID, {dateColumn}, ExpiryDate, Status) 
+                        insertQuery = $@"INSERT INTO Reservations (MemberID, BookID, {dateColumn}, ExpiryDate, Status)
                                        VALUES (@MemberID, @BookID, @ReservationDate, @ExpiryDate, 'Pending')";
                     }
                     else
                     {
-                        insertQuery = $@"INSERT INTO Reservations (MemberID, BookID, {dateColumn}, Status) 
+                        insertQuery = $@"INSERT INTO Reservations (MemberID, BookID, {dateColumn}, Status)
                                        VALUES (@MemberID, @BookID, @ReservationDate, 'Pending')";
                     }
-
                     using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@MemberID", memberId);
@@ -888,14 +802,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                         cmd.ExecuteNonQuery();
                     }
                 }
-
                 MessageBox.Show("Reservation created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 txtMemberID.Text = "Enter member ID";
                 txtMemberID.ForeColor = Color.Gray;
                 txtBookID.Text = "Enter book ID";
                 txtBookID.ForeColor = Color.Gray;
-
                 LoadMetrics();
                 LoadReservations();
             }
@@ -904,29 +815,24 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show($"Error creating reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void DrawCalendarIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 2))
             {
-
                 g.DrawRectangle(pen, x + size * 0.2f, y + size * 0.3f, size * 0.6f, size * 0.6f);
                 g.DrawLine(pen, x + size * 0.2f, y + size * 0.45f, x + size * 0.8f, y + size * 0.45f);
             }
         }
-
         private void DrawClockIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 2))
             {
                 g.DrawEllipse(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
@@ -934,14 +840,12 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 g.DrawLine(pen, x + size * 0.5f, y + size * 0.5f, x + size * 0.65f, y + size * 0.5f);
             }
         }
-
         private void DrawCheckmarkIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 3))
             {
                 g.DrawEllipse(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
@@ -949,14 +853,12 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 g.DrawLine(pen, x + size * 0.45f, y + size * 0.6f, x + size * 0.65f, y + size * 0.4f);
             }
         }
-
         private void DrawXIcon(Graphics g, Panel panel)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             int size = Math.Min(panel.Width, panel.Height) - 10;
             int x = (panel.Width - size) / 2;
             int y = (panel.Height - size) / 2;
-
             using (Pen pen = new Pen(Color.White, 3))
             {
                 g.DrawEllipse(pen, x + size * 0.2f, y + size * 0.2f, size * 0.6f, size * 0.6f);
@@ -964,6 +866,5 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 g.DrawLine(pen, x + size * 0.65f, y + size * 0.35f, x + size * 0.35f, y + size * 0.65f);
             }
         }
-
     }
 }

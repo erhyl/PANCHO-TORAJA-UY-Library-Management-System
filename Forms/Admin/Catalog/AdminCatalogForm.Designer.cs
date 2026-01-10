@@ -2,15 +2,7 @@
 {
     partial class AdminCatalogForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,13 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -82,9 +68,6 @@
             this.panelMetricTotalTitles.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelMainContainer.Controls.Add(this.panelTableContainer);
@@ -97,9 +80,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
             this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelTableContainer
-            // 
             this.panelTableContainer.BackColor = System.Drawing.Color.White;
             this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTableContainer.Controls.Add(this.dataGridViewBooks);
@@ -109,9 +89,6 @@
             this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16);
             this.panelTableContainer.Size = new System.Drawing.Size(1407, 629);
             this.panelTableContainer.TabIndex = 3;
-            // 
-            // dataGridViewBooks
-            // 
             this.dataGridViewBooks.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewBooks.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -161,9 +138,6 @@
             this.dataGridViewBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBooks_CellContentClick);
             this.dataGridViewBooks.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewBooks_CellFormatting);
             this.dataGridViewBooks.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DataGridViewBooks_CellPainting);
-            // 
-            // AccessionNo
-            // 
             this.AccessionNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.AccessionNo.DataPropertyName = "AccessionNo";
             this.AccessionNo.FillWeight = 120F;
@@ -172,9 +146,6 @@
             this.AccessionNo.Name = "AccessionNo";
             this.AccessionNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.AccessionNo.Width = 120;
-            // 
-            // BookDetails
-            // 
             this.BookDetails.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.BookDetails.DataPropertyName = "BookDetails";
             this.BookDetails.FillWeight = 300F;
@@ -182,9 +153,6 @@
             this.BookDetails.MinimumWidth = 200;
             this.BookDetails.Name = "BookDetails";
             this.BookDetails.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Category
-            // 
             this.Category.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Category.DataPropertyName = "Category";
             this.Category.FillWeight = 120F;
@@ -193,9 +161,6 @@
             this.Category.Name = "Category";
             this.Category.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Category.Width = 120;
-            // 
-            // Publisher
-            // 
             this.Publisher.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Publisher.DataPropertyName = "Publisher";
             this.Publisher.FillWeight = 200F;
@@ -204,27 +169,18 @@
             this.Publisher.Name = "Publisher";
             this.Publisher.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Publisher.Width = 200;
-            // 
-            // Copies
-            // 
             this.Copies.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Copies.DataPropertyName = "Copies";
             this.Copies.HeaderText = "COPIES";
             this.Copies.MinimumWidth = 80;
             this.Copies.Name = "Copies";
             this.Copies.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // colLocation
-            // 
             this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLocation.DataPropertyName = "Location";
             this.colLocation.HeaderText = "LOCATION";
             this.colLocation.MinimumWidth = 80;
             this.colLocation.Name = "colLocation";
             this.colLocation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Status
-            // 
             this.Status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Status.DataPropertyName = "Status";
             this.Status.FillWeight = 120F;
@@ -233,9 +189,6 @@
             this.Status.Name = "Status";
             this.Status.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Status.Width = 120;
-            // 
-            // Edit
-            // 
             this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
@@ -247,12 +200,9 @@
             this.Edit.MinimumWidth = 50;
             this.Edit.Name = "Edit";
             this.Edit.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Edit.Text = "✏";
+            this.Edit.Text = "?";
             this.Edit.UseColumnTextForButtonValue = true;
             this.Edit.Width = 50;
-            // 
-            // View
-            // 
             this.View.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
@@ -263,12 +213,9 @@
             this.View.MinimumWidth = 50;
             this.View.Name = "View";
             this.View.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.View.Text = "📖";
+            this.View.Text = "??";
             this.View.UseColumnTextForButtonValue = true;
             this.View.Width = 50;
-            // 
-            // Delete
-            // 
             this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
@@ -279,12 +226,9 @@
             this.Delete.MinimumWidth = 50;
             this.Delete.Name = "Delete";
             this.Delete.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Delete.Text = "🗑";
+            this.Delete.Text = "??";
             this.Delete.UseColumnTextForButtonValue = true;
             this.Delete.Width = 50;
-            // 
-            // panelSearchFilter
-            // 
             this.panelSearchFilter.BackColor = System.Drawing.Color.White;
             this.panelSearchFilter.Controls.Add(this.cmbResourceTypeFilter);
             this.panelSearchFilter.Controls.Add(this.lblResourceTypeFilter);
@@ -298,9 +242,6 @@
             this.panelSearchFilter.Size = new System.Drawing.Size(1407, 60);
             this.panelSearchFilter.TabIndex = 2;
             this.panelSearchFilter.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSearchFilter_Paint);
-            // 
-            // cmbResourceTypeFilter
-            // 
             this.cmbResourceTypeFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbResourceTypeFilter.FormattingEnabled = true;
@@ -309,9 +250,6 @@
             this.cmbResourceTypeFilter.Size = new System.Drawing.Size(181, 25);
             this.cmbResourceTypeFilter.TabIndex = 3;
             this.cmbResourceTypeFilter.SelectedIndexChanged += new System.EventHandler(this.cmbResourceTypeFilter_SelectedIndexChanged);
-            // 
-            // lblResourceTypeFilter
-            // 
             this.lblResourceTypeFilter.AutoSize = true;
             this.lblResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResourceTypeFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -321,9 +259,6 @@
             this.lblResourceTypeFilter.TabIndex = 4;
             this.lblResourceTypeFilter.Text = "All Resource Types:";
             this.lblResourceTypeFilter.Click += new System.EventHandler(this.lblResourceTypeFilter_Click);
-            // 
-            // cmbCategoryFilter
-            // 
             this.cmbCategoryFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCategoryFilter.FormattingEnabled = true;
@@ -332,9 +267,6 @@
             this.cmbCategoryFilter.Size = new System.Drawing.Size(290, 25);
             this.cmbCategoryFilter.TabIndex = 2;
             this.cmbCategoryFilter.SelectedIndexChanged += new System.EventHandler(this.cmbCategoryFilter_SelectedIndexChanged);
-            // 
-            // lblCategoryFilter
-            // 
             this.lblCategoryFilter.AutoSize = true;
             this.lblCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCategoryFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -343,9 +275,6 @@
             this.lblCategoryFilter.Size = new System.Drawing.Size(96, 19);
             this.lblCategoryFilter.TabIndex = 1;
             this.lblCategoryFilter.Text = "All Categories:";
-            // 
-            // txtSearch
-            // 
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
@@ -353,13 +282,10 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(503, 25);
             this.txtSearch.TabIndex = 0;
-            this.txtSearch.Text = "🔍 Search by title, author, ISBN, or accession number...";
+            this.txtSearch.Text = "?? Search by title, author, ISBN, or accession number...";
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
-            // 
-            // panelMetrics
-            // 
             this.panelMetrics.BackColor = System.Drawing.Color.White;
             this.panelMetrics.Controls.Add(this.panelMetricOnLoan);
             this.panelMetrics.Controls.Add(this.panelMetricAvailable);
@@ -370,9 +296,6 @@
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1407, 81);
             this.panelMetrics.TabIndex = 1;
-            // 
-            // panelMetricOnLoan
-            // 
             this.panelMetricOnLoan.BackColor = System.Drawing.Color.White;
             this.panelMetricOnLoan.Controls.Add(this.lblMetricOnLoanValue);
             this.panelMetricOnLoan.Controls.Add(this.lblMetricOnLoanTitle);
@@ -382,9 +305,6 @@
             this.panelMetricOnLoan.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricOnLoan.Size = new System.Drawing.Size(272, 84);
             this.panelMetricOnLoan.TabIndex = 3;
-            // 
-            // lblMetricOnLoanValue
-            // 
             this.lblMetricOnLoanValue.AutoSize = true;
             this.lblMetricOnLoanValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricOnLoanValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -393,9 +313,6 @@
             this.lblMetricOnLoanValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricOnLoanValue.TabIndex = 2;
             this.lblMetricOnLoanValue.Text = "0";
-            // 
-            // lblMetricOnLoanTitle
-            // 
             this.lblMetricOnLoanTitle.AutoSize = true;
             this.lblMetricOnLoanTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricOnLoanTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -403,10 +320,7 @@
             this.lblMetricOnLoanTitle.Name = "lblMetricOnLoanTitle";
             this.lblMetricOnLoanTitle.Size = new System.Drawing.Size(85, 19);
             this.lblMetricOnLoanTitle.TabIndex = 1;
-            this.lblMetricOnLoanTitle.Text = "⏳ On Loan";
-            // 
-            // panelMetricAvailable
-            // 
+            this.lblMetricOnLoanTitle.Text = "? On Loan";
             this.panelMetricAvailable.BackColor = System.Drawing.Color.White;
             this.panelMetricAvailable.Controls.Add(this.lblMetricAvailableValue);
             this.panelMetricAvailable.Controls.Add(this.lblMetricAvailableTitle);
@@ -416,9 +330,6 @@
             this.panelMetricAvailable.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricAvailable.Size = new System.Drawing.Size(272, 82);
             this.panelMetricAvailable.TabIndex = 2;
-            // 
-            // lblMetricAvailableValue
-            // 
             this.lblMetricAvailableValue.AutoSize = true;
             this.lblMetricAvailableValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricAvailableValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -427,9 +338,6 @@
             this.lblMetricAvailableValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricAvailableValue.TabIndex = 2;
             this.lblMetricAvailableValue.Text = "0";
-            // 
-            // lblMetricAvailableTitle
-            // 
             this.lblMetricAvailableTitle.AutoSize = true;
             this.lblMetricAvailableTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricAvailableTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -437,10 +345,7 @@
             this.lblMetricAvailableTitle.Name = "lblMetricAvailableTitle";
             this.lblMetricAvailableTitle.Size = new System.Drawing.Size(86, 19);
             this.lblMetricAvailableTitle.TabIndex = 1;
-            this.lblMetricAvailableTitle.Text = "📕 Available";
-            // 
-            // panelMetricTotalCopies
-            // 
+            this.lblMetricAvailableTitle.Text = "?? Available";
             this.panelMetricTotalCopies.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalCopies.Controls.Add(this.lblMetricTotalCopiesValue);
             this.panelMetricTotalCopies.Controls.Add(this.lblMetricTotalCopiesTitle);
@@ -450,9 +355,6 @@
             this.panelMetricTotalCopies.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricTotalCopies.Size = new System.Drawing.Size(270, 82);
             this.panelMetricTotalCopies.TabIndex = 1;
-            // 
-            // lblMetricTotalCopiesValue
-            // 
             this.lblMetricTotalCopiesValue.AutoSize = true;
             this.lblMetricTotalCopiesValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalCopiesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -461,9 +363,6 @@
             this.lblMetricTotalCopiesValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricTotalCopiesValue.TabIndex = 2;
             this.lblMetricTotalCopiesValue.Text = "0";
-            // 
-            // lblMetricTotalCopiesTitle
-            // 
             this.lblMetricTotalCopiesTitle.AutoSize = true;
             this.lblMetricTotalCopiesTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalCopiesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -471,10 +370,7 @@
             this.lblMetricTotalCopiesTitle.Name = "lblMetricTotalCopiesTitle";
             this.lblMetricTotalCopiesTitle.Size = new System.Drawing.Size(106, 19);
             this.lblMetricTotalCopiesTitle.TabIndex = 1;
-            this.lblMetricTotalCopiesTitle.Text = "📕 Total Copies";
-            // 
-            // panelMetricTotalTitles
-            // 
+            this.lblMetricTotalCopiesTitle.Text = "?? Total Copies";
             this.panelMetricTotalTitles.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalTitles.Controls.Add(this.lblMetricTotalTitlesValue);
             this.panelMetricTotalTitles.Controls.Add(this.lblMetricTotalTitlesTitle);
@@ -484,9 +380,6 @@
             this.panelMetricTotalTitles.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricTotalTitles.Size = new System.Drawing.Size(270, 82);
             this.panelMetricTotalTitles.TabIndex = 0;
-            // 
-            // lblMetricTotalTitlesValue
-            // 
             this.lblMetricTotalTitlesValue.AutoSize = true;
             this.lblMetricTotalTitlesValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalTitlesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -495,9 +388,6 @@
             this.lblMetricTotalTitlesValue.Size = new System.Drawing.Size(38, 45);
             this.lblMetricTotalTitlesValue.TabIndex = 2;
             this.lblMetricTotalTitlesValue.Text = "0";
-            // 
-            // lblMetricTotalTitlesTitle
-            // 
             this.lblMetricTotalTitlesTitle.AutoSize = true;
             this.lblMetricTotalTitlesTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalTitlesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -505,10 +395,7 @@
             this.lblMetricTotalTitlesTitle.Name = "lblMetricTotalTitlesTitle";
             this.lblMetricTotalTitlesTitle.Size = new System.Drawing.Size(96, 19);
             this.lblMetricTotalTitlesTitle.TabIndex = 1;
-            this.lblMetricTotalTitlesTitle.Text = "📕 Total Titles";
-            // 
-            // panelHeader
-            // 
+            this.lblMetricTotalTitlesTitle.Text = "?? Total Titles";
             this.panelHeader.BackColor = System.Drawing.Color.White;
             this.panelHeader.Controls.Add(this.btnImportCSV);
             this.panelHeader.Controls.Add(this.btnAddNewBook);
@@ -519,9 +406,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1407, 76);
             this.panelHeader.TabIndex = 0;
-            // 
-            // btnImportCSV
-            // 
             this.btnImportCSV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportCSV.BackColor = System.Drawing.Color.Green;
             this.btnImportCSV.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -532,12 +416,9 @@
             this.btnImportCSV.Name = "btnImportCSV";
             this.btnImportCSV.Size = new System.Drawing.Size(194, 40);
             this.btnImportCSV.TabIndex = 3;
-            this.btnImportCSV.Text = "📥 Import CSV";
+            this.btnImportCSV.Text = "?? Import CSV";
             this.btnImportCSV.UseVisualStyleBackColor = false;
             this.btnImportCSV.Click += new System.EventHandler(this.btnImportCSV_Click);
-            // 
-            // btnAddNewBook
-            // 
             this.btnAddNewBook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNewBook.BackColor = System.Drawing.Color.Maroon;
             this.btnAddNewBook.FlatAppearance.BorderSize = 0;
@@ -548,12 +429,9 @@
             this.btnAddNewBook.Name = "btnAddNewBook";
             this.btnAddNewBook.Size = new System.Drawing.Size(202, 40);
             this.btnAddNewBook.TabIndex = 2;
-            this.btnAddNewBook.Text = "➕ Add New Book";
+            this.btnAddNewBook.Text = "? Add New Book";
             this.btnAddNewBook.UseVisualStyleBackColor = false;
             this.btnAddNewBook.Click += new System.EventHandler(this.btnAddNewBook_Click);
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -562,9 +440,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(231, 19);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Manage library books and resources";
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -573,9 +448,6 @@
             this.lblTitle.Size = new System.Drawing.Size(223, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Book Catalog";
-            // 
-            // AdminCatalogForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -602,11 +474,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

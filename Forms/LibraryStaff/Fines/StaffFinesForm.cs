@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -9,7 +9,6 @@ using Project5LMS.Data;
 using Project5LMS.Services;
 using Project5LMS.Interfaces;
 using Project5LMS.Forms.Admin.Search;
-
 namespace Project5LMS.Forms.LibraryStaff.Fines
 {
     public partial class StaffFinesForm : Form
@@ -20,21 +19,18 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         private const int CardSpacing = 15;
         private readonly DatabaseContext _dbContext;
         private readonly IPaymentService _paymentService;
-
         public StaffFinesForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
             _paymentService = ServiceFactory.CreatePaymentService();
         }
-
         private void StaffFinesForm_Load(object sender, EventArgs e)
         {
             EnsureFinesTableExists();
             LoadMetrics();
             LoadActiveFines();
         }
-
         private void EnsureFinesTableExists()
         {
             try
@@ -42,8 +38,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                                              WHERE TABLE_SCHEMA = DATABASE() 
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                                              WHERE TABLE_SCHEMA = DATABASE()
                                               AND TABLE_NAME = 'Fines'";
                     using (MySqlCommand checkCmd = new MySqlCommand(checkTableQuery, conn))
                     {
@@ -91,7 +87,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 System.Diagnostics.Debug.WriteLine($"Error ensuring Fines table exists: {ex.Message}");
             }
         }
-
         private void AddColumnIfNotExists(MySqlConnection conn, string tableName, string columnName, string columnDefinition)
         {
             try
@@ -110,8 +105,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 System.Diagnostics.Debug.WriteLine($"Error adding column {columnName}: {ex.Message}");
             }
         }
-
-
         private void LoadMetrics()
         {
             try
@@ -119,20 +112,17 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-
                     bool hasFinesTable = CheckTableExists(conn, "Fines");
                     if (hasFinesTable)
                     {
                         bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
                         bool hasWaivedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "WaivedDate");
-
                         string queryTotal = "SELECT COALESCE(SUM(Amount), 0) FROM Fines";
                         using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                         {
                             decimal total = Convert.ToDecimal(cmd.ExecuteScalar());
                             lblMetricTotalFinesValue.Text = $"${total:F2}";
                         }
-
                         string queryPending = hasPaidDate && hasWaivedDate
                             ? "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE PaidDate IS NULL AND WaivedDate IS NULL"
                             : "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE Status = 'Pending'";
@@ -141,7 +131,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                             decimal pending = Convert.ToDecimal(cmd.ExecuteScalar());
                             lblMetricPendingValue.Text = $"${pending:F2}";
                         }
-
                         bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
                         string queryOverdue = hasDaysOverdue
                             ? "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE DaysOverdue > 0 AND (PaidDate IS NULL OR WaivedDate IS NULL)"
@@ -151,7 +140,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                             decimal overdue = Convert.ToDecimal(cmd.ExecuteScalar());
                             lblMetricOverdueValue.Text = $"${overdue:F2}";
                         }
-
                         string queryCollected = hasPaidDate
                             ? "SELECT COALESCE(SUM(Amount), 0) FROM Fines WHERE PaidDate IS NOT NULL"
                             : "SELECT COALESCE(SUM(Paid), 0) FROM Fines WHERE Status = 'Paid'";
@@ -163,7 +151,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     }
                     else
                     {
-
                         bool hasFine = DatabaseSchemaHelper.CheckColumnExists(conn, "Transactions", "Fine");
                         if (hasFine)
                         {
@@ -173,15 +160,13 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                                 decimal total = Convert.ToDecimal(cmd.ExecuteScalar());
                                 lblMetricTotalFinesValue.Text = $"${total:F2}";
                             }
-
-                            string queryPending = @"SELECT COALESCE(SUM(Fine), 0) FROM Transactions 
+                            string queryPending = @"SELECT COALESCE(SUM(Fine), 0) FROM Transactions
                                                   WHERE ReturnDate IS NULL AND DueDate < NOW() AND Fine > 0";
                             using (MySqlCommand cmd = new MySqlCommand(queryPending, conn))
                             {
                                 decimal pending = Convert.ToDecimal(cmd.ExecuteScalar());
                                 lblMetricPendingValue.Text = $"${pending:F2}";
                             }
-
                             lblMetricOverdueValue.Text = "$0.00";
                             lblMetricCollectedValue.Text = "$0.00";
                         }
@@ -193,11 +178,10 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 System.Diagnostics.Debug.WriteLine($"Error loading metrics: {ex.Message}");
             }
         }
-
         private bool CheckTableExists(MySqlConnection conn, string tableName)
         {
-            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
-                           WHERE TABLE_SCHEMA = DATABASE() 
+            string query = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
+                           WHERE TABLE_SCHEMA = DATABASE()
                            AND TABLE_NAME = @TableName";
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
@@ -205,14 +189,12 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
             }
         }
-
         private void LoadActiveFines()
         {
             try
             {
                 panelActiveFinesList.Controls.Clear();
                 allFinesData = GetFinesData();
-
                 if (allFinesData == null || allFinesData.Rows.Count == 0)
                 {
                     Label lblNoFines = new Label
@@ -226,13 +208,11 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     panelActiveFinesList.Controls.Add(lblNoFines);
                     return;
                 }
-
                 foreach (DataRow row in allFinesData.Rows)
                 {
                     decimal amount = Convert.ToDecimal(row["Amount"]);
                     decimal paid = Convert.ToDecimal(row["Paid"]);
                     string status = DetermineFineStatus(row, amount, paid);
-
                     if (status == "Pending" || status == "Overdue" || status == "Partial")
                     {
                         Panel fineCard = CreateFineCard(row, status);
@@ -246,13 +226,11 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 MessageBox.Show($"Error loading fines: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private DataTable GetFinesData()
         {
             using (var conn = _dbContext.GetConnection())
             {
                 conn.Open();
-
                 bool hasFineType = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "FineType");
                 bool hasDaysOverdue = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "DaysOverdue");
                 bool hasDescription = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "Description");
@@ -260,19 +238,16 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
                 bool hasBookID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "BookID");
                 bool hasTransactionID = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "TransactionID");
-
-                // Build BookID selection - use BookID if exists, otherwise try to get from TransactionID
                 string bookIDSelect = hasBookID ? "f.BookID," : "NULL as BookID,";
-                string bookJoin = hasBookID 
-                    ? "LEFT JOIN Books b ON f.BookID = b.BookID" 
-                    : (hasTransactionID 
+                string bookJoin = hasBookID
+                    ? "LEFT JOIN Books b ON f.BookID = b.BookID"
+                    : (hasTransactionID
                         ? "LEFT JOIN Transactions t ON f.TransactionID = t.TransactionID LEFT JOIN Books b ON t.BookID = b.BookID"
-                        : "LEFT JOIN Books b ON 1=0"); // No join if neither column exists
-
+                        : "LEFT JOIN Books b ON 1=0");
                 string query;
                 if (hasFineType && hasDaysOverdue && hasDescription && hasCreatedDate)
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 f.FineID,
                                 f.MemberID,
                                 {bookIDSelect}
@@ -294,7 +269,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 }
                 else
                 {
-                    query = $@"SELECT 
+                    query = $@"SELECT
                                 f.FineID,
                                 f.MemberID,
                                 {bookIDSelect}
@@ -314,7 +289,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                              " + bookJoin + @"
                              ORDER BY f.FineID DESC";
                 }
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
@@ -324,11 +298,9 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 }
             }
         }
-
         private string DetermineFineStatus(DataRow row, decimal amount, decimal paid)
         {
             string currentStatus = row["Status"] != DBNull.Value ? row["Status"].ToString() : "Pending";
-
             if (currentStatus == "Waived")
                 return "Waived";
             else if (paid >= amount)
@@ -337,7 +309,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 return "Partial";
             else
             {
-
                 bool hasDaysOverdue = row.Table.Columns.Contains("DaysOverdue") && row["DaysOverdue"] != DBNull.Value;
                 if (hasDaysOverdue && Convert.ToInt32(row["DaysOverdue"]) > 0)
                     return "Overdue";
@@ -345,7 +316,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     return "Pending";
             }
         }
-
         private Panel CreateFineCard(DataRow fineRow, string status)
         {
             Panel card = new Panel
@@ -358,7 +328,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 Cursor = Cursors.Hand
             };
             card.Click += (s, e) => SelectFineForPayment(fineRow);
-
             string firstName = fineRow["FirstName"] != DBNull.Value ? fineRow["FirstName"].ToString() : "";
             string lastName = fineRow["LastName"] != DBNull.Value ? fineRow["LastName"].ToString() : "";
             int memberId = Convert.ToInt32(fineRow["MemberID"]);
@@ -371,10 +340,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 Location = new Point(20, 20)
             };
             card.Controls.Add(lblMember);
-
             Panel statusBadge = CreateStatusBadge(status, CardWidth - 120, 20);
             card.Controls.Add(statusBadge);
-
             string bookTitle = fineRow["BookTitle"] != DBNull.Value ? fineRow["BookTitle"].ToString() : "N/A";
             Label lblBook = new Label
             {
@@ -386,7 +353,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 MaximumSize = new Size(CardWidth - 40, 0)
             };
             card.Controls.Add(lblBook);
-
             string reason = GetFineReason(fineRow);
             Label lblReason = new Label
             {
@@ -398,7 +364,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 MaximumSize = new Size(CardWidth - 40, 0)
             };
             card.Controls.Add(lblReason);
-
             DateTime issuedDate = fineRow["CreatedDate"] != DBNull.Value ? Convert.ToDateTime(fineRow["CreatedDate"]) : DateTime.Now;
             Label lblIssued = new Label
             {
@@ -409,7 +374,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 Location = new Point(20, 100)
             };
             card.Controls.Add(lblIssued);
-
             decimal amount = Convert.ToDecimal(fineRow["Amount"]);
             Label lblAmount = new Label
             {
@@ -420,7 +384,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 Location = new Point(20, 125)
             };
             card.Controls.Add(lblAmount);
-
             if (fineRow.Table.Columns.Contains("PaidDate") && fineRow["PaidDate"] == DBNull.Value)
             {
                 DateTime dueDate = issuedDate.AddDays(7);
@@ -434,7 +397,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 };
                 card.Controls.Add(lblDue);
             }
-
             int fineId = Convert.ToInt32(fineRow["FineID"]);
             Label lblFineID = new Label
             {
@@ -445,14 +407,11 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 Location = new Point(250, 125)
             };
             card.Controls.Add(lblFineID);
-
-            // Add Pay and Waive buttons
             if (status == "Pending" || status == "Partial" || status == "Overdue")
             {
                 decimal Amount = Convert.ToDecimal(fineRow["Amount"]);
                 decimal paid = Convert.ToDecimal(fineRow["Paid"]);
                 decimal balance = amount - paid;
-
                 Button btnPay = new Button
                 {
                     Text = balance > 0 ? "Pay" : "Paid",
@@ -469,7 +428,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 btnPay.FlatAppearance.BorderSize = 0;
                 btnPay.Click += (s, e) => ProcessPayment(fineRow);
                 card.Controls.Add(btnPay);
-
                 Button btnWaive = new Button
                 {
                     Text = "Waive",
@@ -486,10 +444,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 btnWaive.Click += (s, e) => WaiveFine(fineRow);
                 card.Controls.Add(btnWaive);
             }
-
             return card;
         }
-
         private Panel CreateStatusBadge(string status, int x, int y)
         {
             Panel badge = new Panel
@@ -497,10 +453,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 Size = new Size(100, 25),
                 Location = new Point(x, y)
             };
-
             Color bgColor = Color.LightGray;
             Color textColor = Color.Black;
-
             switch (status.ToLower())
             {
                 case "overdue":
@@ -516,7 +470,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     textColor = Color.White;
                     break;
             }
-
             badge.BackColor = bgColor;
             badge.Paint += (s, e) =>
             {
@@ -530,76 +483,61 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     path.CloseAllFigures();
                     badge.Region = new Region(path);
                 }
-
                 using (SolidBrush brush = new SolidBrush(textColor))
                 using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
                 {
                     e.Graphics.DrawString(status, new Font("Segoe UI", 9F, FontStyle.Bold), brush, badge.ClientRectangle, format);
                 }
             };
-
             return badge;
         }
-
         private string GetFineReason(DataRow fineRow)
         {
             if (fineRow.Table.Columns.Contains("Description") && fineRow["Description"] != DBNull.Value && !string.IsNullOrEmpty(fineRow["Description"].ToString()))
             {
                 return fineRow["Description"].ToString();
             }
-
             string fineType = fineRow["FineType"] != DBNull.Value ? fineRow["FineType"].ToString() : "Overdue";
             int daysOverdue = 0;
-
             if (fineRow.Table.Columns.Contains("DaysOverdue") && fineRow["DaysOverdue"] != DBNull.Value)
             {
                 daysOverdue = Convert.ToInt32(fineRow["DaysOverdue"]);
             }
-
             if (fineType == "Overdue" && daysOverdue > 0)
             {
                 return $"Late Return ({daysOverdue} day{(daysOverdue > 1 ? "s" : "")})";
             }
-
             return fineType;
         }
-
         private void SelectFineForPayment(DataRow fineRow)
         {
-
             int fineId = Convert.ToInt32(fineRow["FineID"]);
             string firstName = fineRow["FirstName"] != DBNull.Value ? fineRow["FirstName"].ToString() : "";
             string lastName = fineRow["LastName"] != DBNull.Value ? fineRow["LastName"].ToString() : "";
             decimal amount = Convert.ToDecimal(fineRow["Amount"]);
             decimal paid = Convert.ToDecimal(fineRow["Paid"]);
             decimal balance = amount - paid;
-
             lblProcessPaymentPlaceholder.Text = $"Fine ID: F{fineId}\nMember: {firstName} {lastName}\nAmount: ${amount:F2}\nPaid: ${paid:F2}\nBalance: ${balance:F2}";
             lblProcessPaymentPlaceholder.ForeColor = Color.FromArgb(64, 64, 64);
             lblProcessPaymentPlaceholder.Font = new Font("Segoe UI", 11F);
-
             panelProcessPayment.Tag = fineRow;
         }
-
         private void ProcessPayment(DataRow fineRow)
         {
             try
             {
                 int fineId = Convert.ToInt32(fineRow["FineID"]);
                 int memberId = Convert.ToInt32(fineRow["MemberID"]);
-                int transactionId = fineRow.Table.Columns.Contains("TransactionID") && fineRow["TransactionID"] != DBNull.Value 
+                int transactionId = fineRow.Table.Columns.Contains("TransactionID") && fineRow["TransactionID"] != DBNull.Value
                     ? Convert.ToInt32(fineRow["TransactionID"]) : 0;
                 decimal amount = Convert.ToDecimal(fineRow["Amount"]);
                 decimal paid = Convert.ToDecimal(fineRow["Paid"]);
                 decimal balance = amount - paid;
-
-                // Show payment dialog
                 using (Form paymentForm = new Form())
                 {
                     paymentForm.Text = "Process Payment";
                     paymentForm.Size = new Size(400, 250);
                     paymentForm.StartPosition = FormStartPosition.CenterParent;
-
                     Label lblAmount = new Label
                     {
                         Text = $"Amount to Pay: ${balance:F2}",
@@ -608,7 +546,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                         Font = new Font("Segoe UI", 10F, FontStyle.Bold)
                     };
                     paymentForm.Controls.Add(lblAmount);
-
                     Label lblPaymentMode = new Label
                     {
                         Text = "Payment Mode:",
@@ -616,7 +553,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                         AutoSize = true
                     };
                     paymentForm.Controls.Add(lblPaymentMode);
-
                     ComboBox cmbPaymentMode = new ComboBox
                     {
                         Location = new Point(10, 85),
@@ -626,7 +562,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     cmbPaymentMode.Items.AddRange(new string[] { "Cash", "Online", "Check" });
                     cmbPaymentMode.SelectedIndex = 0;
                     paymentForm.Controls.Add(cmbPaymentMode);
-
                     Button btnOK = new Button
                     {
                         Text = "Process Payment",
@@ -639,7 +574,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     };
                     btnOK.FlatAppearance.BorderSize = 0;
                     paymentForm.Controls.Add(btnOK);
-
                     Button btnCancel = new Button
                     {
                         Text = "Cancel",
@@ -648,14 +582,10 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                         Size = new Size(80, 35)
                     };
                     paymentForm.Controls.Add(btnCancel);
-
                     paymentForm.AcceptButton = btnOK;
                     paymentForm.CancelButton = btnCancel;
-
                     if (paymentForm.ShowDialog() != DialogResult.OK)
                         return;
-
-                    // Process payment using PaymentService
                     var payment = new Project5LMS.Models.FinePayment
                     {
                         TransactionID = transactionId > 0 ? transactionId : 0,
@@ -664,19 +594,15 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                         PaymentMode = cmbPaymentMode.SelectedItem?.ToString() ?? "Cash",
                         ProcessedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Staff"
                     };
-
-                    // Show transaction status
                     bool success = false;
                     using (var statusForm = new TransactionStatusForm("Payment Processing"))
                     {
                         statusForm.Show();
                         Application.DoEvents();
-
                         try
                         {
                             statusForm.UpdateStatus("Processing payment...");
                             success = _paymentService.ProcessPayment(payment);
-                            
                             if (success)
                             {
                                 statusForm.UpdateStatus("Payment recorded successfully!");
@@ -690,10 +616,8 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                             throw;
                         }
                     }
-
                     if (success)
                     {
-                        // Update fine status
                         using (var conn = _dbContext.GetConnection())
                         {
                             conn.Open();
@@ -702,7 +626,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                             string updateQuery = hasPaidDate
                                 ? "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID"
                                 : "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid' WHERE FineID = @FineID";
-
                             using (var cmd = new MySqlCommand(updateQuery, conn))
                             {
                                 cmd.Parameters.AddWithValue("@FineID", fineId);
@@ -712,8 +635,7 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                                 cmd.ExecuteNonQuery();
                             }
                         }
-
-                        MessageBox.Show($"Payment of ${balance:F2} processed successfully.\nReceipt: {payment.ReceiptNumber}", 
+                        MessageBox.Show($"Payment of ${balance:F2} processed successfully.\nReceipt: {payment.ReceiptNumber}",
                             "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadMetrics();
                         LoadActiveFines();
@@ -729,17 +651,14 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                 MessageBox.Show($"Error processing payment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void WaiveFine(DataRow fineRow)
         {
-            // Show input dialog for waiver reason
             string reason = "";
             using (Form inputForm = new Form())
             {
                 inputForm.Text = "Waive Fine";
                 inputForm.Size = new Size(400, 200);
                 inputForm.StartPosition = FormStartPosition.CenterParent;
-
                 Label lblReason = new Label
                 {
                     Text = "Reason for waiver:",
@@ -747,7 +666,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     AutoSize = true
                 };
                 inputForm.Controls.Add(lblReason);
-
                 TextBox txtReason = new TextBox
                 {
                     Location = new Point(10, 45),
@@ -756,7 +674,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     ScrollBars = ScrollBars.Vertical
                 };
                 inputForm.Controls.Add(txtReason);
-
                 Button btnOK = new Button
                 {
                     Text = "OK",
@@ -765,7 +682,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     Size = new Size(80, 30)
                 };
                 inputForm.Controls.Add(btnOK);
-
                 Button btnCancel = new Button
                 {
                     Text = "Cancel",
@@ -774,48 +690,38 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                     Size = new Size(80, 30)
                 };
                 inputForm.Controls.Add(btnCancel);
-
                 inputForm.AcceptButton = btnOK;
                 inputForm.CancelButton = btnCancel;
-
                 if (inputForm.ShowDialog() != DialogResult.OK)
                     return;
-
                 reason = txtReason.Text.Trim();
             }
-
             if (string.IsNullOrWhiteSpace(reason))
             {
                 MessageBox.Show("Please provide a reason for the waiver.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             try
             {
                 int fineId = Convert.ToInt32(fineRow["FineID"]);
                 int memberId = Convert.ToInt32(fineRow["MemberID"]);
-                int transactionId = fineRow.Table.Columns.Contains("TransactionID") && fineRow["TransactionID"] != DBNull.Value 
+                int transactionId = fineRow.Table.Columns.Contains("TransactionID") && fineRow["TransactionID"] != DBNull.Value
                     ? Convert.ToInt32(fineRow["TransactionID"]) : 0;
                 decimal originalAmount = Convert.ToDecimal(fineRow["Amount"]);
-
-                // Use PaymentService to waive fine
                 var adjustment = new Project5LMS.Models.FineAdjustment
                 {
                     TransactionID = transactionId > 0 ? transactionId : 0,
                     MemberID = memberId,
                     OriginalAmount = originalAmount,
-                    AdjustedAmount = 0, // Waived completely
+                    AdjustedAmount = 0,
                     AdjustmentAmount = originalAmount,
                     AdjustmentType = "Waiver",
                     Reason = reason,
                     AdjustedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Staff"
                 };
-
                 bool success = _paymentService.WaiveFine(adjustment);
-
                 if (success)
                 {
-                    // Update fine status
                     using (var conn = _dbContext.GetConnection())
                     {
                         conn.Open();
@@ -823,7 +729,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                         string updateQuery = hasWaivedDate
                             ? "UPDATE Fines SET Status = 'Waived', WaivedDate = @WaivedDate WHERE FineID = @FineID"
                             : "UPDATE Fines SET Status = 'Waived' WHERE FineID = @FineID";
-
                         using (var cmd = new MySqlCommand(updateQuery, conn))
                         {
                             cmd.Parameters.AddWithValue("@FineID", fineId);
@@ -832,7 +737,6 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
                             cmd.ExecuteNonQuery();
                         }
                     }
-
                     MessageBox.Show("Fine waived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadMetrics();
                     LoadActiveFines();

@@ -1,12 +1,8 @@
-namespace Project5LMS.Forms.Admin.Catalog
+﻿namespace Project5LMS.Forms.Admin.Catalog
 {
     partial class PeriodicalForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         private new System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Label lblISSN;
         private System.Windows.Forms.TextBox txtISSN;
@@ -20,11 +16,6 @@ namespace Project5LMS.Forms.Admin.Catalog
         private System.Windows.Forms.ComboBox cmbFrequency;
         private new System.Windows.Forms.Button btnSave;
         private new System.Windows.Forms.Button btnCancel;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -33,13 +24,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.panelMain = new System.Windows.Forms.Panel();
@@ -57,9 +42,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblISSN = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMain
-            // 
             this.panelMain.Controls.Add(this.btnCancel);
             this.panelMain.Controls.Add(this.btnSave);
             this.panelMain.Controls.Add(this.cmbFrequency);
@@ -78,9 +60,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMain.Padding = new System.Windows.Forms.Padding(20);
             this.panelMain.Size = new System.Drawing.Size(500, 350);
             this.panelMain.TabIndex = 0;
-            // 
-            // btnCancel
-            // 
             this.btnCancel.BackColor = System.Drawing.Color.Maroon;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
@@ -90,9 +69,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
-            // 
-            // btnSave
-            // 
             this.btnSave.BackColor = System.Drawing.Color.Maroon;
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.ForeColor = System.Drawing.Color.White;
@@ -103,9 +79,6 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
-            // 
-            // cmbFrequency
-            // 
             this.cmbFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFrequency.FormattingEnabled = true;
             this.cmbFrequency.Items.AddRange(new object[] {
@@ -120,84 +93,54 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbFrequency.Name = "cmbFrequency";
             this.cmbFrequency.Size = new System.Drawing.Size(296, 24);
             this.cmbFrequency.TabIndex = 9;
-            // 
-            // lblFrequency
-            // 
             this.lblFrequency.AutoSize = true;
             this.lblFrequency.Location = new System.Drawing.Point(20, 210);
             this.lblFrequency.Name = "lblFrequency";
             this.lblFrequency.Size = new System.Drawing.Size(74, 16);
             this.lblFrequency.TabIndex = 8;
             this.lblFrequency.Text = "Frequency:";
-            // 
-            // dtpPublicationDate
-            // 
             this.dtpPublicationDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpPublicationDate.Location = new System.Drawing.Point(134, 167);
             this.dtpPublicationDate.Name = "dtpPublicationDate";
             this.dtpPublicationDate.Size = new System.Drawing.Size(296, 22);
             this.dtpPublicationDate.TabIndex = 7;
-            // 
-            // lblPubDate
-            // 
             this.lblPubDate.AutoSize = true;
             this.lblPubDate.Location = new System.Drawing.Point(20, 172);
             this.lblPubDate.Name = "lblPubDate";
             this.lblPubDate.Size = new System.Drawing.Size(108, 16);
             this.lblPubDate.TabIndex = 6;
             this.lblPubDate.Text = "Publication Date:";
-            // 
-            // txtIssue
-            // 
             this.txtIssue.Location = new System.Drawing.Point(130, 97);
             this.txtIssue.Multiline = true;
             this.txtIssue.Name = "txtIssue";
             this.txtIssue.Size = new System.Drawing.Size(300, 48);
             this.txtIssue.TabIndex = 5;
-            // 
-            // lblIssue
-            // 
             this.lblIssue.AutoSize = true;
             this.lblIssue.Location = new System.Drawing.Point(20, 100);
             this.lblIssue.Name = "lblIssue";
             this.lblIssue.Size = new System.Drawing.Size(42, 16);
             this.lblIssue.TabIndex = 4;
             this.lblIssue.Text = "Issue:";
-            // 
-            // txtVolume
-            // 
             this.txtVolume.Location = new System.Drawing.Point(130, 57);
             this.txtVolume.Name = "txtVolume";
             this.txtVolume.Size = new System.Drawing.Size(300, 22);
             this.txtVolume.TabIndex = 3;
-            // 
-            // lblVolume
-            // 
             this.lblVolume.AutoSize = true;
             this.lblVolume.Location = new System.Drawing.Point(20, 60);
             this.lblVolume.Name = "lblVolume";
             this.lblVolume.Size = new System.Drawing.Size(56, 16);
             this.lblVolume.TabIndex = 2;
             this.lblVolume.Text = "Volume:";
-            // 
-            // txtISSN
-            // 
             this.txtISSN.Location = new System.Drawing.Point(130, 17);
             this.txtISSN.Name = "txtISSN";
             this.txtISSN.Size = new System.Drawing.Size(300, 22);
             this.txtISSN.TabIndex = 1;
-            // 
-            // lblISSN
-            // 
             this.lblISSN.AutoSize = true;
             this.lblISSN.Location = new System.Drawing.Point(20, 20);
             this.lblISSN.Name = "lblISSN";
             this.lblISSN.Size = new System.Drawing.Size(41, 16);
             this.lblISSN.TabIndex = 0;
             this.lblISSN.Text = "ISSN:";
-            // 
-            // PeriodicalForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 350);
@@ -207,10 +150,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
     }
 }
-

@@ -3,7 +3,6 @@
     partial class StaffCirculationForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,9 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
@@ -53,9 +50,6 @@
             this.panelCheckOutBook.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelTransactionHistory);
@@ -69,9 +63,6 @@
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
             this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelTransactionHistory
-            // 
             this.panelTransactionHistory.Controls.Add(this.panelTransactionsList);
             this.panelTransactionHistory.Controls.Add(this.tabControl);
             this.panelTransactionHistory.Controls.Add(this.lblTransactionHistory);
@@ -81,9 +72,6 @@
             this.panelTransactionHistory.Name = "panelTransactionHistory";
             this.panelTransactionHistory.Size = new System.Drawing.Size(1536, 400);
             this.panelTransactionHistory.TabIndex = 2;
-            // 
-            // panelTransactionsList
-            // 
             this.panelTransactionsList.AutoScroll = true;
             this.panelTransactionsList.Controls.Add(this.flowLayoutTransactions);
             this.panelTransactionsList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -92,9 +80,6 @@
             this.panelTransactionsList.Name = "panelTransactionsList";
             this.panelTransactionsList.Size = new System.Drawing.Size(1536, 400);
             this.panelTransactionsList.TabIndex = 2;
-            // 
-            // flowLayoutTransactions
-            // 
             this.flowLayoutTransactions.AutoScroll = true;
             this.flowLayoutTransactions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutTransactions.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -105,9 +90,6 @@
             this.flowLayoutTransactions.Size = new System.Drawing.Size(1536, 400);
             this.flowLayoutTransactions.TabIndex = 0;
             this.flowLayoutTransactions.WrapContents = false;
-            // 
-            // tabControl
-            // 
             this.tabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl.Controls.Add(this.tabAll);
             this.tabControl.Controls.Add(this.tabCheckouts);
@@ -121,9 +103,6 @@
             this.tabControl.Size = new System.Drawing.Size(1536, 40);
             this.tabControl.TabIndex = 1;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
-            // 
-            // tabAll
-            // 
             this.tabAll.Location = new System.Drawing.Point(4, 44);
             this.tabAll.Margin = new System.Windows.Forms.Padding(4);
             this.tabAll.Name = "tabAll";
@@ -132,9 +111,6 @@
             this.tabAll.TabIndex = 0;
             this.tabAll.Text = "All Transactions";
             this.tabAll.UseVisualStyleBackColor = true;
-            // 
-            // tabCheckouts
-            // 
             this.tabCheckouts.Location = new System.Drawing.Point(4, 44);
             this.tabCheckouts.Margin = new System.Windows.Forms.Padding(4);
             this.tabCheckouts.Name = "tabCheckouts";
@@ -143,9 +119,6 @@
             this.tabCheckouts.TabIndex = 1;
             this.tabCheckouts.Text = "Checkouts";
             this.tabCheckouts.UseVisualStyleBackColor = true;
-            // 
-            // tabReturns
-            // 
             this.tabReturns.Location = new System.Drawing.Point(4, 44);
             this.tabReturns.Margin = new System.Windows.Forms.Padding(4);
             this.tabReturns.Name = "tabReturns";
@@ -154,9 +127,6 @@
             this.tabReturns.TabIndex = 2;
             this.tabReturns.Text = "Returns";
             this.tabReturns.UseVisualStyleBackColor = true;
-            // 
-            // lblTransactionHistory
-            // 
             this.lblTransactionHistory.AutoSize = true;
             this.lblTransactionHistory.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTransactionHistory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -166,9 +136,6 @@
             this.lblTransactionHistory.Size = new System.Drawing.Size(292, 41);
             this.lblTransactionHistory.TabIndex = 0;
             this.lblTransactionHistory.Text = "Transaction History";
-            // 
-            // panelCirculationManagement
-            // 
             this.panelCirculationManagement.Controls.Add(this.panelReturnBook);
             this.panelCirculationManagement.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCirculationManagement.Location = new System.Drawing.Point(32, 122);
@@ -176,9 +143,6 @@
             this.panelCirculationManagement.Name = "panelCirculationManagement";
             this.panelCirculationManagement.Size = new System.Drawing.Size(1536, 334);
             this.panelCirculationManagement.TabIndex = 1;
-            // 
-            // panelReturnBook
-            // 
             this.panelReturnBook.BackColor = System.Drawing.Color.White;
             this.panelReturnBook.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelReturnBook.Controls.Add(this.btnProcessReturn);
@@ -193,9 +157,6 @@
             this.panelReturnBook.Padding = new System.Windows.Forms.Padding(30);
             this.panelReturnBook.Size = new System.Drawing.Size(760, 277);
             this.panelReturnBook.TabIndex = 3;
-            // 
-            // btnProcessReturn
-            // 
             this.btnProcessReturn.BackColor = System.Drawing.Color.Maroon;
             this.btnProcessReturn.FlatAppearance.BorderSize = 0;
             this.btnProcessReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -209,9 +170,6 @@
             this.btnProcessReturn.Text = "Process Return";
             this.btnProcessReturn.UseVisualStyleBackColor = false;
             this.btnProcessReturn.Click += new System.EventHandler(this.btnProcessReturn_Click);
-            // 
-            // lblReturnDate
-            // 
             this.lblReturnDate.AutoSize = true;
             this.lblReturnDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -221,9 +179,6 @@
             this.lblReturnDate.Size = new System.Drawing.Size(102, 23);
             this.lblReturnDate.TabIndex = 5;
             this.lblReturnDate.Text = "Return Date";
-            // 
-            // txtReturnDate
-            // 
             this.txtReturnDate.AutoSize = true;
             this.txtReturnDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReturnDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -232,9 +187,6 @@
             this.txtReturnDate.Name = "txtReturnDate";
             this.txtReturnDate.Size = new System.Drawing.Size(0, 23);
             this.txtReturnDate.TabIndex = 4;
-            // 
-            // txtReturnBookID
-            // 
             this.txtReturnBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReturnBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReturnBookID.ForeColor = System.Drawing.Color.Gray;
@@ -247,9 +199,6 @@
             this.txtReturnBookID.Enter += new System.EventHandler(this.txtReturnBookID_Enter);
             this.txtReturnBookID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtReturnBookID_KeyDown);
             this.txtReturnBookID.Leave += new System.EventHandler(this.txtReturnBookID_Leave);
-            // 
-            // lblReturnBookID
-            // 
             this.lblReturnBookID.AutoSize = true;
             this.lblReturnBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -259,9 +208,6 @@
             this.lblReturnBookID.Size = new System.Drawing.Size(70, 23);
             this.lblReturnBookID.TabIndex = 2;
             this.lblReturnBookID.Text = "Book ID";
-            // 
-            // lblReturnBookTitle
-            // 
             this.lblReturnBookTitle.AutoSize = true;
             this.lblReturnBookTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnBookTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -271,9 +217,6 @@
             this.lblReturnBookTitle.Size = new System.Drawing.Size(130, 28);
             this.lblReturnBookTitle.TabIndex = 0;
             this.lblReturnBookTitle.Text = "Return Book";
-            // 
-            // panelCheckOutBook
-            // 
             this.panelCheckOutBook.BackColor = System.Drawing.Color.White;
             this.panelCheckOutBook.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelCheckOutBook.Controls.Add(this.btnProcessCheckOut);
@@ -288,9 +231,6 @@
             this.panelCheckOutBook.Padding = new System.Windows.Forms.Padding(30);
             this.panelCheckOutBook.Size = new System.Drawing.Size(760, 277);
             this.panelCheckOutBook.TabIndex = 2;
-            // 
-            // btnProcessCheckOut
-            // 
             this.btnProcessCheckOut.BackColor = System.Drawing.Color.Maroon;
             this.btnProcessCheckOut.FlatAppearance.BorderSize = 0;
             this.btnProcessCheckOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -304,9 +244,6 @@
             this.btnProcessCheckOut.Text = "Process Check Out";
             this.btnProcessCheckOut.UseVisualStyleBackColor = false;
             this.btnProcessCheckOut.Click += new System.EventHandler(this.btnProcessCheckOut_Click);
-            // 
-            // txtCheckOutBookID
-            // 
             this.txtCheckOutBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCheckOutBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCheckOutBookID.ForeColor = System.Drawing.Color.Gray;
@@ -319,9 +256,6 @@
             this.txtCheckOutBookID.Enter += new System.EventHandler(this.txtCheckOutBookID_Enter);
             this.txtCheckOutBookID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCheckOutBookID_KeyDown);
             this.txtCheckOutBookID.Leave += new System.EventHandler(this.txtCheckOutBookID_Leave);
-            // 
-            // lblCheckOutBookID
-            // 
             this.lblCheckOutBookID.AutoSize = true;
             this.lblCheckOutBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckOutBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -331,9 +265,6 @@
             this.lblCheckOutBookID.Size = new System.Drawing.Size(70, 23);
             this.lblCheckOutBookID.TabIndex = 4;
             this.lblCheckOutBookID.Text = "Book ID";
-            // 
-            // txtCheckOutMemberID
-            // 
             this.txtCheckOutMemberID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCheckOutMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCheckOutMemberID.ForeColor = System.Drawing.Color.Gray;
@@ -346,9 +277,6 @@
             this.txtCheckOutMemberID.Enter += new System.EventHandler(this.txtCheckOutMemberID_Enter);
             this.txtCheckOutMemberID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCheckOutMemberID_KeyDown);
             this.txtCheckOutMemberID.Leave += new System.EventHandler(this.txtCheckOutMemberID_Leave);
-            // 
-            // lblCheckOutMemberID
-            // 
             this.lblCheckOutMemberID.AutoSize = true;
             this.lblCheckOutMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckOutMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -358,9 +286,6 @@
             this.lblCheckOutMemberID.Size = new System.Drawing.Size(96, 23);
             this.lblCheckOutMemberID.TabIndex = 2;
             this.lblCheckOutMemberID.Text = "Member ID";
-            // 
-            // lblCheckOutBookTitle
-            // 
             this.lblCheckOutBookTitle.AutoSize = true;
             this.lblCheckOutBookTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckOutBookTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -370,9 +295,6 @@
             this.lblCheckOutBookTitle.Size = new System.Drawing.Size(163, 28);
             this.lblCheckOutBookTitle.TabIndex = 0;
             this.lblCheckOutBookTitle.Text = "Check Out Book";
-            // 
-            // lblSubtitle
-            // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -382,9 +304,6 @@
             this.lblSubtitle.Size = new System.Drawing.Size(289, 23);
             this.lblSubtitle.TabIndex = 0;
             this.lblSubtitle.Text = "Manage book checkouts and returns";
-            // 
-            // panelHeader
-            // 
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -393,9 +312,6 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1536, 92);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -405,9 +321,6 @@
             this.lblTitle.Size = new System.Drawing.Size(489, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Circulation Management";
-            // 
-            // StaffCirculationForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -431,11 +344,8 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;

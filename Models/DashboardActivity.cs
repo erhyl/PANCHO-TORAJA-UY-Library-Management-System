@@ -1,5 +1,4 @@
-using System;
-
+﻿using System;
 namespace Project5LMS.Models
 {
     public class DashboardActivity
@@ -9,4 +8,3 @@ namespace Project5LMS.Models
         public DateTime Timestamp { get; set; }
     }
 }
-

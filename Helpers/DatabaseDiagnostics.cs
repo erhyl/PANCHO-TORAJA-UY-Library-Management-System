@@ -1,20 +1,13 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Data;
-
 namespace Project5LMS.Helpers
 {
-    /// <summary>
-    /// Database diagnostics and testing utilities
-    /// </summary>
     public static class DatabaseDiagnostics
     {
-        /// <summary>
-        /// Test database connection and display results
-        /// </summary>
         public static void TestConnection()
         {
             try
@@ -23,8 +16,6 @@ namespace Project5LMS.Helpers
                 {
                     var connectionString = DatabaseHelper.GetConnectionString();
                     var result = $"Connection String: {connectionString}\n\n";
-
-                    // Test basic connection
                     using (var conn = dbContext.GetConnection())
                     {
                         conn.Open();
@@ -33,16 +24,12 @@ namespace Project5LMS.Helpers
                         result += $"✓ Database: {conn.Database}\n";
                         conn.Close();
                     }
-
-                    // Test query execution
                     var testQuery = "SELECT COUNT(*) as TableCount FROM information_schema.tables WHERE table_schema = DATABASE()";
                     var dt = dbContext.ExecuteQuery(testQuery);
                     if (dt.Rows.Count > 0)
                     {
                         result += $"✓ Tables found: {dt.Rows[0]["TableCount"]}\n";
                     }
-
-                    // Test Books table
                     try
                     {
                         var booksQuery = "SELECT COUNT(*) as BookCount FROM Books";
@@ -56,8 +43,6 @@ namespace Project5LMS.Helpers
                     {
                         result += $"✗ Books table error: {ex.Message}\n";
                     }
-
-                    // Test Members table
                     try
                     {
                         var membersQuery = "SELECT COUNT(*) as MemberCount FROM Members";
@@ -71,7 +56,6 @@ namespace Project5LMS.Helpers
                     {
                         result += $"✗ Members table error: {ex.Message}\n";
                     }
-
                     MessageBox.Show(result, "Database Connection Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -84,10 +68,6 @@ namespace Project5LMS.Helpers
                     MessageBoxIcon.Error);
             }
         }
-
-        /// <summary>
-        /// Test a specific query and show results
-        /// </summary>
         public static void TestQuery(string query, string description = "Query")
         {
             try
@@ -97,7 +77,6 @@ namespace Project5LMS.Helpers
                     var dt = dbContext.ExecuteQuery(query);
                     var result = $"{description}\n\n";
                     result += $"Rows returned: {dt.Rows.Count}\n\n";
-
                     if (dt.Rows.Count > 0)
                     {
                         result += "Columns: " + string.Join(", ", dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName)) + "\n\n";
@@ -107,7 +86,6 @@ namespace Project5LMS.Helpers
                             result += $"{col.ColumnName}: {dt.Rows[0][col]}\n";
                         }
                     }
-
                     MessageBox.Show(result, "Query Test Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -122,4 +100,3 @@ namespace Project5LMS.Helpers
         }
     }
 }
-
