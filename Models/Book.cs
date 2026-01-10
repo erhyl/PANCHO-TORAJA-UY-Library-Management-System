@@ -8,12 +8,17 @@ namespace Project5LMS.Models
 
         public int BookID { get; set; }
         public string Title { get; set; }
+        public string Subtitle { get; set; }
         public string Author { get; set; }
+        public string Editor { get; set; }
         public string ISBN { get; set; }
         public string Category { get; set; }
         public string Publisher { get; set; }
         public int PublicationYear { get; set; }
+        public string Edition { get; set; }
         public string Language { get; set; }
+        public int NumberOfPages { get; set; }
+        public string PhysicalDescription { get; set; }
         public int TotalCopies { get; set; }
         public int Available { get; set; }
         public string Location { get; set; }
@@ -21,6 +26,8 @@ namespace Project5LMS.Models
         public string AccessionNo { get; set; }
         public string CallNumber { get; set; }
         public string BookType { get; set; }
+        public string CoverImagePath { get; set; }
+        public string Barcode { get; set; }
 
         public bool IsAvailable => Available > 0;
 

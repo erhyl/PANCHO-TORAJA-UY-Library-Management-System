@@ -19,11 +19,6 @@ namespace Project5LMS.Services
             _fineStrategy = fineStrategy ?? throw new ArgumentNullException(nameof(fineStrategy));
         }
 
-        public FinesService(DatabaseContext dbContext) 
-            : this(new TransactionRepository(dbContext), new StandardFineStrategy())
-        {
-        }
-
         public decimal CalculateFine(int transactionId)
         {
             var transaction = _transactionRepository.GetById(transactionId);

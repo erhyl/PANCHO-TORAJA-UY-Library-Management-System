@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.Admin.Members
+namespace Project5LMS.Forms.Admin.Members
 {
     partial class AddMemberForm
     {
@@ -7,6 +7,9 @@
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel panelFormContent;
+        private System.Windows.Forms.Panel panelPersonalInfo;
+        private System.Windows.Forms.Panel panelMembershipInfo;
+        private System.Windows.Forms.Panel panelPhotos;
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.Label lblLastName;
         private System.Windows.Forms.Label lblEmail;
@@ -28,6 +31,14 @@
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label lblPhoto;
+        private System.Windows.Forms.PictureBox picMemberPhoto;
+        private System.Windows.Forms.Button btnUploadPhoto;
+        private System.Windows.Forms.Label lblValidID;
+        private System.Windows.Forms.PictureBox picValidID;
+        private System.Windows.Forms.Button btnUploadValidID;
+        private System.Windows.Forms.Label lblMemberCardNumber;
+        private System.Windows.Forms.TextBox txtMemberCardNumber;
 
         protected override void Dispose(bool disposing)
         {
@@ -41,10 +52,20 @@
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
+            this.panelFormContent = new System.Windows.Forms.Panel();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.panelFormContent = new System.Windows.Forms.Panel();
+            this.panelPhotos = new System.Windows.Forms.Panel();
+            this.txtMemberCardNumber = new System.Windows.Forms.TextBox();
+            this.lblMemberCardNumber = new System.Windows.Forms.Label();
+            this.btnUploadValidID = new System.Windows.Forms.Button();
+            this.picValidID = new System.Windows.Forms.PictureBox();
+            this.lblValidID = new System.Windows.Forms.Label();
+            this.btnUploadPhoto = new System.Windows.Forms.Button();
+            this.picMemberPhoto = new System.Windows.Forms.PictureBox();
+            this.lblPhoto = new System.Windows.Forms.Label();
+            this.panelMembershipInfo = new System.Windows.Forms.Panel();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.dtpExpiration = new System.Windows.Forms.DateTimePicker();
@@ -53,6 +74,7 @@
             this.lblRegistrationDate = new System.Windows.Forms.Label();
             this.cmbMemberType = new System.Windows.Forms.ComboBox();
             this.lblMemberType = new System.Windows.Forms.Label();
+            this.panelPersonalInfo = new System.Windows.Forms.Panel();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.lblAddress = new System.Windows.Forms.Label();
             this.txtContact = new System.Windows.Forms.TextBox();
@@ -65,36 +87,50 @@
             this.lblFirstName = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelMainContainer.SuspendLayout();
-            this.panelButtons.SuspendLayout();
             this.panelFormContent.SuspendLayout();
+            this.panelButtons.SuspendLayout();
+            this.panelPhotos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picValidID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMemberPhoto)).BeginInit();
+            this.panelMembershipInfo.SuspendLayout();
+            this.panelPersonalInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMainContainer
             // 
             this.panelMainContainer.BackColor = System.Drawing.Color.White;
-            this.panelMainContainer.Controls.Add(this.panelButtons);
             this.panelMainContainer.Controls.Add(this.panelFormContent);
             this.panelMainContainer.Controls.Add(this.lblTitle);
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMainContainer.ForeColor = System.Drawing.Color.White;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(600, 700);
+            this.panelMainContainer.Size = new System.Drawing.Size(886, 900);
             this.panelMainContainer.TabIndex = 0;
             this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
+            // 
+            // panelFormContent
+            // 
+            this.panelFormContent.AutoScroll = true;
+            this.panelFormContent.Controls.Add(this.panelButtons);
+            this.panelFormContent.Controls.Add(this.panelPhotos);
+            this.panelFormContent.Controls.Add(this.panelMembershipInfo);
+            this.panelFormContent.Controls.Add(this.panelPersonalInfo);
+            this.panelFormContent.Location = new System.Drawing.Point(0, 80);
+            this.panelFormContent.Margin = new System.Windows.Forms.Padding(4);
+            this.panelFormContent.Name = "panelFormContent";
+            this.panelFormContent.Padding = new System.Windows.Forms.Padding(30, 20, 30, 20);
+            this.panelFormContent.Size = new System.Drawing.Size(856, 820);
+            this.panelFormContent.TabIndex = 2;
             // 
             // panelButtons
             // 
             this.panelButtons.Controls.Add(this.btnCancel);
             this.panelButtons.Controls.Add(this.btnSave);
-            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelButtons.Location = new System.Drawing.Point(40, 620);
+            this.panelButtons.Location = new System.Drawing.Point(30, 750);
             this.panelButtons.Margin = new System.Windows.Forms.Padding(4);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(520, 50);
-            this.panelButtons.TabIndex = 2;
+            this.panelButtons.Size = new System.Drawing.Size(790, 50);
+            this.panelButtons.TabIndex = 3;
             // 
             // btnCancel
             // 
@@ -104,10 +140,10 @@
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(-1, 7);
+            this.btnCancel.Location = new System.Drawing.Point(0, 5);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(120, 39);
+            this.btnCancel.Size = new System.Drawing.Size(180, 40);
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -121,41 +157,146 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(400, 7);
+            this.btnSave.Location = new System.Drawing.Point(610, 5);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(120, 39);
+            this.btnSave.Size = new System.Drawing.Size(180, 40);
             this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // panelFormContent
+            // panelPhotos
             // 
-            this.panelFormContent.Controls.Add(this.cmbStatus);
-            this.panelFormContent.Controls.Add(this.lblStatus);
-            this.panelFormContent.Controls.Add(this.dtpExpiration);
-            this.panelFormContent.Controls.Add(this.lblExpirationDate);
-            this.panelFormContent.Controls.Add(this.dtpRegistration);
-            this.panelFormContent.Controls.Add(this.lblRegistrationDate);
-            this.panelFormContent.Controls.Add(this.cmbMemberType);
-            this.panelFormContent.Controls.Add(this.lblMemberType);
-            this.panelFormContent.Controls.Add(this.txtAddress);
-            this.panelFormContent.Controls.Add(this.lblAddress);
-            this.panelFormContent.Controls.Add(this.txtContact);
-            this.panelFormContent.Controls.Add(this.lblContact);
-            this.panelFormContent.Controls.Add(this.txtEmail);
-            this.panelFormContent.Controls.Add(this.lblEmail);
-            this.panelFormContent.Controls.Add(this.txtLastName);
-            this.panelFormContent.Controls.Add(this.lblLastName);
-            this.panelFormContent.Controls.Add(this.txtFirstName);
-            this.panelFormContent.Controls.Add(this.lblFirstName);
-            this.panelFormContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFormContent.Location = new System.Drawing.Point(40, 86);
-            this.panelFormContent.Margin = new System.Windows.Forms.Padding(4);
-            this.panelFormContent.Name = "panelFormContent";
-            this.panelFormContent.Size = new System.Drawing.Size(520, 584);
-            this.panelFormContent.TabIndex = 1;
+            this.panelPhotos.Controls.Add(this.txtMemberCardNumber);
+            this.panelPhotos.Controls.Add(this.lblMemberCardNumber);
+            this.panelPhotos.Controls.Add(this.btnUploadValidID);
+            this.panelPhotos.Controls.Add(this.picValidID);
+            this.panelPhotos.Controls.Add(this.lblValidID);
+            this.panelPhotos.Controls.Add(this.btnUploadPhoto);
+            this.panelPhotos.Controls.Add(this.picMemberPhoto);
+            this.panelPhotos.Controls.Add(this.lblPhoto);
+            this.panelPhotos.Location = new System.Drawing.Point(30, 520);
+            this.panelPhotos.Margin = new System.Windows.Forms.Padding(4);
+            this.panelPhotos.Name = "panelPhotos";
+            this.panelPhotos.Size = new System.Drawing.Size(790, 220);
+            this.panelPhotos.TabIndex = 2;
+            // 
+            // txtMemberCardNumber
+            // 
+            this.txtMemberCardNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMemberCardNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMemberCardNumber.Location = new System.Drawing.Point(4, 180);
+            this.txtMemberCardNumber.Margin = new System.Windows.Forms.Padding(4);
+            this.txtMemberCardNumber.Name = "txtMemberCardNumber";
+            this.txtMemberCardNumber.Size = new System.Drawing.Size(286, 28);
+            this.txtMemberCardNumber.TabIndex = 25;
+            // 
+            // lblMemberCardNumber
+            // 
+            this.lblMemberCardNumber.AutoSize = true;
+            this.lblMemberCardNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberCardNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberCardNumber.Location = new System.Drawing.Point(5, 152);
+            this.lblMemberCardNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberCardNumber.Name = "lblMemberCardNumber";
+            this.lblMemberCardNumber.Size = new System.Drawing.Size(200, 24);
+            this.lblMemberCardNumber.TabIndex = 24;
+            this.lblMemberCardNumber.Text = "Member Card Number";
+            // 
+            // btnUploadValidID
+            // 
+            this.btnUploadValidID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnUploadValidID.FlatAppearance.BorderSize = 0;
+            this.btnUploadValidID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUploadValidID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUploadValidID.ForeColor = System.Drawing.Color.White;
+            this.btnUploadValidID.Location = new System.Drawing.Point(450, 100);
+            this.btnUploadValidID.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUploadValidID.Name = "btnUploadValidID";
+            this.btnUploadValidID.Size = new System.Drawing.Size(140, 35);
+            this.btnUploadValidID.TabIndex = 12;
+            this.btnUploadValidID.Text = "Upload ID";
+            this.btnUploadValidID.UseVisualStyleBackColor = false;
+            this.btnUploadValidID.Click += new System.EventHandler(this.btnUploadValidID_Click);
+            // 
+            // picValidID
+            // 
+            this.picValidID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picValidID.Location = new System.Drawing.Point(450, 30);
+            this.picValidID.Margin = new System.Windows.Forms.Padding(4);
+            this.picValidID.Name = "picValidID";
+            this.picValidID.Size = new System.Drawing.Size(140, 66);
+            this.picValidID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picValidID.TabIndex = 23;
+            this.picValidID.TabStop = false;
+            // 
+            // lblValidID
+            // 
+            this.lblValidID.AutoSize = true;
+            this.lblValidID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValidID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblValidID.Location = new System.Drawing.Point(446, 2);
+            this.lblValidID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblValidID.Name = "lblValidID";
+            this.lblValidID.Size = new System.Drawing.Size(128, 24);
+            this.lblValidID.TabIndex = 22;
+            this.lblValidID.Text = "Valid ID Photo";
+            // 
+            // btnUploadPhoto
+            // 
+            this.btnUploadPhoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnUploadPhoto.FlatAppearance.BorderSize = 0;
+            this.btnUploadPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUploadPhoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUploadPhoto.ForeColor = System.Drawing.Color.White;
+            this.btnUploadPhoto.Location = new System.Drawing.Point(150, 100);
+            this.btnUploadPhoto.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUploadPhoto.Name = "btnUploadPhoto";
+            this.btnUploadPhoto.Size = new System.Drawing.Size(140, 35);
+            this.btnUploadPhoto.TabIndex = 11;
+            this.btnUploadPhoto.Text = "Upload Photo";
+            this.btnUploadPhoto.UseVisualStyleBackColor = false;
+            this.btnUploadPhoto.Click += new System.EventHandler(this.btnUploadPhoto_Click);
+            // 
+            // picMemberPhoto
+            // 
+            this.picMemberPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picMemberPhoto.Location = new System.Drawing.Point(150, 30);
+            this.picMemberPhoto.Margin = new System.Windows.Forms.Padding(4);
+            this.picMemberPhoto.Name = "picMemberPhoto";
+            this.picMemberPhoto.Size = new System.Drawing.Size(140, 66);
+            this.picMemberPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picMemberPhoto.TabIndex = 21;
+            this.picMemberPhoto.TabStop = false;
+            // 
+            // lblPhoto
+            // 
+            this.lblPhoto.AutoSize = true;
+            this.lblPhoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPhoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblPhoto.Location = new System.Drawing.Point(146, 2);
+            this.lblPhoto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPhoto.Name = "lblPhoto";
+            this.lblPhoto.Size = new System.Drawing.Size(59, 24);
+            this.lblPhoto.TabIndex = 20;
+            this.lblPhoto.Text = "Photo";
+            // 
+            // panelMembershipInfo
+            // 
+            this.panelMembershipInfo.Controls.Add(this.cmbStatus);
+            this.panelMembershipInfo.Controls.Add(this.lblStatus);
+            this.panelMembershipInfo.Controls.Add(this.dtpExpiration);
+            this.panelMembershipInfo.Controls.Add(this.lblExpirationDate);
+            this.panelMembershipInfo.Controls.Add(this.dtpRegistration);
+            this.panelMembershipInfo.Controls.Add(this.lblRegistrationDate);
+            this.panelMembershipInfo.Controls.Add(this.cmbMemberType);
+            this.panelMembershipInfo.Controls.Add(this.lblMemberType);
+            this.panelMembershipInfo.Location = new System.Drawing.Point(30, 280);
+            this.panelMembershipInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMembershipInfo.Name = "panelMembershipInfo";
+            this.panelMembershipInfo.Size = new System.Drawing.Size(790, 220);
+            this.panelMembershipInfo.TabIndex = 1;
             // 
             // cmbStatus
             // 
@@ -163,14 +304,13 @@
             this.cmbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbStatus.FormattingEnabled = true;
             this.cmbStatus.Items.AddRange(new object[] {
-            "All Status",
-            "Active ",
+            "Active",
             "Inactive",
             "Suspended"});
-            this.cmbStatus.Location = new System.Drawing.Point(0, 449);
+            this.cmbStatus.Location = new System.Drawing.Point(0, 180);
             this.cmbStatus.Margin = new System.Windows.Forms.Padding(4);
             this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(519, 30);
+            this.cmbStatus.Size = new System.Drawing.Size(380, 30);
             this.cmbStatus.TabIndex = 8;
             // 
             // lblStatus
@@ -178,7 +318,7 @@
             this.lblStatus.AutoSize = true;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblStatus.Location = new System.Drawing.Point(4, 421);
+            this.lblStatus.Location = new System.Drawing.Point(0, 152);
             this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(60, 24);
@@ -189,10 +329,10 @@
             // 
             this.dtpExpiration.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpExpiration.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpiration.Location = new System.Drawing.Point(271, 380);
+            this.dtpExpiration.Location = new System.Drawing.Point(410, 100);
             this.dtpExpiration.Margin = new System.Windows.Forms.Padding(4);
             this.dtpExpiration.Name = "dtpExpiration";
-            this.dtpExpiration.Size = new System.Drawing.Size(249, 28);
+            this.dtpExpiration.Size = new System.Drawing.Size(380, 28);
             this.dtpExpiration.TabIndex = 7;
             // 
             // lblExpirationDate
@@ -200,7 +340,7 @@
             this.lblExpirationDate.AutoSize = true;
             this.lblExpirationDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExpirationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblExpirationDate.Location = new System.Drawing.Point(269, 351);
+            this.lblExpirationDate.Location = new System.Drawing.Point(406, 72);
             this.lblExpirationDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblExpirationDate.Name = "lblExpirationDate";
             this.lblExpirationDate.Size = new System.Drawing.Size(137, 24);
@@ -211,10 +351,10 @@
             // 
             this.dtpRegistration.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpRegistration.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpRegistration.Location = new System.Drawing.Point(-1, 380);
+            this.dtpRegistration.Location = new System.Drawing.Point(0, 100);
             this.dtpRegistration.Margin = new System.Windows.Forms.Padding(4);
             this.dtpRegistration.Name = "dtpRegistration";
-            this.dtpRegistration.Size = new System.Drawing.Size(249, 28);
+            this.dtpRegistration.Size = new System.Drawing.Size(380, 28);
             this.dtpRegistration.TabIndex = 6;
             // 
             // lblRegistrationDate
@@ -222,22 +362,22 @@
             this.lblRegistrationDate.AutoSize = true;
             this.lblRegistrationDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRegistrationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRegistrationDate.Location = new System.Drawing.Point(4, 351);
+            this.lblRegistrationDate.Location = new System.Drawing.Point(0, 72);
             this.lblRegistrationDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRegistrationDate.Name = "lblRegistrationDate";
-            this.lblRegistrationDate.Size = new System.Drawing.Size(149, 24);
+            this.lblRegistrationDate.Size = new System.Drawing.Size(151, 24);
             this.lblRegistrationDate.TabIndex = 13;
-            this.lblRegistrationDate.Text = "Registration date";
+            this.lblRegistrationDate.Text = "Registration Date";
             // 
             // cmbMemberType
             // 
             this.cmbMemberType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMemberType.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMemberType.FormattingEnabled = true;
-            this.cmbMemberType.Location = new System.Drawing.Point(0, 306);
+            this.cmbMemberType.Location = new System.Drawing.Point(0, 30);
             this.cmbMemberType.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMemberType.Name = "cmbMemberType";
-            this.cmbMemberType.Size = new System.Drawing.Size(520, 30);
+            this.cmbMemberType.Size = new System.Drawing.Size(790, 30);
             this.cmbMemberType.TabIndex = 5;
             // 
             // lblMemberType
@@ -245,22 +385,40 @@
             this.lblMemberType.AutoSize = true;
             this.lblMemberType.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberType.Location = new System.Drawing.Point(4, 278);
+            this.lblMemberType.Location = new System.Drawing.Point(0, 2);
             this.lblMemberType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMemberType.Name = "lblMemberType";
             this.lblMemberType.Size = new System.Drawing.Size(129, 24);
             this.lblMemberType.TabIndex = 11;
             this.lblMemberType.Text = "Member Type";
             // 
+            // panelPersonalInfo
+            // 
+            this.panelPersonalInfo.Controls.Add(this.txtAddress);
+            this.panelPersonalInfo.Controls.Add(this.lblAddress);
+            this.panelPersonalInfo.Controls.Add(this.txtContact);
+            this.panelPersonalInfo.Controls.Add(this.lblContact);
+            this.panelPersonalInfo.Controls.Add(this.txtEmail);
+            this.panelPersonalInfo.Controls.Add(this.lblEmail);
+            this.panelPersonalInfo.Controls.Add(this.txtLastName);
+            this.panelPersonalInfo.Controls.Add(this.lblLastName);
+            this.panelPersonalInfo.Controls.Add(this.txtFirstName);
+            this.panelPersonalInfo.Controls.Add(this.lblFirstName);
+            this.panelPersonalInfo.Location = new System.Drawing.Point(30, 20);
+            this.panelPersonalInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.panelPersonalInfo.Name = "panelPersonalInfo";
+            this.panelPersonalInfo.Size = new System.Drawing.Size(790, 240);
+            this.panelPersonalInfo.TabIndex = 0;
+            // 
             // txtAddress
             // 
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(0, 244);
+            this.txtAddress.Location = new System.Drawing.Point(0, 200);
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(519, 30);
+            this.txtAddress.Size = new System.Drawing.Size(790, 35);
             this.txtAddress.TabIndex = 4;
             // 
             // lblAddress
@@ -268,7 +426,7 @@
             this.lblAddress.AutoSize = true;
             this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblAddress.Location = new System.Drawing.Point(4, 216);
+            this.lblAddress.Location = new System.Drawing.Point(0, 172);
             this.lblAddress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(80, 24);
@@ -279,10 +437,10 @@
             // 
             this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContact.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContact.Location = new System.Drawing.Point(0, 175);
+            this.txtContact.Location = new System.Drawing.Point(410, 130);
             this.txtContact.Margin = new System.Windows.Forms.Padding(4);
             this.txtContact.Name = "txtContact";
-            this.txtContact.Size = new System.Drawing.Size(519, 28);
+            this.txtContact.Size = new System.Drawing.Size(380, 28);
             this.txtContact.TabIndex = 3;
             // 
             // lblContact
@@ -290,7 +448,7 @@
             this.lblContact.AutoSize = true;
             this.lblContact.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblContact.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblContact.Location = new System.Drawing.Point(4, 147);
+            this.lblContact.Location = new System.Drawing.Point(406, 102);
             this.lblContact.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblContact.Name = "lblContact";
             this.lblContact.Size = new System.Drawing.Size(73, 24);
@@ -301,10 +459,10 @@
             // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(0, 115);
+            this.txtEmail.Location = new System.Drawing.Point(0, 130);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(520, 28);
+            this.txtEmail.Size = new System.Drawing.Size(380, 28);
             this.txtEmail.TabIndex = 2;
             // 
             // lblEmail
@@ -312,7 +470,7 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblEmail.Location = new System.Drawing.Point(4, 87);
+            this.lblEmail.Location = new System.Drawing.Point(0, 102);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(57, 24);
@@ -323,10 +481,10 @@
             // 
             this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(273, 45);
+            this.txtLastName.Location = new System.Drawing.Point(410, 60);
             this.txtLastName.Margin = new System.Windows.Forms.Padding(4);
             this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(247, 28);
+            this.txtLastName.Size = new System.Drawing.Size(380, 28);
             this.txtLastName.TabIndex = 1;
             // 
             // lblLastName
@@ -334,7 +492,7 @@
             this.lblLastName.AutoSize = true;
             this.lblLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblLastName.Location = new System.Drawing.Point(269, 17);
+            this.lblLastName.Location = new System.Drawing.Point(406, 32);
             this.lblLastName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLastName.Name = "lblLastName";
             this.lblLastName.Size = new System.Drawing.Size(99, 24);
@@ -345,10 +503,10 @@
             // 
             this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFirstName.Location = new System.Drawing.Point(0, 45);
+            this.txtFirstName.Location = new System.Drawing.Point(0, 60);
             this.txtFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(250, 28);
+            this.txtFirstName.Size = new System.Drawing.Size(380, 28);
             this.txtFirstName.TabIndex = 0;
             // 
             // lblFirstName
@@ -356,7 +514,7 @@
             this.lblFirstName.AutoSize = true;
             this.lblFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFirstName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFirstName.Location = new System.Drawing.Point(2, 17);
+            this.lblFirstName.Location = new System.Drawing.Point(0, 32);
             this.lblFirstName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFirstName.Name = "lblFirstName";
             this.lblFirstName.Size = new System.Drawing.Size(101, 24);
@@ -367,13 +525,13 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(40, 30);
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
-            this.lblTitle.Size = new System.Drawing.Size(195, 56);
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(30, 20, 0, 20);
+            this.lblTitle.Size = new System.Drawing.Size(251, 79);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Add Member";
             // 
@@ -382,7 +540,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(600, 700);
+            this.ClientSize = new System.Drawing.Size(899, 900);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -392,9 +550,16 @@
             this.Load += new System.EventHandler(this.AddMemberForm_Load);
             this.panelMainContainer.ResumeLayout(false);
             this.panelMainContainer.PerformLayout();
-            this.panelButtons.ResumeLayout(false);
             this.panelFormContent.ResumeLayout(false);
-            this.panelFormContent.PerformLayout();
+            this.panelButtons.ResumeLayout(false);
+            this.panelPhotos.ResumeLayout(false);
+            this.panelPhotos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picValidID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMemberPhoto)).EndInit();
+            this.panelMembershipInfo.ResumeLayout(false);
+            this.panelMembershipInfo.PerformLayout();
+            this.panelPersonalInfo.ResumeLayout(false);
+            this.panelPersonalInfo.PerformLayout();
             this.ResumeLayout(false);
 
         }

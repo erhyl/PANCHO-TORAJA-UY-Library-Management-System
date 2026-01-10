@@ -7,6 +7,8 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
+using Project5LMS.Interfaces;
+using Project5LMS.Forms.Admin.Search;
 
 namespace Project5LMS.Forms.LibraryStaff.Fines
 {
@@ -17,11 +19,13 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
         private const int CardHeight = 180;
         private const int CardSpacing = 15;
         private readonly DatabaseContext _dbContext;
+        private readonly IPaymentService _paymentService;
 
         public StaffFinesForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
+            _paymentService = ServiceFactory.CreatePaymentService();
         }
 
         private void StaffFinesForm_Load(object sender, EventArgs e)
@@ -442,6 +446,47 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             };
             card.Controls.Add(lblFineID);
 
+            // Add Pay and Waive buttons
+            if (status == "Pending" || status == "Partial" || status == "Overdue")
+            {
+                decimal Amount = Convert.ToDecimal(fineRow["Amount"]);
+                decimal paid = Convert.ToDecimal(fineRow["Paid"]);
+                decimal balance = amount - paid;
+
+                Button btnPay = new Button
+                {
+                    Text = balance > 0 ? "Pay" : "Paid",
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(40, 167, 69),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(70, 30),
+                    Location = new Point(400, 120),
+                    Enabled = balance > 0,
+                    Cursor = Cursors.Hand,
+                    Tag = fineRow
+                };
+                btnPay.FlatAppearance.BorderSize = 0;
+                btnPay.Click += (s, e) => ProcessPayment(fineRow);
+                card.Controls.Add(btnPay);
+
+                Button btnWaive = new Button
+                {
+                    Text = "Waive",
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(13, 110, 253),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(70, 30),
+                    Location = new Point(480, 120),
+                    Cursor = Cursors.Hand,
+                    Tag = fineRow
+                };
+                btnWaive.FlatAppearance.BorderSize = 0;
+                btnWaive.Click += (s, e) => WaiveFine(fineRow);
+                card.Controls.Add(btnWaive);
+            }
+
             return card;
         }
 
@@ -534,6 +579,273 @@ namespace Project5LMS.Forms.LibraryStaff.Fines
             lblProcessPaymentPlaceholder.Font = new Font("Segoe UI", 11F);
 
             panelProcessPayment.Tag = fineRow;
+        }
+
+        private void ProcessPayment(DataRow fineRow)
+        {
+            try
+            {
+                int fineId = Convert.ToInt32(fineRow["FineID"]);
+                int memberId = Convert.ToInt32(fineRow["MemberID"]);
+                int transactionId = fineRow.Table.Columns.Contains("TransactionID") && fineRow["TransactionID"] != DBNull.Value 
+                    ? Convert.ToInt32(fineRow["TransactionID"]) : 0;
+                decimal amount = Convert.ToDecimal(fineRow["Amount"]);
+                decimal paid = Convert.ToDecimal(fineRow["Paid"]);
+                decimal balance = amount - paid;
+
+                // Show payment dialog
+                using (Form paymentForm = new Form())
+                {
+                    paymentForm.Text = "Process Payment";
+                    paymentForm.Size = new Size(400, 250);
+                    paymentForm.StartPosition = FormStartPosition.CenterParent;
+
+                    Label lblAmount = new Label
+                    {
+                        Text = $"Amount to Pay: ${balance:F2}",
+                        Location = new Point(10, 20),
+                        AutoSize = true,
+                        Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+                    };
+                    paymentForm.Controls.Add(lblAmount);
+
+                    Label lblPaymentMode = new Label
+                    {
+                        Text = "Payment Mode:",
+                        Location = new Point(10, 60),
+                        AutoSize = true
+                    };
+                    paymentForm.Controls.Add(lblPaymentMode);
+
+                    ComboBox cmbPaymentMode = new ComboBox
+                    {
+                        Location = new Point(10, 85),
+                        Size = new Size(360, 30),
+                        DropDownStyle = ComboBoxStyle.DropDownList
+                    };
+                    cmbPaymentMode.Items.AddRange(new string[] { "Cash", "Online", "Check" });
+                    cmbPaymentMode.SelectedIndex = 0;
+                    paymentForm.Controls.Add(cmbPaymentMode);
+
+                    Button btnOK = new Button
+                    {
+                        Text = "Process Payment",
+                        DialogResult = DialogResult.OK,
+                        Location = new Point(200, 150),
+                        Size = new Size(170, 35),
+                        BackColor = Color.FromArgb(40, 167, 69),
+                        ForeColor = Color.White,
+                        FlatStyle = FlatStyle.Flat
+                    };
+                    btnOK.FlatAppearance.BorderSize = 0;
+                    paymentForm.Controls.Add(btnOK);
+
+                    Button btnCancel = new Button
+                    {
+                        Text = "Cancel",
+                        DialogResult = DialogResult.Cancel,
+                        Location = new Point(10, 150),
+                        Size = new Size(80, 35)
+                    };
+                    paymentForm.Controls.Add(btnCancel);
+
+                    paymentForm.AcceptButton = btnOK;
+                    paymentForm.CancelButton = btnCancel;
+
+                    if (paymentForm.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    // Process payment using PaymentService
+                    var payment = new Project5LMS.Models.FinePayment
+                    {
+                        TransactionID = transactionId > 0 ? transactionId : 0,
+                        MemberID = memberId,
+                        AmountPaid = balance,
+                        PaymentMode = cmbPaymentMode.SelectedItem?.ToString() ?? "Cash",
+                        ProcessedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Staff"
+                    };
+
+                    // Show transaction status
+                    bool success = false;
+                    using (var statusForm = new TransactionStatusForm("Payment Processing"))
+                    {
+                        statusForm.Show();
+                        Application.DoEvents();
+
+                        try
+                        {
+                            statusForm.UpdateStatus("Processing payment...");
+                            success = _paymentService.ProcessPayment(payment);
+                            
+                            if (success)
+                            {
+                                statusForm.UpdateStatus("Payment recorded successfully!");
+                                System.Threading.Thread.Sleep(500);
+                            }
+                            statusForm.Close();
+                        }
+                        catch
+                        {
+                            statusForm.Close();
+                            throw;
+                        }
+                    }
+
+                    if (success)
+                    {
+                        // Update fine status
+                        using (var conn = _dbContext.GetConnection())
+                        {
+                            conn.Open();
+                            decimal newPaid = paid + balance;
+                            bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
+                            string updateQuery = hasPaidDate
+                                ? "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID"
+                                : "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid' WHERE FineID = @FineID";
+
+                            using (var cmd = new MySqlCommand(updateQuery, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@FineID", fineId);
+                                cmd.Parameters.AddWithValue("@NewPaid", newPaid);
+                                if (hasPaidDate)
+                                    cmd.Parameters.AddWithValue("@PaidDate", DateTime.Now);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        MessageBox.Show($"Payment of ${balance:F2} processed successfully.\nReceipt: {payment.ReceiptNumber}", 
+                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadMetrics();
+                        LoadActiveFines();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to process payment.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error processing payment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void WaiveFine(DataRow fineRow)
+        {
+            // Show input dialog for waiver reason
+            string reason = "";
+            using (Form inputForm = new Form())
+            {
+                inputForm.Text = "Waive Fine";
+                inputForm.Size = new Size(400, 200);
+                inputForm.StartPosition = FormStartPosition.CenterParent;
+
+                Label lblReason = new Label
+                {
+                    Text = "Reason for waiver:",
+                    Location = new Point(10, 20),
+                    AutoSize = true
+                };
+                inputForm.Controls.Add(lblReason);
+
+                TextBox txtReason = new TextBox
+                {
+                    Location = new Point(10, 45),
+                    Size = new Size(360, 60),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical
+                };
+                inputForm.Controls.Add(txtReason);
+
+                Button btnOK = new Button
+                {
+                    Text = "OK",
+                    DialogResult = DialogResult.OK,
+                    Location = new Point(200, 120),
+                    Size = new Size(80, 30)
+                };
+                inputForm.Controls.Add(btnOK);
+
+                Button btnCancel = new Button
+                {
+                    Text = "Cancel",
+                    DialogResult = DialogResult.Cancel,
+                    Location = new Point(290, 120),
+                    Size = new Size(80, 30)
+                };
+                inputForm.Controls.Add(btnCancel);
+
+                inputForm.AcceptButton = btnOK;
+                inputForm.CancelButton = btnCancel;
+
+                if (inputForm.ShowDialog() != DialogResult.OK)
+                    return;
+
+                reason = txtReason.Text.Trim();
+            }
+
+            if (string.IsNullOrWhiteSpace(reason))
+            {
+                MessageBox.Show("Please provide a reason for the waiver.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                int fineId = Convert.ToInt32(fineRow["FineID"]);
+                int memberId = Convert.ToInt32(fineRow["MemberID"]);
+                int transactionId = fineRow.Table.Columns.Contains("TransactionID") && fineRow["TransactionID"] != DBNull.Value 
+                    ? Convert.ToInt32(fineRow["TransactionID"]) : 0;
+                decimal originalAmount = Convert.ToDecimal(fineRow["Amount"]);
+
+                // Use PaymentService to waive fine
+                var adjustment = new Project5LMS.Models.FineAdjustment
+                {
+                    TransactionID = transactionId > 0 ? transactionId : 0,
+                    MemberID = memberId,
+                    OriginalAmount = originalAmount,
+                    AdjustedAmount = 0, // Waived completely
+                    AdjustmentAmount = originalAmount,
+                    AdjustmentType = "Waiver",
+                    Reason = reason,
+                    AdjustedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Staff"
+                };
+
+                bool success = _paymentService.WaiveFine(adjustment);
+
+                if (success)
+                {
+                    // Update fine status
+                    using (var conn = _dbContext.GetConnection())
+                    {
+                        conn.Open();
+                        bool hasWaivedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "WaivedDate");
+                        string updateQuery = hasWaivedDate
+                            ? "UPDATE Fines SET Status = 'Waived', WaivedDate = @WaivedDate WHERE FineID = @FineID"
+                            : "UPDATE Fines SET Status = 'Waived' WHERE FineID = @FineID";
+
+                        using (var cmd = new MySqlCommand(updateQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@FineID", fineId);
+                            if (hasWaivedDate)
+                                cmd.Parameters.AddWithValue("@WaivedDate", DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("Fine waived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadMetrics();
+                    LoadActiveFines();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to waive fine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error waiving fine: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

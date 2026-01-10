@@ -322,7 +322,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
                 string memberIdStr = e.Value.ToString();
                 if (int.TryParse(memberIdStr, out int memberId))
                 {
-                    e.Value = $"M{memberIdStr}";
+                    e.Value = Project5LMS.Helpers.IDFormatter.FormatMemberID(memberId);
                 }
                 e.FormattingApplied = true;
             }

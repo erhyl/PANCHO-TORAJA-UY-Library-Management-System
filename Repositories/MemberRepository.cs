@@ -23,7 +23,13 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT * FROM Members WHERE MemberID = @MemberID LIMIT 1";
+                    // Use COALESCE to handle both Type and MemberType columns
+                    string query = @"SELECT 
+                                    MemberID, FirstName, LastName, Email, 
+                                    COALESCE(Type, MemberType) as Type,
+                                    RegistrationDate, ExpirationDate, Status,
+                                    Contact, Address, PhotoPath, ValidIDPath, MemberCardNumber
+                                    FROM Members WHERE MemberID = @MemberID LIMIT 1";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@MemberID", memberId);
@@ -53,7 +59,13 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT * FROM Members WHERE Email = @Email LIMIT 1";
+                    // Use COALESCE to handle both Type and MemberType columns
+                    string query = @"SELECT 
+                                    MemberID, FirstName, LastName, Email, 
+                                    COALESCE(Type, MemberType) as Type,
+                                    RegistrationDate, ExpirationDate, Status,
+                                    Contact, Address, PhotoPath, ValidIDPath, MemberCardNumber
+                                    FROM Members WHERE Email = @Email LIMIT 1";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
@@ -81,7 +93,13 @@ namespace Project5LMS.Repositories
             List<Member> members = new List<Member>();
             try
             {
-                string query = "SELECT * FROM Members ORDER BY LastName, FirstName";
+                // Use COALESCE to handle both Type and MemberType columns
+                string query = @"SELECT 
+                                MemberID, FirstName, LastName, Email, 
+                                COALESCE(Type, MemberType) as Type,
+                                RegistrationDate, ExpirationDate, Status,
+                                Contact, Address, PhotoPath, ValidIDPath, MemberCardNumber
+                                FROM Members ORDER BY LastName, FirstName";
                 DataTable dt = _dbContext.ExecuteQuery(query);
                 foreach (DataRow row in dt.Rows)
                 {
@@ -164,8 +182,27 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = @"UPDATE Members SET FirstName=@FirstName, LastName=@LastName, 
-                                    Email=@Email, Type=@Type, ExpirationDate=@ExpirationDate, 
+                    // Check if Type or MemberType column exists
+                    string typeColumn = "Type";
+                    using (var checkCmd = new MySqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'Members' AND COLUMN_NAME = 'Type'", conn))
+                    {
+                        int hasType = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        if (hasType == 0)
+                        {
+                            // Check for MemberType
+                            using (var checkCmd2 = new MySqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'Members' AND COLUMN_NAME = 'MemberType'", conn))
+                            {
+                                int hasMemberType = Convert.ToInt32(checkCmd2.ExecuteScalar());
+                                if (hasMemberType > 0)
+                                {
+                                    typeColumn = "MemberType";
+                                }
+                            }
+                        }
+                    }
+
+                    string query = $@"UPDATE Members SET FirstName=@FirstName, LastName=@LastName, 
+                                    Email=@Email, {typeColumn}=@Type, ExpirationDate=@ExpirationDate, 
                                     Status=@Status, Contact=@Contact, Address=@Address
                                     WHERE MemberID=@MemberID";
                     using (var cmd = new MySqlCommand(query, conn))
@@ -258,18 +295,32 @@ namespace Project5LMS.Repositories
 
         private Member MapDataRowToMember(DataRow row)
         {
+            // Handle both Type and MemberType columns for backward compatibility
+            string memberType = string.Empty;
+            if (row.Table.Columns.Contains("Type") && row["Type"] != DBNull.Value)
+            {
+                memberType = row["Type"].ToString();
+            }
+            else if (row.Table.Columns.Contains("MemberType") && row["MemberType"] != DBNull.Value)
+            {
+                memberType = row["MemberType"].ToString();
+            }
+
             return new Member
             {
                 MemberID = Convert.ToInt32(row["MemberID"]),
                 FirstName = row["FirstName"]?.ToString() ?? string.Empty,
                 LastName = row["LastName"]?.ToString() ?? string.Empty,
                 Email = row["Email"]?.ToString() ?? string.Empty,
-                Type = row["Type"]?.ToString() ?? string.Empty,
+                Type = memberType,
                 RegistrationDate = row["RegistrationDate"] != DBNull.Value ? Convert.ToDateTime(row["RegistrationDate"]) : DateTime.Now,
                 ExpirationDate = row["ExpirationDate"] != DBNull.Value ? Convert.ToDateTime(row["ExpirationDate"]) : DateTime.Now,
                 Status = row["Status"]?.ToString() ?? string.Empty,
-                Contact = row["Contact"]?.ToString() ?? string.Empty,
-                Address = row["Address"]?.ToString() ?? string.Empty
+                Contact = row.Table.Columns.Contains("Contact") && row["Contact"] != DBNull.Value ? row["Contact"].ToString() : string.Empty,
+                Address = row.Table.Columns.Contains("Address") && row["Address"] != DBNull.Value ? row["Address"].ToString() : string.Empty,
+                PhotoPath = row.Table.Columns.Contains("PhotoPath") && row["PhotoPath"] != DBNull.Value ? row["PhotoPath"].ToString() : null,
+                ValidIDPath = row.Table.Columns.Contains("ValidIDPath") && row["ValidIDPath"] != DBNull.Value ? row["ValidIDPath"].ToString() : null,
+                MemberCardNumber = row.Table.Columns.Contains("MemberCardNumber") && row["MemberCardNumber"] != DBNull.Value ? row["MemberCardNumber"].ToString() : null
             };
         }
 

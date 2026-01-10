@@ -201,7 +201,8 @@ namespace Project5LMS.Repositories
                     conn.Open();
                     string query = @"UPDATE Transactions SET MemberID=@MemberID, BookID=@BookID, 
                                     BorrowDate=@BorrowDate, DueDate=@DueDate, ReturnDate=@ReturnDate, 
-                                    Status=@Status, Fine=@Fine, TransactionType=@TransactionType
+                                    Status=@Status, Fine=@Fine, TransactionType=@TransactionType,
+                                    RenewalCount=@RenewalCount
                                     WHERE TransactionID=@TransactionID";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
@@ -223,6 +224,7 @@ namespace Project5LMS.Repositories
                         {
                             cmd.Parameters.AddWithValue("@Fine", DBNull.Value);
                         }
+                        cmd.Parameters.AddWithValue("@RenewalCount", transaction.RenewalCount);
                         cmd.ExecuteNonQuery();
                         return true;
                     }
@@ -289,7 +291,9 @@ namespace Project5LMS.Repositories
                 ReturnDate = row["ReturnDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["ReturnDate"]) : null,
                 Status = row["Status"]?.ToString() ?? string.Empty,
                 Fine = row["Fine"] != DBNull.Value ? (decimal?)Convert.ToDecimal(row["Fine"]) : null,
-                TransactionType = row["TransactionType"]?.ToString() ?? string.Empty
+                TransactionType = row["TransactionType"]?.ToString() ?? string.Empty,
+                RenewalCount = row.Table.Columns.Contains("RenewalCount") && row["RenewalCount"] != DBNull.Value 
+                    ? Convert.ToInt32(row["RenewalCount"]) : 0
             };
         }
 

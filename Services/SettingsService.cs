@@ -15,11 +15,6 @@ namespace Project5LMS.Services
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public SettingsService()
-        {
-            _dbContext = new DatabaseContext();
-        }
-
         public string GetSetting(string key, string defaultValue = "")
         {
             try

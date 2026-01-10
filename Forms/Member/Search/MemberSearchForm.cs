@@ -280,36 +280,27 @@ namespace Project5LMS.Forms.Member.Search
                         }
                     }
 
-                    string checkReservationQuery = @"SELECT COUNT(*) FROM Reservations 
-                                                    WHERE MemberID = @MemberID 
-                                                    AND BookID = @BookID 
-                                                    AND (Status = 'Pending' OR Status = 'Active' OR Status = 'Ready')";
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkReservationQuery, conn))
+                    // Use ReservationService
+                    var reservationService = ServiceFactory.CreateReservationService();
+                    
+                    if (!reservationService.CanReserve(memberID, bookID))
                     {
-                        checkCmd.Parameters.AddWithValue("@MemberID", memberID);
-                        checkCmd.Parameters.AddWithValue("@BookID", bookID);
-                        int existingReservations = Convert.ToInt32(checkCmd.ExecuteScalar());
-                        if (existingReservations > 0)
-                        {
-                            MessageBox.Show("You have already reserved this book.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
+                        MessageBox.Show("You cannot reserve this book. Please check your reservation limits or book availability.", 
+                            "Reservation Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
 
-                    string insertQuery = @"INSERT INTO Reservations (MemberID, BookID, ReservationDate, PickupDate, ExpiryDate, Status)
-                                          VALUES (@MemberID, @BookID, @ReservationDate, @PickupDate, @ExpiryDate, 'Pending')";
-                    using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
+                    if (reservationService.CreateReservation(memberID, bookID))
                     {
-                        DateTime now = DateTime.Now;
-                        cmd.Parameters.AddWithValue("@MemberID", memberID);
-                        cmd.Parameters.AddWithValue("@BookID", bookID);
-                        cmd.Parameters.AddWithValue("@ReservationDate", now);
-                        cmd.Parameters.AddWithValue("@PickupDate", now.AddDays(7));
-                        cmd.Parameters.AddWithValue("@ExpiryDate", now.AddDays(7));
-                        cmd.ExecuteNonQuery();
+                        MessageBox.Show($"Book '{bookTitle}' reserved successfully! You can pick it up within 7 days.", 
+                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-
-                    MessageBox.Show($"Book '{bookTitle}' reserved successfully! You can pick it up within 7 days.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                    {
+                        MessageBox.Show("Failed to create reservation. The book may already be reserved by you.", 
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     PerformSearch();
                 }

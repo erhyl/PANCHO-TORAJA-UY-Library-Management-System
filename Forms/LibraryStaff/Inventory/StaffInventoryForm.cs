@@ -478,21 +478,29 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
 
             try
             {
-
+                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
-                if (bookIdText.StartsWith("B"))
+                var bookService = ServiceFactory.CreateBookService();
+                var book = bookService.GetBookByAccessionNumber(bookIdText);
+                if (book != null)
                 {
-                    string idPart = bookIdText.Replace("B", "");
-                    int.TryParse(idPart, out bookId);
+                    bookId = book.BookID;
                 }
                 else
                 {
-                    int.TryParse(bookIdText, out bookId);
+                    // Try parsing as book ID
+                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                    if (bookId > 0)
+                    {
+                        var bookById = bookService.GetBook(bookId);
+                        if (bookById == null)
+                            bookId = 0;
+                    }
                 }
 
                 if (bookId == 0)
                 {
-                    MessageBox.Show("Invalid Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Invalid Book ID or Accession Number format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -621,16 +629,24 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
 
             try
             {
-
+                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
-                if (bookIdText.StartsWith("B"))
+                var bookService = ServiceFactory.CreateBookService();
+                var book = bookService.GetBookByAccessionNumber(bookIdText);
+                if (book != null)
                 {
-                    string idPart = bookIdText.Replace("B", "");
-                    int.TryParse(idPart, out bookId);
+                    bookId = book.BookID;
                 }
                 else
                 {
-                    int.TryParse(bookIdText, out bookId);
+                    // Try parsing as book ID
+                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                    if (bookId > 0)
+                    {
+                        var bookById = bookService.GetBook(bookId);
+                        if (bookById == null)
+                            bookId = 0;
+                    }
                 }
 
                 if (bookId == 0)
@@ -757,16 +773,24 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
 
             try
             {
-
+                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
-                if (bookIdText.StartsWith("B"))
+                var bookService = ServiceFactory.CreateBookService();
+                var book = bookService.GetBookByAccessionNumber(bookIdText);
+                if (book != null)
                 {
-                    string idPart = bookIdText.Replace("B", "");
-                    int.TryParse(idPart, out bookId);
+                    bookId = book.BookID;
                 }
                 else
                 {
-                    int.TryParse(bookIdText, out bookId);
+                    // Try parsing as book ID
+                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                    if (bookId > 0)
+                    {
+                        var bookById = bookService.GetBook(bookId);
+                        if (bookById == null)
+                            bookId = 0;
+                    }
                 }
 
                 if (bookId == 0)

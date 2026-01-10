@@ -8,6 +8,7 @@ using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
+using Project5LMS.Forms.Admin.Search;
 
 namespace Project5LMS.Forms.LibraryStaff.Circulation
 {
@@ -98,7 +99,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
 
         private void txtCheckOutMemberID_Enter(object sender, EventArgs e)
         {
-            if (txtCheckOutMemberID.Text == "Enter member ID (e.g., M1001)")
+            if (txtCheckOutMemberID.Text == "Enter member ID (e.g., MEM-000001)")
             {
                 txtCheckOutMemberID.Text = "";
                 txtCheckOutMemberID.ForeColor = Color.Black;
@@ -109,7 +110,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             if (string.IsNullOrWhiteSpace(txtCheckOutMemberID.Text))
             {
-                txtCheckOutMemberID.Text = "Enter member ID (e.g., M1001)";
+                txtCheckOutMemberID.Text = "Enter member ID (e.g., MEM-000001)";
                 txtCheckOutMemberID.ForeColor = Color.Gray;
             }
         }
@@ -125,7 +126,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
 
         private void txtCheckOutBookID_Enter(object sender, EventArgs e)
         {
-            if (txtCheckOutBookID.Text == "Enter book ID (e.g., B1001)")
+            if (txtCheckOutBookID.Text == "Enter book ID or accession (e.g., ACC-000001)")
             {
                 txtCheckOutBookID.Text = "";
                 txtCheckOutBookID.ForeColor = Color.Black;
@@ -136,7 +137,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         {
             if (string.IsNullOrWhiteSpace(txtCheckOutBookID.Text))
             {
-                txtCheckOutBookID.Text = "Enter book ID (e.g., B1001)";
+                txtCheckOutBookID.Text = "Enter book ID or accession (e.g., ACC-000001)";
                 txtCheckOutBookID.ForeColor = Color.Gray;
             }
         }
@@ -199,16 +200,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             try
             {
 
-                int memberId = 0;
-                if (memberIdText.StartsWith("M") || memberIdText.StartsWith("MEM-"))
-                {
-                    string idPart = memberIdText.Replace("M", "").Replace("MEM-", "");
-                    int.TryParse(idPart, out memberId);
-                }
-                else
-                {
-                    int.TryParse(memberIdText, out memberId);
-                }
+                int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdText);
 
                 if (memberId == 0)
                 {
@@ -216,40 +208,29 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     return;
                 }
 
+                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
-                if (bookIdText.StartsWith("B"))
+                var book = _bookService.GetBookByAccessionNumber(bookIdText);
+                if (book != null)
                 {
-                    string idPart = bookIdText.Replace("B", "");
-                    int.TryParse(idPart, out bookId);
+                    bookId = book.BookID;
                 }
                 else
                 {
-                    int.TryParse(bookIdText, out bookId);
+                    // Try parsing as book ID
+                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                    if (bookId > 0)
+                    {
+                        var bookById = _bookService.GetBook(bookId);
+                        if (bookById == null)
+                            bookId = 0;
+                    }
                 }
 
                 if (bookId == 0)
                 {
-
-                    var book = _bookService.GetBookByAccessionNumber(bookIdText);
-                    if (book != null)
-                    {
-                        bookId = book.BookID;
-                    }
-                    else
-                    {
-                        string cleanAccession = bookIdText.Replace("ACC-", "").Trim();
-                        if (int.TryParse(cleanAccession, out int parsedId))
-                        {
-                            var bookById = _bookService.GetBook(parsedId);
-                            if (bookById != null)
-                                bookId = parsedId;
-                        }
-                    }
-                    if (bookId == 0)
-                    {
-                        MessageBox.Show("Book not found with the provided ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    MessageBox.Show("Book not found with the provided ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 if (!_membersService.MemberExists(memberId))
@@ -270,9 +251,37 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     return;
                 }
 
-                if (!_circulationService.BorrowBook(memberId, bookId, 14))
+                // Show transaction status
+                using (var statusForm = new TransactionStatusForm("Book Borrow"))
                 {
-                    throw new InvalidOperationException("Failed to borrow book. Please try again.");
+                    statusForm.Show();
+                    Application.DoEvents();
+
+                    try
+                    {
+                        statusForm.UpdateStatus("Validating member eligibility...");
+                        if (!_circulationService.CanBorrow(memberId))
+                        {
+                            statusForm.Close();
+                            throw new InvalidOperationException("Member is not eligible to borrow books.");
+                        }
+
+                        statusForm.UpdateStatus("Processing book checkout...");
+                        if (!_circulationService.BorrowBook(memberId, bookId, 14))
+                        {
+                            statusForm.Close();
+                            throw new InvalidOperationException("Failed to borrow book. Please try again.");
+                        }
+
+                        statusForm.UpdateStatus("Transaction completed successfully!");
+                        System.Threading.Thread.Sleep(500);
+                        statusForm.Close();
+                    }
+                    catch
+                    {
+                        statusForm.Close();
+                        throw;
+                    }
                 }
 
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -304,40 +313,29 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             try
             {
 
+                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
-                if (bookIdText.StartsWith("B"))
+                var book = _bookService.GetBookByAccessionNumber(bookIdText);
+                if (book != null)
                 {
-                    string idPart = bookIdText.Replace("B", "");
-                    int.TryParse(idPart, out bookId);
+                    bookId = book.BookID;
                 }
                 else
                 {
-                    int.TryParse(bookIdText, out bookId);
+                    // Try parsing as book ID
+                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                    if (bookId > 0)
+                    {
+                        var bookById = _bookService.GetBook(bookId);
+                        if (bookById == null)
+                            bookId = 0;
+                    }
                 }
 
                 if (bookId == 0)
                 {
-
-                    var book = _bookService.GetBookByAccessionNumber(bookIdText);
-                    if (book != null)
-                    {
-                        bookId = book.BookID;
-                    }
-                    else
-                    {
-                        string cleanAccession = bookIdText.Replace("ACC-", "").Trim();
-                        if (int.TryParse(cleanAccession, out int parsedId))
-                        {
-                            var bookById = _bookService.GetBook(parsedId);
-                            if (bookById != null)
-                                bookId = parsedId;
-                        }
-                    }
-                    if (bookId == 0)
-                    {
-                        MessageBox.Show("Book not found with the provided ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    MessageBox.Show("Book not found with the provided ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 var activeTransaction = _circulationService.GetActiveTransactionByBook(bookId);
@@ -350,16 +348,44 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 int transactionId = activeTransaction.TransactionID;
                 decimal fine = _finesService.CalculateFine(transactionId);
 
-                if (_circulationService.ReturnBook(transactionId))
+                // Show transaction status
+                using (var statusForm = new TransactionStatusForm("Book Return"))
                 {
-                    if (fine > 0)
+                    statusForm.Show();
+                    Application.DoEvents();
+
+                    try
                     {
-                        _finesService.UpdateTransactionFine(transactionId, fine);
+                        statusForm.UpdateStatus("Calculating fine...");
+                        if (fine > 0)
+                        {
+                            statusForm.UpdateStatus($"Fine calculated: ${fine:F2}");
+                        }
+
+                        statusForm.UpdateStatus("Processing book return...");
+                        if (_circulationService.ReturnBook(transactionId))
+                        {
+                            if (fine > 0)
+                            {
+                                statusForm.UpdateStatus("Updating fine record...");
+                                _finesService.UpdateTransactionFine(transactionId, fine);
+                            }
+
+                            statusForm.UpdateStatus("Transaction completed successfully!");
+                            System.Threading.Thread.Sleep(500);
+                            statusForm.Close();
+                        }
+                        else
+                        {
+                            statusForm.Close();
+                            throw new InvalidOperationException("Failed to return book. Please try again.");
+                        }
                     }
-                }
-                else
-                {
-                    throw new InvalidOperationException("Failed to return book. Please try again.");
+                    catch
+                    {
+                        statusForm.Close();
+                        throw;
+                    }
                 }
 
                 string message = fine > 0 
@@ -408,13 +434,35 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     string bookIdentifier = hasBarcode ? "b.Barcode" : "b.AccessionNo";
                     string bookIdentifierAlias = hasBarcode ? "Barcode" : "AccessionNo";
                     
+                    // Check if BookCopies table exists
+                    bool hasBookCopies = false;
+                    try
+                    {
+                        string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                                  WHERE TABLE_SCHEMA = DATABASE() 
+                                                  AND TABLE_NAME = 'BookCopies'";
+                        using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
+                        {
+                            hasBookCopies = Convert.ToInt32(checkCmd.ExecuteScalar()) > 0;
+                        }
+                    }
+                    catch { hasBookCopies = false; }
+
+                    string copyJoin = hasBookCopies 
+                        ? "LEFT JOIN BookCopies bc ON b.BookID = bc.BookID AND bc.CopyStatus = 'Borrowed'" 
+                        : "";
+                    string copySelect = hasBookCopies 
+                        ? ", bc.AccessionNumber as CopyAccessionNumber, bc.Barcode as CopyBarcode, bc.CopyStatus as CopyStatus" 
+                        : "";
+
                     string query = $@"SELECT t.TransactionID, t.MemberID, t.BookID, t.BorrowDate, t.DueDate, t.ReturnDate, 
-                                    t.Status, t.TransactionType, t.Fine,
-                                    b.Title as BookTitle, {bookIdentifier} as {bookIdentifierAlias},
+                                    t.Status, t.TransactionType, t.Fine, t.RenewalCount,
+                                    b.Title as BookTitle, {bookIdentifier} as {bookIdentifierAlias}{copySelect},
                                     m.FirstName, m.LastName, m.MemberID as MemberIDNum
                                     FROM Transactions t
                                     INNER JOIN Books b ON t.BookID = b.BookID
-                                    INNER JOIN Members m ON t.MemberID = m.MemberID";
+                                    INNER JOIN Members m ON t.MemberID = m.MemberID
+                                    {copyJoin}";
 
                     if (currentFilter == "Checkouts")
                     {
@@ -457,6 +505,18 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             DateTime? returnDate = reader["ReturnDate"] != DBNull.Value ? (DateTime?)reader.GetDateTime("ReturnDate") : null;
             string status = reader["Status"]?.ToString() ?? "";
             string transactionType = reader["TransactionType"]?.ToString() ?? "";
+            
+            // Helper method to check if column exists and get value
+            int renewalCount = HasColumn(reader, "RenewalCount") && reader["RenewalCount"] != DBNull.Value 
+                ? Convert.ToInt32(reader["RenewalCount"]) : 0;
+            
+            // Get copy information if available
+            string copyAccession = HasColumn(reader, "CopyAccessionNumber") && reader["CopyAccessionNumber"] != DBNull.Value
+                ? reader["CopyAccessionNumber"].ToString() : "";
+            string copyBarcode = HasColumn(reader, "CopyBarcode") && reader["CopyBarcode"] != DBNull.Value
+                ? reader["CopyBarcode"].ToString() : "";
+            string copyStatus = HasColumn(reader, "CopyStatus") && reader["CopyStatus"] != DBNull.Value
+                ? reader["CopyStatus"].ToString() : "";
 
             Panel card = new Panel
             {
@@ -485,6 +545,21 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             };
             card.Controls.Add(lblBookTitle);
 
+            // Display copy information if available
+            if (!string.IsNullOrEmpty(copyAccession) || !string.IsNullOrEmpty(copyBarcode))
+            {
+                string copyInfo = !string.IsNullOrEmpty(copyAccession) ? copyAccession : copyBarcode;
+                Label lblCopyInfo = new Label
+                {
+                    Text = $"Copy: {copyInfo}",
+                    Font = new Font("Segoe UI", 9F),
+                    ForeColor = Color.FromArgb(128, 128, 128),
+                    AutoSize = true,
+                    Location = new Point(90, 55)
+                };
+                card.Controls.Add(lblCopyInfo);
+            }
+
             if (status == "Borrowed" || status == "Active")
             {
                 Label lblStatus = new Label
@@ -498,6 +573,20 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     Location = new Point(90, 40)
                 };
                 card.Controls.Add(lblStatus);
+
+                // Display renewal count
+                if (renewalCount > 0)
+                {
+                    Label lblRenewalCount = new Label
+                    {
+                        Text = $"Renewed: {renewalCount}x",
+                        Font = new Font("Segoe UI", 9F),
+                        ForeColor = Color.FromArgb(128, 128, 128),
+                        AutoSize = true,
+                        Location = new Point(200, 40)
+                    };
+                    card.Controls.Add(lblRenewalCount);
+                }
             }
             else if (returnDate.HasValue && dueDate.HasValue && returnDate.Value > dueDate.Value)
             {
@@ -558,7 +647,42 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             };
             card.Controls.Add(lblCheckmark);
 
+            // Add Renew button for borrowed books
+            if (status == "Borrowed" || status == "Active")
+            {
+                bool canRenew = _circulationService.CanRenew(transactionId);
+                
+                Button btnRenew = new Button
+                {
+                    Text = "Renew",
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    BackColor = canRenew ? Color.FromArgb(13, 110, 253) : Color.FromArgb(200, 200, 200),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(80, 30),
+                    Location = new Point(1350, 25),
+                    Enabled = canRenew,
+                    Cursor = Cursors.Hand
+                };
+                btnRenew.FlatAppearance.BorderSize = 0;
+                
+                btnRenew.Click += (s, e) => RenewTransaction(transactionId);
+                card.Controls.Add(btnRenew);
+            }
+
             return card;
+        }
+
+        private bool HasColumn(MySqlDataReader reader, string columnName)
+        {
+            try
+            {
+                return reader.GetOrdinal(columnName) >= 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void DrawTransactionIcon(Graphics g, Panel panel, bool isReturn)
@@ -619,11 +743,85 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             }
         }
 
+        private void RenewTransaction(int transactionId)
+        {
+            try
+            {
+                // Check if can renew
+                if (!_circulationService.CanRenew(transactionId))
+                {
+                    MessageBox.Show("This book cannot be renewed. Maximum renewal limit reached or member is not eligible.", 
+                        "Renewal Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Perform renewal
+                // Show transaction status
+                bool success = false;
+                using (var statusForm = new TransactionStatusForm("Book Renewal"))
+                {
+                    statusForm.Show();
+                    Application.DoEvents();
+
+                    try
+                    {
+                        statusForm.UpdateStatus("Processing renewal...");
+                        success = _circulationService.RenewBook(transactionId);
+                        
+                        if (success)
+                        {
+                            statusForm.UpdateStatus("Book renewed successfully!");
+                            System.Threading.Thread.Sleep(500);
+                            statusForm.Close();
+                            MessageBox.Show("Book renewed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadTransactions(); // Refresh the list
+                        }
+                        else
+                        {
+                            statusForm.Close();
+                            MessageBox.Show("Failed to renew book. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch
+                    {
+                        statusForm.Close();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error renewing book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private int GetBookIdFromAccession(string accessionNo)
         {
             try
             {
-                string cleanAccession = accessionNo.Replace("ACC-", "").Trim();
+                // Try by accession number first (preferred)
+                var book = _bookService.GetBookByAccessionNumber(accessionNo);
+                if (book != null)
+                    return book.BookID;
+
+                // Try parsing accession number
+                int parsedAccession = Project5LMS.Helpers.IDFormatter.ParseAccessionNumber(accessionNo);
+                if (parsedAccession > 0)
+                {
+                    var bookByAcc = _bookService.GetBookByAccessionNumber(Project5LMS.Helpers.IDFormatter.FormatAccessionNumber(parsedAccession.ToString()));
+                    if (bookByAcc != null)
+                        return bookByAcc.BookID;
+                }
+
+                // Try as book ID
+                int bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(accessionNo);
+                if (bookId > 0)
+                {
+                    var bookById = _bookService.GetBook(bookId);
+                    return bookById != null ? bookId : 0;
+                }
+
+                // Fallback: direct database query
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
@@ -634,13 +832,14 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Accession", accessionNo);
-                        if (int.TryParse(cleanAccession, out int bookId))
+                        int parsedBookId = Project5LMS.Helpers.IDFormatter.ParseBookID(accessionNo);
+                        if (parsedBookId > 0)
                         {
-                            cmd.Parameters.AddWithValue("@BookID", bookId);
+                            cmd.Parameters.AddWithValue("@BookID", parsedBookId);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@BookID", 0);
+                            cmd.Parameters.AddWithValue("@BookID", DBNull.Value);
                         }
                         object result = cmd.ExecuteScalar();
                         return result != null ? Convert.ToInt32(result) : 0;

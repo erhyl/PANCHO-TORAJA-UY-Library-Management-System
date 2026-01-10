@@ -21,7 +21,7 @@ namespace Project5LMS.Controllers
                                 MemberID,
                                 FirstName,
                                 LastName,
-                                MemberType,
+                                COALESCE(Type, MemberType) as MemberType,
                                 Email,
                                 RegistrationDate,
                                 ExpirationDate,
@@ -42,8 +42,9 @@ namespace Project5LMS.Controllers
         public bool AddMember(string firstName, string lastName, string email, string type,
                               DateTime regDate, DateTime expDate, string status)
         {
+            // Try Type first, fallback to MemberType if Type doesn't exist
             string query = @"INSERT INTO Members
-                            (FirstName, LastName, Email, MemberType, RegistrationDate, ExpirationDate, Status)
+                            (FirstName, LastName, Email, Type, RegistrationDate, ExpirationDate, Status)
                              VALUES
                             (@FirstName, @LastName, @Email, @Type, @RegDate, @ExpDate, @Status)";
 
@@ -69,7 +70,7 @@ namespace Project5LMS.Controllers
                         MemberID,
                         FirstName,
                         LastName,
-                        MemberType,
+                        COALESCE(Type, MemberType) as MemberType,
                         Email,
                         RegistrationDate,
                         ExpirationDate,
@@ -77,7 +78,7 @@ namespace Project5LMS.Controllers
                      FROM Members
                      WHERE
                         (FirstName LIKE @Keyword OR LastName LIKE @Keyword OR Email LIKE @Keyword)
-                        AND (@Type = 'All' OR MemberType = @Type)
+                        AND (@Type = 'All' OR COALESCE(Type, MemberType) = @Type)
                         AND (@Status = 'All' OR Status = @Status)
                      ORDER BY LastName, FirstName";
 
@@ -99,7 +100,7 @@ namespace Project5LMS.Controllers
                                  DateTime regDate, DateTime expDate, string status)
         {
             string query = @"UPDATE Members
-                             SET FirstName=@FirstName, LastName=@LastName, Email=@Email, MemberType=@Type,
+                             SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Type=@Type,
                                  RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
                              WHERE MemberID=@ID";
 

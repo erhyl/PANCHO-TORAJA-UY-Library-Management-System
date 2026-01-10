@@ -12,9 +12,9 @@ namespace Project5LMS.Services
     {
         private readonly DatabaseContext _db;
 
-        public UserService(DatabaseContext dbContext = null)
+        public UserService(DatabaseContext dbContext)
         {
-            _db = dbContext ?? new DatabaseContext();
+            _db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         public User Login(string email, string password)

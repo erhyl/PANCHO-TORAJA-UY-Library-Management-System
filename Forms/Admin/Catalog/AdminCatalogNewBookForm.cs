@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
+using Project5LMS.Models;
 
 namespace Project5LMS.Forms.Admin.Catalog
 {
@@ -20,12 +21,15 @@ namespace Project5LMS.Forms.Admin.Catalog
             _dbContext = ServiceFactory.GetDbContext();
         }
 
+        // Resource type is determined dynamically from cmbResourceType selection
+
         private void AdminCatalogNewBookForm_Load(object sender, EventArgs e)
         {
             try
             {
                 LoadCategories();
                 LoadLanguages();
+                LoadResourceTypes();
                 GenerateAccessionNumber();
                 radioCirculationBook.Checked = true;
             }
@@ -33,6 +37,12 @@ namespace Project5LMS.Forms.Admin.Catalog
             {
                 MessageBox.Show($"Error loading form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LoadResourceTypes()
+        {
+            // Resource type selection will be handled via a combo box or radio buttons
+            // For now, default to Book. Specialized forms can be opened based on selection.
         }
 
         private void LoadCategories()
@@ -374,7 +384,13 @@ namespace Project5LMS.Forms.Admin.Catalog
                         cmd.Parameters.AddWithValue("@Copies", copies);
                         cmd.Parameters.AddWithValue("@Available", copies);
                         cmd.Parameters.AddWithValue("@BookType", bookType);
-                        cmd.Parameters.AddWithValue("@Barcode", txtAccessionNumber.Text.Trim());
+                        
+                        // Auto-generate barcode from accession number or ISBN
+                        string barcode = string.IsNullOrWhiteSpace(txtAccessionNumber.Text) 
+                            ? BarcodeGenerator.GenerateFromISBN(txtISBN.Text.Trim())
+                            : BarcodeGenerator.GenerateFromAccession(txtAccessionNumber.Text.Trim());
+                        
+                        cmd.Parameters.AddWithValue("@Barcode", barcode);
                         cmd.Parameters.AddWithValue("@CallNumber", string.IsNullOrWhiteSpace(txtCallNumber.Text) ? DBNull.Value : (object)txtCallNumber.Text.Trim());
 
                         cmd.ExecuteNonQuery();
@@ -391,6 +407,140 @@ namespace Project5LMS.Forms.Admin.Catalog
             {
                 throw new Exception($"Failed to save book: {ex.Message}", ex);
             }
+        }
+
+        /// <summary>
+        /// Opens specialized form for resource type and saves the resource
+        /// </summary>
+        public void OpenResourceTypeForm(string resourceType)
+        {
+            try
+            {
+                if (!ValidateInputs())
+                {
+                    return;
+                }
+
+                // Save base book first to get BookID
+                SaveBook();
+                
+                // Get the saved book ID
+                int bookId = 0;
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT MAX(BookID) as LastID FROM Books";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        object maxIdResult = cmd.ExecuteScalar();
+                        if (maxIdResult != DBNull.Value && maxIdResult != null)
+                        {
+                            bookId = Convert.ToInt32(maxIdResult);
+                        }
+                    }
+                }
+
+                if (bookId == 0)
+                {
+                    MessageBox.Show("Error: Could not retrieve book ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Create base book object
+                Book baseBook = new Book
+                {
+                    BookID = bookId,
+                    Title = txtTitle.Text.Trim(),
+                    Author = txtAuthors.Text.Trim(),
+                    ISBN = txtISBN.Text.Trim(),
+                    Publisher = txtPublisher.Text.Trim(),
+                    PublicationYear = int.Parse(txtPublicationYear.Text),
+                    Category = cmbCategory.SelectedItem?.ToString(),
+                    Language = cmbLanguage.SelectedItem?.ToString()
+                };
+
+                // Open appropriate specialized form
+                DialogResult dialogResult = DialogResult.Cancel;
+                switch (resourceType.ToLower())
+                {
+                    case "periodical":
+                        using (var form = new PeriodicalForm(baseBook))
+                        {
+                            dialogResult = form.ShowDialog();
+                            if (dialogResult == DialogResult.OK)
+                            {
+                                var periodical = form.GetPeriodical(baseBook);
+                                SavePeriodical(periodical);
+                            }
+                        }
+                        break;
+                    case "thesis":
+                        using (var form = new ThesisForm(baseBook))
+                        {
+                            dialogResult = form.ShowDialog();
+                            if (dialogResult == DialogResult.OK)
+                            {
+                                var thesis = form.GetThesis(baseBook);
+                                SaveThesis(thesis);
+                            }
+                        }
+                        break;
+                    case "audiovisual":
+                        using (var form = new AudioVisualForm(baseBook))
+                        {
+                            dialogResult = form.ShowDialog();
+                            if (dialogResult == DialogResult.OK)
+                            {
+                                var av = form.GetAudioVisual(baseBook);
+                                SaveAudioVisual(av);
+                            }
+                        }
+                        break;
+                    case "ebook":
+                        using (var form = new EBookForm(baseBook))
+                        {
+                            dialogResult = form.ShowDialog();
+                            if (dialogResult == DialogResult.OK)
+                            {
+                                var ebook = form.GetEBook(baseBook);
+                                SaveEBook(ebook);
+                            }
+                        }
+                        break;
+                }
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    MessageBox.Show($"{resourceType} added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adding {resourceType}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SavePeriodical(Periodical periodical)
+        {
+            // Additional periodical-specific data can be saved to a separate table or added to Books table
+            // For now, the base book is already saved
+        }
+
+        private void SaveThesis(Thesis thesis)
+        {
+            // Additional thesis-specific data can be saved
+        }
+
+        private void SaveAudioVisual(AudioVisual av)
+        {
+            // Additional audio-visual-specific data can be saved
+        }
+
+        private void SaveEBook(EBook ebook)
+        {
+            // Additional ebook-specific data can be saved
         }
     }
 }

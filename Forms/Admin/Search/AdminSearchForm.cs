@@ -5,11 +5,13 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using System.ComponentModel;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
+using Project5LMS.Models;
 using Project5LMS.Forms.Admin.Catalog;
 using Project5LMS.Forms.Admin.Members;
 
@@ -345,14 +347,123 @@ namespace Project5LMS.Forms.Admin.Search
             LoadFormInParentPanel(new AdminCatalogForm());
         }
 
+        private void lblAuthorLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Show author selection dialog
+            try
+            {
+                var authors = ServiceFactory.CreateBookService().GetAllAuthors().ToList();
+                if (authors.Count == 0)
+                {
+                    MessageBox.Show("No authors found in the catalog.", "No Authors", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                using (var authorDialog = new Form())
+                {
+                    authorDialog.Text = "Select Author";
+                    authorDialog.Size = new Size(400, 500);
+                    authorDialog.StartPosition = FormStartPosition.CenterParent;
+                    authorDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    authorDialog.MaximizeBox = false;
+                    authorDialog.MinimizeBox = false;
+
+                    var listBox = new ListBox
+                    {
+                        Dock = DockStyle.Fill,
+                        Font = new Font("Segoe UI", 10F)
+                    };
+                    listBox.Items.AddRange(authors.ToArray());
+
+                    var btnSelect = new Button
+                    {
+                        Text = "Browse",
+                        Dock = DockStyle.Bottom,
+                        Height = 40,
+                        DialogResult = DialogResult.OK
+                    };
+
+                    authorDialog.Controls.Add(listBox);
+                    authorDialog.Controls.Add(btnSelect);
+
+                    if (authorDialog.ShowDialog() == DialogResult.OK && listBox.SelectedItem != null)
+                    {
+                        string selectedAuthor = listBox.SelectedItem.ToString();
+                        var books = ServiceFactory.CreateBookService().GetBooksByAuthor(selectedAuthor);
+                        ShowBrowseResults($"Books by {selectedAuthor}", books);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading authors: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void lblNewLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadFormInParentPanel(new AdminCatalogForm());
+            // Show filter dialog for new arrivals
+            using (var filterForm = new BrowseFiltersForm("New Arrivals"))
+            {
+                if (filterForm.ShowDialog() == DialogResult.OK)
+                {
+                    var newArrivals = ServiceFactory.CreateBookService().GetNewArrivals(
+                        50, 
+                        filterForm.StartDate, 
+                        filterForm.EndDate);
+                    ShowBrowseResults("New Arrivals", newArrivals);
+                }
+            }
         }
 
         private void lblPopularLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadFormInParentPanel(new AdminCatalogForm());
+            // Show filter dialog for popular books
+            using (var filterForm = new BrowseFiltersForm("Popular Books"))
+            {
+                if (filterForm.ShowDialog() == DialogResult.OK)
+                {
+                    var popularBooks = ServiceFactory.CreateBookService().GetPopularBooks(
+                        50, 
+                        filterForm.UseWeightedPopularity);
+                    ShowBrowseResults("Popular Books", popularBooks);
+                }
+            }
+        }
+
+        private void ShowBrowseResults(string title, IEnumerable<Book> books)
+        {
+            try
+            {
+                searchResults = new DataTable();
+                searchResults.Columns.Add("Type", typeof(string));
+                searchResults.Columns.Add("ID", typeof(int));
+                searchResults.Columns.Add("Title", typeof(string));
+                searchResults.Columns.Add("Author", typeof(string));
+                searchResults.Columns.Add("ISBN", typeof(string));
+                searchResults.Columns.Add("Category", typeof(string));
+                searchResults.Columns.Add("Status", typeof(string));
+
+                foreach (var book in books)
+                {
+                    DataRow row = searchResults.NewRow();
+                    row["Type"] = "Book";
+                    row["ID"] = book.BookID;
+                    row["Title"] = book.Title;
+                    row["Author"] = book.Author;
+                    row["ISBN"] = book.ISBN;
+                    row["Category"] = book.Category;
+                    row["Status"] = book.Status;
+                    searchResults.Rows.Add(row);
+                }
+
+                DisplaySearchResults();
+                txtSearch.Text = title;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading {title}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadFormInParentPanel(Form formToLoad)

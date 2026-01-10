@@ -168,7 +168,7 @@ namespace Project5LMS.Forms.Admin.Members
                 string memberIdStr = e.Value.ToString();
                 if (int.TryParse(memberIdStr, out int memberId))
                 {
-                    e.Value = $"MEM-{memberIdStr.PadLeft(3, '0')}";
+                    e.Value = Project5LMS.Helpers.IDFormatter.FormatMemberID(memberId);
                 }
                 e.FormattingApplied = true;
             }
@@ -549,13 +549,13 @@ namespace Project5LMS.Forms.Admin.Members
                     }
 
                     string memberIdStr = row.Cells["MemberID"].Value.ToString();
-                    if (string.IsNullOrEmpty(memberIdStr) || !memberIdStr.Contains("MEM-"))
+                    int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdStr);
+                    
+                    if (memberId == 0)
                     {
                         MessageBox.Show("Invalid member ID format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
-                    int memberId = Convert.ToInt32(memberIdStr.Replace("MEM-", ""));
 
                     int relativeX = clickPoint.X - startX;
 

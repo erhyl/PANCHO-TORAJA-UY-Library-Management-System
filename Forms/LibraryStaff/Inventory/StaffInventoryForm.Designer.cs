@@ -124,8 +124,6 @@
             // 
             // dataGridViewInventory
             // 
-            this.dataGridViewInventory.AllowUserToAddRows = false;
-            this.dataGridViewInventory.AllowUserToDeleteRows = false;
             this.dataGridViewInventory.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewInventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -168,7 +166,6 @@
             this.dataGridViewInventory.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewInventory.MultiSelect = false;
             this.dataGridViewInventory.Name = "dataGridViewInventory";
-            this.dataGridViewInventory.ReadOnly = true;
             this.dataGridViewInventory.RowHeadersVisible = false;
             this.dataGridViewInventory.RowHeadersWidth = 51;
             this.dataGridViewInventory.RowTemplate.Height = 60;
@@ -181,26 +178,24 @@
             this.colBookID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colBookID.DataPropertyName = "BookID";
             this.colBookID.HeaderText = "Book ID";
+            this.colBookID.MinimumWidth = 6;
             this.colBookID.Name = "colBookID";
-            this.colBookID.ReadOnly = true;
-            this.colBookID.Width = 100;
             // 
             // colTitle
             // 
             this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTitle.DataPropertyName = "Title";
             this.colTitle.HeaderText = "Title";
-            this.colTitle.Name = "colTitle";
-            this.colTitle.ReadOnly = true;
             this.colTitle.MinimumWidth = 250;
+            this.colTitle.Name = "colTitle";
             // 
             // colCategory
             // 
             this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCategory.DataPropertyName = "Category";
             this.colCategory.HeaderText = "Category";
+            this.colCategory.MinimumWidth = 6;
             this.colCategory.Name = "colCategory";
-            this.colCategory.ReadOnly = true;
             this.colCategory.Width = 120;
             // 
             // colLocation
@@ -208,17 +203,16 @@
             this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLocation.DataPropertyName = "Location";
             this.colLocation.HeaderText = "Location";
+            this.colLocation.MinimumWidth = 6;
             this.colLocation.Name = "colLocation";
-            this.colLocation.ReadOnly = true;
-            this.colLocation.Width = 100;
             // 
             // colTotal
             // 
             this.colTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colTotal.DataPropertyName = "Total";
             this.colTotal.HeaderText = "Total";
+            this.colTotal.MinimumWidth = 6;
             this.colTotal.Name = "colTotal";
-            this.colTotal.ReadOnly = true;
             this.colTotal.Width = 80;
             // 
             // colAvailable
@@ -226,17 +220,16 @@
             this.colAvailable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colAvailable.DataPropertyName = "Available";
             this.colAvailable.HeaderText = "Available";
+            this.colAvailable.MinimumWidth = 6;
             this.colAvailable.Name = "colAvailable";
-            this.colAvailable.ReadOnly = true;
-            this.colAvailable.Width = 100;
             // 
             // colCheckedOut
             // 
             this.colCheckedOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCheckedOut.DataPropertyName = "CheckedOut";
             this.colCheckedOut.HeaderText = "Checked Out";
+            this.colCheckedOut.MinimumWidth = 6;
             this.colCheckedOut.Name = "colCheckedOut";
-            this.colCheckedOut.ReadOnly = true;
             this.colCheckedOut.Width = 120;
             // 
             // colDamaged
@@ -244,17 +237,16 @@
             this.colDamaged.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colDamaged.DataPropertyName = "Damaged";
             this.colDamaged.HeaderText = "Damaged";
+            this.colDamaged.MinimumWidth = 6;
             this.colDamaged.Name = "colDamaged";
-            this.colDamaged.ReadOnly = true;
-            this.colDamaged.Width = 100;
             // 
             // colLost
             // 
             this.colLost.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLost.DataPropertyName = "Lost";
             this.colLost.HeaderText = "Lost";
+            this.colLost.MinimumWidth = 6;
             this.colLost.Name = "colLost";
-            this.colLost.ReadOnly = true;
             this.colLost.Width = 80;
             // 
             // colLastUpdated
@@ -262,8 +254,8 @@
             this.colLastUpdated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLastUpdated.DataPropertyName = "LastUpdated";
             this.colLastUpdated.HeaderText = "Last Updated";
+            this.colLastUpdated.MinimumWidth = 6;
             this.colLastUpdated.Name = "colLastUpdated";
-            this.colLastUpdated.ReadOnly = true;
             this.colLastUpdated.Width = 130;
             // 
             // colStatus
@@ -271,8 +263,8 @@
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "Status";
+            this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
             this.colStatus.Width = 120;
             // 
             // panelFilter

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Project5LMS.Models;
@@ -14,10 +15,6 @@ namespace Project5LMS.Services
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository ?? throw new System.ArgumentNullException(nameof(bookRepository));
-        }
-
-        public BookService(DatabaseContext dbContext) : this(new BookRepository(dbContext))
-        {
         }
 
         public Book GetBook(int bookId)
@@ -54,6 +51,24 @@ namespace Project5LMS.Services
             return _bookRepository.GetByCategory(category);
         }
 
+        public IEnumerable<Book> GetBooksByAuthor(string author)
+        {
+            if (string.IsNullOrWhiteSpace(author))
+                return new List<Book>();
+
+            return _bookRepository.GetByAuthor(author);
+        }
+
+        public IEnumerable<string> GetAllAuthors()
+        {
+            return _bookRepository.GetAllAuthors();
+        }
+
+        public IEnumerable<string> GetAllPublishers()
+        {
+            return _bookRepository.GetAllPublishers();
+        }
+
         public bool AddBook(Book book)
         {
             if (book == null || !book.IsValid())
@@ -70,12 +85,12 @@ namespace Project5LMS.Services
             return _bookRepository.Update(book);
         }
 
-        public bool DeleteBook(int bookId)
+        public bool DeleteBook(string accessionNumber)
         {
-            if (bookId <= 0)
+            if (string.IsNullOrWhiteSpace(accessionNumber))
                 return false;
 
-            return _bookRepository.Delete(bookId);
+            return _bookRepository.Delete(accessionNumber);
         }
 
         public bool IsBookAvailable(int bookId)
@@ -84,12 +99,21 @@ namespace Project5LMS.Services
             return book != null && book.IsAvailable;
         }
 
-        public bool UpdateBookAvailability(int bookId, int change)
+        public bool IsBookAvailableByAccession(string accessionNumber)
         {
-            if (bookId <= 0)
+            if (string.IsNullOrWhiteSpace(accessionNumber))
                 return false;
 
-            return _bookRepository.UpdateAvailability(bookId, change);
+            var book = _bookRepository.GetByAccessionNumber(accessionNumber);
+            return book != null && book.IsAvailable;
+        }
+
+        public bool UpdateBookAvailability(string accessionNumber, int change)
+        {
+            if (string.IsNullOrWhiteSpace(accessionNumber))
+                return false;
+
+            return _bookRepository.UpdateAvailability(accessionNumber, change);
         }
 
         public IEnumerable<string> GetAllCategories()
@@ -100,6 +124,16 @@ namespace Project5LMS.Services
                 .Select(b => b.Category)
                 .Distinct()
                 .OrderBy(c => c);
+        }
+
+        public IEnumerable<Book> GetNewArrivals(int limit = 20, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            return _bookRepository.GetNewArrivals(limit, startDate, endDate);
+        }
+
+        public IEnumerable<Book> GetPopularBooks(int limit = 20, bool weightedByRecency = false)
+        {
+            return _bookRepository.GetPopularBooks(limit, weightedByRecency);
         }
     }
 }

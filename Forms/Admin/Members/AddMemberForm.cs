@@ -15,6 +15,8 @@ namespace Project5LMS.Forms.Admin.Members
         private MembersController membersController;
         private int memberId = 0;
         private string connectionString;
+        private string photoPath = null;
+        private string validIDPath = null;
 
         public AddMemberForm(int memberId = 0)
         {
@@ -103,10 +105,60 @@ namespace Project5LMS.Forms.Admin.Members
                     }
                     catch { }
 
-                    cmbMemberType.Text = row["MemberType"].ToString();
+                    // Handle both Type and MemberType columns
+                    if (row.Table.Columns.Contains("Type") && row["Type"] != DBNull.Value)
+                    {
+                        cmbMemberType.Text = row["Type"].ToString();
+                    }
+                    else if (row.Table.Columns.Contains("MemberType") && row["MemberType"] != DBNull.Value)
+                    {
+                        cmbMemberType.Text = row["MemberType"].ToString();
+                    }
                     dtpRegistration.Value = Convert.ToDateTime(row["RegistrationDate"]);
                     dtpExpiration.Value = Convert.ToDateTime(row["ExpirationDate"]);
                     cmbStatus.Text = row["Status"].ToString();
+
+                    // Load member card number if it exists
+                    if (row.Table.Columns.Contains("MemberCardNumber") && row["MemberCardNumber"] != DBNull.Value)
+                    {
+                        txtMemberCardNumber.Text = row["MemberCardNumber"].ToString();
+                    }
+                    else if (memberId > 0)
+                    {
+                        // Auto-generate if editing and doesn't exist
+                        txtMemberCardNumber.Text = $"MEM-{DateTime.Now:yyyyMMdd}-{memberId:D4}";
+                    }
+
+                    // Load photo and ID paths if they exist
+                    if (row.Table.Columns.Contains("PhotoPath") && row["PhotoPath"] != DBNull.Value)
+                    {
+                        photoPath = row["PhotoPath"].ToString();
+                        if (!string.IsNullOrEmpty(photoPath) && System.IO.File.Exists(photoPath))
+                        {
+                            // Display photo if PictureBox exists
+                            if (this.Controls.Find("picMemberPhoto", true).Length > 0)
+                            {
+                                var picBox = this.Controls.Find("picMemberPhoto", true)[0] as PictureBox;
+                                if (picBox != null)
+                                    picBox.Image = Image.FromFile(photoPath);
+                            }
+                        }
+                    }
+
+                    if (row.Table.Columns.Contains("ValidIDPath") && row["ValidIDPath"] != DBNull.Value)
+                    {
+                        validIDPath = row["ValidIDPath"].ToString();
+                        if (!string.IsNullOrEmpty(validIDPath) && System.IO.File.Exists(validIDPath))
+                        {
+                            // Display ID if PictureBox exists
+                            if (this.Controls.Find("picValidID", true).Length > 0)
+                            {
+                                var picBox = this.Controls.Find("picValidID", true)[0] as PictureBox;
+                                if (picBox != null)
+                                    picBox.Image = Image.FromFile(validIDPath);
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -134,6 +186,7 @@ namespace Project5LMS.Forms.Admin.Members
             DateTime regDate = dtpRegistration.Value;
             DateTime expDate = dtpExpiration.Value;
             string status = cmbStatus.Text;
+            string memberCardNumber = txtMemberCardNumber?.Text?.Trim();
 
             bool success = false;
 
@@ -141,11 +194,11 @@ namespace Project5LMS.Forms.Admin.Members
             {
                 if (memberId == 0)
                 {
-                    success = AddMemberWithOptionalFields(firstName, lastName, email, contact, address, type, regDate, expDate, status);
+                    success = AddMemberWithOptionalFields(firstName, lastName, email, contact, address, type, regDate, expDate, status, memberCardNumber);
                 }
                 else
                 {
-                    success = UpdateMemberWithOptionalFields(memberId, firstName, lastName, email, contact, address, type, regDate, expDate, status);
+                    success = UpdateMemberWithOptionalFields(memberId, firstName, lastName, email, contact, address, type, regDate, expDate, status, memberCardNumber);
                 }
 
                 if (success)
@@ -199,7 +252,7 @@ namespace Project5LMS.Forms.Admin.Members
         }
 
         private bool AddMemberWithOptionalFields(string firstName, string lastName, string email, string contact, string address, 
-            string type, DateTime regDate, DateTime expDate, string status)
+            string type, DateTime regDate, DateTime expDate, string status, string memberCardNumber = null)
         {
             try
             {
@@ -209,23 +262,28 @@ namespace Project5LMS.Forms.Admin.Members
 
                     bool hasContact = CheckColumnExists(conn, "Members", "Contact");
                     bool hasAddress = CheckColumnExists(conn, "Members", "Address");
+                    bool hasPhotoPath = CheckColumnExists(conn, "Members", "PhotoPath");
+                    bool hasValidIDPath = CheckColumnExists(conn, "Members", "ValidIDPath");
+                    bool hasMemberCardNumber = CheckColumnExists(conn, "Members", "MemberCardNumber");
 
                     string query;
-                    if (hasContact && hasAddress)
-                    {
-                        query = @"INSERT INTO Members (FirstName, LastName, Email, Contact, Address, MemberType, RegistrationDate, ExpirationDate, Status)
-                                 VALUES (@FirstName, @LastName, @Email, @Contact, @Address, @Type, @RegDate, @ExpDate, @Status)";
+                    // Use Type column (standard), fallback to MemberType if Type doesn't exist
+                    bool hasType = CheckColumnExists(conn, "Members", "Type");
+                    string typeColumn = hasType ? "Type" : "MemberType";
+                    string columns = $"FirstName, LastName, Email, {typeColumn}, RegistrationDate, ExpirationDate, Status";
+                    string values = "@FirstName, @LastName, @Email, @Type, @RegDate, @ExpDate, @Status";
+
+                    if (hasContact) { columns += ", Contact"; values += ", @Contact"; }
+                    if (hasAddress) { columns += ", Address"; values += ", @Address"; }
+                    if (hasPhotoPath) { columns += ", PhotoPath"; values += ", @PhotoPath"; }
+                    if (hasValidIDPath) { columns += ", ValidIDPath"; values += ", @ValidIDPath"; }
+                    if (hasMemberCardNumber && !string.IsNullOrWhiteSpace(memberCardNumber)) 
+                    { 
+                        columns += ", MemberCardNumber"; 
+                        values += ", @MemberCardNumber"; 
                     }
-                    else if (hasContact)
-                    {
-                        query = @"INSERT INTO Members (FirstName, LastName, Email, Contact, MemberType, RegistrationDate, ExpirationDate, Status)
-                                 VALUES (@FirstName, @LastName, @Email, @Contact, @Type, @RegDate, @ExpDate, @Status)";
-                    }
-                    else
-                    {
-                        query = @"INSERT INTO Members (FirstName, LastName, Email, MemberType, RegistrationDate, ExpirationDate, Status)
-                                 VALUES (@FirstName, @LastName, @Email, @Type, @RegDate, @ExpDate, @Status)";
-                    }
+
+                    query = $"INSERT INTO Members ({columns}) VALUES ({values})";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -241,6 +299,12 @@ namespace Project5LMS.Forms.Admin.Members
                             cmd.Parameters.AddWithValue("@Contact", contact);
                         if (hasAddress)
                             cmd.Parameters.AddWithValue("@Address", address);
+                        if (hasPhotoPath)
+                            cmd.Parameters.AddWithValue("@PhotoPath", photoPath ?? (object)DBNull.Value);
+                        if (hasValidIDPath)
+                            cmd.Parameters.AddWithValue("@ValidIDPath", validIDPath ?? (object)DBNull.Value);
+                        if (hasMemberCardNumber && !string.IsNullOrWhiteSpace(memberCardNumber))
+                            cmd.Parameters.AddWithValue("@MemberCardNumber", memberCardNumber);
 
                         return cmd.ExecuteNonQuery() > 0;
                     }
@@ -253,8 +317,8 @@ namespace Project5LMS.Forms.Admin.Members
             }
         }
 
-        private bool UpdateMemberWithOptionalFields(int memberId, string firstName, string lastName, string email, string contact, string address,
-            string type, DateTime regDate, DateTime expDate, string status)
+        private bool UpdateMemberWithOptionalFields(int memberId, string firstName, string lastName, string email, string contact, string address, 
+            string type, DateTime regDate, DateTime expDate, string status, string memberCardNumber = null)
         {
             try
             {
@@ -264,29 +328,23 @@ namespace Project5LMS.Forms.Admin.Members
 
                     bool hasContact = CheckColumnExists(conn, "Members", "Contact");
                     bool hasAddress = CheckColumnExists(conn, "Members", "Address");
+                    bool hasPhotoPath = CheckColumnExists(conn, "Members", "PhotoPath");
+                    bool hasValidIDPath = CheckColumnExists(conn, "Members", "ValidIDPath");
+                    bool hasMemberCardNumber = CheckColumnExists(conn, "Members", "MemberCardNumber");
 
-                    string query;
-                    if (hasContact && hasAddress)
-                    {
-                        query = @"UPDATE Members 
-                                 SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Contact=@Contact, Address=@Address, 
-                                     MemberType=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
-                                 WHERE MemberID=@ID";
-                    }
-                    else if (hasContact)
-                    {
-                        query = @"UPDATE Members 
-                                 SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Contact=@Contact, 
-                                     MemberType=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
-                                 WHERE MemberID=@ID";
-                    }
-                    else
-                    {
-                        query = @"UPDATE Members 
-                                 SET FirstName=@FirstName, LastName=@LastName, Email=@Email, 
-                                     MemberType=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status
-                                 WHERE MemberID=@ID";
-                    }
+                    // Use Type column (standard), fallback to MemberType if Type doesn't exist
+                    bool hasType = CheckColumnExists(conn, "Members", "Type");
+                    string typeColumn = hasType ? "Type" : "MemberType";
+                    string setClause = $"FirstName=@FirstName, LastName=@LastName, Email=@Email, {typeColumn}=@Type, RegistrationDate=@RegDate, ExpirationDate=@ExpDate, Status=@Status";
+                    
+                    if (hasContact) setClause += ", Contact=@Contact";
+                    if (hasAddress) setClause += ", Address=@Address";
+                    if (hasPhotoPath) setClause += ", PhotoPath=@PhotoPath";
+                    if (hasValidIDPath) setClause += ", ValidIDPath=@ValidIDPath";
+                    if (hasMemberCardNumber && !string.IsNullOrWhiteSpace(memberCardNumber))
+                        setClause += ", MemberCardNumber=@MemberCardNumber";
+
+                    string query = $"UPDATE Members SET {setClause} WHERE MemberID=@ID";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -347,6 +405,66 @@ namespace Project5LMS.Forms.Admin.Members
         private void panelMainContainer_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        // Photo upload handler - wire this to a button or picture box click event
+        private void btnUploadPhoto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png|All Files|*.*";
+                    openFileDialog.FilterIndex = 1;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        photoPath = openFileDialog.FileName;
+                        // Display in PictureBox if exists
+                        if (this.Controls.Find("picMemberPhoto", true).Length > 0)
+                        {
+                            var picBox = this.Controls.Find("picMemberPhoto", true)[0] as PictureBox;
+                            if (picBox != null)
+                                picBox.Image = Image.FromFile(photoPath);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading photo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Valid ID upload handler - wire this to a button or picture box click event
+        private void btnUploadValidID_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png|PDF Files|*.pdf|All Files|*.*";
+                    openFileDialog.FilterIndex = 1;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        validIDPath = openFileDialog.FileName;
+                        // Display in PictureBox if exists and is image
+                        if (this.Controls.Find("picValidID", true).Length > 0 && validIDPath.ToLower().EndsWith(".jpg") || validIDPath.ToLower().EndsWith(".jpeg") || validIDPath.ToLower().EndsWith(".png"))
+                        {
+                            var picBox = this.Controls.Find("picValidID", true)[0] as PictureBox;
+                            if (picBox != null)
+                                picBox.Image = Image.FromFile(validIDPath);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading valid ID: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

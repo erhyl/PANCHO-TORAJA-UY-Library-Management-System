@@ -91,7 +91,7 @@
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
             this.panelMainContainer.Size = new System.Drawing.Size(1924, 1055);
@@ -104,7 +104,7 @@
             this.panelTableContainer.Controls.Add(this.dataGridViewMembers);
             this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTableContainer.Location = new System.Drawing.Point(32, 104);
-            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelTableContainer.Name = "panelTableContainer";
             this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelTableContainer.Size = new System.Drawing.Size(1860, 921);
@@ -112,8 +112,6 @@
             // 
             // dataGridViewMembers
             // 
-            this.dataGridViewMembers.AllowUserToAddRows = false;
-            this.dataGridViewMembers.AllowUserToDeleteRows = false;
             this.dataGridViewMembers.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewMembers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -150,10 +148,9 @@
             this.dataGridViewMembers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewMembers.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewMembers.Location = new System.Drawing.Point(21, 20);
-            this.dataGridViewMembers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewMembers.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewMembers.MultiSelect = false;
             this.dataGridViewMembers.Name = "dataGridViewMembers";
-            this.dataGridViewMembers.ReadOnly = true;
             this.dataGridViewMembers.RowHeadersVisible = false;
             this.dataGridViewMembers.RowHeadersWidth = 51;
             this.dataGridViewMembers.RowTemplate.Height = 60;
@@ -167,8 +164,8 @@
             this.colMemberID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMemberID.DataPropertyName = "MemberID";
             this.colMemberID.HeaderText = "MEMBER ID";
+            this.colMemberID.MinimumWidth = 6;
             this.colMemberID.Name = "colMemberID";
-            this.colMemberID.ReadOnly = true;
             this.colMemberID.Width = 120;
             // 
             // colName
@@ -176,8 +173,8 @@
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colName.DataPropertyName = "Name";
             this.colName.HeaderText = "NAME";
+            this.colName.MinimumWidth = 6;
             this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
             this.colName.Width = 250;
             // 
             // colContact
@@ -185,8 +182,8 @@
             this.colContact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colContact.DataPropertyName = "Contact";
             this.colContact.HeaderText = "CONTACT";
+            this.colContact.MinimumWidth = 6;
             this.colContact.Name = "colContact";
-            this.colContact.ReadOnly = true;
             this.colContact.Width = 150;
             // 
             // colMemberType
@@ -194,8 +191,8 @@
             this.colMemberType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMemberType.DataPropertyName = "MemberType";
             this.colMemberType.HeaderText = "TYPE";
+            this.colMemberType.MinimumWidth = 6;
             this.colMemberType.Name = "colMemberType";
-            this.colMemberType.ReadOnly = true;
             this.colMemberType.Width = 120;
             // 
             // colStatus
@@ -203,8 +200,8 @@
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "STATUS";
+            this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
             this.colStatus.Width = 120;
             // 
             // colBooks
@@ -212,17 +209,16 @@
             this.colBooks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colBooks.DataPropertyName = "Books";
             this.colBooks.HeaderText = "BOOKS";
+            this.colBooks.MinimumWidth = 6;
             this.colBooks.Name = "colBooks";
-            this.colBooks.ReadOnly = true;
-            this.colBooks.Width = 100;
             // 
             // colExpires
             // 
             this.colExpires.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colExpires.DataPropertyName = "Expires";
             this.colExpires.HeaderText = "EXPIRES";
+            this.colExpires.MinimumWidth = 6;
             this.colExpires.Name = "colExpires";
-            this.colExpires.ReadOnly = true;
             this.colExpires.Width = 120;
             // 
             // colActions
@@ -230,8 +226,8 @@
             this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colActions.DataPropertyName = "Actions";
             this.colActions.HeaderText = "ACTIONS";
+            this.colActions.MinimumWidth = 6;
             this.colActions.Name = "colActions";
-            this.colActions.ReadOnly = true;
             this.colActions.Width = 150;
             // 
             // panelSearchFilter
@@ -244,7 +240,7 @@
             this.panelSearchFilter.Controls.Add(this.txtSearch);
             this.panelSearchFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSearchFilter.Location = new System.Drawing.Point(32, 30);
-            this.panelSearchFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelSearchFilter.Margin = new System.Windows.Forms.Padding(4);
             this.panelSearchFilter.Name = "panelSearchFilter";
             this.panelSearchFilter.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelSearchFilter.Size = new System.Drawing.Size(1860, 74);
@@ -261,7 +257,7 @@
             "Suspended",
             "Expired"});
             this.cmbStatusFilter.Location = new System.Drawing.Point(1200, 20);
-            this.cmbStatusFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbStatusFilter.Margin = new System.Windows.Forms.Padding(4);
             this.cmbStatusFilter.Name = "cmbStatusFilter";
             this.cmbStatusFilter.Size = new System.Drawing.Size(313, 31);
             this.cmbStatusFilter.TabIndex = 4;
@@ -291,7 +287,7 @@
             "Staff",
             "Guest"});
             this.cmbTypeFilter.Location = new System.Drawing.Point(733, 20);
-            this.cmbTypeFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbTypeFilter.Margin = new System.Windows.Forms.Padding(4);
             this.cmbTypeFilter.Name = "cmbTypeFilter";
             this.cmbTypeFilter.Size = new System.Drawing.Size(313, 31);
             this.cmbTypeFilter.TabIndex = 2;
@@ -315,7 +311,7 @@
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
             this.txtSearch.Location = new System.Drawing.Point(21, 20);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(399, 30);
             this.txtSearch.TabIndex = 0;
@@ -333,7 +329,7 @@
             this.panelMetrics.Controls.Add(this.panelMetricActive);
             this.panelMetrics.Controls.Add(this.panelMetricTotal);
             this.panelMetrics.Location = new System.Drawing.Point(32, 172);
-            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1860, 123);
             this.panelMetrics.TabIndex = 1;
@@ -380,7 +376,7 @@
             // 
             this.panelMetricIconExpired.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
             this.panelMetricIconExpired.Location = new System.Drawing.Point(187, 20);
-            this.panelMetricIconExpired.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetricIconExpired.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricIconExpired.Name = "panelMetricIconExpired";
             this.panelMetricIconExpired.Size = new System.Drawing.Size(53, 49);
             this.panelMetricIconExpired.TabIndex = 0;
@@ -427,7 +423,7 @@
             // 
             this.panelMetricIconSuspended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
             this.panelMetricIconSuspended.Location = new System.Drawing.Point(187, 20);
-            this.panelMetricIconSuspended.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetricIconSuspended.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricIconSuspended.Name = "panelMetricIconSuspended";
             this.panelMetricIconSuspended.Size = new System.Drawing.Size(53, 49);
             this.panelMetricIconSuspended.TabIndex = 0;
@@ -474,7 +470,7 @@
             // 
             this.panelMetricIconActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
             this.panelMetricIconActive.Location = new System.Drawing.Point(187, 20);
-            this.panelMetricIconActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetricIconActive.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricIconActive.Name = "panelMetricIconActive";
             this.panelMetricIconActive.Size = new System.Drawing.Size(53, 49);
             this.panelMetricIconActive.TabIndex = 0;
@@ -521,7 +517,7 @@
             // 
             this.panelMetricIconTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
             this.panelMetricIconTotal.Location = new System.Drawing.Point(187, 20);
-            this.panelMetricIconTotal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetricIconTotal.Margin = new System.Windows.Forms.Padding(4);
             this.panelMetricIconTotal.Name = "panelMetricIconTotal";
             this.panelMetricIconTotal.Size = new System.Drawing.Size(53, 49);
             this.panelMetricIconTotal.TabIndex = 0;
@@ -534,7 +530,7 @@
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(32, 30);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1860, 143);
             this.panelHeader.TabIndex = 0;
@@ -548,7 +544,7 @@
             this.btnAddNewMember.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddNewMember.ForeColor = System.Drawing.Color.White;
             this.btnAddNewMember.Location = new System.Drawing.Point(1593, 20);
-            this.btnAddNewMember.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddNewMember.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddNewMember.Name = "btnAddNewMember";
             this.btnAddNewMember.Size = new System.Drawing.Size(267, 49);
             this.btnAddNewMember.TabIndex = 2;
@@ -587,7 +583,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1924, 1055);
             this.Controls.Add(this.panelMainContainer);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AdminMembersForm";
             this.Text = "Member Management";
             this.Load += new System.EventHandler(this.AdminMembersForm_Load);

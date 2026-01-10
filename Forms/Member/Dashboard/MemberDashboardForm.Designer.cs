@@ -845,7 +845,7 @@
             this.lblWelcomeSubtitle.AutoSize = true;
             this.lblWelcomeSubtitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWelcomeSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.lblWelcomeSubtitle.Location = new System.Drawing.Point(0, 54);
+            this.lblWelcomeSubtitle.Location = new System.Drawing.Point(15, 52);
             this.lblWelcomeSubtitle.Name = "lblWelcomeSubtitle";
             this.lblWelcomeSubtitle.Size = new System.Drawing.Size(378, 28);
             this.lblWelcomeSubtitle.TabIndex = 1;
@@ -856,7 +856,7 @@
             this.lblWelcomeTitle.AutoSize = true;
             this.lblWelcomeTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWelcomeTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.lblWelcomeTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblWelcomeTitle.Location = new System.Drawing.Point(3, 0);
             this.lblWelcomeTitle.Name = "lblWelcomeTitle";
             this.lblWelcomeTitle.Size = new System.Drawing.Size(310, 54);
             this.lblWelcomeTitle.TabIndex = 0;

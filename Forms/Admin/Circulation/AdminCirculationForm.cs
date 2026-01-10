@@ -205,7 +205,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 string transactionIdStr = e.Value.ToString();
                 if (int.TryParse(transactionIdStr, out int transactionId))
                 {
-                    e.Value = $"TXN-{transactionIdStr.PadLeft(3, '0')}";
+                    e.Value = IDFormatter.FormatTransactionID(transactionId);
                 }
                 e.FormattingApplied = true;
             }
@@ -416,7 +416,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
                     string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     int memberId = Convert.ToInt32(row["MemberID"]);
-                    row["Member"] = $"{firstName} {lastName} (MEM-{memberId.ToString().PadLeft(3, '0')})".Trim();
+                    row["Member"] = IDFormatter.FormatMemberDisplay(firstName, lastName, memberId);
 
                     string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
@@ -430,8 +430,8 @@ namespace Project5LMS.Forms.Admin.Circulation
                     {
                         barcode = row["AccessionNo"].ToString();
                     }
-                    string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
-                    row["Book"] = $"{bookTitle} ({accessionNo})";
+                    string accessionNo = !string.IsNullOrEmpty(barcode) ? IDFormatter.FormatAccessionNumber(barcode) : IDFormatter.FormatAccessionNumber(bookId.ToString());
+                    row["Book"] = IDFormatter.FormatBookDisplay(bookTitle, accessionNo);
 
                     if (row["Fine"] != DBNull.Value && Convert.ToDecimal(row["Fine"]) > 0)
                     {
@@ -696,16 +696,7 @@ namespace Project5LMS.Forms.Admin.Circulation
             try
             {
 
-                int memberId = 0;
-                if (memberIdText.StartsWith("MEM-"))
-                {
-                    string idPart = memberIdText.Replace("MEM-", "");
-                    int.TryParse(idPart, out memberId);
-                }
-                else
-                {
-                    int.TryParse(memberIdText, out memberId);
-                }
+                int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdText);
 
                 if (memberId == 0)
                 {
@@ -843,12 +834,23 @@ namespace Project5LMS.Forms.Admin.Circulation
         {
             try
             {
-                string cleanAccession = accessionNo.Replace("ACC-", "").Trim();
+                // Try by accession number first (preferred)
                 var book = _bookService.GetBookByAccessionNumber(accessionNo);
                 if (book != null)
                     return book.BookID;
 
-                if (int.TryParse(cleanAccession, out int bookId))
+                // Try parsing accession number
+                int parsedAccession = IDFormatter.ParseAccessionNumber(accessionNo);
+                if (parsedAccession > 0)
+                {
+                    var bookByAcc = _bookService.GetBookByAccessionNumber(IDFormatter.FormatAccessionNumber(parsedAccession.ToString()));
+                    if (bookByAcc != null)
+                        return bookByAcc.BookID;
+                }
+
+                // Try as book ID
+                int bookId = IDFormatter.ParseBookID(accessionNo);
+                if (bookId > 0)
                 {
                     var bookById = _bookService.GetBook(bookId);
                     return bookById != null ? bookId : 0;

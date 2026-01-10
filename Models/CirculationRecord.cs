@@ -14,5 +14,6 @@ namespace Project5LMS.Models
         public string Status { get; set; }
         public decimal? Fine { get; set; }
         public string TransactionType { get; set; }
+        public int RenewalCount { get; set; }
     }
 }

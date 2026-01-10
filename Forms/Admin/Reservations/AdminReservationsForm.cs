@@ -201,7 +201,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 string reservationIdStr = e.Value.ToString();
                 if (int.TryParse(reservationIdStr, out int reservationId))
                 {
-                    e.Value = $"RES-{reservationIdStr.PadLeft(3, '0')}";
+                    e.Value = IDFormatter.FormatReservationID(reservationId);
                 }
                 e.FormattingApplied = true;
             }
@@ -553,7 +553,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
                     string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     int memberId = Convert.ToInt32(row["MemberID"]);
-                    row["Member"] = $"{firstName} {lastName} (MEM-{memberId.ToString().PadLeft(3, '0')})".Trim();
+                    row["Member"] = Project5LMS.Helpers.IDFormatter.FormatMemberDisplay(firstName, lastName, memberId);
 
                     string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
@@ -567,7 +567,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                     {
                         barcode = row["AccessionNo"].ToString();
                     }
-                    string accessionNo = !string.IsNullOrEmpty(barcode) ? barcode : $"ACC-{bookId.ToString().PadLeft(4, '0')}";
+                    string accessionNo = !string.IsNullOrEmpty(barcode) ? IDFormatter.FormatAccessionNumber(barcode) : IDFormatter.FormatAccessionNumber(bookId.ToString());
                     row["Book"] = $"{bookTitle} ({accessionNo})";
 
                     // Try to get ReservationDate or ReservedDate from the row

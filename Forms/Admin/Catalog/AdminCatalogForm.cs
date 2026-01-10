@@ -357,7 +357,12 @@ namespace Project5LMS.Forms.Admin.Catalog
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading books: {ex.Message}");
-                MessageBox.Show($"Error loading books: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show(
+                    $"Error loading books data:\n\n{ex.Message}\n\nPlease check:\n1. Database connection\n2. Books table exists\n3. Database permissions\n\nFor detailed diagnostics, use the Database Test feature in Settings.",
+                    "Data Load Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
@@ -568,8 +573,46 @@ namespace Project5LMS.Forms.Admin.Catalog
                         bookTitle = bookDetails.Split('\n')[0];
                     }
                 }
+
+                // Get AccessionNo from the row
+                string accessionNo = null;
+                if (row.DataBoundItem != null)
+                {
+                    DataRowView rowView = row.DataBoundItem as DataRowView;
+                    if (rowView != null && rowView.Row.Table.Columns.Contains("AccessionNo"))
+                    {
+                        object accessionNoObj = rowView["AccessionNo"];
+                        if (accessionNoObj != null && accessionNoObj != DBNull.Value)
+                        {
+                            accessionNo = accessionNoObj.ToString();
+                        }
+                    }
+                }
+
+                // Fallback: get from AccessionNo column if available
+                if (string.IsNullOrWhiteSpace(accessionNo) && row.Cells["AccessionNo"]?.Value != null)
+                {
+                    accessionNo = row.Cells["AccessionNo"].Value.ToString();
+                }
+
+                // If still no AccessionNo, get book to retrieve it
+                if (string.IsNullOrWhiteSpace(accessionNo))
+                {
+                    var book = _bookService.GetBook(bookId);
+                    if (book != null)
+                    {
+                        accessionNo = book.AccessionNo;
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(accessionNo))
+                {
+                    MessageBox.Show("Unable to identify book accession number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
             var result = MessageBox.Show(
-                $"Are you sure you want to delete book \"{bookTitle}\"?\n\nThis action cannot be undone.",
+                $"Are you sure you want to delete book \"{bookTitle}\" (Accession: {accessionNo})?\n\nThis action cannot be undone.",
                 "Delete Book",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
@@ -578,20 +621,17 @@ namespace Project5LMS.Forms.Admin.Catalog
             {
                 try
                 {
-                    using (var conn = _dbContext.GetConnection())
+                    bool deleted = _bookService.DeleteBook(accessionNo);
+                    if (deleted)
                     {
-                        conn.Open();
-                        string query = "DELETE FROM Books WHERE BookID = @bookId";
-                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@bookId", bookId);
-                            cmd.ExecuteNonQuery();
-                        }
+                        MessageBox.Show("Book deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadBooks();
+                        LoadMetrics();
                     }
-
-                    MessageBox.Show("Book deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadBooks();
-                    LoadMetrics();
+                    else
+                    {
+                        MessageBox.Show("Failed to delete book. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -630,12 +670,105 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "CSV Files|*.csv|Excel Files|*.xlsx;*.xls|All Files|*.*";
+                    openFileDialog.FilterIndex = 1;
+                    openFileDialog.RestoreDirectory = true;
+                    openFileDialog.Title = "Select File to Import (CSV or Excel)";
 
-                MessageBox.Show("Import CSV functionality will be implemented here.\n\nImportBooksForm will be opened.", "Import CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string filePath = openFileDialog.FileName;
+                        ImportBooksFromCSV(filePath);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening import form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ImportBooksFromCSV(string filePath)
+        {
+            try
+            {
+                var bulkImportService = new Services.BulkImportService(_dbContext, _bookService);
+                
+                // Show progress dialog
+                using (Form progressForm = new Form())
+                {
+                    progressForm.Text = "Importing Books";
+                    progressForm.Size = new Size(400, 150);
+                    progressForm.StartPosition = FormStartPosition.CenterParent;
+                    progressForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    progressForm.MaximizeBox = false;
+                    progressForm.MinimizeBox = false;
+
+                    string fileType = System.IO.Path.GetExtension(filePath).ToLower() == ".xlsx" || 
+                                      System.IO.Path.GetExtension(filePath).ToLower() == ".xls" 
+                                      ? "Excel" : "CSV";
+                    
+                    Label lblStatus = new Label
+                    {
+                        Text = $"Importing books from {fileType} file...",
+                        Location = new Point(20, 20),
+                        AutoSize = true
+                    };
+                    progressForm.Controls.Add(lblStatus);
+
+                    ProgressBar progressBar = new ProgressBar
+                    {
+                        Location = new Point(20, 50),
+                        Size = new Size(350, 23),
+                        Style = ProgressBarStyle.Marquee,
+                        MarqueeAnimationSpeed = 30
+                    };
+                    progressForm.Controls.Add(progressBar);
+
+                    progressForm.Show();
+                    Application.DoEvents();
+
+                    var result = bulkImportService.ImportFromFile(filePath, skipHeader: true);
+
+                    progressForm.Close();
+
+                    // Show results
+                    string message = $"Import Complete!\n\n" +
+                                   $"Total Records: {result.TotalRecords}\n" +
+                                   $"Successfully Imported: {result.SuccessCount}\n" +
+                                   $"Failed: {result.FailedCount}\n" +
+                                   $"Success Rate: {result.SuccessRate:F1}%";
+
+                    if (result.HasErrors && result.Errors.Count > 0)
+                    {
+                        message += $"\n\nErrors ({Math.Min(result.Errors.Count, 10)} of {result.Errors.Count}):\n";
+                        foreach (var error in result.Errors.Take(10))
+                        {
+                            message += $"• {error}\n";
+                        }
+                        if (result.Errors.Count > 10)
+                        {
+                            message += $"... and {result.Errors.Count - 10} more errors.";
+                        }
+                    }
+
+                    MessageBox.Show(message, "Import Results", 
+                        MessageBoxButtons.OK, 
+                        result.SuccessCount > 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+
+                    if (result.SuccessCount > 0)
+                    {
+                        LoadBooks();
+                        LoadMetrics();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error importing books: {ex.Message}", "Import Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

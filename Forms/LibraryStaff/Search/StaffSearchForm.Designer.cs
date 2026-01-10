@@ -91,8 +91,6 @@
             // 
             // dataGridViewResults
             // 
-            this.dataGridViewResults.AllowUserToAddRows = false;
-            this.dataGridViewResults.AllowUserToDeleteRows = false;
             this.dataGridViewResults.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewResults.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
@@ -130,7 +128,6 @@
             this.dataGridViewResults.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewResults.MultiSelect = false;
             this.dataGridViewResults.Name = "dataGridViewResults";
-            this.dataGridViewResults.ReadOnly = true;
             this.dataGridViewResults.RowHeadersVisible = false;
             this.dataGridViewResults.RowHeadersWidth = 51;
             this.dataGridViewResults.RowTemplate.Height = 60;
@@ -144,8 +141,8 @@
             this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colType.DataPropertyName = "Type";
             this.colType.HeaderText = "Type";
+            this.colType.MinimumWidth = 6;
             this.colType.Name = "colType";
-            this.colType.ReadOnly = true;
             this.colType.Width = 80;
             // 
             // colTitle
@@ -153,24 +150,24 @@
             this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTitle.DataPropertyName = "Title";
             this.colTitle.HeaderText = "Title/Name";
+            this.colTitle.MinimumWidth = 6;
             this.colTitle.Name = "colTitle";
-            this.colTitle.ReadOnly = true;
             // 
             // colAuthor
             // 
             this.colAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAuthor.DataPropertyName = "Author";
             this.colAuthor.HeaderText = "Author/Email";
+            this.colAuthor.MinimumWidth = 6;
             this.colAuthor.Name = "colAuthor";
-            this.colAuthor.ReadOnly = true;
             // 
             // colISBN
             // 
             this.colISBN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colISBN.DataPropertyName = "ISBN";
             this.colISBN.HeaderText = "ISBN";
+            this.colISBN.MinimumWidth = 6;
             this.colISBN.Name = "colISBN";
-            this.colISBN.ReadOnly = true;
             this.colISBN.Width = 150;
             // 
             // colCategory
@@ -178,8 +175,8 @@
             this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colCategory.DataPropertyName = "Category";
             this.colCategory.HeaderText = "Category/Type";
+            this.colCategory.MinimumWidth = 6;
             this.colCategory.Name = "colCategory";
-            this.colCategory.ReadOnly = true;
             this.colCategory.Width = 120;
             // 
             // colStatus
@@ -187,9 +184,8 @@
             this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "Status";
+            this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
-            this.colStatus.Width = 100;
             // 
             // panelQuickSearchExamples
             // 
@@ -208,12 +204,11 @@
             // flowLayoutExamples
             // 
             this.flowLayoutExamples.AutoSize = true;
-            this.flowLayoutExamples.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutExamples.Location = new System.Drawing.Point(30, 30);
             this.flowLayoutExamples.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutExamples.Name = "flowLayoutExamples";
             this.flowLayoutExamples.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.flowLayoutExamples.Size = new System.Drawing.Size(1474, 10);
+            this.flowLayoutExamples.Size = new System.Drawing.Size(1474, 90);
             this.flowLayoutExamples.TabIndex = 1;
             // 
             // lblQuickSearchTitle
@@ -221,7 +216,7 @@
             this.lblQuickSearchTitle.AutoSize = true;
             this.lblQuickSearchTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblQuickSearchTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblQuickSearchTitle.Location = new System.Drawing.Point(29, 44);
+            this.lblQuickSearchTitle.Location = new System.Drawing.Point(15, 3);
             this.lblQuickSearchTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblQuickSearchTitle.Name = "lblQuickSearchTitle";
             this.lblQuickSearchTitle.Size = new System.Drawing.Size(230, 28);
@@ -410,7 +405,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Location = new System.Drawing.Point(4, 0);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(148, 54);

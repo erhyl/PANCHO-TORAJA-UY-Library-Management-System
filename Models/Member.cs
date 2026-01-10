@@ -17,6 +17,9 @@ namespace Project5LMS.Models
         public string Status { get; set; }
         public string Contact { get; set; }
         public string Address { get; set; }
+        public string PhotoPath { get; set; }
+        public string ValidIDPath { get; set; }
+        public string MemberCardNumber { get; set; }
 
         public string FullName => string.Join(" ", new[] { FirstName, LastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
 

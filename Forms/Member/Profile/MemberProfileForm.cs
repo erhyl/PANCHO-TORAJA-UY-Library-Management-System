@@ -118,7 +118,8 @@ namespace Project5LMS.Forms.Member.Profile
                             lblProfileName.Text = fullName;
 
                             string memberIDStr = reader["MemberID"] != DBNull.Value ? reader["MemberID"].ToString() : memberID.ToString();
-                            lblMemberID.Text = $"Member ID: MEM-{memberIDStr.PadLeft(6, '0')}";
+                            int parsedMemberID = int.TryParse(memberIDStr, out int id) ? id : memberID;
+                            lblMemberID.Text = $"Member ID: {Project5LMS.Helpers.IDFormatter.FormatMemberID(parsedMemberID)}";
 
                             string status = reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "Active";
                             lblStatusBadge.Text = status;

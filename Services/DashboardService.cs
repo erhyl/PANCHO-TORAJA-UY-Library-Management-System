@@ -27,15 +27,6 @@ namespace Project5LMS.Services
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public DashboardService(DatabaseContext dbContext)
-            : this(
-                new BookRepository(dbContext),
-                new MemberRepository(dbContext),
-                new TransactionRepository(dbContext),
-                dbContext)
-        {
-        }
-
         public int GetTotalBooks()
         {
             return _bookRepository.GetAll().Count();
@@ -310,6 +301,66 @@ namespace Project5LMS.Services
             }
             catch { }
             return distribution.OrderByDescending(kvp => kvp.Value).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        }
+
+        public Dictionary<string, int> GetMonthlyBorrowData(int months = 6)
+        {
+            var data = new Dictionary<string, int>();
+            var monthNames = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+            
+            try
+            {
+                var startDate = DateTime.Now.AddMonths(-months);
+                var transactions = _transactionRepository.GetByStatus("Borrowed")
+                    .Where(t => t.BorrowDate >= startDate && t.BorrowDate <= DateTime.Now);
+
+                foreach (var transaction in transactions)
+                {
+                    string monthKey = $"{monthNames[transaction.BorrowDate.Month - 1]} {transaction.BorrowDate.Year}";
+                    if (data.ContainsKey(monthKey))
+                    {
+                        data[monthKey]++;
+                    }
+                    else
+                    {
+                        data[monthKey] = 1;
+                    }
+                }
+            }
+            catch { }
+
+            return data;
+        }
+
+        public Dictionary<string, int> GetMonthlyReturnData(int months = 6)
+        {
+            var data = new Dictionary<string, int>();
+            var monthNames = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+            
+            try
+            {
+                var startDate = DateTime.Now.AddMonths(-months);
+                var transactions = _transactionRepository.GetByStatus("Returned")
+                    .Where(t => t.ReturnDate.HasValue && 
+                               t.ReturnDate.Value >= startDate && 
+                               t.ReturnDate.Value <= DateTime.Now);
+
+                foreach (var transaction in transactions)
+                {
+                    string monthKey = $"{monthNames[transaction.ReturnDate.Value.Month - 1]} {transaction.ReturnDate.Value.Year}";
+                    if (data.ContainsKey(monthKey))
+                    {
+                        data[monthKey]++;
+                    }
+                    else
+                    {
+                        data[monthKey] = 1;
+                    }
+                }
+            }
+            catch { }
+
+            return data;
         }
     }
 

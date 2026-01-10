@@ -15,10 +15,6 @@ namespace Project5LMS.Services
             _memberRepository = memberRepository ?? throw new System.ArgumentNullException(nameof(memberRepository));
         }
 
-        public MembersService(DatabaseContext dbContext) : this(new MemberRepository(dbContext))
-        {
-        }
-
         public Member GetMember(int memberId)
         {
             return _memberRepository.GetById(memberId);

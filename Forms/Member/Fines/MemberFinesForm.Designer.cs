@@ -296,7 +296,7 @@
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(0, 70);
+            this.lblSubtitle.Location = new System.Drawing.Point(14, 70);
             this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtitle.Name = "lblSubtitle";
             this.lblSubtitle.Size = new System.Drawing.Size(540, 32);
@@ -311,9 +311,9 @@
             this.lblTitle.Location = new System.Drawing.Point(9, 8);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(360, 62);
+            this.lblTitle.Size = new System.Drawing.Size(442, 62);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Fines & Penalties";
+            this.lblTitle.Text = "Fines and Penalties";
             // 
             // MemberFinesForm
             // 

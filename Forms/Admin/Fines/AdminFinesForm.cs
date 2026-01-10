@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -10,6 +11,7 @@ using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Repositories;
 using Project5LMS.Interfaces;
+using Project5LMS.Forms.Admin.Search;
 
 namespace Project5LMS.Forms.Admin.Fines
 {
@@ -22,6 +24,7 @@ namespace Project5LMS.Forms.Admin.Fines
         private readonly ITransactionRepository _transactionRepository;
         private readonly IMembersService _membersService;
         private readonly IBookService _bookService;
+        private readonly IPaymentService _paymentService;
 
         public AdminFinesForm()
         {
@@ -31,14 +34,17 @@ namespace Project5LMS.Forms.Admin.Fines
             _transactionRepository = new TransactionRepository(dbContext);
             _membersService = ServiceFactory.CreateMembersService();
             _bookService = ServiceFactory.CreateBookService();
+            _paymentService = ServiceFactory.CreatePaymentService();
         }
 
         private void AdminFinesForm_Load(object sender, EventArgs e)
         {
             EnsureFinesTableExists();
             SetupDataGridView();
+            SetupPaymentHistoryGridView();
             LoadMetrics();
             LoadFines();
+            LoadPaymentHistory();
         }
 
         private void EnsureFinesTableExists()
@@ -218,6 +224,110 @@ namespace Project5LMS.Forms.Admin.Fines
             dataGridViewFines.CellContentClick += DataGridViewFines_CellContentClick;
         }
 
+        private void SetupPaymentHistoryGridView()
+        {
+            if (dataGridViewPaymentHistory == null) return;
+
+            dataGridViewPaymentHistory.Columns.Clear();
+            dataGridViewPaymentHistory.AutoGenerateColumns = false;
+            dataGridViewPaymentHistory.DefaultCellStyle.Font = new Font("Segoe UI", 9);
+            dataGridViewPaymentHistory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            dataGridViewPaymentHistory.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewPaymentHistory.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewPaymentHistory.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            dataGridViewPaymentHistory.RowTemplate.Height = 40;
+            dataGridViewPaymentHistory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
+            dataGridViewPaymentHistory.CellFormatting += DataGridViewPaymentHistory_CellFormatting;
+        }
+
+        private void DataGridViewPaymentHistory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            string columnName = dataGridViewPaymentHistory.Columns[e.ColumnIndex].Name;
+
+            if (columnName == "AmountPaid" && e.Value != null)
+            {
+                if (decimal.TryParse(e.Value.ToString(), out decimal amount))
+                {
+                    e.Value = $"${amount:F2}";
+                }
+                e.FormattingApplied = true;
+            }
+
+            if (columnName == "PaymentDate" && e.Value != null)
+            {
+                if (DateTime.TryParse(e.Value.ToString(), out DateTime date))
+                {
+                    e.Value = date.ToString("yyyy-MM-dd HH:mm");
+                }
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void LoadPaymentHistory()
+        {
+            try
+            {
+                if (dataGridViewPaymentHistory == null) return;
+
+                // Load recent payments from database
+                var dbContext = ServiceFactory.GetDbContext();
+                using (var conn = dbContext.GetConnection())
+                {
+                    conn.Open();
+                    
+                    // Check if FinePayments table exists
+                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES 
+                                              WHERE TABLE_SCHEMA = DATABASE() 
+                                              AND TABLE_NAME = 'FinePayments'";
+                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
+                    {
+                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        if (tableExists > 0 && !this.DesignMode)
+                        {
+                            string query = @"SELECT ReceiptNumber, AmountPaid, PaymentDate, PaymentMode, ProcessedBy
+                                           FROM FinePayments
+                                           ORDER BY PaymentDate DESC
+                                           LIMIT 20";
+                            using (var adapter = new MySqlDataAdapter(query, conn))
+                            {
+                                DataTable dt = new DataTable();
+                                adapter.Fill(dt);
+                                dataGridViewPaymentHistory.DataSource = dt;
+                            }
+                        }
+                        else
+                        {
+                            // Show placeholder data in design mode
+                            var placeholderData = new List<object>
+                            {
+                                new { ReceiptNumber = "RCP-001", AmountPaid = 25.50m, PaymentDate = DateTime.Now, PaymentMode = "Cash", ProcessedBy = "Admin" },
+                                new { ReceiptNumber = "RCP-002", AmountPaid = 15.00m, PaymentDate = DateTime.Now.AddDays(-1), PaymentMode = "Online", ProcessedBy = "Staff" },
+                                new { ReceiptNumber = "RCP-003", AmountPaid = 30.00m, PaymentDate = DateTime.Now.AddDays(-2), PaymentMode = "Check", ProcessedBy = "Admin" }
+                            };
+                            dataGridViewPaymentHistory.DataSource = placeholderData;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading payment history: {ex.Message}");
+                // Show placeholder in design mode or on error
+                if (this.DesignMode && dataGridViewPaymentHistory != null)
+                {
+                    var placeholderData = new List<object>
+                    {
+                        new { ReceiptNumber = "RCP-001", AmountPaid = 25.50m, PaymentDate = DateTime.Now, PaymentMode = "Cash", ProcessedBy = "Admin" },
+                        new { ReceiptNumber = "RCP-002", AmountPaid = 15.00m, PaymentDate = DateTime.Now.AddDays(-1), PaymentMode = "Online", ProcessedBy = "Staff" },
+                        new { ReceiptNumber = "RCP-003", AmountPaid = 30.00m, PaymentDate = DateTime.Now.AddDays(-2), PaymentMode = "Check", ProcessedBy = "Admin" }
+                    };
+                    dataGridViewPaymentHistory.DataSource = placeholderData;
+                }
+            }
+        }
+
         private void DataGridViewFines_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -237,9 +347,9 @@ namespace Project5LMS.Forms.Admin.Fines
 
             if ((columnName == "Amount" || columnName == "Paid") && e.Value != null)
             {
-                if (decimal.TryParse(e.Value.ToString(), out decimal amount))
+                if (decimal.TryParse(e.Value.ToString(), out decimal amountValue))
                 {
-                    e.Value = $"${amount:F2}";
+                    e.Value = $"${amountValue:F2}";
                 }
                 e.FormattingApplied = true;
             }
@@ -408,12 +518,24 @@ namespace Project5LMS.Forms.Admin.Fines
 
                     Rectangle btnWaiveRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, buttonHeight);
                     DrawButton(e.Graphics, btnWaiveRect, "Waive", Color.FromArgb(13, 110, 253), Color.White);
+
+                    Rectangle btnHistoryRect = new Rectangle(xOffset + (buttonWidth + spacing) * 2, buttonY, buttonWidth, buttonHeight);
+                    DrawButton(e.Graphics, btnHistoryRect, "History", Color.FromArgb(108, 117, 125), Color.White);
                 }
                 else if (status.ToLower() == "partial")
                 {
 
                     Rectangle btnPayBalanceRect = new Rectangle(xOffset, buttonY, buttonWidth + 20, buttonHeight);
                     DrawButton(e.Graphics, btnPayBalanceRect, "Pay Balance", Color.FromArgb(40, 167, 69), Color.White);
+
+                    Rectangle btnHistoryRect = new Rectangle(xOffset + buttonWidth + 25, buttonY, buttonWidth, buttonHeight);
+                    DrawButton(e.Graphics, btnHistoryRect, "History", Color.FromArgb(108, 117, 125), Color.White);
+                }
+                else
+                {
+                    // For paid/waived, show history button
+                    Rectangle btnHistoryRect = new Rectangle(xOffset, buttonY, buttonWidth, buttonHeight);
+                    DrawButton(e.Graphics, btnHistoryRect, "History", Color.FromArgb(108, 117, 125), Color.White);
                 }
 
                 e.Handled = true;
@@ -457,9 +579,9 @@ namespace Project5LMS.Forms.Admin.Fines
             DataGridViewRow row = dataGridViewFines.Rows[e.RowIndex];
 
             int fineId = 0;
-            if (row.DataBoundItem is DataRowView drv)
+            if (row.DataBoundItem is DataRowView drv1)
             {
-                fineId = Convert.ToInt32(drv["FineID"]);
+                fineId = Convert.ToInt32(drv1["FineID"]);
             }
             else if (row.DataBoundItem is DataRow dr)
             {
@@ -497,10 +619,30 @@ namespace Project5LMS.Forms.Admin.Fines
             int spacing = 5;
             int xOffset = cellRect.X + 5;
 
+            int memberId = 0;
+            if (row.DataBoundItem is DataRowView drv2)
+            {
+                memberId = Convert.ToInt32(drv2["MemberID"]);
+            }
+            else if (row.DataBoundItem is DataRow dr)
+            {
+                memberId = Convert.ToInt32(dr["MemberID"]);
+            }
+            else
+            {
+                // Try to get from row
+                var memberIdCell = row.Cells["MemberID"];
+                if (memberIdCell?.Value != null)
+                {
+                    int.TryParse(memberIdCell.Value.ToString(), out memberId);
+                }
+            }
+
             if (status.ToLower() == "pending")
             {
                 Rectangle btnCollectRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
                 Rectangle btnWaiveRect = new Rectangle(xOffset + buttonWidth + spacing, buttonY, buttonWidth, 30);
+                Rectangle btnHistoryRect = new Rectangle(xOffset + (buttonWidth + spacing) * 2, buttonY, buttonWidth, 30);
 
                 if (btnCollectRect.Contains(clickPoint))
                 {
@@ -510,15 +652,33 @@ namespace Project5LMS.Forms.Admin.Fines
                 {
                     WaiveFine(fineId);
                 }
+                else if (btnHistoryRect.Contains(clickPoint) && memberId > 0)
+                {
+                    ShowPaymentHistory(memberId);
+                }
             }
             else if (status.ToLower() == "partial")
             {
                 Rectangle btnPayBalanceRect = new Rectangle(xOffset, buttonY, buttonWidth + 20, 30);
+                Rectangle btnHistoryRect = new Rectangle(xOffset + buttonWidth + 25, buttonY, buttonWidth, 30);
 
                 if (btnPayBalanceRect.Contains(clickPoint))
                 {
                     decimal balance = amount - paid;
                     PayBalance(fineId, balance, amount, paid);
+                }
+                else if (btnHistoryRect.Contains(clickPoint) && memberId > 0)
+                {
+                    ShowPaymentHistory(memberId);
+                }
+            }
+            else if (memberId > 0)
+            {
+                // For paid/waived, show history button
+                Rectangle btnHistoryRect = new Rectangle(xOffset, buttonY, buttonWidth, 30);
+                if (btnHistoryRect.Contains(clickPoint))
+                {
+                    ShowPaymentHistory(memberId);
                 }
             }
         }
@@ -601,7 +761,7 @@ namespace Project5LMS.Forms.Admin.Fines
                     string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
                     string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     int memberId = Convert.ToInt32(row["MemberID"]);
-                    row["Member"] = $"{firstName} {lastName} (MEM-{memberId.ToString().PadLeft(3, '0')})".Trim();
+                    row["Member"] = Project5LMS.Helpers.IDFormatter.FormatMemberDisplay(firstName, lastName, memberId);
 
                     if (row["BookID"] != DBNull.Value && Convert.ToInt32(row["BookID"]) > 0)
                     {
@@ -800,36 +960,70 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
+                // Get fine details including TransactionID and MemberID
                 var dbContext = ServiceFactory.GetDbContext();
+                int transactionId = 0;
+                int memberId = 0;
+                
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
-                    string updateQuery;
-                    if (hasPaidDate)
-                    {
-                        updateQuery = "UPDATE Fines SET Paid = Amount, Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID";
-                    }
-                    else
-                    {
-                        updateQuery = "UPDATE Fines SET Paid = Amount, Status = 'Paid' WHERE FineID = @FineID";
-                    }
-
-                    using (var cmd = new MySqlCommand(updateQuery, conn))
+                    string getFineQuery = "SELECT TransactionID, MemberID FROM Fines WHERE FineID = @FineID";
+                    using (var cmd = new MySqlCommand(getFineQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);
-                        if (hasPaidDate)
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            cmd.Parameters.AddWithValue("@PaidDate", DateTime.Now);
+                            if (reader.Read())
+                            {
+                                transactionId = reader["TransactionID"] != DBNull.Value ? Convert.ToInt32(reader["TransactionID"]) : 0;
+                                memberId = Convert.ToInt32(reader["MemberID"]);
+                            }
                         }
-                        cmd.ExecuteNonQuery();
                     }
                 }
 
-                MessageBox.Show($"Fine of ${amount:F2} collected successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadMetrics();
-                LoadFines();
+                // Use PaymentService to process payment
+                var payment = new Project5LMS.Models.FinePayment
+                {
+                    TransactionID = transactionId > 0 ? transactionId : 0,
+                    MemberID = memberId,
+                    AmountPaid = amount,
+                    PaymentMode = "Cash", // Default, can be changed via dialog
+                    ProcessedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Admin"
+                };
+
+                bool success = _paymentService.ProcessPayment(payment);
+                
+                if (success)
+                {
+                    // Update fine status
+                    using (var conn = dbContext.GetConnection())
+                    {
+                        conn.Open();
+                        bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
+                        string updateQuery = hasPaidDate
+                            ? "UPDATE Fines SET Paid = Amount, Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID"
+                            : "UPDATE Fines SET Paid = Amount, Status = 'Paid' WHERE FineID = @FineID";
+
+                        using (var cmd = new MySqlCommand(updateQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@FineID", fineId);
+                            if (hasPaidDate)
+                                cmd.Parameters.AddWithValue("@PaidDate", DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show($"Fine of ${amount:F2} collected successfully.\nReceipt: {payment.ReceiptNumber}", 
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadMetrics();
+                    LoadFines();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to process payment.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -841,38 +1035,96 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
+                // Get fine details
                 var dbContext = ServiceFactory.GetDbContext();
+                int transactionId = 0;
+                int memberId = 0;
+                
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    decimal newPaid = paid + balance;
-                    bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
-                    string updateQuery;
-                    if (hasPaidDate)
-                    {
-                        updateQuery = "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID";
-                    }
-                    else
-                    {
-                        updateQuery = "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid' WHERE FineID = @FineID";
-                    }
-
-                    using (var cmd = new MySqlCommand(updateQuery, conn))
+                    string getFineQuery = "SELECT TransactionID, MemberID FROM Fines WHERE FineID = @FineID";
+                    using (var cmd = new MySqlCommand(getFineQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);
-                        cmd.Parameters.AddWithValue("@NewPaid", newPaid);
-                        if (hasPaidDate)
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            cmd.Parameters.AddWithValue("@PaidDate", DateTime.Now);
+                            if (reader.Read())
+                            {
+                                transactionId = reader["TransactionID"] != DBNull.Value ? Convert.ToInt32(reader["TransactionID"]) : 0;
+                                memberId = Convert.ToInt32(reader["MemberID"]);
+                            }
                         }
-                        cmd.ExecuteNonQuery();
                     }
                 }
 
-                MessageBox.Show($"Balance of ${balance:F2} paid successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadMetrics();
-                LoadFines();
+                // Use PaymentService to process payment
+                var payment = new Project5LMS.Models.FinePayment
+                {
+                    TransactionID = transactionId > 0 ? transactionId : 0,
+                    MemberID = memberId,
+                    AmountPaid = balance,
+                    PaymentMode = "Cash", // Default, can be changed via dialog
+                    ProcessedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Admin"
+                };
+
+                // Show transaction status
+                bool success = false;
+                using (var statusForm = new TransactionStatusForm("Payment Processing"))
+                {
+                    statusForm.Show();
+                    Application.DoEvents();
+
+                    try
+                    {
+                        statusForm.UpdateStatus("Processing payment...");
+                        success = _paymentService.ProcessPayment(payment);
+                        
+                        if (success)
+                        {
+                            statusForm.UpdateStatus("Payment recorded successfully!");
+                            System.Threading.Thread.Sleep(500);
+                        }
+                        statusForm.Close();
+                    }
+                    catch
+                    {
+                        statusForm.Close();
+                        throw;
+                    }
+                }
+                
+                if (success)
+                {
+                    // Update fine status
+                    decimal newPaid = paid + balance;
+                    using (var conn = dbContext.GetConnection())
+                    {
+                        conn.Open();
+                        bool hasPaidDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "PaidDate");
+                        string updateQuery = hasPaidDate
+                            ? "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid', PaidDate = @PaidDate WHERE FineID = @FineID"
+                            : "UPDATE Fines SET Paid = @NewPaid, Status = 'Paid' WHERE FineID = @FineID";
+
+                        using (var cmd = new MySqlCommand(updateQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@FineID", fineId);
+                            cmd.Parameters.AddWithValue("@NewPaid", newPaid);
+                            if (hasPaidDate)
+                                cmd.Parameters.AddWithValue("@PaidDate", DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show($"Balance of ${balance:F2} paid successfully.\nReceipt: {payment.ReceiptNumber}", 
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadMetrics();
+                    LoadFines();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to process payment.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -882,41 +1134,158 @@ namespace Project5LMS.Forms.Admin.Fines
 
         private void WaiveFine(int fineId)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to waive this fine?", "Confirm Waiver", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result != DialogResult.Yes) return;
+            // Show input dialog for waiver reason
+            string reason = "";
+            using (Form inputForm = new Form())
+            {
+                inputForm.Text = "Waive Fine";
+                inputForm.Size = new Size(400, 200);
+                inputForm.StartPosition = FormStartPosition.CenterParent;
+
+                Label lblReason = new Label
+                {
+                    Text = "Reason for waiver:",
+                    Location = new Point(10, 20),
+                    AutoSize = true
+                };
+                inputForm.Controls.Add(lblReason);
+
+                TextBox txtReason = new TextBox
+                {
+                    Location = new Point(10, 45),
+                    Size = new Size(360, 60),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical
+                };
+                inputForm.Controls.Add(txtReason);
+
+                Button btnOK = new Button
+                {
+                    Text = "OK",
+                    DialogResult = DialogResult.OK,
+                    Location = new Point(200, 120),
+                    Size = new Size(80, 30)
+                };
+                inputForm.Controls.Add(btnOK);
+
+                Button btnCancel = new Button
+                {
+                    Text = "Cancel",
+                    DialogResult = DialogResult.Cancel,
+                    Location = new Point(290, 120),
+                    Size = new Size(80, 30)
+                };
+                inputForm.Controls.Add(btnCancel);
+
+                inputForm.AcceptButton = btnOK;
+                inputForm.CancelButton = btnCancel;
+
+                if (inputForm.ShowDialog() != DialogResult.OK)
+                    return;
+
+                reason = txtReason.Text.Trim();
+            }
+
+            if (string.IsNullOrWhiteSpace(reason))
+            {
+                MessageBox.Show("Please provide a reason for the waiver.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             try
             {
+                // Get fine details
                 var dbContext = ServiceFactory.GetDbContext();
+                int transactionId = 0;
+                int memberId = 0;
+                decimal originalAmount = 0;
+                
                 using (var conn = dbContext.GetConnection())
                 {
                     conn.Open();
-
-                    bool hasWaivedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "WaivedDate");
-                    string updateQuery;
-                    if (hasWaivedDate)
-                    {
-                        updateQuery = "UPDATE Fines SET Status = 'Waived', WaivedDate = @WaivedDate WHERE FineID = @FineID";
-                    }
-                    else
-                    {
-                        updateQuery = "UPDATE Fines SET Status = 'Waived' WHERE FineID = @FineID";
-                    }
-
-                    using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                    string getFineQuery = "SELECT TransactionID, MemberID, Amount FROM Fines WHERE FineID = @FineID";
+                    using (var cmd = new MySqlCommand(getFineQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@FineID", fineId);
-                        if (hasWaivedDate)
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            cmd.Parameters.AddWithValue("@WaivedDate", DateTime.Now);
+                            if (reader.Read())
+                            {
+                                transactionId = reader["TransactionID"] != DBNull.Value ? Convert.ToInt32(reader["TransactionID"]) : 0;
+                                memberId = Convert.ToInt32(reader["MemberID"]);
+                                originalAmount = Convert.ToDecimal(reader["Amount"]);
+                            }
                         }
-                        cmd.ExecuteNonQuery();
                     }
                 }
 
-                MessageBox.Show("Fine waived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadMetrics();
-                LoadFines();
+                // Use PaymentService to waive fine
+                var adjustment = new Project5LMS.Models.FineAdjustment
+                {
+                    TransactionID = transactionId > 0 ? transactionId : 0,
+                    MemberID = memberId,
+                    OriginalAmount = originalAmount,
+                    AdjustedAmount = 0, // Waived completely
+                    AdjustmentAmount = originalAmount,
+                    AdjustmentType = "Waiver",
+                    Reason = reason,
+                    AdjustedBy = Project5LMS.Helpers.CurrentUser.FullName ?? "Admin"
+                };
+
+                // Show transaction status
+                bool success = false;
+                using (var statusForm = new TransactionStatusForm("Fine Waiver"))
+                {
+                    statusForm.Show();
+                    Application.DoEvents();
+
+                    try
+                    {
+                        statusForm.UpdateStatus("Processing fine waiver...");
+                        success = _paymentService.WaiveFine(adjustment);
+                        
+                        if (success)
+                        {
+                            statusForm.UpdateStatus("Fine waived successfully!");
+                            System.Threading.Thread.Sleep(500);
+                        }
+                        statusForm.Close();
+                    }
+                    catch
+                    {
+                        statusForm.Close();
+                        throw;
+                    }
+                }
+                
+                if (success)
+                {
+                    // Update fine status
+                    using (var conn = dbContext.GetConnection())
+                    {
+                        conn.Open();
+                        bool hasWaivedDate = DatabaseSchemaHelper.CheckColumnExists(conn, "Fines", "WaivedDate");
+                        string updateQuery = hasWaivedDate
+                            ? "UPDATE Fines SET Status = 'Waived', WaivedDate = @WaivedDate WHERE FineID = @FineID"
+                            : "UPDATE Fines SET Status = 'Waived' WHERE FineID = @FineID";
+
+                        using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@FineID", fineId);
+                            if (hasWaivedDate)
+                                cmd.Parameters.AddWithValue("@WaivedDate", DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("Fine waived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadMetrics();
+                    LoadFines();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to waive fine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -937,6 +1306,21 @@ namespace Project5LMS.Forms.Admin.Fines
         private void lblMetricWaivedValue_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ShowPaymentHistory(int memberId)
+        {
+            try
+            {
+                using (var historyForm = new PaymentHistoryForm(memberId))
+                {
+                    historyForm.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading payment history: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void lblMetricWaivedTitle_Click(object sender, EventArgs e)

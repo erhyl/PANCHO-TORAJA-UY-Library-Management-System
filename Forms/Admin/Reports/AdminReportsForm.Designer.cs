@@ -30,6 +30,7 @@
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.lblContentPlaceholder = new System.Windows.Forms.Label();
             this.panelDateFilter = new System.Windows.Forms.Panel();
             this.cmbDateRange = new System.Windows.Forms.ComboBox();
             this.panelReportButtons = new System.Windows.Forms.Panel();
@@ -43,6 +44,7 @@
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelMainContainer.SuspendLayout();
+            this.panelContent.SuspendLayout();
             this.panelDateFilter.SuspendLayout();
             this.panelReportButtons.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -68,6 +70,7 @@
             // 
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelContent.Controls.Add(this.lblContentPlaceholder);
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContent.Location = new System.Drawing.Point(32, 227);
             this.panelContent.Margin = new System.Windows.Forms.Padding(4);
@@ -75,6 +78,22 @@
             this.panelContent.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
             this.panelContent.Size = new System.Drawing.Size(1536, 728);
             this.panelContent.TabIndex = 3;
+            // 
+            // lblContentPlaceholder
+            // 
+            this.lblContentPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblContentPlaceholder.AutoSize = false;
+            this.lblContentPlaceholder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblContentPlaceholder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblContentPlaceholder.Location = new System.Drawing.Point(21, 20);
+            this.lblContentPlaceholder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblContentPlaceholder.Name = "lblContentPlaceholder";
+            this.lblContentPlaceholder.Size = new System.Drawing.Size(1494, 688);
+            this.lblContentPlaceholder.TabIndex = 0;
+            this.lblContentPlaceholder.Text = "Report content will be displayed here.\r\nSelect a report category above to view statistics and data.";
+            this.lblContentPlaceholder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelDateFilter
             // 
@@ -259,6 +278,7 @@
             this.Text = "Reports & Analytics";
             this.Load += new System.EventHandler(this.AdminReportsForm_Load);
             this.panelMainContainer.ResumeLayout(false);
+            this.panelContent.ResumeLayout(false);
             this.panelDateFilter.ResumeLayout(false);
             this.panelReportButtons.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
@@ -283,5 +303,6 @@
         private System.Windows.Forms.Panel panelDateFilter;
         private System.Windows.Forms.ComboBox cmbDateRange;
         private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.Label lblContentPlaceholder;
     }
 }

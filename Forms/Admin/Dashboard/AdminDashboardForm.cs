@@ -4,6 +4,7 @@ using System.Linq;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Data;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Services;
@@ -315,108 +316,64 @@ namespace Project5LMS.Forms.Admin.Dashboard
 
             try
             {
-                using (var conn = _dbContext.GetConnection())
+                // Use DashboardService methods instead of direct database queries
+                var borrowedData = _dashboardService.GetWeeklyBorrowData();
+                var returnedData = _dashboardService.GetWeeklyReturnData();
+
+                string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+                
+                int padding = 60;
+                int chartWidth = rect.Width - padding * 2;
+                int chartHeight = rect.Height - padding * 2;
+                int startX = padding;
+                int startY = padding;
+                int endY = startY + chartHeight;
+
+                g.DrawLine(Pens.Gray, startX, endY, startX + chartWidth, endY);
+                g.DrawLine(Pens.Gray, startX, startY, startX, endY);
+
+                int maxBorrowed = borrowedData.Values.Count > 0 ? borrowedData.Values.Max() : 0;
+                int maxReturned = returnedData.Values.Count > 0 ? returnedData.Values.Max() : 0;
+                int maxValue = Math.Max(maxBorrowed, maxReturned);
+                maxValue = Math.Max(maxValue, 10); // Minimum scale
+                int step = maxValue / 4;
+                if (step == 0) step = 1;
+                for (int i = 0; i <= 4; i++)
                 {
-                    conn.Open();
-
-                    Dictionary<string, int> borrowedData = new Dictionary<string, int>();
-                    Dictionary<string, int> returnedData = new Dictionary<string, int>();
-
-                    string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-                    foreach (string day in days)
-                    {
-                        borrowedData[day] = 0;
-                        returnedData[day] = 0;
-                    }
-
-                    string borrowQuery = @"SELECT DAYNAME(BorrowDate) as day_name, COUNT(*) as count
-                                         FROM Transactions
-                                         WHERE BorrowDate >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY)
-                                         AND BorrowDate < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY), INTERVAL 7 DAY)
-                                         AND (Status = 'Borrowed' OR Status = 'Active')
-                                         GROUP BY DAYNAME(BorrowDate)";
-                    using (MySqlCommand cmd = new MySqlCommand(borrowQuery, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string dayName = reader["day_name"].ToString();
-                            string shortDay = GetShortDayName(dayName);
-                            if (borrowedData.ContainsKey(shortDay))
-                                borrowedData[shortDay] = Convert.ToInt32(reader["count"]);
-                        }
-                    }
-
-                    string returnQuery = @"SELECT DAYNAME(ReturnDate) as day_name, COUNT(*) as count
-                                          FROM Transactions
-                                          WHERE ReturnDate >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY)
-                                          AND ReturnDate < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY), INTERVAL 7 DAY)
-                                          AND Status = 'Returned' AND ReturnDate IS NOT NULL
-                                          GROUP BY DAYNAME(ReturnDate)";
-                    using (MySqlCommand cmd = new MySqlCommand(returnQuery, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string dayName = reader["day_name"].ToString();
-                            string shortDay = GetShortDayName(dayName);
-                            if (returnedData.ContainsKey(shortDay))
-                                returnedData[shortDay] = Convert.ToInt32(reader["count"]);
-                        }
-                    }
-
-                    int padding = 60;
-                    int chartWidth = rect.Width - padding * 2;
-                    int chartHeight = rect.Height - padding * 2;
-                    int startX = padding;
-                    int startY = padding;
-                    int endY = startY + chartHeight;
-
-                    g.DrawLine(Pens.Gray, startX, endY, startX + chartWidth, endY);
-                    g.DrawLine(Pens.Gray, startX, startY, startX, endY);
-
-                    int maxBorrowed = borrowedData.Values.Count > 0 ? borrowedData.Values.Max() : 0;
-                    int maxReturned = returnedData.Values.Count > 0 ? returnedData.Values.Max() : 0;
-                    int maxValue = Math.Max(maxBorrowed, maxReturned);
-                    maxValue = Math.Max(maxValue, 240);
-                    int step = maxValue / 4;
-                    for (int i = 0; i <= 4; i++)
-                    {
-                        int value = i * step;
-                        int y = endY - (value * chartHeight / maxValue);
-                        g.DrawString(value.ToString(), new Font("Segoe UI", 9F), Brushes.Gray, startX - 40, y - 10);
-                        g.DrawLine(new Pen(Color.LightGray, 1), startX, y, startX + chartWidth, y);
-                    }
-
-                    int barWidth = chartWidth / (days.Length * 3);
-                    int spacing = barWidth;
-                    int xPos = startX + spacing;
-
-                    foreach (string day in days)
-                    {
-                        int borrowed = borrowedData.ContainsKey(day) ? borrowedData[day] : 0;
-                        int returned = returnedData.ContainsKey(day) ? returnedData[day] : 0;
-
-                        int borrowedHeight = (int)((double)borrowed / maxValue * chartHeight);
-                        Rectangle borrowedRect = new Rectangle(xPos, endY - borrowedHeight, barWidth, borrowedHeight);
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(0, 123, 255)), borrowedRect);
-
-                        int returnedHeight = (int)((double)returned / maxValue * chartHeight);
-                        Rectangle returnedRect = new Rectangle(xPos + barWidth, endY - returnedHeight, barWidth, returnedHeight);
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(40, 167, 69)), returnedRect);
-
-                        g.DrawString(day, new Font("Segoe UI", 9F), Brushes.Black, xPos + barWidth / 2 - 10, endY + 5);
-
-                        xPos += barWidth * 2 + spacing;
-                    }
-
-                    int legendY = startY + 20;
-                    g.FillRectangle(new SolidBrush(Color.FromArgb(0, 123, 255)), startX + chartWidth - 150, legendY, 15, 15);
-                    g.DrawString("Borrowed", new Font("Segoe UI", 9F), Brushes.Black, startX + chartWidth - 130, legendY);
-
-                    g.FillRectangle(new SolidBrush(Color.FromArgb(40, 167, 69)), startX + chartWidth - 150, legendY + 20, 15, 15);
-                    g.DrawString("Returned", new Font("Segoe UI", 9F), Brushes.Black, startX + chartWidth - 130, legendY + 20);
+                    int value = i * step;
+                    int y = endY - (value * chartHeight / maxValue);
+                    g.DrawString(value.ToString(), new Font("Segoe UI", 9F), Brushes.Gray, startX - 40, y - 10);
+                    g.DrawLine(new Pen(Color.LightGray, 1), startX, y, startX + chartWidth, y);
                 }
+
+                int barWidth = chartWidth / (days.Length * 3);
+                int spacing = barWidth;
+                int xPos = startX + spacing;
+
+                foreach (string day in days)
+                {
+                    int borrowed = borrowedData.ContainsKey(day) ? borrowedData[day] : 0;
+                    int returned = returnedData.ContainsKey(day) ? returnedData[day] : 0;
+
+                    int borrowedHeight = (int)((double)borrowed / maxValue * chartHeight);
+                    Rectangle borrowedRect = new Rectangle(xPos, endY - borrowedHeight, barWidth, borrowedHeight);
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(0, 123, 255)), borrowedRect);
+
+                    int returnedHeight = (int)((double)returned / maxValue * chartHeight);
+                    Rectangle returnedRect = new Rectangle(xPos + barWidth, endY - returnedHeight, barWidth, returnedHeight);
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(40, 167, 69)), returnedRect);
+
+                    g.DrawString(day, new Font("Segoe UI", 9F), Brushes.Black, xPos + barWidth / 2 - 10, endY + 5);
+
+                    xPos += barWidth * 2 + spacing;
+                }
+
+                int legendY = startY + 20;
+                g.FillRectangle(new SolidBrush(Color.FromArgb(0, 123, 255)), startX + chartWidth - 150, legendY, 15, 15);
+                g.DrawString("Borrowed", new Font("Segoe UI", 9F), Brushes.Black, startX + chartWidth - 130, legendY);
+
+                g.FillRectangle(new SolidBrush(Color.FromArgb(40, 167, 69)), startX + chartWidth - 150, legendY + 20, 15, 15);
+                g.DrawString("Returned", new Font("Segoe UI", 9F), Brushes.Black, startX + chartWidth - 130, legendY + 20);
             }
             catch (Exception ex)
             {
@@ -433,45 +390,45 @@ namespace Project5LMS.Forms.Admin.Dashboard
             {
                 var categoryData = _dashboardService.GetCategoryDistribution();
 
-                    if (categoryData.Count == 0) return;
+                if (categoryData.Count == 0) return;
 
-                    int padding = 80;
-                    int size = Math.Min(rect.Width, rect.Height) - padding * 2;
-                    Rectangle pieRect = new Rectangle(rect.Width / 2 - size / 2, padding, size, size);
+                int padding = 80;
+                int size = Math.Min(rect.Width, rect.Height) - padding * 2;
+                Rectangle pieRect = new Rectangle(rect.Width / 2 - size / 2, padding, size, size);
 
-                    int total = categoryData.Values.Sum();
-                    float startAngle = 0;
+                int total = categoryData.Values.Sum();
+                float startAngle = 0;
 
-                    Color[] colors = new Color[]
-                    {
-                        Color.FromArgb(0, 123, 255),
-                        Color.FromArgb(40, 167, 69),
-                        Color.FromArgb(255, 152, 0),
-                        Color.FromArgb(156, 39, 176),
-                        Color.FromArgb(233, 30, 99),
-                        Color.FromArgb(63, 81, 181)
-                    };
+                Color[] colors = new Color[]
+                {
+                    Color.FromArgb(0, 123, 255),
+                    Color.FromArgb(40, 167, 69),
+                    Color.FromArgb(255, 152, 0),
+                    Color.FromArgb(156, 39, 176),
+                    Color.FromArgb(233, 30, 99),
+                    Color.FromArgb(63, 81, 181)
+                };
 
-                    int colorIndex = 0;
-                    int legendY = padding + size + 20;
-                    int legendX = rect.Width / 2 - 150;
+                int colorIndex = 0;
+                int legendY = padding + size + 20;
+                int legendX = rect.Width / 2 - 150;
 
-                    foreach (var kvp in categoryData.Take(6))
-                    {
-                        float sweepAngle = (float)kvp.Value / total * 360;
-                        Color color = colors[colorIndex % colors.Length];
+                foreach (var kvp in categoryData.Take(6))
+                {
+                    float sweepAngle = (float)kvp.Value / total * 360;
+                    Color color = colors[colorIndex % colors.Length];
 
-                        g.FillPie(new SolidBrush(color), pieRect, startAngle, sweepAngle);
-                        g.DrawPie(Pens.White, pieRect, startAngle, sweepAngle);
+                    g.FillPie(new SolidBrush(color), pieRect, startAngle, sweepAngle);
+                    g.DrawPie(Pens.White, pieRect, startAngle, sweepAngle);
 
-                        g.FillRectangle(new SolidBrush(color), legendX, legendY, 15, 15);
-                        float percentage = (float)kvp.Value / total * 100;
-                        g.DrawString($"{kvp.Key}: {percentage:F0}%", new Font("Segoe UI", 9F), Brushes.Black, legendX + 20, legendY);
+                    g.FillRectangle(new SolidBrush(color), legendX, legendY, 15, 15);
+                    float percentage = (float)kvp.Value / total * 100;
+                    g.DrawString($"{kvp.Key}: {percentage:F0}%", new Font("Segoe UI", 9F), Brushes.Black, legendX + 20, legendY);
 
-                        startAngle += sweepAngle;
-                        colorIndex++;
-                        legendY += 20;
-                    }
+                    startAngle += sweepAngle;
+                    colorIndex++;
+                    legendY += 20;
+                }
             }
             catch (Exception ex)
             {
@@ -517,6 +474,168 @@ namespace Project5LMS.Forms.Admin.Dashboard
         private void panelCharts_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Draw a line chart showing monthly trends
+        /// </summary>
+        private void DrawLineChart(Graphics g, Rectangle rect, Dictionary<string, int> borrowData, Dictionary<string, int> returnData, string title)
+        {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.Clear(Color.White);
+
+            try
+            {
+                if (borrowData.Count == 0 && returnData.Count == 0) return;
+
+                int padding = 60;
+                int chartWidth = rect.Width - padding * 2;
+                int chartHeight = rect.Height - padding * 2;
+                int startX = padding;
+                int startY = padding;
+                int endY = startY + chartHeight;
+
+                // Draw axes
+                g.DrawLine(Pens.Gray, startX, endY, startX + chartWidth, endY);
+                g.DrawLine(Pens.Gray, startX, startY, startX, endY);
+
+                // Get all months and sort
+                var allMonths = new HashSet<string>();
+                foreach (var key in borrowData.Keys) allMonths.Add(key);
+                foreach (var key in returnData.Keys) allMonths.Add(key);
+                var sortedMonths = allMonths.OrderBy(m => m).ToList();
+
+                if (sortedMonths.Count == 0) return;
+
+                int maxBorrowed = borrowData.Values.Count > 0 ? borrowData.Values.Max() : 0;
+                int maxReturned = returnData.Values.Count > 0 ? returnData.Values.Max() : 0;
+                int maxValue = Math.Max(maxBorrowed, maxReturned);
+                maxValue = Math.Max(maxValue, 10);
+
+                // Draw grid lines
+                int step = maxValue / 4;
+                if (step == 0) step = 1;
+                for (int i = 0; i <= 4; i++)
+                {
+                    int value = i * step;
+                    int y = endY - (value * chartHeight / maxValue);
+                    g.DrawString(value.ToString(), new Font("Segoe UI", 9F), Brushes.Gray, startX - 40, y - 10);
+                    g.DrawLine(new Pen(Color.LightGray, 1), startX, y, startX + chartWidth, y);
+                }
+
+                // Draw lines
+                int pointSpacing = chartWidth / Math.Max(sortedMonths.Count - 1, 1);
+                PointF[] borrowPoints = new PointF[sortedMonths.Count];
+                PointF[] returnPoints = new PointF[sortedMonths.Count];
+
+                for (int i = 0; i < sortedMonths.Count; i++)
+                {
+                    int x = startX + i * pointSpacing;
+                    int borrowValue = borrowData.ContainsKey(sortedMonths[i]) ? borrowData[sortedMonths[i]] : 0;
+                    int returnValue = returnData.ContainsKey(sortedMonths[i]) ? returnData[sortedMonths[i]] : 0;
+
+                    int borrowY = endY - (int)((double)borrowValue / maxValue * chartHeight);
+                    int returnY = endY - (int)((double)returnValue / maxValue * chartHeight);
+
+                    borrowPoints[i] = new PointF(x, borrowY);
+                    returnPoints[i] = new PointF(x, returnY);
+
+                    // Draw points
+                    g.FillEllipse(new SolidBrush(Color.FromArgb(0, 123, 255)), x - 3, borrowY - 3, 6, 6);
+                    g.FillEllipse(new SolidBrush(Color.FromArgb(40, 167, 69)), x - 3, returnY - 3, 6, 6);
+
+                    // Draw month labels
+                    g.DrawString(sortedMonths[i].Substring(0, 3), new Font("Segoe UI", 8F), Brushes.Black, x - 10, endY + 5);
+                }
+
+                // Draw lines
+                if (borrowPoints.Length > 1)
+                {
+                    g.DrawLines(new Pen(Color.FromArgb(0, 123, 255), 2), borrowPoints);
+                }
+                if (returnPoints.Length > 1)
+                {
+                    g.DrawLines(new Pen(Color.FromArgb(40, 167, 69), 2), returnPoints);
+                }
+
+                // Legend
+                int legendY = startY + 20;
+                g.FillRectangle(new SolidBrush(Color.FromArgb(0, 123, 255)), startX + chartWidth - 150, legendY, 15, 15);
+                g.DrawString("Borrowed", new Font("Segoe UI", 9F), Brushes.Black, startX + chartWidth - 130, legendY);
+
+                g.FillRectangle(new SolidBrush(Color.FromArgb(40, 167, 69)), startX + chartWidth - 150, legendY + 20, 15, 15);
+                g.DrawString("Returned", new Font("Segoe UI", 9F), Brushes.Black, startX + chartWidth - 130, legendY + 20);
+            }
+            catch (Exception ex)
+            {
+                g.DrawString($"Error loading chart: {ex.Message}", new Font("Segoe UI", 10F), Brushes.Red, 20, 20);
+            }
+        }
+
+        /// <summary>
+        /// Draw an area chart (filled line chart)
+        /// </summary>
+        private void DrawAreaChart(Graphics g, Rectangle rect, Dictionary<string, int> data, Color areaColor, string title)
+        {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.Clear(Color.White);
+
+            try
+            {
+                if (data.Count == 0) return;
+
+                int padding = 60;
+                int chartWidth = rect.Width - padding * 2;
+                int chartHeight = rect.Height - padding * 2;
+                int startX = padding;
+                int startY = padding;
+                int endY = startY + chartHeight;
+
+                g.DrawLine(Pens.Gray, startX, endY, startX + chartWidth, endY);
+                g.DrawLine(Pens.Gray, startX, startY, startX, endY);
+
+                var sortedKeys = data.Keys.OrderBy(k => k).ToList();
+                if (sortedKeys.Count == 0) return;
+
+                int maxValue = data.Values.Max();
+                maxValue = Math.Max(maxValue, 10);
+
+                int pointSpacing = chartWidth / Math.Max(sortedKeys.Count - 1, 1);
+                PointF[] points = new PointF[sortedKeys.Count + 2];
+
+                // Start point at bottom-left
+                points[0] = new PointF(startX, endY);
+
+                for (int i = 0; i < sortedKeys.Count; i++)
+                {
+                    int x = startX + i * pointSpacing;
+                    int value = data[sortedKeys[i]];
+                    int y = endY - (int)((double)value / maxValue * chartHeight);
+                    points[i + 1] = new PointF(x, y);
+
+                    g.FillEllipse(new SolidBrush(areaColor), x - 3, y - 3, 6, 6);
+                    g.DrawString(sortedKeys[i].Substring(0, 3), new Font("Segoe UI", 8F), Brushes.Black, x - 10, endY + 5);
+                }
+
+                // End point at bottom-right
+                points[sortedKeys.Count + 1] = new PointF(startX + chartWidth, endY);
+
+                // Fill area
+                using (var brush = new SolidBrush(Color.FromArgb(100, areaColor.R, areaColor.G, areaColor.B)))
+                {
+                    g.FillPolygon(brush, points);
+                }
+
+                // Draw line
+                if (points.Length > 2)
+                {
+                    g.DrawLines(new Pen(areaColor, 2), points.Skip(1).Take(sortedKeys.Count).ToArray());
+                }
+            }
+            catch (Exception ex)
+            {
+                g.DrawString($"Error loading chart: {ex.Message}", new Font("Segoe UI", 10F), Brushes.Red, 20, 20);
+            }
         }
     }
 }

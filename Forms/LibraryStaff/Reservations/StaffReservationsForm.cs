@@ -785,26 +785,26 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             try
             {
 
-                int memberId = 0;
-                if (memberIdText.StartsWith("M"))
-                {
-                    string idPart = memberIdText.Replace("M", "");
-                    int.TryParse(idPart, out memberId);
-                }
-                else
-                {
-                    int.TryParse(memberIdText, out memberId);
-                }
-
+                int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdText);
+                
+                // Try to get book by accession number first (preferred method)
                 int bookId = 0;
-                if (bookIdText.StartsWith("B"))
+                var bookService = ServiceFactory.CreateBookService();
+                var book = bookService.GetBookByAccessionNumber(bookIdText);
+                if (book != null)
                 {
-                    string idPart = bookIdText.Replace("B", "");
-                    int.TryParse(idPart, out bookId);
+                    bookId = book.BookID;
                 }
                 else
                 {
-                    int.TryParse(bookIdText, out bookId);
+                    // Try parsing as book ID
+                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                    if (bookId > 0)
+                    {
+                        var bookById = bookService.GetBook(bookId);
+                        if (bookById == null)
+                            bookId = 0;
+                    }
                 }
 
                 if (memberId == 0 || bookId == 0)

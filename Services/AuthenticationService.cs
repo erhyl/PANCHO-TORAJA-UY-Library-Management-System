@@ -12,10 +12,6 @@ namespace Project5LMS.Services
     {
         private readonly DatabaseContext _db;
 
-        public AuthenticationService() : this(new DatabaseContext())
-        {
-        }
-
         public AuthenticationService(DatabaseContext dbContext)
         {
             _db = dbContext ?? throw new System.ArgumentNullException(nameof(dbContext));

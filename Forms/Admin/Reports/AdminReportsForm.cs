@@ -146,6 +146,11 @@ namespace Project5LMS.Forms.Admin.Reports
         {
             currentReportType = reportType;
             panelContent.Controls.Clear();
+            // Remove placeholder label if it exists
+            if (lblContentPlaceholder != null && panelContent.Controls.Contains(lblContentPlaceholder))
+            {
+                panelContent.Controls.Remove(lblContentPlaceholder);
+            }
 
             switch (reportType)
             {

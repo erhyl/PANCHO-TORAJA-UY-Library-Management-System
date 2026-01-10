@@ -22,17 +22,29 @@ namespace Project5LMS.Repositories
         {
             try
             {
-                string query = "SELECT * FROM Books WHERE BookID = @BookID LIMIT 1";
-                DataTable dt = _dbContext.ExecuteQuery(query.Replace("@BookID", bookId.ToString()));
-
-                if (dt.Rows.Count > 0)
+                using (var conn = _dbContext.GetConnection())
                 {
-                    return MapDataRowToBook(dt.Rows[0]);
+                    conn.Open();
+                    string query = "SELECT * FROM Books WHERE BookID = @BookID LIMIT 1";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        using (var adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            if (dt.Rows.Count > 0)
+                            {
+                                return MapDataRowToBook(dt.Rows[0]);
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error getting book by ID: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
             }
             return null;
         }
@@ -154,6 +166,93 @@ namespace Project5LMS.Repositories
             return books;
         }
 
+        public IEnumerable<Book> GetByAuthor(string author)
+        {
+            List<Book> books = new List<Book>();
+            try
+            {
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT * FROM Books WHERE Author LIKE @Author ORDER BY Title";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Author", $"%{author}%");
+                        using (var adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                books.Add(MapDataRowToBook(row));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting books by author: {ex.Message}");
+            }
+            return books;
+        }
+
+        public IEnumerable<string> GetAllAuthors()
+        {
+            var authors = new List<string>();
+            try
+            {
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT DISTINCT Author FROM Books WHERE Author IS NOT NULL AND Author != '' ORDER BY Author";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            authors.Add(row["Author"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting all authors: {ex.Message}");
+            }
+            return authors;
+        }
+
+        public IEnumerable<string> GetAllPublishers()
+        {
+            var publishers = new List<string>();
+            try
+            {
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT DISTINCT Publisher FROM Books WHERE Publisher IS NOT NULL AND Publisher != '' ORDER BY Publisher";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            publishers.Add(row["Publisher"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting all publishers: {ex.Message}");
+            }
+            return publishers;
+        }
+
         public bool Add(Book book)
         {
             try
@@ -185,6 +284,12 @@ namespace Project5LMS.Repositories
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(book.AccessionNo))
+                {
+                    System.Diagnostics.Debug.WriteLine("Error updating book: AccessionNo is required");
+                    return false;
+                }
+
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
@@ -192,11 +297,10 @@ namespace Project5LMS.Repositories
                                     Publisher=@Publisher, PublicationYear=@PublicationYear, Language=@Language,
                                     TotalCopies=@TotalCopies, Available=@Available, Location=@Location, 
                                     Status=@Status, CallNumber=@CallNumber, BookType=@BookType
-                                    WHERE BookID=@BookID";
+                                    WHERE AccessionNo=@AccessionNo";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@BookID", book.BookID);
                         MapBookToParameters(cmd, book);
                         cmd.ExecuteNonQuery();
                         return true;
@@ -210,17 +314,23 @@ namespace Project5LMS.Repositories
             }
         }
 
-        public bool Delete(int bookId)
+        public bool Delete(string accessionNumber)
         {
             try
             {
-                string query = "DELETE FROM Books WHERE BookID = @BookID";
+                if (string.IsNullOrWhiteSpace(accessionNumber))
+                {
+                    System.Diagnostics.Debug.WriteLine("Error deleting book: AccessionNo is required");
+                    return false;
+                }
+
+                string query = "DELETE FROM Books WHERE AccessionNo = @AccessionNo";
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        cmd.Parameters.AddWithValue("@AccessionNo", accessionNumber);
                         cmd.ExecuteNonQuery();
                         return true;
                     }
@@ -233,20 +343,26 @@ namespace Project5LMS.Repositories
             }
         }
 
-        public bool UpdateAvailability(int bookId, int change)
+        public bool UpdateAvailability(string accessionNumber, int change)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(accessionNumber))
+                {
+                    System.Diagnostics.Debug.WriteLine("Error updating book availability: AccessionNo is required");
+                    return false;
+                }
+
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
                     string query = @"UPDATE Books 
                                     SET Available = GREATEST(0, LEAST(Available + @Change, TotalCopies))
-                                    WHERE BookID = @BookID AND Available + @Change >= 0 AND Available + @Change <= TotalCopies";
+                                    WHERE AccessionNo = @AccessionNo AND Available + @Change >= 0 AND Available + @Change <= TotalCopies";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        cmd.Parameters.AddWithValue("@AccessionNo", accessionNumber);
                         cmd.Parameters.AddWithValue("@Change", change);
                         int rowsAffected = cmd.ExecuteNonQuery();
                         return rowsAffected > 0;
@@ -260,17 +376,22 @@ namespace Project5LMS.Repositories
             }
         }
 
-        public int GetAvailableCount(int bookId)
+        public int GetAvailableCount(string accessionNumber)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(accessionNumber))
+                {
+                    return 0;
+                }
+
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT Available FROM Books WHERE BookID = @BookID";
+                    string query = "SELECT Available FROM Books WHERE AccessionNo = @AccessionNo";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        cmd.Parameters.AddWithValue("@AccessionNo", accessionNumber);
                         object result = cmd.ExecuteScalar();
                         if (result != null && result != DBNull.Value)
                         {
@@ -284,6 +405,115 @@ namespace Project5LMS.Repositories
                 System.Diagnostics.Debug.WriteLine($"Error getting available count: {ex.Message}");
             }
             return 0;
+        }
+
+        public IEnumerable<Book> GetNewArrivals(int limit = 20, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            List<Book> books = new List<Book>();
+            try
+            {
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    
+                    // Default to last 30 days if no dates provided
+                    if (!startDate.HasValue)
+                        startDate = DateTime.Now.AddDays(-30);
+                    if (!endDate.HasValue)
+                        endDate = DateTime.Now;
+
+                    string query = @"SELECT * FROM Books 
+                                   WHERE (CreatedDate >= @StartDate AND CreatedDate <= @EndDate)
+                                   OR (CreatedDate IS NULL AND BookID IN (
+                                       SELECT BookID FROM Books ORDER BY BookID DESC LIMIT @Limit
+                                   ))
+                                   ORDER BY COALESCE(CreatedDate, '1900-01-01') DESC, BookID DESC
+                                   LIMIT @Limit";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@StartDate", startDate.Value);
+                        cmd.Parameters.AddWithValue("@EndDate", endDate.Value);
+                        cmd.Parameters.AddWithValue("@Limit", limit);
+                        using (var adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                books.Add(MapDataRowToBook(row));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting new arrivals: {ex.Message}");
+            }
+            return books;
+        }
+
+        public IEnumerable<Book> GetPopularBooks(int limit = 20, bool weightedByRecency = false)
+        {
+            List<Book> books = new List<Book>();
+            try
+            {
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    
+                    string query;
+                    if (weightedByRecency)
+                    {
+                        // Weighted popularity: recent borrowings count more
+                        // Formula: SUM(CASE WHEN BorrowDate >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 3 
+                        //                  WHEN BorrowDate >= DATE_SUB(NOW(), INTERVAL 90 DAY) THEN 2 
+                        //                  ELSE 1 END) as PopularityScore
+                        query = @"SELECT b.*, 
+                                   SUM(CASE 
+                                       WHEN t.BorrowDate >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 3
+                                       WHEN t.BorrowDate >= DATE_SUB(NOW(), INTERVAL 90 DAY) THEN 2
+                                       ELSE 1
+                                   END) as PopularityScore
+                                   FROM Books b
+                                   LEFT JOIN Transactions t ON b.BookID = t.BookID 
+                                       AND (t.Status = 'Borrowed' OR t.Status = 'Returned')
+                                   GROUP BY b.BookID
+                                   ORDER BY PopularityScore DESC, b.Title ASC
+                                   LIMIT @Limit";
+                    }
+                    else
+                    {
+                        // Simple count-based popularity
+                        query = @"SELECT b.*, COUNT(t.TransactionID) as BorrowCount
+                                   FROM Books b
+                                   LEFT JOIN Transactions t ON b.BookID = t.BookID 
+                                       AND (t.Status = 'Borrowed' OR t.Status = 'Returned')
+                                   GROUP BY b.BookID
+                                   ORDER BY BorrowCount DESC, b.Title ASC
+                                   LIMIT @Limit";
+                    }
+                    
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Limit", limit);
+                        using (var adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                books.Add(MapDataRowToBook(row));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting popular books: {ex.Message}");
+            }
+            return books;
         }
 
         private Book MapDataRowToBook(DataRow row)

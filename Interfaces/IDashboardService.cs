@@ -20,6 +20,8 @@ namespace Project5LMS.Interfaces
         Dictionary<string, int> GetWeeklyBorrowData();
         Dictionary<string, int> GetWeeklyReturnData();
         Dictionary<string, int> GetCategoryDistribution();
+        Dictionary<string, int> GetMonthlyBorrowData(int months = 6);
+        Dictionary<string, int> GetMonthlyReturnData(int months = 6);
     }
 }
 

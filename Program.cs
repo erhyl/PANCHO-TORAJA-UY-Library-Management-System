@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using Project5LMS.Services;
 
 namespace Project5LMS
 {
@@ -10,6 +11,8 @@ namespace Project5LMS
         [STAThread]
         static void Main()
         {
+            // Initialize Dependency Injection container
+            DependencyInjection.ConfigureServices();
 
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += Application_ThreadException;
