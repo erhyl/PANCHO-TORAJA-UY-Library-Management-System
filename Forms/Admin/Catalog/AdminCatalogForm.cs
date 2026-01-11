@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -91,12 +91,18 @@ namespace Project5LMS.Forms.Admin.Catalog
             }
             if (columnName == "BookDetails" && e.Value != null)
             {
+                // BookDetails is already formatted in LoadBooks() as multiline
+                // Ensure it displays properly with line breaks
                 string details = e.Value.ToString();
+                e.CellStyle.WrapMode = DataGridViewTriState.True;
                 e.FormattingApplied = true;
             }
             if (columnName == "Publisher" && e.Value != null)
             {
+                // Publisher is already formatted in LoadBooks() as multiline
+                // Ensure it displays properly with line breaks
                 string publisher = e.Value.ToString();
+                e.CellStyle.WrapMode = DataGridViewTriState.True;
                 e.FormattingApplied = true;
             }
             if (columnName == "Copies" && e.Value != null)
@@ -109,7 +115,18 @@ namespace Project5LMS.Forms.Admin.Catalog
                         if (rowView != null)
                         {
                             int totalCopies = 0;
-                            if (e.Value is int)
+                            // Try to get TotalCopies first, then Copies
+                            if (rowView.Row.Table.Columns.Contains("TotalCopies") && rowView["TotalCopies"] != DBNull.Value)
+                            {
+                                object totalValue = rowView["TotalCopies"];
+                                if (totalValue is int)
+                                    totalCopies = (int)totalValue;
+                                else if (totalValue is decimal)
+                                    totalCopies = (int)(decimal)totalValue;
+                                else if (int.TryParse(totalValue.ToString(), out int parsedTotal))
+                                    totalCopies = parsedTotal;
+                            }
+                            else if (e.Value is int)
                             {
                                 totalCopies = (int)e.Value;
                             }
@@ -121,6 +138,7 @@ namespace Project5LMS.Forms.Admin.Catalog
                             {
                                 totalCopies = parsedCopies;
                             }
+                            
                             int available = 0;
                             if (rowView.Row.Table.Columns.Contains("Available") && rowView["Available"] != DBNull.Value)
                             {
@@ -138,10 +156,12 @@ namespace Project5LMS.Forms.Admin.Catalog
                                     available = parsedAvailable;
                                 }
                             }
-                            e.Value = $"{available}/{totalCopies} available";
+                            // Format as "X/Y\navailable" for multiline display
+                            e.Value = $"{available}/{totalCopies}\navailable";
+                            e.CellStyle.WrapMode = DataGridViewTriState.True;
+                            e.FormattingApplied = true;
                         }
                     }
-                    e.FormattingApplied = true;
                 }
                 catch (Exception ex)
                 {
@@ -161,57 +181,70 @@ namespace Project5LMS.Forms.Admin.Catalog
             {
                 if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
                 string columnName = dataGridViewBooks.Columns[e.ColumnIndex].Name;
-            if (columnName == "Status")
-            {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-                string value = e.Value?.ToString() ?? "";
-                Color bgColor = Color.LightGray;
-                Color textColor = Color.Black;
-                switch (value.ToLower())
+                
+                // Paint Status column with color-coded badges
+                if (columnName == "Status")
                 {
-                    case "available":
-                        bgColor = Color.FromArgb(40, 167, 69);
-                        textColor = Color.White;
-                        break;
-                    case "limited":
-                        bgColor = Color.FromArgb(255, 193, 7);
-                        textColor = Color.White;
-                        break;
-                    case "out of stock":
-                    case "outofstock":
-                        bgColor = Color.FromArgb(220, 53, 69);
-                        textColor = Color.White;
-                        break;
-                }
-                Rectangle badgeRect = new Rectangle(
-                    e.CellBounds.X + 5,
-                    e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
-                    Math.Min(100, e.CellBounds.Width - 10),
-                    25
-                );
-                using (GraphicsPath path = new GraphicsPath())
-                {
-                    int radius = 12;
-                    path.AddArc(badgeRect.X, badgeRect.Y, radius, radius, 180, 90);
-                    path.AddArc(badgeRect.Right - radius, badgeRect.Y, radius, radius, 270, 90);
-                    path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
-                    path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
-                    path.CloseAllFigures();
-                    using (SolidBrush brush = new SolidBrush(bgColor))
+                    e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+                    string value = e.Value?.ToString() ?? "";
+                    Color bgColor = Color.LightGray;
+                    Color textColor = Color.Black;
+                    
+                    switch (value.ToLower())
                     {
-                        e.Graphics.FillPath(brush, path);
+                        case "available":
+                            bgColor = Color.FromArgb(40, 167, 69); // Green
+                            textColor = Color.White;
+                            break;
+                        case "limited":
+                            bgColor = Color.FromArgb(255, 193, 7); // Orange/Amber
+                            textColor = Color.Black;
+                            break;
+                        case "out of stock":
+                        case "outofstock":
+                        case "no copies":
+                            bgColor = Color.FromArgb(220, 53, 69); // Red
+                            textColor = Color.White;
+                            break;
+                        default:
+                            bgColor = Color.LightGray;
+                            textColor = Color.Black;
+                            break;
                     }
+                    
+                    Rectangle badgeRect = new Rectangle(
+                        e.CellBounds.X + 5,
+                        e.CellBounds.Y + (e.CellBounds.Height - 25) / 2,
+                        Math.Min(100, e.CellBounds.Width - 10),
+                        25
+                    );
+                    
+                    using (GraphicsPath path = new GraphicsPath())
+                    {
+                        int radius = 12;
+                        path.AddArc(badgeRect.X, badgeRect.Y, radius, radius, 180, 90);
+                        path.AddArc(badgeRect.Right - radius, badgeRect.Y, radius, radius, 270, 90);
+                        path.AddArc(badgeRect.Right - radius, badgeRect.Bottom - radius, radius, radius, 0, 90);
+                        path.AddArc(badgeRect.X, badgeRect.Bottom - radius, radius, radius, 90, 90);
+                        path.CloseAllFigures();
+                        using (SolidBrush brush = new SolidBrush(bgColor))
+                        {
+                            e.Graphics.FillPath(brush, path);
+                        }
+                    }
+                    
+                    TextRenderer.DrawText(
+                        e.Graphics,
+                        value,
+                        dataGridViewBooks.DefaultCellStyle.Font,
+                        badgeRect,
+                        textColor,
+                        TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
+                    );
+                    e.Handled = true;
                 }
-                TextRenderer.DrawText(
-                    e.Graphics,
-                    value,
-                    dataGridViewBooks.DefaultCellStyle.Font,
-                    badgeRect,
-                    textColor,
-                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
-                );
-                e.Handled = true;
-            }
+                // For multiline cells (BookDetails, Publisher, Copies), let default rendering handle it
+                // WrapMode is already enabled in Designer, so default rendering will show multiline text
             }
             catch (Exception ex)
             {
@@ -265,27 +298,36 @@ namespace Project5LMS.Forms.Admin.Catalog
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
+                    // Check which columns exist
+                    bool hasTotalCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies");
+                    bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                    string copiesColumn = hasTotalCopies ? "TotalCopies" : (hasCopies ? "Copies" : "1");
+                    
                     string queryTotalTitles = "SELECT COUNT(DISTINCT BookID) FROM Books";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotalTitles, conn))
                     {
-                        int totalTitles = Convert.ToInt32(cmd.ExecuteScalar());
+                        object result = cmd.ExecuteScalar();
+                        int totalTitles = result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
                         lblMetricTotalTitlesValue.Text = totalTitles.ToString();
                     }
-                    string queryTotalCopies = "SELECT SUM(Copies) FROM Books";
+                    
+                    string queryTotalCopies = $"SELECT COALESCE(SUM({copiesColumn}), 0) FROM Books";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotalCopies, conn))
                     {
                         object result = cmd.ExecuteScalar();
                         int totalCopies = result != DBNull.Value && result != null ? Convert.ToInt32(result) : 0;
                         lblMetricTotalCopiesValue.Text = totalCopies.ToString();
                     }
-                    string queryAvailable = "SELECT SUM(Available) FROM Books";
+                    
+                    string queryAvailable = "SELECT COALESCE(SUM(Available), 0) FROM Books WHERE Available IS NOT NULL";
                     using (MySqlCommand cmd = new MySqlCommand(queryAvailable, conn))
                     {
                         object result = cmd.ExecuteScalar();
                         int available = result != DBNull.Value && result != null ? Convert.ToInt32(result) : 0;
                         lblMetricAvailableValue.Text = available.ToString();
                     }
-                    string queryOnLoan = "SELECT SUM(Copies - Available) FROM Books";
+                    
+                    string queryOnLoan = $"SELECT COALESCE(SUM({copiesColumn} - COALESCE(Available, 0)), 0) FROM Books WHERE Available IS NOT NULL";
                     using (MySqlCommand cmd = new MySqlCommand(queryOnLoan, conn))
                     {
                         object result = cmd.ExecuteScalar();
@@ -304,6 +346,21 @@ namespace Project5LMS.Forms.Admin.Catalog
             try
             {
                 allBooksData = GetBooksData();
+                
+                if (allBooksData == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("GetBooksData returned null");
+                    allBooksData = new DataTable();
+                }
+                
+                if (allBooksData.Rows.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("No books found in database");
+                    // Still set the data source so the grid shows (empty)
+                    ApplyFilters();
+                    return;
+                }
+                
                 if (!allBooksData.Columns.Contains("AccessionNo"))
                 {
                     allBooksData.Columns.Add("AccessionNo", typeof(string));
@@ -328,32 +385,77 @@ namespace Project5LMS.Forms.Admin.Catalog
                 {
                     allBooksData.Columns.Add("TotalCopies", typeof(int));
                 }
+                
                 foreach (DataRow row in allBooksData.Rows)
                 {
                     int bookId = Convert.ToInt32(row["BookID"]);
-                    string barcode = row["Barcode"] != DBNull.Value ? row["Barcode"].ToString() : "";
-                    row["AccessionNo"] = !string.IsNullOrEmpty(barcode) ? barcode : bookId.ToString();
-                    string title = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
-                    string author = row["Author"] != DBNull.Value ? row["Author"].ToString() : "";
-                    string isbn = row["ISBN"] != DBNull.Value ? row["ISBN"].ToString() : "";
+                    
+                    // Handle Barcode/AccessionNo
+                    string barcode = "";
+                    if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
+                        barcode = row["Barcode"].ToString();
+                    else if (row.Table.Columns.Contains("AccessionNo") && row["AccessionNo"] != DBNull.Value)
+                        barcode = row["AccessionNo"].ToString();
+                    
+                    // Format AccessionNo - use existing or generate from BookID
+                    if (string.IsNullOrEmpty(barcode))
+                    {
+                        // Generate in format ACC-XXXXXX (6 digits)
+                        row["AccessionNo"] = $"ACC-{bookId.ToString().PadLeft(6, '0')}";
+                    }
+                    else
+                    {
+                        // Ensure it starts with ACC- if it doesn't
+                        if (!barcode.StartsWith("ACC-"))
+                        {
+                            row["AccessionNo"] = $"ACC-{barcode}";
+                        }
+                        else
+                        {
+                            row["AccessionNo"] = barcode;
+                        }
+                    }
+                    
+                    string title = row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
+                    string author = row.Table.Columns.Contains("Author") && row["Author"] != DBNull.Value ? row["Author"].ToString() : "";
+                    string isbn = row.Table.Columns.Contains("ISBN") && row["ISBN"] != DBNull.Value ? row["ISBN"].ToString() : "";
+                    // Format BookDetails as multiline: Title, Author, ISBN
                     row["BookDetails"] = $"{title}\n{author}\nISBN: {isbn}";
-                    string publisher = row["Publisher"] != DBNull.Value ? row["Publisher"].ToString() : "";
-                    string year = row["YearPublished"] != DBNull.Value ? row["YearPublished"].ToString() : "";
+                    
+                    string publisher = row.Table.Columns.Contains("Publisher") && row["Publisher"] != DBNull.Value ? row["Publisher"].ToString() : "";
+                    string year = "";
+                    if (row.Table.Columns.Contains("YearPublished") && row["YearPublished"] != DBNull.Value)
+                        year = row["YearPublished"].ToString();
+                    else if (row.Table.Columns.Contains("PublicationYear") && row["PublicationYear"] != DBNull.Value)
+                        year = row["PublicationYear"].ToString();
+                    
                     row["Publisher"] = !string.IsNullOrEmpty(year) ? $"{publisher}, {year}" : publisher;
-                    int available = row["Available"] != DBNull.Value ? Convert.ToInt32(row["Available"]) : 0;
-                    int totalCopies = row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 0;
+                    
+                    int available = row.Table.Columns.Contains("Available") && row["Available"] != DBNull.Value ? Convert.ToInt32(row["Available"]) : 0;
+                    int totalCopies = 0;
+                    if (row.Table.Columns.Contains("TotalCopies") && row["TotalCopies"] != DBNull.Value)
+                        totalCopies = Convert.ToInt32(row["TotalCopies"]);
+                    else if (row.Table.Columns.Contains("Copies") && row["Copies"] != DBNull.Value)
+                        totalCopies = Convert.ToInt32(row["Copies"]);
+                    
                     row["TotalCopies"] = totalCopies;
                     row["Copies"] = totalCopies;
-                    if (allBooksData.Columns.Contains("Location") && row["Location"] != DBNull.Value)
+                    
+                    if (row.Table.Columns.Contains("Location") && row["Location"] != DBNull.Value && !string.IsNullOrEmpty(row["Location"].ToString()))
                     {
                         row["Location"] = row["Location"].ToString();
                     }
                     else
                     {
-                        string category = row["Category"] != DBNull.Value ? row["Category"].ToString() : "";
+                        string category = row.Table.Columns.Contains("Category") && row["Category"] != DBNull.Value ? row["Category"].ToString() : "";
                         row["Location"] = GenerateLocation(category, bookId);
                     }
-                    if (available == 0)
+                    
+                    if (totalCopies == 0)
+                    {
+                        row["Status"] = "No Copies";
+                    }
+                    else if (available == 0)
                     {
                         row["Status"] = "Out of Stock";
                     }
@@ -424,7 +526,21 @@ namespace Project5LMS.Forms.Admin.Catalog
                     filteredData.ImportRow(row);
                 }
             }
-            dataGridViewBooks.DataSource = filteredData;
+                dataGridViewBooks.DataSource = filteredData;
+                
+                // Adjust row heights for multiline content after data binding
+                if (dataGridViewBooks.Rows.Count > 0)
+                {
+                    dataGridViewBooks.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
+                    // Set minimum row height for multiline content
+                    foreach (DataGridViewRow row in dataGridViewBooks.Rows)
+                    {
+                        if (row.Height < 80)
+                        {
+                            row.Height = 80; // Ensure enough height for multiline text
+                        }
+                    }
+                }
         }
         private void txtSearch_Enter(object sender, EventArgs e)
         {
@@ -525,7 +641,22 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
-                MessageBox.Show($"Edit book with ID: {bookId}\n\nEditBookForm will be opened here.", "Edit Book", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var book = _bookService.GetBook(bookId);
+                if (book == null)
+                {
+                    MessageBox.Show("Book not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                // Use AdminCatalogNewBookForm for editing (if it supports edit mode)
+                // For now, show a message with book details
+                string message = $"Edit Book: {book.Title}\n\n" +
+                               $"Book ID: {bookId}\n" +
+                               $"Accession No: {book.AccessionNo ?? "N/A"}\n" +
+                               $"Author: {book.Author ?? "N/A"}\n" +
+                               $"ISBN: {book.ISBN ?? "N/A"}\n\n" +
+                               $"Edit functionality will open the book edit form.";
+                MessageBox.Show(message, "Edit Book", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // TODO: Open AdminCatalogNewBookForm or AdminCatalogEditBookForm in edit mode
             }
             catch (Exception ex)
             {
@@ -536,7 +667,25 @@ namespace Project5LMS.Forms.Admin.Catalog
         {
             try
             {
-                MessageBox.Show($"View book details for ID: {bookId}", "View Book", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var book = _bookService.GetBook(bookId);
+                if (book == null)
+                {
+                    MessageBox.Show("Book not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                string message = $"Book Details\n\n" +
+                               $"Title: {book.Title ?? "N/A"}\n" +
+                               $"Author: {book.Author ?? "N/A"}\n" +
+                               $"ISBN: {book.ISBN ?? "N/A"}\n" +
+                               $"Category: {book.Category ?? "N/A"}\n" +
+                               $"Publisher: {book.Publisher ?? "N/A"}\n" +
+                               $"Year: {book.PublicationYear?.ToString() ?? "N/A"}\n" +
+                               $"Accession No: {book.AccessionNo ?? "N/A"}\n" +
+                               $"Location: {book.Location ?? "N/A"}\n" +
+                               $"Total Copies: {book.TotalCopies}\n" +
+                               $"Available: {book.Available}\n" +
+                               $"Status: {book.Status ?? "N/A"}";
+                MessageBox.Show(message, "View Book Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

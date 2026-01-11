@@ -562,6 +562,21 @@ namespace Project5LMS.Forms.Admin.Inventory
             try
             {
                 allInventoryData = GetInventoryData();
+                
+                if (allInventoryData == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("GetInventoryData returned null");
+                    allInventoryData = new DataTable();
+                }
+                
+                if (allInventoryData.Rows.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("No inventory items found in database");
+                    // Still set the data source so the grid shows (empty)
+                    dataGridViewInventory.DataSource = allInventoryData;
+                    return;
+                }
+                
                 if (!allInventoryData.Columns.Contains("BookDetails"))
                 {
                     allInventoryData.Columns.Add("BookDetails", typeof(string));
@@ -570,6 +585,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 {
                     allInventoryData.Columns.Add("Copy", typeof(string));
                 }
+                
                 foreach (DataRow row in allInventoryData.Rows)
                 {
                     string title = "";
@@ -614,8 +630,8 @@ namespace Project5LMS.Forms.Admin.Inventory
                         bookDetails = $"Book ID: {bookId} ({accessionNo})";
                     }
                     row["BookDetails"] = bookDetails;
-                    int copyNumber = Convert.ToInt32(row["CopyNumber"]);
-                    int totalCopies = row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 1;
+                    int copyNumber = row.Table.Columns.Contains("CopyNumber") && row["CopyNumber"] != DBNull.Value ? Convert.ToInt32(row["CopyNumber"]) : 1;
+                    int totalCopies = row.Table.Columns.Contains("Copies") && row["Copies"] != DBNull.Value ? Convert.ToInt32(row["Copies"]) : 1;
                     row["Copy"] = $"{copyNumber}/{totalCopies}";
                     if (row["Location"] == DBNull.Value || string.IsNullOrEmpty(row["Location"].ToString()))
                     {
@@ -623,12 +639,12 @@ namespace Project5LMS.Forms.Admin.Inventory
                     }
                 }
                 ApplyFilters();
-                dataGridViewInventory.DataSource = allInventoryData;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading inventory: {ex.Message}");
-                MessageBox.Show($"Error loading inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show($"Error loading inventory: {ex.Message}\n\nPlease check:\n1. Database connection\n2. Inventory table exists\n3. Database permissions", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private DataTable GetInventoryData()
@@ -788,27 +804,39 @@ namespace Project5LMS.Forms.Admin.Inventory
         private void ApplyFilters()
         {
             if (allInventoryData == null) return;
-            DataView dv = allInventoryData.DefaultView;
-            string rowFilter = "";
-            if (currentConditionFilter != "All Conditions")
+            
+            try
             {
-                rowFilter = $"`Condition` = '{currentConditionFilter}'";
+                DataView dv = allInventoryData.DefaultView;
+                string rowFilter = "";
+                if (currentConditionFilter != "All Conditions")
+                {
+                    rowFilter = $"`Condition` = '{currentConditionFilter.Replace("'", "''")}'";
+                }
+                if (currentStatusFilter != "All Status")
+                {
+                    if (!string.IsNullOrEmpty(rowFilter))
+                        rowFilter += " AND ";
+                    rowFilter += $"Status = '{currentStatusFilter.Replace("'", "''")}'";
+                }
+                string searchText = txtSearch.Text.Trim();
+                if (!string.IsNullOrEmpty(searchText) && searchText != "🔍 Search inventory...")
+                {
+                    if (!string.IsNullOrEmpty(rowFilter))
+                        rowFilter += " AND ";
+                    string safeSearch = searchText.Replace("'", "''");
+                    rowFilter += $"(BookDetails LIKE '%{safeSearch}%' OR Location LIKE '%{safeSearch}%')";
+                }
+                dv.RowFilter = rowFilter;
+                DataTable filteredData = dv.ToTable();
+                dataGridViewInventory.DataSource = filteredData;
             }
-            if (currentStatusFilter != "All Status")
+            catch (Exception ex)
             {
-                if (!string.IsNullOrEmpty(rowFilter))
-                    rowFilter += " AND ";
-                rowFilter += $"Status = '{currentStatusFilter}'";
+                System.Diagnostics.Debug.WriteLine($"Error applying filters: {ex.Message}");
+                // If filtering fails, just show all data
+                dataGridViewInventory.DataSource = allInventoryData;
             }
-            string searchText = txtSearch.Text.Trim();
-            if (!string.IsNullOrEmpty(searchText) && searchText != "🔍 Search inventory...")
-            {
-                if (!string.IsNullOrEmpty(rowFilter))
-                    rowFilter += " AND ";
-                rowFilter += $"(Title LIKE '%{searchText}%' OR Author LIKE '%{searchText}%' OR Barcode LIKE '%{searchText}%')";
-            }
-            dv.RowFilter = rowFilter;
-            allInventoryData = dv.ToTable();
         }
         private void txtSearch_Enter(object sender, EventArgs e)
         {

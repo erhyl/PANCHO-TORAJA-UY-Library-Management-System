@@ -369,6 +369,21 @@ namespace Project5LMS.Forms.Admin.Circulation
             try
             {
                 allTransactionsData = GetTransactionsData();
+                
+                if (allTransactionsData == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("GetTransactionsData returned null");
+                    allTransactionsData = new DataTable();
+                }
+                
+                if (allTransactionsData.Rows.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("No transactions found in database");
+                    // Still set the data source so the grid shows (empty)
+                    dataGridViewTransactions.DataSource = allTransactionsData;
+                    return;
+                }
+                
                 if (!allTransactionsData.Columns.Contains("Type"))
                 {
                     allTransactionsData.Columns.Add("Type", typeof(string));
@@ -381,15 +396,16 @@ namespace Project5LMS.Forms.Admin.Circulation
                 {
                     allTransactionsData.Columns.Add("Book", typeof(string));
                 }
+                
                 foreach (DataRow row in allTransactionsData.Rows)
                 {
-                    string transactionType = row["TransactionType"] != DBNull.Value ? row["TransactionType"].ToString() : "Borrow";
+                    string transactionType = row.Table.Columns.Contains("TransactionType") && row["TransactionType"] != DBNull.Value ? row["TransactionType"].ToString() : "Borrow";
                     row["Type"] = transactionType;
-                    string firstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
-                    string lastName = row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
+                    string firstName = row.Table.Columns.Contains("FirstName") && row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : "";
+                    string lastName = row.Table.Columns.Contains("LastName") && row["LastName"] != DBNull.Value ? row["LastName"].ToString() : "";
                     int memberId = Convert.ToInt32(row["MemberID"]);
                     row["Member"] = IDFormatter.FormatMemberDisplay(firstName, lastName, memberId);
-                    string bookTitle = row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
+                    string bookTitle = row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value ? row["Title"].ToString() : "";
                     int bookId = Convert.ToInt32(row["BookID"]);
                     string barcode = "";
                     if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
@@ -402,18 +418,22 @@ namespace Project5LMS.Forms.Admin.Circulation
                     }
                     string accessionNo = !string.IsNullOrEmpty(barcode) ? IDFormatter.FormatAccessionNumber(barcode) : IDFormatter.FormatAccessionNumber(bookId.ToString());
                     row["Book"] = IDFormatter.FormatBookDisplay(bookTitle, accessionNo);
-                    if (row["Status"].ToString() == "Borrowed" || row["Status"].ToString() == "Active")
+                    if (row.Table.Columns.Contains("Status") && row["Status"] != DBNull.Value)
                     {
-                        if (row["DueDate"] != DBNull.Value)
+                        string status = row["Status"].ToString();
+                        if (status == "Borrowed" || status == "Active")
                         {
-                            DateTime dueDate = Convert.ToDateTime(row["DueDate"]);
-                            if (dueDate < DateTime.Now)
+                            if (row.Table.Columns.Contains("DueDate") && row["DueDate"] != DBNull.Value)
                             {
-                                row["Status"] = "Overdue";
-                            }
-                            else
-                            {
-                                row["Status"] = "Active";
+                                DateTime dueDate = Convert.ToDateTime(row["DueDate"]);
+                                if (dueDate < DateTime.Now)
+                                {
+                                    row["Status"] = "Overdue";
+                                }
+                                else
+                                {
+                                    row["Status"] = "Active";
+                                }
                             }
                         }
                     }
@@ -423,7 +443,8 @@ namespace Project5LMS.Forms.Admin.Circulation
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading transactions: {ex.Message}");
-                MessageBox.Show($"Error loading transactions: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show($"Error loading transactions: {ex.Message}\n\nPlease check:\n1. Database connection\n2. Transactions table exists\n3. Database permissions", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private DataTable GetTransactionsData()
@@ -540,6 +561,26 @@ namespace Project5LMS.Forms.Admin.Circulation
         }
         private void ShowTabContent(int tabIndex)
         {
+            try
+            {
+                switch (tabIndex)
+                {
+                    case 0: // Borrow Book tab
+                        // Content is already in the tab, no action needed
+                        break;
+                    case 1: // Return Book tab
+                        // Content is already in the tab, no action needed
+                        break;
+                    case 2: // Transaction History tab
+                        // Reload transactions to ensure data is current
+                        LoadTransactions();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error showing tab content: {ex.Message}");
+            }
         }
         private void txtBorrowMemberID_Enter(object sender, EventArgs e)
         {

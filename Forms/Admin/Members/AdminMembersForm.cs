@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -339,7 +339,33 @@ namespace Project5LMS.Forms.Admin.Members
                     .OrderBy(m => m.LastName)
                     .ThenBy(m => m.FirstName)
                     .ToList();
+                
+                if (members == null || members.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("No members found in database");
+                    allMembersData = new DataTable();
+                    // Add columns to empty table
+                    allMembersData.Columns.Add("MemberID", typeof(int));
+                    allMembersData.Columns.Add("Name", typeof(string));
+                    allMembersData.Columns.Add("Contact", typeof(string));
+                    allMembersData.Columns.Add("MemberType", typeof(string));
+                    allMembersData.Columns.Add("Status", typeof(string));
+                    allMembersData.Columns.Add("Books", typeof(int));
+                    allMembersData.Columns.Add("Expires", typeof(string));
+                    allMembersData.Columns.Add("Email", typeof(string));
+                    dataGridViewMembers.DataSource = allMembersData;
+                    return;
+                }
+                
                 allMembersData = DataTableHelper.MembersToDataTable(members, m => _membersService.GetActiveBorrowingCount(m.MemberID));
+                
+                if (allMembersData == null || allMembersData.Rows.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("DataTable is empty after conversion");
+                    dataGridViewMembers.DataSource = allMembersData;
+                    return;
+                }
+                
                 foreach (DataRow row in allMembersData.Rows)
                 {
                     string contact = row["Contact"]?.ToString() ?? "";
@@ -387,7 +413,8 @@ namespace Project5LMS.Forms.Admin.Members
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading members: {ex.Message}");
-                MessageBox.Show($"Error loading members: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show($"Error loading members: {ex.Message}\n\nPlease check:\n1. Database connection\n2. Members table exists\n3. Database permissions", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private int GetMaxBooksForType(string memberType)
@@ -492,16 +519,30 @@ namespace Project5LMS.Forms.Admin.Members
                     int spacing = 8;
                     int totalWidth = buttonSize * 3 + spacing * 2;
                     int startX = cellBounds.X + (cellBounds.Width - totalWidth) / 2;
-                    if (row.Cells["MemberID"]?.Value == null)
+                    
+                    // Get the raw MemberID from DataRowView instead of formatted cell value
+                    int memberId = 0;
+                    if (row.DataBoundItem != null && row.DataBoundItem is DataRowView rowView)
                     {
-                        MessageBox.Show("Unable to identify member.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        if (rowView.Row.Table.Columns.Contains("MemberID") && rowView["MemberID"] != DBNull.Value)
+                        {
+                            if (int.TryParse(rowView["MemberID"].ToString(), out memberId))
+                            {
+                                // Successfully parsed
+                            }
+                        }
                     }
-                    string memberIdStr = row.Cells["MemberID"].Value.ToString();
-                    int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdStr);
+                    
+                    // Fallback: try to get from cell value if DataRowView approach failed
+                    if (memberId == 0 && row.Cells["MemberID"]?.Value != null)
+                    {
+                        string memberIdStr = row.Cells["MemberID"].Value.ToString();
+                        memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdStr);
+                    }
+                    
                     if (memberId == 0)
                     {
-                        MessageBox.Show("Invalid member ID format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Unable to identify member. Please select a valid member row.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     int relativeX = clickPoint.X - startX;

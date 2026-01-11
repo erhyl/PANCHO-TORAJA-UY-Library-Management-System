@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
@@ -277,7 +277,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             {
                 int totalBooks = _dashboardService.GetTotalBooks();
                 lblBooksValue.Text = totalBooks.ToString("N0");
-                int booksThisMonth = 0;
+                int booksThisMonth = _dashboardService.GetBooksAddedThisMonth();
                 lblBooksChange.Text = $"+{booksThisMonth} this month";
                 int activeMembers = _dashboardService.GetActiveMembers();
                 lblMembersValue.Text = activeMembers.ToString("N0");
@@ -431,14 +431,17 @@ namespace Project5LMS.Forms.Admin.Dashboard
                 int maxBorrowed = borrowedData.Values != null && borrowedData.Values.Count > 0 ? borrowedData.Values.Max() : 0;
                 int maxReturned = returnedData.Values != null && returnedData.Values.Count > 0 ? returnedData.Values.Max() : 0;
                 int maxValue = Math.Max(maxBorrowed, maxReturned);
-                maxValue = Math.Max(maxValue, 8);
-                int step = maxValue > 0 ? (int)Math.Ceiling((double)maxValue / 4) : 1;
+                // Ensure minimum scale for visibility, but allow dynamic scaling
+                maxValue = Math.Max(maxValue, 1);
+                // Use more granular steps for better readability
+                int step = maxValue > 0 ? Math.Max(1, (int)Math.Ceiling((double)maxValue / 5)) : 1;
                 if (step == 0) step = 1;
-                if (maxValue == 0) maxValue = 8;
                 using (Font axisFont = new Font("Segoe UI", 9F, FontStyle.Regular))
                 using (Brush axisBrush = new SolidBrush(Color.FromArgb(100, 100, 100)))
                 {
-                    for (int i = 0; i <= 4; i++)
+                    // Draw more grid lines for better readability (up to 6 lines)
+                    int numGridLines = Math.Min(6, maxValue > 0 ? Math.Max(2, (int)Math.Ceiling((double)maxValue / step)) : 2);
+                    for (int i = 0; i <= numGridLines; i++)
                     {
                         int value = i * step;
                         if (value > maxValue) value = maxValue;
@@ -579,14 +582,16 @@ namespace Project5LMS.Forms.Admin.Dashboard
                 using (Font countFont = new Font("Segoe UI", 8F, FontStyle.Regular))
                 {
                     int legendStartY = centerY + size / 2 + 30;
-                    int legendX = Math.Max(20, centerX - 200);
+                    int legendX = Math.Max(20, centerX - 250);
                     int legendY = legendStartY;
-                    int maxLegendItems = Math.Min(8, categoryData.Count);
+                    // Show ALL categories in legend, not just top 8
+                    int maxLegendItems = categoryData.Count;
                     int itemsPerColumn = (int)Math.Ceiling(maxLegendItems / 2.0);
-                    int columnWidth = 250;
+                    int columnWidth = 280;
                     int currentColumn = 0;
                     int itemsInCurrentColumn = 0;
-                    foreach (var kvp in categoryData.OrderByDescending(x => x.Value).Take(maxLegendItems))
+                    // Show all categories, sorted by value descending
+                    foreach (var kvp in categoryData.OrderByDescending(x => x.Value))
                     {
                         float percentage = (float)kvp.Value / total * 100;
                         float sweepAngle = percentage / 100 * 360;
@@ -605,13 +610,22 @@ namespace Project5LMS.Forms.Admin.Dashboard
                         {
                             g.DrawPie(whitePen, explodedRect, startAngle, sweepAngle);
                         }
-                        if (percentage >= 5)
+                        // Only show on-chart labels for slices >= 10% to avoid overlapping
+                        // All data is visible in the legend below
+                        if (percentage >= 10)
                         {
                             float labelAngle = (float)(midAngle * Math.PI / 180);
-                            int labelX = centerX + offsetX + (int)((size / 2 + 20) * Math.Cos(labelAngle));
-                            int labelY = centerY + offsetY + (int)((size / 2 + 20) * Math.Sin(labelAngle));
+                            // Position label further out to avoid overlap
+                            int labelDistance = size / 2 + 35;
+                            int labelX = centerX + offsetX + (int)(labelDistance * Math.Cos(labelAngle));
+                            int labelY = centerY + offsetY + (int)(labelDistance * Math.Sin(labelAngle));
                             string percentText = $"{percentage:F0}%";
                             SizeF textSize = g.MeasureString(percentText, percentageFont);
+                            // Draw background for better visibility
+                            RectangleF textRect = new RectangleF(labelX - textSize.Width / 2 - 2, labelY - textSize.Height / 2 - 2, 
+                                textSize.Width + 4, textSize.Height + 4);
+                            g.FillRectangle(new SolidBrush(Color.FromArgb(240, 240, 240)), textRect);
+                            g.DrawRectangle(new Pen(Color.FromArgb(200, 200, 200), 1), textRect.X, textRect.Y, textRect.Width, textRect.Height);
                             g.DrawString(percentText, percentageFont, new SolidBrush(Color.FromArgb(64, 64, 64)), 
                                 labelX - textSize.Width / 2, labelY - textSize.Height / 2);
                         }

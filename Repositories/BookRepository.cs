@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
@@ -21,7 +21,37 @@ namespace Project5LMS.Repositories
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT * FROM Books WHERE BookID = @BookID LIMIT 1";
+                    // Check which columns exist and build query accordingly
+                    bool hasTotalCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies");
+                    bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                    bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
+                    bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                    bool hasPublicationYear = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "PublicationYear");
+                    bool hasYearPublished = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "YearPublished");
+                    
+                    string copiesColumn = hasTotalCopies ? "TotalCopies" : (hasCopies ? "Copies" : "1 as TotalCopies");
+                    string accessionColumn = hasAccessionNo ? "AccessionNo" : (hasBarcode ? "Barcode as AccessionNo" : "CAST(BookID AS CHAR) as AccessionNo");
+                    string yearColumn = hasPublicationYear ? "PublicationYear" : (hasYearPublished ? "YearPublished as PublicationYear" : "0 as PublicationYear");
+                    
+                    string query = $@"SELECT 
+                                        BookID,
+                                        Title,
+                                        Author,
+                                        ISBN,
+                                        Category,
+                                        Publisher,
+                                        {yearColumn},
+                                        Language,
+                                        {copiesColumn} as TotalCopies,
+                                        Available,
+                                        Location,
+                                        Status,
+                                        {accessionColumn},
+                                        CallNumber,
+                                        BookType
+                                      FROM Books 
+                                      WHERE BookID = @BookID 
+                                      LIMIT 1";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@BookID", bookId);
@@ -78,16 +108,51 @@ namespace Project5LMS.Repositories
             List<Book> books = new List<Book>();
             try
             {
-                string query = "SELECT * FROM Books ORDER BY Title";
-                DataTable dt = _dbContext.ExecuteQuery(query);
-                foreach (DataRow row in dt.Rows)
+                using (var conn = _dbContext.GetConnection())
                 {
-                    books.Add(MapDataRowToBook(row));
+                    conn.Open();
+                    // Check which columns exist and build query accordingly
+                    bool hasTotalCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "TotalCopies");
+                    bool hasCopies = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Copies");
+                    bool hasAccessionNo = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "AccessionNo");
+                    bool hasBarcode = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "Barcode");
+                    bool hasPublicationYear = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "PublicationYear");
+                    bool hasYearPublished = DatabaseSchemaHelper.CheckColumnExists(conn, "Books", "YearPublished");
+                    
+                    string copiesColumn = hasTotalCopies ? "TotalCopies" : (hasCopies ? "Copies" : "1 as TotalCopies");
+                    string accessionColumn = hasAccessionNo ? "AccessionNo" : (hasBarcode ? "Barcode as AccessionNo" : "CAST(BookID AS CHAR) as AccessionNo");
+                    string yearColumn = hasPublicationYear ? "PublicationYear" : (hasYearPublished ? "YearPublished as PublicationYear" : "0 as PublicationYear");
+                    
+                    string query = $@"SELECT 
+                                        BookID,
+                                        Title,
+                                        Author,
+                                        ISBN,
+                                        Category,
+                                        Publisher,
+                                        {yearColumn},
+                                        Language,
+                                        {copiesColumn} as TotalCopies,
+                                        Available,
+                                        Location,
+                                        Status,
+                                        {accessionColumn},
+                                        CallNumber,
+                                        BookType
+                                      FROM Books 
+                                      ORDER BY Title";
+                    
+                    DataTable dt = _dbContext.ExecuteQuery(query);
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        books.Add(MapDataRowToBook(row));
+                    }
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error getting all books: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
             }
             return books;
         }
@@ -481,21 +546,44 @@ namespace Project5LMS.Repositories
         }
         private Book MapDataRowToBook(DataRow row)
         {
+            // Handle both TotalCopies and Copies columns
+            int totalCopies = 0;
+            if (row.Table.Columns.Contains("TotalCopies") && row["TotalCopies"] != DBNull.Value)
+                totalCopies = Convert.ToInt32(row["TotalCopies"]);
+            else if (row.Table.Columns.Contains("Copies") && row["Copies"] != DBNull.Value)
+                totalCopies = Convert.ToInt32(row["Copies"]);
+            
+            // Handle both AccessionNo and Barcode columns
+            string accessionNo = string.Empty;
+            if (row.Table.Columns.Contains("AccessionNo") && row["AccessionNo"] != DBNull.Value)
+                accessionNo = row["AccessionNo"].ToString();
+            else if (row.Table.Columns.Contains("Barcode") && row["Barcode"] != DBNull.Value)
+                accessionNo = row["Barcode"].ToString();
+            
+            // Handle PublicationYear and YearPublished
+            int publicationYear = 0;
+            if (row.Table.Columns.Contains("PublicationYear") && row["PublicationYear"] != DBNull.Value)
+                publicationYear = Convert.ToInt32(row["PublicationYear"]);
+            else if (row.Table.Columns.Contains("YearPublished") && row["YearPublished"] != DBNull.Value)
+                publicationYear = Convert.ToInt32(row["YearPublished"]);
+            
             return new Book
             {
                 BookID = Convert.ToInt32(row["BookID"]),
-                Title = row["Title"]?.ToString() ?? string.Empty,
-                Author = row["Author"]?.ToString() ?? string.Empty,
-                ISBN = row["ISBN"]?.ToString() ?? string.Empty,
-                Category = row["Category"]?.ToString() ?? string.Empty,
-                Publisher = row["Publisher"]?.ToString() ?? string.Empty,
-                PublicationYear = row["PublicationYear"] != DBNull.Value ? Convert.ToInt32(row["PublicationYear"]) : 0,
-                Language = row["Language"]?.ToString() ?? string.Empty,
-                TotalCopies = row["TotalCopies"] != DBNull.Value ? Convert.ToInt32(row["TotalCopies"]) : 0,
-                Available = row["Available"] != DBNull.Value ? Convert.ToInt32(row["Available"]) : 0,
-                Location = row["Location"]?.ToString() ?? string.Empty,
-                Status = row["Status"]?.ToString() ?? string.Empty,
-                AccessionNo = row["AccessionNo"]?.ToString() ?? string.Empty
+                Title = row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty,
+                Author = row.Table.Columns.Contains("Author") && row["Author"] != DBNull.Value ? row["Author"].ToString() : string.Empty,
+                ISBN = row.Table.Columns.Contains("ISBN") && row["ISBN"] != DBNull.Value ? row["ISBN"].ToString() : string.Empty,
+                Category = row.Table.Columns.Contains("Category") && row["Category"] != DBNull.Value ? row["Category"].ToString() : string.Empty,
+                Publisher = row.Table.Columns.Contains("Publisher") && row["Publisher"] != DBNull.Value ? row["Publisher"].ToString() : string.Empty,
+                PublicationYear = publicationYear,
+                Language = row.Table.Columns.Contains("Language") && row["Language"] != DBNull.Value ? row["Language"].ToString() : string.Empty,
+                TotalCopies = totalCopies,
+                Available = row.Table.Columns.Contains("Available") && row["Available"] != DBNull.Value ? Convert.ToInt32(row["Available"]) : 0,
+                Location = row.Table.Columns.Contains("Location") && row["Location"] != DBNull.Value ? row["Location"].ToString() : string.Empty,
+                Status = row.Table.Columns.Contains("Status") && row["Status"] != DBNull.Value ? row["Status"].ToString() : string.Empty,
+                AccessionNo = accessionNo,
+                CallNumber = row.Table.Columns.Contains("CallNumber") && row["CallNumber"] != DBNull.Value ? row["CallNumber"].ToString() : string.Empty,
+                BookType = row.Table.Columns.Contains("BookType") && row["BookType"] != DBNull.Value ? row["BookType"].ToString() : string.Empty
             };
         }
         private void MapBookToParameters(MySqlCommand cmd, Book book)

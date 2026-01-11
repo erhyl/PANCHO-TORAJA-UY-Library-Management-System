@@ -472,7 +472,21 @@ namespace Project5LMS.Forms.Admin.UserManagement
         }
         private void EditUser(User user)
         {
-            MessageBox.Show($"Edit user: {user.FirstName} {user.LastName}", "Edit User", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                using (AddUserForm editUserForm = new AddUserForm(user.UserID))
+                {
+                    if (editUserForm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadUsers();
+                        LoadMetrics();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening edit user form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void DeleteUser(User user)
         {

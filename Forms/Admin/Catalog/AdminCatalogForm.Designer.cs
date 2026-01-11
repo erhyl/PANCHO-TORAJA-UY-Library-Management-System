@@ -124,7 +124,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewBooks.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewBooks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewBooks.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -134,7 +134,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.dataGridViewBooks.Name = "dataGridViewBooks";
             this.dataGridViewBooks.RowHeadersVisible = false;
             this.dataGridViewBooks.RowHeadersWidth = 51;
-            this.dataGridViewBooks.RowTemplate.Height = 60;
+            this.dataGridViewBooks.RowTemplate.Height = 80;
             this.dataGridViewBooks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewBooks.Size = new System.Drawing.Size(1832, 730);
             this.dataGridViewBooks.TabIndex = 0;
@@ -156,6 +156,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.BookDetails.MinimumWidth = 200;
             this.BookDetails.Name = "BookDetails";
             this.BookDetails.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.BookDetails.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.Category.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Category.DataPropertyName = "Category";
             this.Category.FillWeight = 120F;
@@ -172,6 +173,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.Publisher.Name = "Publisher";
             this.Publisher.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Publisher.Width = 200;
+            this.Publisher.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.Copies.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Copies.DataPropertyName = "Copies";
             this.Copies.HeaderText = "COPIES";
@@ -179,6 +181,8 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.Copies.Name = "Copies";
             this.Copies.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Copies.Width = 125;
+            this.Copies.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Copies.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLocation.DataPropertyName = "Location";
             this.colLocation.HeaderText = "LOCATION";
@@ -208,6 +212,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.Edit.Text = "✏️";
             this.Edit.UseColumnTextForButtonValue = true;
             this.Edit.Width = 50;
+            this.Edit.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.View.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
@@ -224,7 +229,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
             this.Delete.DefaultCellStyle = dataGridViewCellStyle5;
             this.Delete.FillWeight = 50F;
             this.Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -234,6 +239,7 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.Delete.Text = "🗑️";
             this.Delete.UseColumnTextForButtonValue = true;
             this.Delete.Width = 50;
+            this.Delete.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.panelSearchFilter.BackColor = System.Drawing.Color.White;
             this.panelSearchFilter.Controls.Add(this.cmbResourceTypeFilter);
             this.panelSearchFilter.Controls.Add(this.lblResourceTypeFilter);
