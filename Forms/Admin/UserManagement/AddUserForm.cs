@@ -90,10 +90,10 @@ namespace Project5LMS.Forms.Admin.UserManagement
                         {
                             if (reader.Read())
                             {
-                                txtFirstName.Text = reader["FirstName"]?.ToString() ?? "";
-                                txtLastName.Text = reader["LastName"]?.ToString() ?? "";
-                                txtEmail.Text = reader["Email"]?.ToString() ?? "";
-                                string role = reader["Role"]?.ToString() ?? "Member";
+                                txtFirstName.Text = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : "";
+                                txtLastName.Text = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : "";
+                                txtEmail.Text = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : "";
+                                string role = reader["Role"] != DBNull.Value ? reader["Role"].ToString() : "Member";
                                 
                                 int roleIndex = cmbRole.Items.IndexOf(role);
                                 if (roleIndex >= 0)
@@ -162,7 +162,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             string lastName = txtLastName.Text.Trim();
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
-            string role = cmbRole.SelectedItem?.ToString() ?? "Member";
+            string role = cmbRole.SelectedItem != null ? cmbRole.SelectedItem.ToString() : "Member";
             try
             {
                 if (_isEditMode)
@@ -245,7 +245,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
                             if (rowsAffected > 0)
                             {
                                 // Get the newly created user ID
-                                int newUserId = (int)cmd.LastInsertedId;
+                                long lastInsertedId = cmd.LastInsertedId;
+                                int newUserId = (int)lastInsertedId;
                                 
                                 // Save permissions using the same connection
                                 SaveUserPermissions(conn, newUserId);
@@ -409,22 +410,22 @@ namespace Project5LMS.Forms.Admin.UserManagement
                         var permissions = new Dictionary<string, bool>();
                         while (reader.Read())
                         {
-                            string permissionName = reader["PermissionName"]?.ToString() ?? "";
+                            string permissionName = reader["PermissionName"] != DBNull.Value ? reader["PermissionName"].ToString() : "";
                             bool isGranted = reader["IsGranted"] != DBNull.Value && Convert.ToBoolean(reader["IsGranted"]);
                             permissions[permissionName] = isGranted;
                         }
                         
-                        // Apply loaded permissions
-                        chkSystemConfiguration.Checked = permissions.GetValueOrDefault("SystemConfiguration", true);
-                        chkUserManagement.Checked = permissions.GetValueOrDefault("UserManagement", true);
-                        chkMemberManagement.Checked = permissions.GetValueOrDefault("MemberManagement", true);
-                        chkCatalogManagement.Checked = permissions.GetValueOrDefault("CatalogManagement", true);
-                        chkCirculation.Checked = permissions.GetValueOrDefault("Circulation", true);
-                        chkReservations.Checked = permissions.GetValueOrDefault("Reservations", true);
-                        chkFineManagement.Checked = permissions.GetValueOrDefault("FineManagement", true);
-                        chkInventory.Checked = permissions.GetValueOrDefault("Inventory", true);
-                        chkReports.Checked = permissions.GetValueOrDefault("Reports", true);
-                        chkSearch.Checked = permissions.GetValueOrDefault("Search", true);
+                        // Apply loaded permissions (using ContainsKey for compatibility with older .NET Framework)
+                        chkSystemConfiguration.Checked = permissions.ContainsKey("SystemConfiguration") ? permissions["SystemConfiguration"] : true;
+                        chkUserManagement.Checked = permissions.ContainsKey("UserManagement") ? permissions["UserManagement"] : true;
+                        chkMemberManagement.Checked = permissions.ContainsKey("MemberManagement") ? permissions["MemberManagement"] : true;
+                        chkCatalogManagement.Checked = permissions.ContainsKey("CatalogManagement") ? permissions["CatalogManagement"] : true;
+                        chkCirculation.Checked = permissions.ContainsKey("Circulation") ? permissions["Circulation"] : true;
+                        chkReservations.Checked = permissions.ContainsKey("Reservations") ? permissions["Reservations"] : true;
+                        chkFineManagement.Checked = permissions.ContainsKey("FineManagement") ? permissions["FineManagement"] : true;
+                        chkInventory.Checked = permissions.ContainsKey("Inventory") ? permissions["Inventory"] : true;
+                        chkReports.Checked = permissions.ContainsKey("Reports") ? permissions["Reports"] : true;
+                        chkSearch.Checked = permissions.ContainsKey("Search") ? permissions["Search"] : true;
                     }
                 }
             }

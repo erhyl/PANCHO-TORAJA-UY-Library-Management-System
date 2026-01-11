@@ -679,7 +679,7 @@ namespace Project5LMS.Forms.Admin.Catalog
                                $"ISBN: {book.ISBN ?? "N/A"}\n" +
                                $"Category: {book.Category ?? "N/A"}\n" +
                                $"Publisher: {book.Publisher ?? "N/A"}\n" +
-                               $"Year: {book.PublicationYear?.ToString() ?? "N/A"}\n" +
+                               $"Year: {(book.PublicationYear > 0 ? book.PublicationYear.ToString() : "N/A")}\n" +
                                $"Accession No: {book.AccessionNo ?? "N/A"}\n" +
                                $"Location: {book.Location ?? "N/A"}\n" +
                                $"Total Copies: {book.TotalCopies}\n" +
