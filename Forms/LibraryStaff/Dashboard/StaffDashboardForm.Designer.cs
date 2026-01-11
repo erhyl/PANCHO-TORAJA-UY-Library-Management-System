@@ -381,6 +381,7 @@
             // listViewRecentActivity
             // 
             this.listViewRecentActivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listViewRecentActivity.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewRecentActivity.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listViewRecentActivity.FullRowSelect = true;
             this.listViewRecentActivity.HideSelection = false;
@@ -388,7 +389,7 @@
             this.listViewRecentActivity.MultiSelect = false;
             this.listViewRecentActivity.Name = "listViewRecentActivity";
             this.listViewRecentActivity.OwnerDraw = true;
-            this.listViewRecentActivity.Size = new System.Drawing.Size(449, 476);
+            this.listViewRecentActivity.Size = new System.Drawing.Size(928, 476);
             this.listViewRecentActivity.TabIndex = 0;
             this.listViewRecentActivity.UseCompatibleStateImageBehavior = false;
             this.listViewRecentActivity.View = System.Windows.Forms.View.Details;

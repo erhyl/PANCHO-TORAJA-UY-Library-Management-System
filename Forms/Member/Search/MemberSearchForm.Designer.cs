@@ -16,6 +16,7 @@
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelSearchResults = new System.Windows.Forms.Panel();
+            this.dtaGridMemberSearchCatalog = new System.Windows.Forms.DataGridView();
             this.lblResultsCount = new System.Windows.Forms.Label();
             this.panelSearchSection = new System.Windows.Forms.Panel();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -27,13 +28,12 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.dtaGridMemberSearchCatalog = new System.Windows.Forms.DataGridView();
             this.panelMainContainer.SuspendLayout();
             this.panelSearchResults.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtaGridMemberSearchCatalog)).BeginInit();
             this.panelSearchSection.SuspendLayout();
             this.panelSearchInput.SuspendLayout();
             this.panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtaGridMemberSearchCatalog)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMainContainer
@@ -60,6 +60,14 @@
             this.panelSearchResults.Name = "panelSearchResults";
             this.panelSearchResults.Size = new System.Drawing.Size(930, 492);
             this.panelSearchResults.TabIndex = 3;
+            // 
+            // dtaGridMemberSearchCatalog
+            // 
+            this.dtaGridMemberSearchCatalog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtaGridMemberSearchCatalog.Location = new System.Drawing.Point(5, 3);
+            this.dtaGridMemberSearchCatalog.Name = "dtaGridMemberSearchCatalog";
+            this.dtaGridMemberSearchCatalog.Size = new System.Drawing.Size(922, 486);
+            this.dtaGridMemberSearchCatalog.TabIndex = 0;
             // 
             // lblResultsCount
             // 
@@ -186,14 +194,6 @@
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Search Catalog";
             // 
-            // dtaGridMemberSearchCatalog
-            // 
-            this.dtaGridMemberSearchCatalog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtaGridMemberSearchCatalog.Location = new System.Drawing.Point(5, 3);
-            this.dtaGridMemberSearchCatalog.Name = "dtaGridMemberSearchCatalog";
-            this.dtaGridMemberSearchCatalog.Size = new System.Drawing.Size(922, 486);
-            this.dtaGridMemberSearchCatalog.TabIndex = 0;
-            // 
             // MemberSearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,13 +208,13 @@
             this.panelMainContainer.ResumeLayout(false);
             this.panelMainContainer.PerformLayout();
             this.panelSearchResults.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dtaGridMemberSearchCatalog)).EndInit();
             this.panelSearchSection.ResumeLayout(false);
             this.panelSearchSection.PerformLayout();
             this.panelSearchInput.ResumeLayout(false);
             this.panelSearchInput.PerformLayout();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtaGridMemberSearchCatalog)).EndInit();
             this.ResumeLayout(false);
 
         }
