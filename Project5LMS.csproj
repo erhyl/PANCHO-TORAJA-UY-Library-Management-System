@@ -398,6 +398,7 @@
     <Compile Include="Helpers\IDFormatter.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\InputValidator.cs" />
+    <Compile Include="Helpers\PanelSizeHelper.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Interfaces\IPaymentService.cs" />

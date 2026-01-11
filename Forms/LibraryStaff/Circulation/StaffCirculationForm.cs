@@ -59,10 +59,60 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     this.PerformLayout();
                 }
             }
+            // Auto-size panels based on available space
+            AdjustPanelSizes();
+            this.Resize += StaffCirculationForm_Resize;
             EnsureTransactionsTableExists();
             UpdateReturnDate();
             LoadTransactions();
             tabControl.SelectedIndex = 0;
+        }
+        
+        private void StaffCirculationForm_Resize(object sender, EventArgs e)
+        {
+            // Re-adjust panel sizes when form resizes
+            if (this.Width > 0 && this.Height > 0)
+            {
+                AdjustPanelSizes();
+            }
+        }
+        
+        private void AdjustPanelSizes()
+        {
+            try
+            {
+                // Adjust checkout and return panels to be side-by-side (each 45% of width)
+                if (panelCheckOutBook != null && panelReturnBook != null)
+                {
+                    int panelWidth = PanelSizeHelper.CalculateWidth(this, 0.45, padding: 48, minWidth: 400);
+                    
+                    if (panelCheckOutBook.Width != panelWidth)
+                    {
+                        panelCheckOutBook.Width = panelWidth;
+                    }
+                    
+                    if (panelReturnBook.Width != panelWidth)
+                    {
+                        panelReturnBook.Width = panelWidth;
+                        // Reposition return panel next to checkout panel
+                        panelReturnBook.Location = new Point(panelCheckOutBook.Right + 16, panelReturnBook.Top);
+                    }
+                }
+                
+                // Adjust transaction history panel height (35% of available height, minimum 200px)
+                if (panelTransactionHistory != null)
+                {
+                    int optimalHeight = PanelSizeHelper.CalculateHeight(this, 0.35, padding: 48, minHeight: 200);
+                    if (panelTransactionHistory.Height < 200 && optimalHeight >= 200)
+                    {
+                        panelTransactionHistory.Height = optimalHeight;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error adjusting panel sizes: {ex.Message}");
+            }
         }
         private void EnsureTransactionsTableExists()
         {

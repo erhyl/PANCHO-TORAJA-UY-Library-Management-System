@@ -63,8 +63,26 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     this.PerformLayout();
                 }
             }
+            // Auto-size panels based on available space
+            AdjustPanelSizes();
             LoadMetrics();
             LoadUsers();
+        }
+        
+        private void AdjustPanelSizes()
+        {
+            try
+            {
+                // Adjust metrics panel - distribute 4 metric panels evenly
+                if (panelMetrics != null && panelMetrics.Width > 0)
+                {
+                    PanelSizeHelper.DistributePanelsEvenly(panelMetrics, 4, spacing: 16, minPanelWidth: 180);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error adjusting panel sizes: {ex.Message}");
+            }
         }
         
         private void UserManagementForm_Resize(object sender, EventArgs e)

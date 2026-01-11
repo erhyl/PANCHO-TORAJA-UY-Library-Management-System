@@ -58,12 +58,64 @@ namespace Project5LMS.Forms.Admin.Circulation
                     this.PerformLayout();
                 }
             }
+            // Auto-size panels based on available space
+            AdjustPanelSizes();
+            this.Resize += AdminCirculationForm_Resize;
             EnsureTransactionsTableExists();
             SetupDataGridView();
             LoadMetrics();
             LoadTransactions();
             tabControl.SelectedIndex = 0;
             ShowTabContent(0);
+        }
+        
+        private void AdminCirculationForm_Resize(object sender, EventArgs e)
+        {
+            // Re-adjust panel sizes when form resizes
+            if (this.Width > 0 && this.Height > 0)
+            {
+                AdjustPanelSizes();
+            }
+        }
+        
+        private void AdjustPanelSizes()
+        {
+            try
+            {
+                // Use helper to get available dimensions
+                int availableWidth = PanelSizeHelper.GetAvailableWidth(this);
+                int availableHeight = PanelSizeHelper.GetAvailableHeight(this);
+                
+                // Adjust metrics panel - distribute 4 metric panels evenly
+                if (panelMetrics != null && panelMetrics.Width > 0)
+                {
+                    PanelSizeHelper.DistributePanelsEvenly(panelMetrics, 4, spacing: 16, minPanelWidth: 180);
+                }
+                
+                // Adjust action tabs panel width (use 95% of available width)
+                if (panelActionTabs != null)
+                {
+                    int optimalWidth = PanelSizeHelper.CalculateWidth(this, 0.95, padding: 48, minWidth: 600);
+                    if (panelActionTabs.Width != optimalWidth && optimalWidth > 0)
+                    {
+                        panelActionTabs.Width = optimalWidth;
+                    }
+                }
+                
+                // Adjust table container height (use 40% of available height, minimum 200px)
+                if (panelTableContainer != null)
+                {
+                    int optimalHeight = PanelSizeHelper.CalculateHeight(this, 0.40, padding: 48, minHeight: 200);
+                    if (panelTableContainer.Height < 200 && optimalHeight >= 200)
+                    {
+                        panelTableContainer.Height = optimalHeight;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error adjusting panel sizes: {ex.Message}");
+            }
         }
         private void EnsureTransactionsTableExists()
         {
