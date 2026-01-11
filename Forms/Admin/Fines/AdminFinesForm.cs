@@ -40,10 +40,10 @@ namespace Project5LMS.Forms.Admin.Fines
             {
                 EnsureFinesTableExists();
                 SetupDataGridView();
-                SetupPaymentHistoryGridView();
+                
                 LoadMetrics();
                 LoadFines();
-                LoadPaymentHistory();
+                
             }
             catch (Exception ex)
             {
@@ -214,97 +214,8 @@ namespace Project5LMS.Forms.Admin.Fines
             dataGridViewFines.CellContentClick += DataGridViewFines_CellContentClick;
             dataGridViewFines.DataError += DataGridViewFines_DataError;
         }
-        private void SetupPaymentHistoryGridView()
-        {
-            if (dataGridViewPaymentHistory == null) return;
-            dataGridViewPaymentHistory.Columns.Clear();
-            dataGridViewPaymentHistory.AutoGenerateColumns = false;
-            dataGridViewPaymentHistory.DefaultCellStyle.Font = new Font("Segoe UI", 9);
-            dataGridViewPaymentHistory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            dataGridViewPaymentHistory.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
-            dataGridViewPaymentHistory.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewPaymentHistory.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
-            dataGridViewPaymentHistory.RowTemplate.Height = 40;
-            dataGridViewPaymentHistory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
-            dataGridViewPaymentHistory.CellFormatting += DataGridViewPaymentHistory_CellFormatting;
-        }
-        private void DataGridViewPaymentHistory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            string columnName = dataGridViewPaymentHistory.Columns[e.ColumnIndex].Name;
-            if (columnName == "AmountPaid" && e.Value != null)
-            {
-                if (decimal.TryParse(e.Value.ToString(), out decimal amount))
-                {
-                    e.Value = $"${amount:F2}";
-                }
-                e.FormattingApplied = true;
-            }
-            if (columnName == "PaymentDate" && e.Value != null)
-            {
-                if (DateTime.TryParse(e.Value.ToString(), out DateTime date))
-                {
-                    e.Value = date.ToString("yyyy-MM-dd HH:mm");
-                }
-                e.FormattingApplied = true;
-            }
-        }
-        private void LoadPaymentHistory()
-        {
-            try
-            {
-                if (dataGridViewPaymentHistory == null) return;
-                var dbContext = ServiceFactory.GetDbContext();
-                using (var conn = dbContext.GetConnection())
-                {
-                    conn.Open();
-                    string checkTableQuery = @"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES
-                                              WHERE TABLE_SCHEMA = DATABASE()
-                                              AND TABLE_NAME = 'FinePayments'";
-                    using (var checkCmd = new MySqlCommand(checkTableQuery, conn))
-                    {
-                        int tableExists = Convert.ToInt32(checkCmd.ExecuteScalar());
-                        if (tableExists > 0 && !this.DesignMode)
-                        {
-                            string query = @"SELECT ReceiptNumber, AmountPaid, PaymentDate, PaymentMode, ProcessedBy
-                                           FROM FinePayments
-                                           ORDER BY PaymentDate DESC
-                                           LIMIT 20";
-                            using (var adapter = new MySqlDataAdapter(query, conn))
-                            {
-                                DataTable dt = new DataTable();
-                                adapter.Fill(dt);
-                                dataGridViewPaymentHistory.DataSource = dt;
-                            }
-                        }
-                        else
-                        {
-                            var placeholderData = new List<object>
-                            {
-                                new { ReceiptNumber = "RCP-001", AmountPaid = 25.50m, PaymentDate = DateTime.Now, PaymentMode = "Cash", ProcessedBy = "Admin" },
-                                new { ReceiptNumber = "RCP-002", AmountPaid = 15.00m, PaymentDate = DateTime.Now.AddDays(-1), PaymentMode = "Online", ProcessedBy = "Staff" },
-                                new { ReceiptNumber = "RCP-003", AmountPaid = 30.00m, PaymentDate = DateTime.Now.AddDays(-2), PaymentMode = "Check", ProcessedBy = "Admin" }
-                            };
-                            dataGridViewPaymentHistory.DataSource = placeholderData;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error loading payment history: {ex.Message}");
-                if (this.DesignMode && dataGridViewPaymentHistory != null)
-                {
-                    var placeholderData = new List<object>
-                    {
-                        new { ReceiptNumber = "RCP-001", AmountPaid = 25.50m, PaymentDate = DateTime.Now, PaymentMode = "Cash", ProcessedBy = "Admin" },
-                        new { ReceiptNumber = "RCP-002", AmountPaid = 15.00m, PaymentDate = DateTime.Now.AddDays(-1), PaymentMode = "Online", ProcessedBy = "Staff" },
-                        new { ReceiptNumber = "RCP-003", AmountPaid = 30.00m, PaymentDate = DateTime.Now.AddDays(-2), PaymentMode = "Check", ProcessedBy = "Admin" }
-                    };
-                    dataGridViewPaymentHistory.DataSource = placeholderData;
-                }
-            }
-        }
+        
+        
         private void DataGridViewFines_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;
@@ -1280,6 +1191,39 @@ namespace Project5LMS.Forms.Admin.Fines
         }
         private void dataGridViewFines_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+        }
+
+        private void panelPaymentHistory_Paint(object sender, PaintEventArgs e)
+        {                    }
+
+        private void dataGridViewFines_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panelTableContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelFilters_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void splitContainerMain_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void dataGridViewFines_CellContentClick_3(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

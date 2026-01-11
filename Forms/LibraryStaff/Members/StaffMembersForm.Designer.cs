@@ -22,6 +22,12 @@
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewMembers = new System.Windows.Forms.DataGridView();
+            this.panelSearchFilter = new System.Windows.Forms.Panel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.btnAddNewMember = new System.Windows.Forms.Button();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.colMemberID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colContact = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -30,12 +36,6 @@
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.panelSearchFilter = new System.Windows.Forms.Panel();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.btnAddNewMember = new System.Windows.Forms.Button();
-            this.lblSubtitle = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.panelMainContainer.SuspendLayout();
             this.panelTableContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMembers)).BeginInit();
@@ -53,7 +53,7 @@
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
             this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
@@ -107,7 +107,7 @@
             this.dataGridViewMembers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewMembers.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewMembers.Location = new System.Drawing.Point(15, 16);
-            this.dataGridViewMembers.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridViewMembers.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewMembers.MultiSelect = false;
             this.dataGridViewMembers.Name = "dataGridViewMembers";
             this.dataGridViewMembers.RowHeadersVisible = false;
@@ -119,89 +119,6 @@
             this.dataGridViewMembers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMembers_CellContentClick);
             this.dataGridViewMembers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewMembers_CellFormatting);
             this.dataGridViewMembers.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridViewMembers_CellPainting);
-            // 
-            // colMemberID
-            // 
-            this.colMemberID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colMemberID.DataPropertyName = "MemberID";
-            this.colMemberID.HeaderText = "MEMBER ID";
-            this.colMemberID.MinimumWidth = 6;
-            this.colMemberID.Name = "colMemberID";
-            this.colMemberID.Width = 120;
-            // 
-            // colName
-            // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colName.DataPropertyName = "Name";
-            this.colName.HeaderText = "NAME";
-            this.colName.MinimumWidth = 6;
-            this.colName.Name = "colName";
-            this.colName.Width = 200;
-            // 
-            // colContact
-            // 
-            this.colContact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colContact.DataPropertyName = "Contact";
-            this.colContact.HeaderText = "CONTACT";
-            this.colContact.MinimumWidth = 6;
-            this.colContact.Name = "colContact";
-            this.colContact.Width = 250;
-            // 
-            // colMemberSince
-            // 
-            this.colMemberSince.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colMemberSince.DataPropertyName = "MemberSince";
-            this.colMemberSince.HeaderText = "MEMBER SINCE";
-            this.colMemberSince.MinimumWidth = 6;
-            this.colMemberSince.Name = "colMemberSince";
-            this.colMemberSince.Width = 150;
-            // 
-            // colActiveLoans
-            // 
-            this.colActiveLoans.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colActiveLoans.DataPropertyName = "ActiveLoans";
-            this.colActiveLoans.HeaderText = "ACTIVE LOANS";
-            this.colActiveLoans.MinimumWidth = 6;
-            this.colActiveLoans.Name = "colActiveLoans";
-            this.colActiveLoans.Width = 120;
-            // 
-            // colStatus
-            // 
-            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colStatus.DataPropertyName = "Status";
-            this.colStatus.HeaderText = "STATUS";
-            this.colStatus.MinimumWidth = 6;
-            this.colStatus.Name = "colStatus";
-            this.colStatus.Width = 120;
-            // 
-            // colEdit
-            // 
-            this.colEdit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
-            this.colEdit.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.colEdit.HeaderText = "ACTIONS";
-            this.colEdit.MinimumWidth = 6;
-            this.colEdit.Name = "colEdit";
-            this.colEdit.Text = "✏️";
-            this.colEdit.UseColumnTextForButtonValue = true;
-            this.colEdit.Width = 50;
-            // 
-            // colDelete
-            // 
-            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            this.colDelete.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.colDelete.MinimumWidth = 6;
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Text = "🗑️";
-            this.colDelete.UseColumnTextForButtonValue = true;
-            this.colDelete.Width = 50;
             // 
             // panelSearchFilter
             // 
@@ -278,6 +195,91 @@
             this.lblTitle.Size = new System.Drawing.Size(161, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Members";
+            // 
+            // colMemberID
+            // 
+            this.colMemberID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMemberID.DataPropertyName = "MemberID";
+            this.colMemberID.FillWeight = 75F;
+            this.colMemberID.HeaderText = "MEMBER ID";
+            this.colMemberID.MinimumWidth = 6;
+            this.colMemberID.Name = "colMemberID";
+            this.colMemberID.Width = 120;
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colName.DataPropertyName = "Name";
+            this.colName.HeaderText = "NAME";
+            this.colName.MinimumWidth = 6;
+            this.colName.Name = "colName";
+            this.colName.Width = 200;
+            // 
+            // colContact
+            // 
+            this.colContact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colContact.DataPropertyName = "Contact";
+            this.colContact.HeaderText = "CONTACT";
+            this.colContact.MinimumWidth = 6;
+            this.colContact.Name = "colContact";
+            this.colContact.Width = 250;
+            // 
+            // colMemberSince
+            // 
+            this.colMemberSince.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMemberSince.DataPropertyName = "MemberSince";
+            this.colMemberSince.HeaderText = "MEMBER SINCE";
+            this.colMemberSince.MinimumWidth = 6;
+            this.colMemberSince.Name = "colMemberSince";
+            this.colMemberSince.Width = 150;
+            // 
+            // colActiveLoans
+            // 
+            this.colActiveLoans.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colActiveLoans.DataPropertyName = "ActiveLoans";
+            this.colActiveLoans.FillWeight = 75F;
+            this.colActiveLoans.HeaderText = "ACTIVE LOANS";
+            this.colActiveLoans.MinimumWidth = 6;
+            this.colActiveLoans.Name = "colActiveLoans";
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.FillWeight = 75F;
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.MinimumWidth = 6;
+            this.colStatus.Name = "colStatus";
+            // 
+            // colEdit
+            // 
+            this.colEdit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.colEdit.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colEdit.FillWeight = 75F;
+            this.colEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.colEdit.HeaderText = "ACTIONS";
+            this.colEdit.MinimumWidth = 6;
+            this.colEdit.Name = "colEdit";
+            this.colEdit.Text = "✏️";
+            this.colEdit.UseColumnTextForButtonValue = true;
+            // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
+            this.colDelete.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colDelete.FillWeight = 75F;
+            this.colDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.colDelete.HeaderText = "Delete";
+            this.colDelete.MinimumWidth = 6;
+            this.colDelete.Name = "colDelete";
+            this.colDelete.Text = "🗑️";
+            this.colDelete.UseColumnTextForButtonValue = true;
             // 
             // StaffMembersForm
             // 

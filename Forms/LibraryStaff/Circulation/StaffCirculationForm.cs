@@ -515,44 +515,70 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 ? reader["CopyBarcode"].ToString() : "";
             string copyStatus = HasColumn(reader, "CopyStatus") && reader["CopyStatus"] != DBNull.Value
                 ? reader["CopyStatus"].ToString() : "";
+            
+            bool isReturned = status == "Returned";
+            bool isActive = status == "Borrowed" || status == "Active";
+            bool isOverdue = dueDate.HasValue && DateTime.Now > dueDate.Value && !isReturned;
+            
+            int cardWidth = flowLayoutTransactions.Width > 0 
+                ? flowLayoutTransactions.Width - 40 
+                : 1100;
+            if (cardWidth < 600) cardWidth = 600;
+            
             Panel card = new Panel
             {
                 BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle,
-                Size = new Size(1500, 80),
-                Margin = new Padding(0, 5, 0, 5)
+                BorderStyle = BorderStyle.None,
+                Size = new Size(cardWidth, 100),
+                Margin = new Padding(10, 8, 10, 8),
+                Padding = new Padding(16, 12, 16, 12)
             };
+            
+            // Add subtle border effect
+            card.Paint += (s, e) =>
+            {
+                e.Graphics.DrawRectangle(new Pen(Color.FromArgb(240, 240, 240), 1), 0, 0, card.Width - 1, card.Height - 1);
+            };
+            
+            // Icon button on the left
             Panel iconPanel = new Panel
             {
-                BackColor = status == "Returned" ? Color.FromArgb(13, 110, 253) : Color.FromArgb(40, 167, 69),
-                Size = new Size(50, 50),
-                Location = new Point(20, 15)
+                BackColor = isReturned ? Color.FromArgb(13, 110, 253) : Color.FromArgb(40, 167, 69),
+                Size = new Size(48, 48),
+                Location = new Point(16, 26)
             };
-            iconPanel.Paint += (s, e) => DrawTransactionIcon(e.Graphics, iconPanel, status == "Returned");
+            iconPanel.Paint += (s, e) => DrawTransactionIcon(e.Graphics, iconPanel, isReturned);
             card.Controls.Add(iconPanel);
+            
+            // Book title (bold, larger)
             Label lblBookTitle = new Label
             {
-                Text = bookTitle,
-                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(64, 64, 64),
-                AutoSize = true,
-                Location = new Point(90, 15)
+                Text = bookTitle.Length > 60 ? bookTitle.Substring(0, 57) + "..." : bookTitle,
+                Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(33, 37, 41),
+                AutoSize = false,
+                Location = new Point(80, 20),
+                Size = new Size(400, 24),
+                TextAlign = ContentAlignment.MiddleLeft
             };
             card.Controls.Add(lblBookTitle);
-            if (!string.IsNullOrEmpty(copyAccession) || !string.IsNullOrEmpty(copyBarcode))
+            
+            // Member name below title
+            Label lblMember = new Label
             {
-                string copyInfo = !string.IsNullOrEmpty(copyAccession) ? copyAccession : copyBarcode;
-                Label lblCopyInfo = new Label
-                {
-                    Text = $"Copy: {copyInfo}",
-                    Font = new Font("Segoe UI", 9F),
-                    ForeColor = Color.FromArgb(128, 128, 128),
-                    AutoSize = true,
-                    Location = new Point(90, 55)
-                };
-                card.Controls.Add(lblCopyInfo);
-            }
-            if (status == "Borrowed" || status == "Active")
+                Text = $"{memberName} (M{memberId})",
+                Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(108, 117, 125),
+                AutoSize = false,
+                Location = new Point(80, 48),
+                Size = new Size(400, 20),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            card.Controls.Add(lblMember);
+            
+            // Active status badge
+            int leftOffset = 80;
+            if (isActive)
             {
                 Label lblStatus = new Label
                 {
@@ -560,25 +586,29 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     ForeColor = Color.White,
                     BackColor = Color.FromArgb(40, 167, 69),
-                    AutoSize = true,
-                    Padding = new Padding(8, 4, 8, 4),
-                    Location = new Point(90, 40)
+                    AutoSize = false,
+                    Size = new Size(55, 22),
+                    Location = new Point(leftOffset, 72),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Padding = new Padding(0)
                 };
                 card.Controls.Add(lblStatus);
+                leftOffset += 65;
+                
                 if (renewalCount > 0)
                 {
                     Label lblRenewalCount = new Label
                     {
                         Text = $"Renewed: {renewalCount}x",
                         Font = new Font("Segoe UI", 9F),
-                        ForeColor = Color.FromArgb(128, 128, 128),
+                        ForeColor = Color.FromArgb(108, 117, 125),
                         AutoSize = true,
-                        Location = new Point(200, 40)
+                        Location = new Point(leftOffset, 75)
                     };
                     card.Controls.Add(lblRenewalCount);
                 }
             }
-            else if (returnDate.HasValue && dueDate.HasValue && returnDate.Value > dueDate.Value)
+            else if (isOverdue)
             {
                 Label lblStatus = new Label
                 {
@@ -586,23 +616,18 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     ForeColor = Color.White,
                     BackColor = Color.FromArgb(220, 53, 69),
-                    AutoSize = true,
-                    Padding = new Padding(8, 4, 8, 4),
-                    Location = new Point(90, 40)
+                    AutoSize = false,
+                    Size = new Size(70, 22),
+                    Location = new Point(leftOffset, 72),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Padding = new Padding(0)
                 };
                 card.Controls.Add(lblStatus);
             }
-            Label lblMember = new Label
-            {
-                Text = $"{memberName} (M{memberId})",
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.FromArgb(128, 128, 128),
-                AutoSize = true,
-                Location = new Point(200, 25)
-            };
-            card.Controls.Add(lblMember);
+            
+            // Date and time on the right
             string dateText = "";
-            if (status == "Returned" && returnDate.HasValue)
+            if (isReturned && returnDate.HasValue)
             {
                 dateText = returnDate.Value.ToString("yyyy-MM-dd HH:mm");
             }
@@ -614,25 +639,39 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     dateText += $" | Due: {dueDate.Value:yyyy-MM-dd}";
                 }
             }
+            
             Label lblDate = new Label
             {
                 Text = dateText,
                 Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.FromArgb(64, 64, 64),
-                AutoSize = true,
-                Location = new Point(1200, 25)
+                ForeColor = Color.FromArgb(33, 37, 41),
+                AutoSize = false,
+                Size = new Size(250, 20),
+                Location = new Point(card.Width - 320, 40),
+                TextAlign = ContentAlignment.MiddleRight
             };
             card.Controls.Add(lblDate);
-            Label lblCheckmark = new Label
+            
+            // Checkmark on far right
+            Panel checkmarkPanel = new Panel
             {
-                Text = "✅",
-                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
-                ForeColor = status == "Returned" ? Color.FromArgb(40, 167, 69) : Color.FromArgb(40, 167, 69),
-                AutoSize = true,
-                Location = new Point(1450, 25)
+                BackColor = Color.FromArgb(40, 167, 69),
+                Size = new Size(32, 32),
+                Location = new Point(card.Width - 48, 34)
             };
-            card.Controls.Add(lblCheckmark);
-            if (status == "Borrowed" || status == "Active")
+            checkmarkPanel.Paint += (s, e) =>
+            {
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                using (Pen pen = new Pen(Color.White, 3))
+                {
+                    e.Graphics.DrawLine(pen, 10, 16, 14, 20);
+                    e.Graphics.DrawLine(pen, 14, 20, 22, 12);
+                }
+            };
+            card.Controls.Add(checkmarkPanel);
+            
+            // Renew button for active transactions
+            if (isActive)
             {
                 bool canRenew = _circulationService.CanRenew(transactionId);
                 Button btnRenew = new Button
@@ -642,8 +681,8 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                     ForeColor = Color.White,
                     BackColor = canRenew ? Color.FromArgb(13, 110, 253) : Color.FromArgb(200, 200, 200),
                     FlatStyle = FlatStyle.Flat,
-                    Size = new Size(80, 30),
-                    Location = new Point(1350, 25),
+                    Size = new Size(75, 28),
+                    Location = new Point(card.Width - 130, 66),
                     Enabled = canRenew,
                     Cursor = Cursors.Hand
                 };
@@ -651,6 +690,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
                 btnRenew.Click += (s, e) => RenewTransaction(transactionId);
                 card.Controls.Add(btnRenew);
             }
+            
             return card;
         }
         private bool HasColumn(MySqlDataReader reader, string columnName)
@@ -949,6 +989,11 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             {
                 return false;
             }
+        }
+
+        private void flowLayoutTransactions_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -1008,5 +1008,20 @@ namespace Project5LMS.Forms.Admin.Inventory
         private void dataGridViewInventory_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
         }
+
+        private void dataGridViewInventory_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panelTableContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelMetrics_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -96,7 +96,7 @@
             this.panelCreateReservation.Location = new System.Drawing.Point(-1, -1);
             this.panelCreateReservation.Name = "panelCreateReservation";
             this.panelCreateReservation.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
-            this.panelCreateReservation.Size = new System.Drawing.Size(1152, 97);
+            this.panelCreateReservation.Size = new System.Drawing.Size(1197, 97);
             this.panelCreateReservation.TabIndex = 4;
             // 
             // btnCreateReservation

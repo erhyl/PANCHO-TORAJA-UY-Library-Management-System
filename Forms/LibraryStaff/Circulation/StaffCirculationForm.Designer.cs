@@ -62,7 +62,7 @@
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
             this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
@@ -86,7 +86,7 @@
             this.panelTransactionsList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTransactionsList.Location = new System.Drawing.Point(0, 0);
             this.panelTransactionsList.Name = "panelTransactionsList";
-            this.panelTransactionsList.Size = new System.Drawing.Size(1186, 325);
+            this.panelTransactionsList.Size = new System.Drawing.Size(1152, 325);
             this.panelTransactionsList.TabIndex = 2;
             // 
             // flowLayoutTransactions
@@ -97,9 +97,10 @@
             this.flowLayoutTransactions.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutTransactions.Name = "flowLayoutTransactions";
             this.flowLayoutTransactions.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.flowLayoutTransactions.Size = new System.Drawing.Size(1186, 325);
+            this.flowLayoutTransactions.Size = new System.Drawing.Size(1152, 325);
             this.flowLayoutTransactions.TabIndex = 0;
             this.flowLayoutTransactions.WrapContents = false;
+            this.flowLayoutTransactions.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutTransactions_Paint);
             // 
             // tabControl
             // 
@@ -120,7 +121,7 @@
             // 
             this.tabAll.Location = new System.Drawing.Point(4, 44);
             this.tabAll.Name = "tabAll";
-            this.tabAll.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabAll.Padding = new System.Windows.Forms.Padding(3);
             this.tabAll.Size = new System.Drawing.Size(1144, 0);
             this.tabAll.TabIndex = 0;
             this.tabAll.Text = "All Transactions";
@@ -130,7 +131,7 @@
             // 
             this.tabCheckouts.Location = new System.Drawing.Point(4, 44);
             this.tabCheckouts.Name = "tabCheckouts";
-            this.tabCheckouts.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabCheckouts.Padding = new System.Windows.Forms.Padding(3);
             this.tabCheckouts.Size = new System.Drawing.Size(1144, 0);
             this.tabCheckouts.TabIndex = 1;
             this.tabCheckouts.Text = "Checkouts";
@@ -140,7 +141,7 @@
             // 
             this.tabReturns.Location = new System.Drawing.Point(4, 44);
             this.tabReturns.Name = "tabReturns";
-            this.tabReturns.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabReturns.Padding = new System.Windows.Forms.Padding(3);
             this.tabReturns.Size = new System.Drawing.Size(1144, 0);
             this.tabReturns.TabIndex = 2;
             this.tabReturns.Text = "Returns";

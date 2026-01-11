@@ -52,11 +52,10 @@ namespace Project5LMS.Forms.Member.Fines
             this.panelMainContainer.Controls.Add(this.panelOutstandingFines);
             this.panelMainContainer.Controls.Add(this.panelTotalOutstanding);
             this.panelMainContainer.Controls.Add(this.panelHeader);
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(30, 24, 30, 24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.Size = new System.Drawing.Size(1200, 899);
             this.panelMainContainer.TabIndex = 0;
             this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
             // 
@@ -67,10 +66,10 @@ namespace Project5LMS.Forms.Member.Fines
             this.panelFineRates.Controls.Add(this.lblRate3);
             this.panelFineRates.Controls.Add(this.lblRate2);
             this.panelFineRates.Controls.Add(this.lblRate1);
-            this.panelFineRates.Location = new System.Drawing.Point(600, 567);
+            this.panelFineRates.Location = new System.Drawing.Point(785, 644);
             this.panelFineRates.Name = "panelFineRates";
             this.panelFineRates.Padding = new System.Windows.Forms.Padding(19, 16, 19, 16);
-            this.panelFineRates.Size = new System.Drawing.Size(360, 162);
+            this.panelFineRates.Size = new System.Drawing.Size(343, 162);
             this.panelFineRates.TabIndex = 4;
             // 
             // lblFineRatesTitle
@@ -120,21 +119,21 @@ namespace Project5LMS.Forms.Member.Fines
             // panelPaymentHistory
             // 
             this.panelPaymentHistory.BackColor = System.Drawing.Color.White;
+            this.panelPaymentHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPaymentHistory.Controls.Add(this.panelPaymentHistoryHeader);
             this.panelPaymentHistory.Controls.Add(this.panelPaymentHistoryList);
-            this.panelPaymentHistory.Location = new System.Drawing.Point(30, 528);
+            this.panelPaymentHistory.Location = new System.Drawing.Point(30, 644);
             this.panelPaymentHistory.Name = "panelPaymentHistory";
-            this.panelPaymentHistory.Size = new System.Drawing.Size(562, 244);
+            this.panelPaymentHistory.Size = new System.Drawing.Size(749, 244);
             this.panelPaymentHistory.TabIndex = 3;
             // 
             // panelPaymentHistoryHeader
             // 
-            this.panelPaymentHistoryHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.panelPaymentHistoryHeader.BackColor = System.Drawing.Color.White;
             this.panelPaymentHistoryHeader.Controls.Add(this.lblPaymentHistoryTitle);
-            this.panelPaymentHistoryHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelPaymentHistoryHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelPaymentHistoryHeader.Location = new System.Drawing.Point(16, 3);
             this.panelPaymentHistoryHeader.Name = "panelPaymentHistoryHeader";
-            this.panelPaymentHistoryHeader.Size = new System.Drawing.Size(562, 41);
+            this.panelPaymentHistoryHeader.Size = new System.Drawing.Size(173, 41);
             this.panelPaymentHistoryHeader.TabIndex = 1;
             // 
             // lblPaymentHistoryTitle
@@ -142,7 +141,7 @@ namespace Project5LMS.Forms.Member.Fines
             this.lblPaymentHistoryTitle.AutoSize = true;
             this.lblPaymentHistoryTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPaymentHistoryTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPaymentHistoryTitle.Location = new System.Drawing.Point(10, 0);
+            this.lblPaymentHistoryTitle.Location = new System.Drawing.Point(7, 7);
             this.lblPaymentHistoryTitle.Name = "lblPaymentHistoryTitle";
             this.lblPaymentHistoryTitle.Size = new System.Drawing.Size(161, 25);
             this.lblPaymentHistoryTitle.TabIndex = 0;
@@ -152,22 +151,23 @@ namespace Project5LMS.Forms.Member.Fines
             // 
             this.panelPaymentHistoryList.AutoScroll = true;
             this.panelPaymentHistoryList.BackColor = System.Drawing.Color.White;
-            this.panelPaymentHistoryList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPaymentHistoryList.Location = new System.Drawing.Point(0, 0);
+            this.panelPaymentHistoryList.Location = new System.Drawing.Point(28, 47);
             this.panelPaymentHistoryList.Name = "panelPaymentHistoryList";
             this.panelPaymentHistoryList.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelPaymentHistoryList.Size = new System.Drawing.Size(562, 244);
+            this.panelPaymentHistoryList.Size = new System.Drawing.Size(718, 188);
             this.panelPaymentHistoryList.TabIndex = 0;
             // 
             // panelOutstandingFines
             // 
             this.panelOutstandingFines.BackColor = System.Drawing.Color.White;
+            this.panelOutstandingFines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOutstandingFines.Controls.Add(this.lblOutstandingFinesCount);
             this.panelOutstandingFines.Controls.Add(this.panelOutstandingFinesList);
             this.panelOutstandingFines.Location = new System.Drawing.Point(30, 284);
             this.panelOutstandingFines.Name = "panelOutstandingFines";
-            this.panelOutstandingFines.Size = new System.Drawing.Size(1042, 228);
+            this.panelOutstandingFines.Size = new System.Drawing.Size(1096, 354);
             this.panelOutstandingFines.TabIndex = 2;
+            this.panelOutstandingFines.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOutstandingFines_Paint);
             // 
             // lblOutstandingFinesCount
             // 
@@ -184,9 +184,10 @@ namespace Project5LMS.Forms.Member.Fines
             // 
             this.panelOutstandingFinesList.AutoScroll = true;
             this.panelOutstandingFinesList.BackColor = System.Drawing.Color.White;
+            this.panelOutstandingFinesList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOutstandingFinesList.Location = new System.Drawing.Point(15, 57);
             this.panelOutstandingFinesList.Name = "panelOutstandingFinesList";
-            this.panelOutstandingFinesList.Size = new System.Drawing.Size(1015, 154);
+            this.panelOutstandingFinesList.Size = new System.Drawing.Size(1065, 287);
             this.panelOutstandingFinesList.TabIndex = 0;
             // 
             // panelTotalOutstanding
@@ -198,7 +199,7 @@ namespace Project5LMS.Forms.Member.Fines
             this.panelTotalOutstanding.Location = new System.Drawing.Point(30, 139);
             this.panelTotalOutstanding.Name = "panelTotalOutstanding";
             this.panelTotalOutstanding.Padding = new System.Windows.Forms.Padding(22, 20, 22, 20);
-            this.panelTotalOutstanding.Size = new System.Drawing.Size(1042, 129);
+            this.panelTotalOutstanding.Size = new System.Drawing.Size(1096, 129);
             this.panelTotalOutstanding.TabIndex = 1;
             // 
             // btnPayNow
@@ -208,7 +209,7 @@ namespace Project5LMS.Forms.Member.Fines
             this.btnPayNow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPayNow.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPayNow.ForeColor = System.Drawing.Color.White;
-            this.btnPayNow.Location = new System.Drawing.Point(891, 46);
+            this.btnPayNow.Location = new System.Drawing.Point(941, 46);
             this.btnPayNow.Name = "btnPayNow";
             this.btnPayNow.Size = new System.Drawing.Size(139, 41);
             this.btnPayNow.TabIndex = 4;
@@ -244,7 +245,7 @@ namespace Project5LMS.Forms.Member.Fines
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(30, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(930, 88);
+            this.panelHeader.Size = new System.Drawing.Size(1096, 88);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -274,7 +275,7 @@ namespace Project5LMS.Forms.Member.Fines
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1200, 891);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MemberFinesForm";

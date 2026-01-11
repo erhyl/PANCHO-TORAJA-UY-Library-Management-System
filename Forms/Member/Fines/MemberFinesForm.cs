@@ -462,5 +462,10 @@ namespace Project5LMS.Forms.Member.Fines
         {
 
         }
+
+        private void panelOutstandingFines_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

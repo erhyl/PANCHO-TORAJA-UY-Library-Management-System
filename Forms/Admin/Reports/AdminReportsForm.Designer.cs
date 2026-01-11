@@ -14,194 +14,34 @@ namespace Project5LMS.Forms.Admin.Reports
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
-            this.panelMainContainer = new System.Windows.Forms.Panel();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.lblContentPlaceholder = new System.Windows.Forms.Label();
-            this.panelDateFilter = new System.Windows.Forms.Panel();
-            this.cmbDateRange = new System.Windows.Forms.ComboBox();
-            this.panelReportButtons = new System.Windows.Forms.Panel();
-            this.btnExportReport = new System.Windows.Forms.Button();
-            this.btnStatisticalReports = new System.Windows.Forms.Button();
-            this.btnFinancialReports = new System.Windows.Forms.Button();
-            this.btnCollectionReports = new System.Windows.Forms.Button();
-            this.btnMemberReports = new System.Windows.Forms.Button();
-            this.btnCirculationReports = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.panelMainContainer.SuspendLayout();
-            this.panelContent.SuspendLayout();
-            this.panelDateFilter.SuspendLayout();
-            this.panelReportButtons.SuspendLayout();
+            this.tabControlReports = new System.Windows.Forms.TabControl();
+            this.tabPageCirculation = new System.Windows.Forms.TabPage();
+            this.panelContentCirculation = new System.Windows.Forms.Panel();
+            this.tabPageMember = new System.Windows.Forms.TabPage();
+            this.panelContentMember = new System.Windows.Forms.Panel();
+            this.tabPageCollection = new System.Windows.Forms.TabPage();
+            this.panelContentCollection = new System.Windows.Forms.Panel();
+            this.tabPageFinancial = new System.Windows.Forms.TabPage();
+            this.panelContentFinancial = new System.Windows.Forms.Panel();
+            this.tabPageStatistical = new System.Windows.Forms.TabPage();
+            this.panelContentStatistical = new System.Windows.Forms.Panel();
+            this.panelDateFilter = new System.Windows.Forms.Panel();
+            this.btnExportReport = new System.Windows.Forms.Button();
+            this.cmbDateRange = new System.Windows.Forms.ComboBox();
+            this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelHeader.SuspendLayout();
+            this.tabControlReports.SuspendLayout();
+            this.tabPageCirculation.SuspendLayout();
+            this.tabPageMember.SuspendLayout();
+            this.tabPageCollection.SuspendLayout();
+            this.tabPageFinancial.SuspendLayout();
+            this.tabPageStatistical.SuspendLayout();
+            this.panelDateFilter.SuspendLayout();
+            this.panelMainContainer.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMainContainer
-            // 
-            this.panelMainContainer.AutoScroll = true;
-            this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.panelMainContainer.Controls.Add(this.panelContent);
-            this.panelMainContainer.Controls.Add(this.panelDateFilter);
-            this.panelMainContainer.Controls.Add(this.panelReportButtons);
-            this.panelMainContainer.Controls.Add(this.panelHeader);
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
-            this.panelMainContainer.TabIndex = 0;
-            // 
-            // panelContent
-            // 
-            this.panelContent.BackColor = System.Drawing.Color.White;
-            this.panelContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelContent.Controls.Add(this.lblContentPlaceholder);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(24, 184);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
-            this.panelContent.Size = new System.Drawing.Size(1152, 592);
-            this.panelContent.TabIndex = 3;
-            // 
-            // lblContentPlaceholder
-            // 
-            this.lblContentPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblContentPlaceholder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblContentPlaceholder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblContentPlaceholder.Location = new System.Drawing.Point(16, 16);
-            this.lblContentPlaceholder.Name = "lblContentPlaceholder";
-            this.lblContentPlaceholder.Size = new System.Drawing.Size(1120, 559);
-            this.lblContentPlaceholder.TabIndex = 0;
-            this.lblContentPlaceholder.Text = "Report content will be displayed here.\r\nSelect a report category above to view st" +
-    "atistics and data.";
-            this.lblContentPlaceholder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panelDateFilter
-            // 
-            this.panelDateFilter.Controls.Add(this.cmbDateRange);
-            this.panelDateFilter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelDateFilter.Location = new System.Drawing.Point(24, 146);
-            this.panelDateFilter.Name = "panelDateFilter";
-            this.panelDateFilter.Size = new System.Drawing.Size(1152, 38);
-            this.panelDateFilter.TabIndex = 1;
-            // 
-            // cmbDateRange
-            // 
-            this.cmbDateRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDateRange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDateRange.FormattingEnabled = true;
-            this.cmbDateRange.Location = new System.Drawing.Point(14, 6);
-            this.cmbDateRange.Name = "cmbDateRange";
-            this.cmbDateRange.Size = new System.Drawing.Size(151, 25);
-            this.cmbDateRange.TabIndex = 0;
-            this.cmbDateRange.SelectedIndexChanged += new System.EventHandler(this.cmbDateRange_SelectedIndexChanged);
-            // 
-            // panelReportButtons
-            // 
-            this.panelReportButtons.Controls.Add(this.btnExportReport);
-            this.panelReportButtons.Controls.Add(this.btnStatisticalReports);
-            this.panelReportButtons.Controls.Add(this.btnFinancialReports);
-            this.panelReportButtons.Controls.Add(this.btnCollectionReports);
-            this.panelReportButtons.Controls.Add(this.btnMemberReports);
-            this.panelReportButtons.Controls.Add(this.btnCirculationReports);
-            this.panelReportButtons.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelReportButtons.Location = new System.Drawing.Point(24, 97);
-            this.panelReportButtons.Name = "panelReportButtons";
-            this.panelReportButtons.Size = new System.Drawing.Size(1152, 49);
-            this.panelReportButtons.TabIndex = 2;
-            // 
-            // btnExportReport
-            // 
-            this.btnExportReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportReport.BackColor = System.Drawing.Color.Green;
-            this.btnExportReport.FlatAppearance.BorderSize = 0;
-            this.btnExportReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExportReport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportReport.ForeColor = System.Drawing.Color.White;
-            this.btnExportReport.Location = new System.Drawing.Point(978, 6);
-            this.btnExportReport.Name = "btnExportReport";
-            this.btnExportReport.Size = new System.Drawing.Size(156, 34);
-            this.btnExportReport.TabIndex = 2;
-            this.btnExportReport.Text = "📤 Export Report";
-            this.btnExportReport.UseVisualStyleBackColor = false;
-            this.btnExportReport.Click += new System.EventHandler(this.btnExportReport_Click);
-            // 
-            // btnStatisticalReports
-            // 
-            this.btnStatisticalReports.BackColor = System.Drawing.Color.Maroon;
-            this.btnStatisticalReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnStatisticalReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStatisticalReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStatisticalReports.ForeColor = System.Drawing.Color.White;
-            this.btnStatisticalReports.Location = new System.Drawing.Point(591, 0);
-            this.btnStatisticalReports.Name = "btnStatisticalReports";
-            this.btnStatisticalReports.Size = new System.Drawing.Size(150, 49);
-            this.btnStatisticalReports.TabIndex = 4;
-            this.btnStatisticalReports.Text = "📊 Statistical Reports";
-            this.btnStatisticalReports.UseVisualStyleBackColor = false;
-            this.btnStatisticalReports.Click += new System.EventHandler(this.btnStatisticalReports_Click);
-            // 
-            // btnFinancialReports
-            // 
-            this.btnFinancialReports.BackColor = System.Drawing.Color.Maroon;
-            this.btnFinancialReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnFinancialReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFinancialReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFinancialReports.ForeColor = System.Drawing.Color.White;
-            this.btnFinancialReports.Location = new System.Drawing.Point(444, 0);
-            this.btnFinancialReports.Name = "btnFinancialReports";
-            this.btnFinancialReports.Size = new System.Drawing.Size(150, 49);
-            this.btnFinancialReports.TabIndex = 3;
-            this.btnFinancialReports.Text = "💰 Financial Reports";
-            this.btnFinancialReports.UseVisualStyleBackColor = false;
-            this.btnFinancialReports.Click += new System.EventHandler(this.btnFinancialReports_Click);
-            // 
-            // btnCollectionReports
-            // 
-            this.btnCollectionReports.BackColor = System.Drawing.Color.Maroon;
-            this.btnCollectionReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnCollectionReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCollectionReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCollectionReports.ForeColor = System.Drawing.Color.White;
-            this.btnCollectionReports.Location = new System.Drawing.Point(298, 0);
-            this.btnCollectionReports.Name = "btnCollectionReports";
-            this.btnCollectionReports.Size = new System.Drawing.Size(150, 49);
-            this.btnCollectionReports.TabIndex = 2;
-            this.btnCollectionReports.Text = "📚 Collection Reports";
-            this.btnCollectionReports.UseVisualStyleBackColor = false;
-            this.btnCollectionReports.Click += new System.EventHandler(this.btnCollectionReports_Click);
-            // 
-            // btnMemberReports
-            // 
-            this.btnMemberReports.BackColor = System.Drawing.Color.Maroon;
-            this.btnMemberReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnMemberReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMemberReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMemberReports.ForeColor = System.Drawing.Color.White;
-            this.btnMemberReports.Location = new System.Drawing.Point(148, 0);
-            this.btnMemberReports.Name = "btnMemberReports";
-            this.btnMemberReports.Size = new System.Drawing.Size(150, 49);
-            this.btnMemberReports.TabIndex = 1;
-            this.btnMemberReports.Text = "👥 Member Reports";
-            this.btnMemberReports.UseVisualStyleBackColor = false;
-            this.btnMemberReports.Click += new System.EventHandler(this.btnMemberReports_Click);
-            // 
-            // btnCirculationReports
-            // 
-            this.btnCirculationReports.BackColor = System.Drawing.Color.Maroon;
-            this.btnCirculationReports.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
-            this.btnCirculationReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCirculationReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCirculationReports.ForeColor = System.Drawing.Color.White;
-            this.btnCirculationReports.Location = new System.Drawing.Point(0, 0);
-            this.btnCirculationReports.Name = "btnCirculationReports";
-            this.btnCirculationReports.Size = new System.Drawing.Size(149, 49);
-            this.btnCirculationReports.TabIndex = 0;
-            this.btnCirculationReports.Text = "🔄 Circulation Reports";
-            this.btnCirculationReports.UseVisualStyleBackColor = false;
-            this.btnCirculationReports.Click += new System.EventHandler(this.btnCirculationReports_Click);
             // 
             // panelHeader
             // 
@@ -210,7 +50,7 @@ namespace Project5LMS.Forms.Admin.Reports
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1152, 73);
+            this.panelHeader.Size = new System.Drawing.Size(1152, 70);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -236,6 +76,178 @@ namespace Project5LMS.Forms.Admin.Reports
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Reports and Analytics";
             // 
+            // tabControlReports
+            // 
+            this.tabControlReports.Controls.Add(this.tabPageCirculation);
+            this.tabControlReports.Controls.Add(this.tabPageMember);
+            this.tabControlReports.Controls.Add(this.tabPageCollection);
+            this.tabControlReports.Controls.Add(this.tabPageFinancial);
+            this.tabControlReports.Controls.Add(this.tabPageStatistical);
+            this.tabControlReports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlReports.Location = new System.Drawing.Point(24, 111);
+            this.tabControlReports.Name = "tabControlReports";
+            this.tabControlReports.SelectedIndex = 0;
+            this.tabControlReports.Size = new System.Drawing.Size(1152, 665);
+            this.tabControlReports.TabIndex = 2;
+            this.tabControlReports.SelectedIndexChanged += new System.EventHandler(this.tabControlReports_SelectedIndexChanged);
+            // 
+            // tabPageCirculation
+            // 
+            this.tabPageCirculation.Controls.Add(this.panelContentCirculation);
+            this.tabPageCirculation.Location = new System.Drawing.Point(4, 26);
+            this.tabPageCirculation.Name = "tabPageCirculation";
+            this.tabPageCirculation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCirculation.Size = new System.Drawing.Size(1144, 635);
+            this.tabPageCirculation.TabIndex = 0;
+            this.tabPageCirculation.Text = "🔄 Circulation";
+            this.tabPageCirculation.UseVisualStyleBackColor = true;
+            // 
+            // panelContentCirculation
+            // 
+            this.panelContentCirculation.BackColor = System.Drawing.Color.White;
+            this.panelContentCirculation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContentCirculation.Location = new System.Drawing.Point(3, 3);
+            this.panelContentCirculation.Name = "panelContentCirculation";
+            this.panelContentCirculation.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContentCirculation.Size = new System.Drawing.Size(1138, 629);
+            this.panelContentCirculation.TabIndex = 0;
+            // 
+            // tabPageMember
+            // 
+            this.tabPageMember.Controls.Add(this.panelContentMember);
+            this.tabPageMember.Location = new System.Drawing.Point(4, 26);
+            this.tabPageMember.Name = "tabPageMember";
+            this.tabPageMember.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMember.Size = new System.Drawing.Size(1144, 635);
+            this.tabPageMember.TabIndex = 1;
+            this.tabPageMember.Text = "👥 Member";
+            this.tabPageMember.UseVisualStyleBackColor = true;
+            // 
+            // panelContentMember
+            // 
+            this.panelContentMember.BackColor = System.Drawing.Color.White;
+            this.panelContentMember.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContentMember.Location = new System.Drawing.Point(3, 3);
+            this.panelContentMember.Name = "panelContentMember";
+            this.panelContentMember.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContentMember.Size = new System.Drawing.Size(1138, 629);
+            this.panelContentMember.TabIndex = 0;
+            // 
+            // tabPageCollection
+            // 
+            this.tabPageCollection.Controls.Add(this.panelContentCollection);
+            this.tabPageCollection.Location = new System.Drawing.Point(4, 26);
+            this.tabPageCollection.Name = "tabPageCollection";
+            this.tabPageCollection.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCollection.Size = new System.Drawing.Size(1144, 635);
+            this.tabPageCollection.TabIndex = 2;
+            this.tabPageCollection.Text = "📚 Collection";
+            this.tabPageCollection.UseVisualStyleBackColor = true;
+            // 
+            // panelContentCollection
+            // 
+            this.panelContentCollection.BackColor = System.Drawing.Color.White;
+            this.panelContentCollection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContentCollection.Location = new System.Drawing.Point(3, 3);
+            this.panelContentCollection.Name = "panelContentCollection";
+            this.panelContentCollection.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContentCollection.Size = new System.Drawing.Size(1138, 629);
+            this.panelContentCollection.TabIndex = 0;
+            // 
+            // tabPageFinancial
+            // 
+            this.tabPageFinancial.Controls.Add(this.panelContentFinancial);
+            this.tabPageFinancial.Location = new System.Drawing.Point(4, 26);
+            this.tabPageFinancial.Name = "tabPageFinancial";
+            this.tabPageFinancial.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFinancial.Size = new System.Drawing.Size(1144, 635);
+            this.tabPageFinancial.TabIndex = 3;
+            this.tabPageFinancial.Text = "💰 Financial";
+            this.tabPageFinancial.UseVisualStyleBackColor = true;
+            // 
+            // panelContentFinancial
+            // 
+            this.panelContentFinancial.BackColor = System.Drawing.Color.White;
+            this.panelContentFinancial.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContentFinancial.Location = new System.Drawing.Point(3, 3);
+            this.panelContentFinancial.Name = "panelContentFinancial";
+            this.panelContentFinancial.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContentFinancial.Size = new System.Drawing.Size(1138, 629);
+            this.panelContentFinancial.TabIndex = 0;
+            // 
+            // tabPageStatistical
+            // 
+            this.tabPageStatistical.Controls.Add(this.panelContentStatistical);
+            this.tabPageStatistical.Location = new System.Drawing.Point(4, 26);
+            this.tabPageStatistical.Name = "tabPageStatistical";
+            this.tabPageStatistical.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageStatistical.Size = new System.Drawing.Size(1144, 635);
+            this.tabPageStatistical.TabIndex = 4;
+            this.tabPageStatistical.Text = "📊 Statistical";
+            this.tabPageStatistical.UseVisualStyleBackColor = true;
+            // 
+            // panelContentStatistical
+            // 
+            this.panelContentStatistical.BackColor = System.Drawing.Color.White;
+            this.panelContentStatistical.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContentStatistical.Location = new System.Drawing.Point(3, 3);
+            this.panelContentStatistical.Name = "panelContentStatistical";
+            this.panelContentStatistical.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContentStatistical.Size = new System.Drawing.Size(1138, 629);
+            this.panelContentStatistical.TabIndex = 0;
+            // 
+            // panelDateFilter
+            // 
+            this.panelDateFilter.Controls.Add(this.btnExportReport);
+            this.panelDateFilter.Controls.Add(this.cmbDateRange);
+            this.panelDateFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelDateFilter.Location = new System.Drawing.Point(24, 94);
+            this.panelDateFilter.Name = "panelDateFilter";
+            this.panelDateFilter.Size = new System.Drawing.Size(1152, 38);
+            this.panelDateFilter.TabIndex = 1;
+            // 
+            // cmbDateRange
+            // 
+            this.cmbDateRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDateRange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDateRange.FormattingEnabled = true;
+            this.cmbDateRange.Location = new System.Drawing.Point(14, 6);
+            this.cmbDateRange.Name = "cmbDateRange";
+            this.cmbDateRange.Size = new System.Drawing.Size(151, 25);
+            this.cmbDateRange.TabIndex = 0;
+            this.cmbDateRange.SelectedIndexChanged += new System.EventHandler(this.cmbDateRange_SelectedIndexChanged);
+            // 
+            // btnExportReport
+            // 
+            this.btnExportReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExportReport.BackColor = System.Drawing.Color.Green;
+            this.btnExportReport.FlatAppearance.BorderSize = 0;
+            this.btnExportReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportReport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportReport.ForeColor = System.Drawing.Color.White;
+            this.btnExportReport.Location = new System.Drawing.Point(978, 4);
+            this.btnExportReport.Name = "btnExportReport";
+            this.btnExportReport.Size = new System.Drawing.Size(156, 30);
+            this.btnExportReport.TabIndex = 1;
+            this.btnExportReport.Text = "📤 Export Report";
+            this.btnExportReport.UseVisualStyleBackColor = false;
+            this.btnExportReport.Click += new System.EventHandler(this.btnExportReport_Click);
+            // 
+            // panelMainContainer
+            // 
+            this.panelMainContainer.AutoScroll = true;
+            this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.panelMainContainer.Controls.Add(this.tabControlReports);
+            this.panelMainContainer.Controls.Add(this.panelDateFilter);
+            this.panelMainContainer.Controls.Add(this.panelHeader);
+            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelMainContainer.Name = "panelMainContainer";
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.TabIndex = 0;
+            // 
             // AdminReportsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,30 +259,38 @@ namespace Project5LMS.Forms.Admin.Reports
             this.Name = "AdminReportsForm";
             this.Text = "Reports & Analytics";
             this.Load += new System.EventHandler(this.AdminReportsForm_Load);
-            this.panelMainContainer.ResumeLayout(false);
-            this.panelContent.ResumeLayout(false);
-            this.panelDateFilter.ResumeLayout(false);
-            this.panelReportButtons.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
+            this.tabControlReports.ResumeLayout(false);
+            this.tabPageCirculation.ResumeLayout(false);
+            this.tabPageMember.ResumeLayout(false);
+            this.tabPageCollection.ResumeLayout(false);
+            this.tabPageFinancial.ResumeLayout(false);
+            this.tabPageStatistical.ResumeLayout(false);
+            this.panelDateFilter.ResumeLayout(false);
+            this.panelMainContainer.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
         #endregion
-        private System.Windows.Forms.Panel panelMainContainer;
+
         private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
-        private System.Windows.Forms.Button btnExportReport;
-        private System.Windows.Forms.Panel panelReportButtons;
-        private System.Windows.Forms.Button btnCirculationReports;
-        private System.Windows.Forms.Button btnMemberReports;
-        private System.Windows.Forms.Button btnCollectionReports;
-        private System.Windows.Forms.Button btnFinancialReports;
-        private System.Windows.Forms.Button btnStatisticalReports;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.TabControl tabControlReports;
+        private System.Windows.Forms.TabPage tabPageCirculation;
+        private System.Windows.Forms.Panel panelContentCirculation;
+        private System.Windows.Forms.TabPage tabPageMember;
+        private System.Windows.Forms.Panel panelContentMember;
+        private System.Windows.Forms.TabPage tabPageCollection;
+        private System.Windows.Forms.Panel panelContentCollection;
+        private System.Windows.Forms.TabPage tabPageFinancial;
+        private System.Windows.Forms.Panel panelContentFinancial;
+        private System.Windows.Forms.TabPage tabPageStatistical;
+        private System.Windows.Forms.Panel panelContentStatistical;
         private System.Windows.Forms.Panel panelDateFilter;
         private System.Windows.Forms.ComboBox cmbDateRange;
-        private System.Windows.Forms.Panel panelContent;
-        private System.Windows.Forms.Label lblContentPlaceholder;
+        private System.Windows.Forms.Button btnExportReport;
+        private System.Windows.Forms.Panel panelMainContainer;
     }
 }

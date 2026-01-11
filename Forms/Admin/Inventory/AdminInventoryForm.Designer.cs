@@ -20,15 +20,6 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewInventory = new System.Windows.Forms.DataGridView();
-            this.colInventoryID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBookDetails = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCondition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLastVerified = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelSearchFilter = new System.Windows.Forms.Panel();
             this.btnFilterStatus = new System.Windows.Forms.Button();
             this.btnFilterCondition = new System.Windows.Forms.Button();
@@ -49,6 +40,15 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLastVerified = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCondition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBookDetails = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInventoryID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelMainContainer.SuspendLayout();
             this.panelTableContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInventory)).BeginInit();
@@ -63,7 +63,6 @@ namespace Project5LMS.Forms.Admin.Inventory
             // 
             // panelMainContainer
             // 
-            this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelTableContainer);
             this.panelMainContainer.Controls.Add(this.panelSearchFilter);
@@ -71,28 +70,28 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1358, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelTableContainer
             // 
+            this.panelTableContainer.AutoScroll = true;
             this.panelTableContainer.BackColor = System.Drawing.Color.White;
             this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTableContainer.Controls.Add(this.dataGridViewInventory);
-            this.panelTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTableContainer.Location = new System.Drawing.Point(24, 196);
+            this.panelTableContainer.Location = new System.Drawing.Point(24, 202);
             this.panelTableContainer.Name = "panelTableContainer";
-            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
-            this.panelTableContainer.Size = new System.Drawing.Size(1152, 580);
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16);
+            this.panelTableContainer.Size = new System.Drawing.Size(1244, 598);
             this.panelTableContainer.TabIndex = 3;
+            this.panelTableContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTableContainer_Paint);
             // 
             // dataGridViewInventory
             // 
             this.dataGridViewInventory.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.dataGridViewInventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewInventory.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewInventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -123,98 +122,17 @@ namespace Project5LMS.Forms.Admin.Inventory
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewInventory.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewInventory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewInventory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dataGridViewInventory.Location = new System.Drawing.Point(16, 16);
+            this.dataGridViewInventory.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewInventory.MultiSelect = false;
             this.dataGridViewInventory.Name = "dataGridViewInventory";
             this.dataGridViewInventory.RowHeadersVisible = false;
             this.dataGridViewInventory.RowHeadersWidth = 51;
             this.dataGridViewInventory.RowTemplate.Height = 60;
             this.dataGridViewInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewInventory.Size = new System.Drawing.Size(1118, 546);
+            this.dataGridViewInventory.Size = new System.Drawing.Size(1327, 546);
             this.dataGridViewInventory.TabIndex = 0;
-            // 
-            // colInventoryID
-            // 
-            this.colInventoryID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colInventoryID.DataPropertyName = "InventoryID";
-            this.colInventoryID.HeaderText = "INVENTORY ID";
-            this.colInventoryID.MinimumWidth = 6;
-            this.colInventoryID.Name = "colInventoryID";
-            this.colInventoryID.Width = 120;
-            // 
-            // colBookDetails
-            // 
-            this.colBookDetails.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colBookDetails.DataPropertyName = "BookDetails";
-            this.colBookDetails.HeaderText = "BOOK DETAILS";
-            this.colBookDetails.MinimumWidth = 6;
-            this.colBookDetails.Name = "colBookDetails";
-            this.colBookDetails.Width = 300;
-            // 
-            // colCategory
-            // 
-            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colCategory.DataPropertyName = "Category";
-            this.colCategory.HeaderText = "CATEGORY";
-            this.colCategory.MinimumWidth = 6;
-            this.colCategory.Name = "colCategory";
-            this.colCategory.Width = 120;
-            // 
-            // colLocation
-            // 
-            this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLocation.DataPropertyName = "Location";
-            this.colLocation.HeaderText = "LOCATION";
-            this.colLocation.MinimumWidth = 6;
-            this.colLocation.Name = "colLocation";
-            this.colLocation.Width = 125;
-            // 
-            // colCopy
-            // 
-            this.colCopy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colCopy.DataPropertyName = "Copy";
-            this.colCopy.HeaderText = "COPY";
-            this.colCopy.MinimumWidth = 6;
-            this.colCopy.Name = "colCopy";
-            this.colCopy.Width = 125;
-            // 
-            // colCondition
-            // 
-            this.colCondition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colCondition.DataPropertyName = "Condition";
-            this.colCondition.HeaderText = "CONDITION";
-            this.colCondition.MinimumWidth = 6;
-            this.colCondition.Name = "colCondition";
-            this.colCondition.Width = 120;
-            // 
-            // colStatus
-            // 
-            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colStatus.DataPropertyName = "Status";
-            this.colStatus.HeaderText = "STATUS";
-            this.colStatus.MinimumWidth = 6;
-            this.colStatus.Name = "colStatus";
-            this.colStatus.Width = 120;
-            // 
-            // colLastVerified
-            // 
-            this.colLastVerified.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLastVerified.DataPropertyName = "LastVerified";
-            this.colLastVerified.HeaderText = "LAST VERIFIED";
-            this.colLastVerified.MinimumWidth = 6;
-            this.colLastVerified.Name = "colLastVerified";
-            this.colLastVerified.Width = 130;
-            // 
-            // colActions
-            // 
-            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colActions.DataPropertyName = "Actions";
-            this.colActions.HeaderText = "ACTIONS";
-            this.colActions.MinimumWidth = 6;
-            this.colActions.Name = "colActions";
-            this.colActions.Width = 200;
+            this.dataGridViewInventory.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewInventory_CellContentClick_2);
             // 
             // panelSearchFilter
             // 
@@ -224,7 +142,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelSearchFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSearchFilter.Location = new System.Drawing.Point(24, 161);
             this.panelSearchFilter.Name = "panelSearchFilter";
-            this.panelSearchFilter.Size = new System.Drawing.Size(1152, 35);
+            this.panelSearchFilter.Size = new System.Drawing.Size(1310, 35);
             this.panelSearchFilter.TabIndex = 2;
             // 
             // btnFilterStatus
@@ -283,8 +201,9 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMetrics.Location = new System.Drawing.Point(24, 98);
             this.panelMetrics.Name = "panelMetrics";
-            this.panelMetrics.Size = new System.Drawing.Size(1152, 63);
+            this.panelMetrics.Size = new System.Drawing.Size(1310, 63);
             this.panelMetrics.TabIndex = 1;
+            this.panelMetrics.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMetrics_Paint);
             // 
             // panelMetricLost
             // 
@@ -294,7 +213,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMetricLost.Location = new System.Drawing.Point(918, 1);
             this.panelMetricLost.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricLost.Name = "panelMetricLost";
-            this.panelMetricLost.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricLost.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricLost.Size = new System.Drawing.Size(234, 63);
             this.panelMetricLost.TabIndex = 3;
             // 
@@ -328,7 +247,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMetricDamaged.Location = new System.Drawing.Point(620, 0);
             this.panelMetricDamaged.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricDamaged.Name = "panelMetricDamaged";
-            this.panelMetricDamaged.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricDamaged.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricDamaged.Size = new System.Drawing.Size(234, 63);
             this.panelMetricDamaged.TabIndex = 2;
             // 
@@ -362,7 +281,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMetricNeedsRepair.Location = new System.Drawing.Point(314, 1);
             this.panelMetricNeedsRepair.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricNeedsRepair.Name = "panelMetricNeedsRepair";
-            this.panelMetricNeedsRepair.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricNeedsRepair.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricNeedsRepair.Size = new System.Drawing.Size(234, 62);
             this.panelMetricNeedsRepair.TabIndex = 1;
             // 
@@ -396,7 +315,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelMetricTotal.Location = new System.Drawing.Point(0, 0);
             this.panelMetricTotal.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricTotal.Name = "panelMetricTotal";
-            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricTotal.Size = new System.Drawing.Size(234, 63);
             this.panelMetricTotal.TabIndex = 0;
             // 
@@ -429,7 +348,7 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1152, 74);
+            this.panelHeader.Size = new System.Drawing.Size(1310, 74);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -454,12 +373,95 @@ namespace Project5LMS.Forms.Admin.Inventory
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Inventory Management";
             // 
+            // colActions
+            // 
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colActions.DataPropertyName = "Actions";
+            this.colActions.HeaderText = "ACTIONS";
+            this.colActions.MinimumWidth = 6;
+            this.colActions.Name = "colActions";
+            this.colActions.Width = 200;
+            // 
+            // colLastVerified
+            // 
+            this.colLastVerified.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLastVerified.DataPropertyName = "LastVerified";
+            this.colLastVerified.HeaderText = "LAST VERIFIED";
+            this.colLastVerified.MinimumWidth = 6;
+            this.colLastVerified.Name = "colLastVerified";
+            this.colLastVerified.Width = 130;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.MinimumWidth = 6;
+            this.colStatus.Name = "colStatus";
+            this.colStatus.Width = 120;
+            // 
+            // colCondition
+            // 
+            this.colCondition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCondition.DataPropertyName = "Condition";
+            this.colCondition.HeaderText = "CONDITION";
+            this.colCondition.MinimumWidth = 6;
+            this.colCondition.Name = "colCondition";
+            this.colCondition.Width = 110;
+            // 
+            // colCopy
+            // 
+            this.colCopy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCopy.DataPropertyName = "Copy";
+            this.colCopy.HeaderText = "COPY";
+            this.colCopy.MinimumWidth = 6;
+            this.colCopy.Name = "colCopy";
+            this.colCopy.Width = 80;
+            // 
+            // colLocation
+            // 
+            this.colLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLocation.DataPropertyName = "Location";
+            this.colLocation.HeaderText = "LOCATION";
+            this.colLocation.MinimumWidth = 6;
+            this.colLocation.Name = "colLocation";
+            this.colLocation.Width = 125;
+            // 
+            // colCategory
+            // 
+            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colCategory.DataPropertyName = "Category";
+            this.colCategory.HeaderText = "CATEGORY";
+            this.colCategory.MinimumWidth = 6;
+            this.colCategory.Name = "colCategory";
+            this.colCategory.Width = 120;
+            // 
+            // colBookDetails
+            // 
+            this.colBookDetails.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colBookDetails.DataPropertyName = "BookDetails";
+            this.colBookDetails.HeaderText = "BOOK DETAILS";
+            this.colBookDetails.MinimumWidth = 6;
+            this.colBookDetails.Name = "colBookDetails";
+            this.colBookDetails.Width = 151;
+            // 
+            // colInventoryID
+            // 
+            this.colInventoryID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colInventoryID.DataPropertyName = "InventoryID";
+            this.colInventoryID.FillWeight = 20F;
+            this.colInventoryID.HeaderText = "INVENTORY ID";
+            this.colInventoryID.MinimumWidth = 6;
+            this.colInventoryID.Name = "colInventoryID";
+            this.colInventoryID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colInventoryID.Width = 110;
+            // 
             // AdminInventoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1280, 800);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AdminInventoryForm";

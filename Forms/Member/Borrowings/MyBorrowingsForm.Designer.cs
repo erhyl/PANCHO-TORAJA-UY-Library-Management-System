@@ -122,7 +122,7 @@
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Location = new System.Drawing.Point(30, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(930, 86);
+            this.panelHeader.Size = new System.Drawing.Size(1158, 86);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle

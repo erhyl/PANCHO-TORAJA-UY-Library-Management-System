@@ -86,54 +86,52 @@ namespace Project5LMS.Forms.Admin.Reports
             UpdateDateRange();
             LoadReportContent(currentReportType);
         }
-        private void btnCirculationReports_Click(object sender, EventArgs e)
+        private void tabControlReports_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetActiveButton(btnCirculationReports);
-            LoadReportContent("Circulation");
+            switch (tabControlReports.SelectedIndex)
+            {
+                case 0:
+                    currentReportType = "Circulation";
+                    break;
+                case 1:
+                    currentReportType = "Member";
+                    break;
+                case 2:
+                    currentReportType = "Collection";
+                    break;
+                case 3:
+                    currentReportType = "Financial";
+                    break;
+                case 4:
+                    currentReportType = "Statistical";
+                    break;
+            }
+            LoadReportContent(currentReportType);
         }
-        private void btnMemberReports_Click(object sender, EventArgs e)
+        private Panel GetCurrentPanel()
         {
-            SetActiveButton(btnMemberReports);
-            LoadReportContent("Member");
-        }
-        private void btnCollectionReports_Click(object sender, EventArgs e)
-        {
-            SetActiveButton(btnCollectionReports);
-            LoadReportContent("Collection");
-        }
-        private void btnFinancialReports_Click(object sender, EventArgs e)
-        {
-            SetActiveButton(btnFinancialReports);
-            LoadReportContent("Financial");
-        }
-        private void btnStatisticalReports_Click(object sender, EventArgs e)
-        {
-            SetActiveButton(btnStatisticalReports);
-            LoadReportContent("Statistical");
-        }
-        private void SetActiveButton(Button activeButton)
-        {
-            btnCirculationReports.BackColor = Color.White;
-            btnCirculationReports.ForeColor = Color.FromArgb(64, 64, 64);
-            btnMemberReports.BackColor = Color.White;
-            btnMemberReports.ForeColor = Color.FromArgb(64, 64, 64);
-            btnCollectionReports.BackColor = Color.White;
-            btnCollectionReports.ForeColor = Color.FromArgb(64, 64, 64);
-            btnFinancialReports.BackColor = Color.White;
-            btnFinancialReports.ForeColor = Color.FromArgb(64, 64, 64);
-            btnStatisticalReports.BackColor = Color.White;
-            btnStatisticalReports.ForeColor = Color.FromArgb(64, 64, 64);
-            activeButton.BackColor = Color.FromArgb(13, 110, 253);
-            activeButton.ForeColor = Color.White;
+            switch (currentReportType)
+            {
+                case "Circulation":
+                    return panelContentCirculation;
+                case "Member":
+                    return panelContentMember;
+                case "Collection":
+                    return panelContentCollection;
+                case "Financial":
+                    return panelContentFinancial;
+                case "Statistical":
+                    return panelContentStatistical;
+                default:
+                    return panelContentCirculation;
+            }
         }
         private void LoadReportContent(string reportType)
         {
             currentReportType = reportType;
-            panelContent.Controls.Clear();
-            if (lblContentPlaceholder != null && panelContent.Controls.Contains(lblContentPlaceholder))
-            {
-                panelContent.Controls.Remove(lblContentPlaceholder);
-            }
+            Panel currentPanel = GetCurrentPanel();
+            currentPanel.Controls.Clear();
+            
             switch (reportType)
             {
                 case "Circulation":
@@ -155,6 +153,8 @@ namespace Project5LMS.Forms.Admin.Reports
         }
         private void LoadCirculationReport()
         {
+            panelContentCirculation.Controls.Clear();
+            
             panelChart = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -162,13 +162,17 @@ namespace Project5LMS.Forms.Admin.Reports
                 Padding = new Padding(20)
             };
             panelChart.Paint += PanelChart_Circulation_Paint;
-            panelContent.Controls.Add(panelChart);
+            panelContentCirculation.Controls.Add(panelChart);
+            
+            // Force the panel to refresh and show the chart
+            panelContentCirculation.Refresh();
+            panelChart.Refresh();
             panelChart.Invalidate();
+            Application.DoEvents();
         }
         private void PanelChart_Circulation_Paint(object sender, PaintEventArgs e)
         {
-            DrawLineChart(e.Graphics, panelChart, "Daily Borrowing & Return Trends",
-                GetDailyBorrowingData(), GetDailyReturnData());
+            DrawBarChart(e.Graphics, panelChart, "Borrowing by Category", GetBorrowingByCategoryData());
         }
         private void LoadMemberReport()
         {
@@ -205,7 +209,7 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             tablePanel.Controls.Add(dataGridViewReports);
             container.Controls.Add(tablePanel, 0, 1);
-            panelContent.Controls.Add(container);
+            panelContentMember.Controls.Add(container);
             panelChart.Invalidate();
             LoadNewMemberRegistrations();
         }
@@ -226,7 +230,7 @@ namespace Project5LMS.Forms.Admin.Reports
             CreateSummaryCard(summaryPanel, "Total Books", summaryData["Total"].ToString(), Color.FromArgb(13, 110, 253));
             CreateSummaryCard(summaryPanel, "Available", summaryData["Available"].ToString(), Color.FromArgb(40, 167, 69));
             CreateSummaryCard(summaryPanel, "On Loan", summaryData["OnLoan"].ToString(), Color.FromArgb(255, 193, 7));
-            panelContent.Controls.Add(summaryPanel);
+            panelContentCollection.Controls.Add(summaryPanel);
             TableLayoutPanel container = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -260,7 +264,7 @@ namespace Project5LMS.Forms.Admin.Reports
             };
             tablePanel.Controls.Add(dataGridViewReports);
             container.Controls.Add(tablePanel, 0, 1);
-            panelContent.Controls.Add(container);
+            panelContentCollection.Controls.Add(container);
             panelChart.Invalidate();
             LoadMostBorrowedBooks();
         }
@@ -277,30 +281,16 @@ namespace Project5LMS.Forms.Admin.Reports
                 FlowDirection = FlowDirection.LeftToRight,
                 Padding = new Padding(0, 0, 0, 20)
             };
-            var summaryData = GetFinancialSummary();
-            CreateSummaryCard(summaryPanel, "Fines Collected", "$" + summaryData["Collected"].ToString("F2"), Color.FromArgb(40, 167, 69));
-            CreateSummaryCard(summaryPanel, "Pending Fines", "$" + summaryData["Pending"].ToString("F2"), Color.FromArgb(255, 193, 7));
-            CreateSummaryCard(summaryPanel, "Waived Fines", "$" + summaryData["Waived"].ToString("F2"), Color.FromArgb(220, 53, 69));
-            panelContent.Controls.Add(summaryPanel);
-            Panel tablePanel = new Panel
-            {
-                Dock = DockStyle.Fill,
-                BackColor = Color.White,
-                Padding = new Padding(0, 20, 0, 0)
-            };
-            dataGridViewReports = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                ReadOnly = true,
-                AllowUserToAddRows = false,
-                BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.None
-            };
-            tablePanel.Controls.Add(dataGridViewReports);
-            panelContent.Controls.Add(tablePanel);
-            LoadOverdueBooksReport();
+            
+            var financialData = GetFinancialSummary();
+            CreateSummaryCard(summaryPanel, "Collected", financialData["Collected"].ToString("C2"), Color.FromArgb(40, 167, 69));
+            CreateSummaryCard(summaryPanel, "Pending", financialData["Pending"].ToString("C2"), Color.FromArgb(255, 193, 7));
+            CreateSummaryCard(summaryPanel, "Waived", financialData["Waived"].ToString("C2"), Color.FromArgb(220, 53, 69));
+            panelContentFinancial.Controls.Add(summaryPanel);
         }
+            
+            
+          
         private void LoadStatisticalReport()
         {
             FlowLayoutPanel summaryPanel = new FlowLayoutPanel
@@ -315,7 +305,7 @@ namespace Project5LMS.Forms.Admin.Reports
             CreateSummaryCard(summaryPanel, "Books Per Member", Convert.ToDouble(statsData["BooksPerMember"]).ToString("F1"), Color.FromArgb(40, 167, 69));
             CreateSummaryCard(summaryPanel, "Avg. Borrowing Period", Convert.ToString(statsData["AvgPeriod"]) + " days", Color.FromArgb(255, 193, 7));
             CreateSummaryCard(summaryPanel, "Collection Turnover", Convert.ToString(statsData["Turnover"]) + "%", Color.FromArgb(220, 53, 69));
-            panelContent.Controls.Add(summaryPanel);
+            panelContentStatistical.Controls.Add(summaryPanel);
         }
         private void CreateSummaryCard(FlowLayoutPanel parent, string title, string value, Color accentColor)
         {
@@ -907,19 +897,29 @@ namespace Project5LMS.Forms.Admin.Reports
                 g.DrawString(value.ToString(), new Font("Segoe UI", 9F), Brushes.Gray, 5, y - 10);
             }
             var items = data.OrderByDescending(x => x.Value).ToList();
-            float barWidth = (float)chartWidth / items.Count - 20;
+            float barWidth = (float)chartWidth / items.Count - 30;
             float stepX = (float)chartWidth / items.Count;
             Color barColor = title.Contains("Category") ? Color.FromArgb(13, 110, 253) : Color.FromArgb(128, 0, 128);
             for (int i = 0; i < items.Count; i++)
             {
-                float x = startX + i * stepX + 10;
+                float x = startX + i * stepX + 15;
                 float barHeight = (float)items[i].Value / maxValue * chartHeight;
                 float y = endY - barHeight;
+                
+                // Draw solid blue bars without border for cleaner look
                 g.FillRectangle(new SolidBrush(barColor), x, y, barWidth, barHeight);
-                g.DrawRectangle(Pens.DarkBlue, x, y, barWidth, barHeight);
-                g.DrawString(items[i].Value.ToString(), new Font("Segoe UI", 9F), Brushes.Black, x + barWidth / 2 - 10, y - 20);
-                string label = items[i].Key.Length > 10 ? items[i].Key.Substring(0, 10) + "..." : items[i].Key;
-                g.DrawString(label, new Font("Segoe UI", 9F), Brushes.Black, x, endY + 5);
+                
+                // Draw value on top of bar
+                string valueText = items[i].Value.ToString();
+                SizeF valueSize = g.MeasureString(valueText, new Font("Segoe UI", 9F, FontStyle.Regular));
+                g.DrawString(valueText, new Font("Segoe UI", 9F, FontStyle.Regular), Brushes.Black, 
+                    x + (barWidth / 2) - (valueSize.Width / 2), y - 20);
+                
+                // Draw category label below
+                string label = items[i].Key;
+                SizeF labelSize = g.MeasureString(label, new Font("Segoe UI", 9F, FontStyle.Regular));
+                g.DrawString(label, new Font("Segoe UI", 9F, FontStyle.Regular), Brushes.Black, 
+                    x + (barWidth / 2) - (labelSize.Width / 2), endY + 8);
             }
         }
         private bool CheckTableExists(MySqlConnection conn, string tableName)
@@ -993,5 +993,11 @@ namespace Project5LMS.Forms.Admin.Reports
         private void lblSubtitle_Click(object sender, EventArgs e)
         {
         }
+
+        private void lblContentPlaceholder_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

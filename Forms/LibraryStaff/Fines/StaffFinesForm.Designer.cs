@@ -57,33 +57,32 @@
             this.panelMainContainer.Controls.Add(this.panelContentContainer);
             this.panelMainContainer.Controls.Add(this.panelMetrics);
             this.panelMainContainer.Controls.Add(this.panelHeader);
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.Size = new System.Drawing.Size(1176, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelContentContainer
             // 
             this.panelContentContainer.Controls.Add(this.panelProcessPayment);
             this.panelContentContainer.Controls.Add(this.panelActiveFines);
-            this.panelContentContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContentContainer.Location = new System.Drawing.Point(24, 195);
+            this.panelContentContainer.Location = new System.Drawing.Point(0, 207);
             this.panelContentContainer.Name = "panelContentContainer";
-            this.panelContentContainer.Size = new System.Drawing.Size(1152, 581);
+            this.panelContentContainer.Size = new System.Drawing.Size(1164, 581);
             this.panelContentContainer.TabIndex = 2;
             // 
             // panelProcessPayment
             // 
+            this.panelProcessPayment.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panelProcessPayment.BackColor = System.Drawing.Color.White;
             this.panelProcessPayment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelProcessPayment.Controls.Add(this.lblProcessPaymentPlaceholder);
             this.panelProcessPayment.Controls.Add(this.lblProcessPaymentTitle);
-            this.panelProcessPayment.Location = new System.Drawing.Point(540, 0);
+            this.panelProcessPayment.Location = new System.Drawing.Point(608, 0);
             this.panelProcessPayment.Name = "panelProcessPayment";
             this.panelProcessPayment.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelProcessPayment.Size = new System.Drawing.Size(612, 581);
+            this.panelProcessPayment.Size = new System.Drawing.Size(550, 581);
             this.panelProcessPayment.TabIndex = 1;
             // 
             // lblProcessPaymentPlaceholder
@@ -110,26 +109,25 @@
             // 
             // panelActiveFines
             // 
+            this.panelActiveFines.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panelActiveFines.BackColor = System.Drawing.Color.White;
             this.panelActiveFines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelActiveFines.Controls.Add(this.panelActiveFinesList);
             this.panelActiveFines.Controls.Add(this.lblActiveFinesTitle);
-            this.panelActiveFines.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelActiveFines.Location = new System.Drawing.Point(0, 0);
+            this.panelActiveFines.Location = new System.Drawing.Point(0, 3);
             this.panelActiveFines.Name = "panelActiveFines";
             this.panelActiveFines.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelActiveFines.Size = new System.Drawing.Size(541, 581);
+            this.panelActiveFines.Size = new System.Drawing.Size(602, 581);
             this.panelActiveFines.TabIndex = 0;
             // 
             // panelActiveFinesList
             // 
             this.panelActiveFinesList.AutoScroll = true;
-            this.panelActiveFinesList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelActiveFinesList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.panelActiveFinesList.Location = new System.Drawing.Point(15, 16);
+            this.panelActiveFinesList.Location = new System.Drawing.Point(20, 16);
             this.panelActiveFinesList.Name = "panelActiveFinesList";
             this.panelActiveFinesList.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.panelActiveFinesList.Size = new System.Drawing.Size(509, 547);
+            this.panelActiveFinesList.Size = new System.Drawing.Size(581, 547);
             this.panelActiveFinesList.TabIndex = 1;
             this.panelActiveFinesList.WrapContents = false;
             // 
@@ -150,7 +148,6 @@
             this.panelMetrics.Controls.Add(this.panelMetricOverdue);
             this.panelMetrics.Controls.Add(this.panelMetricPending);
             this.panelMetrics.Controls.Add(this.panelMetricTotalFines);
-            this.panelMetrics.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMetrics.Location = new System.Drawing.Point(24, 97);
             this.panelMetrics.Name = "panelMetrics";
             this.panelMetrics.Size = new System.Drawing.Size(1152, 98);
@@ -164,7 +161,7 @@
             this.panelMetricCollected.Location = new System.Drawing.Point(916, 0);
             this.panelMetricCollected.Name = "panelMetricCollected";
             this.panelMetricCollected.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
-            this.panelMetricCollected.Size = new System.Drawing.Size(236, 98);
+            this.panelMetricCollected.Size = new System.Drawing.Size(212, 98);
             this.panelMetricCollected.TabIndex = 3;
             // 
             // lblMetricCollectedValue
@@ -295,7 +292,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1152, 73);
+            this.panelHeader.Size = new System.Drawing.Size(1128, 73);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -325,7 +322,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1278, 800);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "StaffFinesForm";

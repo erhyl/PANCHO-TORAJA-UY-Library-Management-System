@@ -646,7 +646,7 @@
             this.lblPhoneValue.AutoSize = true;
             this.lblPhoneValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPhoneValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPhoneValue.Location = new System.Drawing.Point(160, 77);
+            this.lblPhoneValue.Location = new System.Drawing.Point(168, 196);
             this.lblPhoneValue.Name = "lblPhoneValue";
             this.lblPhoneValue.Size = new System.Drawing.Size(41, 21);
             this.lblPhoneValue.TabIndex = 8;
@@ -709,7 +709,7 @@
             this.lblFullNameValue.AutoSize = true;
             this.lblFullNameValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFullNameValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFullNameValue.Location = new System.Drawing.Point(177, 190);
+            this.lblFullNameValue.Location = new System.Drawing.Point(167, 76);
             this.lblFullNameValue.Name = "lblFullNameValue";
             this.lblFullNameValue.Size = new System.Drawing.Size(41, 21);
             this.lblFullNameValue.TabIndex = 2;

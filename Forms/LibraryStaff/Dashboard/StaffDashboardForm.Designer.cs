@@ -631,6 +631,7 @@
             this.Controls.Add(this.panelSidebar);
             this.Name = "StaffDashboardForm";
             this.Text = "LibraryMS - Management System";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.StaffDashboardForm_Load);
             this.panelSidebar.ResumeLayout(false);
             this.panelSidebar.PerformLayout();
