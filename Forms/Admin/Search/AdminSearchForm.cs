@@ -494,5 +494,10 @@ namespace Project5LMS.Forms.Admin.Search
         private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
+
+        private void panelCards_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

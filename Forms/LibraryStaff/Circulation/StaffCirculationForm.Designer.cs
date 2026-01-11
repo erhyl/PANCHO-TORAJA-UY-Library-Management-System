@@ -59,21 +59,24 @@
             this.panelMainContainer.Controls.Add(this.panelCheckOutBook);
             this.panelMainContainer.Controls.Add(this.panelCirculationManagement);
             this.panelMainContainer.Controls.Add(this.panelHeader);
+            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1234, 800);
+            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelTransactionHistory
             // 
+            this.panelTransactionHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTransactionHistory.Controls.Add(this.panelTransactionsList);
             this.panelTransactionHistory.Controls.Add(this.tabControl);
             this.panelTransactionHistory.Controls.Add(this.lblTransactionHistory);
-            this.panelTransactionHistory.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTransactionHistory.Location = new System.Drawing.Point(24, 370);
             this.panelTransactionHistory.Name = "panelTransactionHistory";
-            this.panelTransactionHistory.Size = new System.Drawing.Size(1186, 325);
+            this.panelTransactionHistory.Size = new System.Drawing.Size(1152, 325);
             this.panelTransactionHistory.TabIndex = 2;
             // 
             // panelTransactionsList
@@ -156,6 +159,8 @@
             // 
             // panelCheckOutBook
             // 
+            this.panelCheckOutBook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCheckOutBook.BackColor = System.Drawing.Color.White;
             this.panelCheckOutBook.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelCheckOutBook.Controls.Add(this.btnProcessCheckOut);
@@ -167,7 +172,7 @@
             this.panelCheckOutBook.Location = new System.Drawing.Point(24, 122);
             this.panelCheckOutBook.Name = "panelCheckOutBook";
             this.panelCheckOutBook.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
-            this.panelCheckOutBook.Size = new System.Drawing.Size(570, 225);
+            this.panelCheckOutBook.Size = new System.Drawing.Size(550, 225);
             this.panelCheckOutBook.TabIndex = 2;
             // 
             // btnProcessCheckOut
@@ -248,11 +253,12 @@
             // 
             // panelCirculationManagement
             // 
+            this.panelCirculationManagement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCirculationManagement.Controls.Add(this.panelReturnBook);
-            this.panelCirculationManagement.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCirculationManagement.Location = new System.Drawing.Point(24, 99);
             this.panelCirculationManagement.Name = "panelCirculationManagement";
-            this.panelCirculationManagement.Size = new System.Drawing.Size(1186, 271);
+            this.panelCirculationManagement.Size = new System.Drawing.Size(1152, 271);
             this.panelCirculationManagement.TabIndex = 1;
             // 
             // panelReturnBook
@@ -345,12 +351,13 @@
             // 
             // panelHeader
             // 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.lblSubtitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1186, 75);
+            this.panelHeader.Size = new System.Drawing.Size(1152, 75);
             this.panelHeader.TabIndex = 0;
             // 
             // lblTitle
@@ -379,10 +386,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1233, 800);
+            this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "StaffCirculationForm";
             this.Text = "Circulation";
             this.Load += new System.EventHandler(this.StaffCirculationForm_Load);

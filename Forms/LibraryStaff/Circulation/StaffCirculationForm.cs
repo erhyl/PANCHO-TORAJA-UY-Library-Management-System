@@ -39,9 +39,26 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             _finesService = ServiceFactory.CreateFinesService();
             _bookService = ServiceFactory.CreateBookService();
             _membersService = ServiceFactory.CreateMembersService();
+            this.ResizeRedraw = true;
         }
         private void StaffCirculationForm_Load(object sender, EventArgs e)
         {
+            this.Shown += StaffCirculationForm_Shown;
+        }
+        
+        private void StaffCirculationForm_Shown(object sender, EventArgs e)
+        {
+            // Ensure form is properly sized before loading data
+            if (this.Parent != null)
+            {
+                this.Dock = DockStyle.Fill;
+                if (this.Parent is Panel parentPanel)
+                {
+                    this.panelMainContainer.Dock = DockStyle.Fill;
+                    this.panelMainContainer.PerformLayout();
+                    this.PerformLayout();
+                }
+            }
             EnsureTransactionsTableExists();
             UpdateReturnDate();
             LoadTransactions();

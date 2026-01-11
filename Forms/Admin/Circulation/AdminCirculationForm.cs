@@ -38,9 +38,26 @@ namespace Project5LMS.Forms.Admin.Circulation
             _finesService = ServiceFactory.CreateFinesService();
             _bookService = ServiceFactory.CreateBookService();
             _membersService = ServiceFactory.CreateMembersService();
+            this.ResizeRedraw = true;
         }
         private void AdminCirculationForm_Load(object sender, EventArgs e)
         {
+            this.Shown += AdminCirculationForm_Shown;
+        }
+        
+        private void AdminCirculationForm_Shown(object sender, EventArgs e)
+        {
+            // Ensure form is properly sized before loading data
+            if (this.Parent != null)
+            {
+                this.Dock = DockStyle.Fill;
+                if (this.Parent is Panel parentPanel)
+                {
+                    this.panelMainContainer.Dock = DockStyle.Fill;
+                    this.panelMainContainer.PerformLayout();
+                    this.PerformLayout();
+                }
+            }
             EnsureTransactionsTableExists();
             SetupDataGridView();
             LoadMetrics();
@@ -822,6 +839,11 @@ namespace Project5LMS.Forms.Admin.Circulation
         }
         private void dataGridViewTransactions_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+        }
+
+        private void panelTableContainer_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

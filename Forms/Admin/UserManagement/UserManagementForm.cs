@@ -34,12 +34,58 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 return;
             }
             _userService = ServiceFactory.CreateUserService();
+            // Ensure form works when loaded in a panel
+            this.ResizeRedraw = true;
         }
         private void UserManagementForm_Load(object sender, EventArgs e)
         {
             cmbRoleFilter.SelectedIndex = 0;
+            this.Resize += UserManagementForm_Resize;
+            // Delay loading to ensure form is properly sized
+            this.Shown += UserManagementForm_Shown;
+        }
+        
+        private void UserManagementForm_Shown(object sender, EventArgs e)
+        {
+            // Ensure form is properly sized before loading data
+            if (this.Parent != null)
+            {
+                // Form is embedded in a panel, ensure it fills the panel
+                this.Dock = DockStyle.Fill;
+                // Adjust panelMainContainer to fit the parent
+                if (this.Parent is Panel parentPanel)
+                {
+                    this.panelMainContainer.Dock = DockStyle.Fill;
+                    // Update the form size to match parent
+                    this.Size = parentPanel.Size;
+                    // Force layout update
+                    this.panelMainContainer.PerformLayout();
+                    this.PerformLayout();
+                }
+            }
             LoadMetrics();
             LoadUsers();
+        }
+        
+        private void UserManagementForm_Resize(object sender, EventArgs e)
+        {
+            // Re-render cards when form resizes to adjust card widths
+            if (filteredUsers != null && filteredUsers.Count > 0 && panelUsersContainer.Width > 0)
+            {
+                // Use a small delay to ensure resize is complete
+                System.Windows.Forms.Timer resizeTimer = new System.Windows.Forms.Timer();
+                resizeTimer.Interval = 100;
+                resizeTimer.Tick += (s, args) =>
+                {
+                    resizeTimer.Stop();
+                    resizeTimer.Dispose();
+                    if (panelUsersContainer.Width > 0)
+                    {
+                        RenderUserCards();
+                    }
+                };
+                resizeTimer.Start();
+            }
         }
         private void DrawMetricIcon(Graphics g, Panel panel, string icon)
         {
@@ -141,11 +187,18 @@ namespace Project5LMS.Forms.Admin.UserManagement
         }
         private Panel CreateUserCard(User user)
         {
+            // Calculate card width based on container width
+            // Aim for 2 cards per row with margins, minimum 400px width
+            int containerWidth = panelUsersContainer.Width > 0 
+                ? panelUsersContainer.Width - panelUsersContainer.Padding.Left - panelUsersContainer.Padding.Right
+                : 1200; // Default width if container not initialized
+            int cardWidth = Math.Max(400, (containerWidth - 48) / 2); // 48 = margins (16*3)
+            
             Panel card = new Panel
             {
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle,
-                Size = new Size(550, 280),
+                Size = new Size(cardWidth, 280),
                 Margin = new Padding(0, 0, 16, 16),
                 Padding = new Padding(20, 20, 20, 20)
             };
@@ -327,6 +380,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
             };
             btnSuspend.Click += (s, e) => SuspendUser(user);
             card.Controls.Add(btnSuspend);
+            // Calculate edit/delete button position relative to card width (accounting for padding)
+            int rightEdgeX = cardWidth - card.Padding.Right - 30; // 30 = button width
             Button btnEdit = new Button
             {
                 Text = "✏️",
@@ -336,7 +391,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 FlatStyle = FlatStyle.Flat,
                 FlatAppearance = { BorderSize = 0 },
                 Size = new Size(30, 30),
-                Location = new Point(490, 20),
+                Location = new Point(rightEdgeX, 20),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Cursor = Cursors.Hand
             };
             btnEdit.Click += (s, e) => EditUser(user);
@@ -350,7 +406,8 @@ namespace Project5LMS.Forms.Admin.UserManagement
                 FlatStyle = FlatStyle.Flat,
                 FlatAppearance = { BorderSize = 0 },
                 Size = new Size(30, 30),
-                Location = new Point(490, 50),
+                Location = new Point(rightEdgeX, 50),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Cursor = Cursors.Hand
             };
             btnDelete.Click += (s, e) => DeleteUser(user);
@@ -624,5 +681,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             catch { }
             return "Never";
         }
+
+
     }
 }
