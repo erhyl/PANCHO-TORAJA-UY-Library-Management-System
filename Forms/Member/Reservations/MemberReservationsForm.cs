@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -199,7 +199,7 @@ namespace Project5LMS.Forms.Member.Reservations
             };
             Button btnCancel = new Button
             {
-                Text = "?",
+                Text = "❌",
                 Font = new Font("Segoe UI", 14F, FontStyle.Bold),
                 BackColor = Color.Transparent,
                 ForeColor = Color.FromArgb(220, 20, 60),

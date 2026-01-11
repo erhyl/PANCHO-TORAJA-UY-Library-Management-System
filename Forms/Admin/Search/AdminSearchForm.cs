@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -123,7 +123,7 @@ namespace Project5LMS.Forms.Admin.Search
         }
         private void txtSearch_Enter(object sender, EventArgs e)
         {
-            if (txtSearch.Text == "?? Search by title, author, ISBN, member name, or ID...")
+            if (txtSearch.Text == "🔍 Search by title, author, ISBN, member name, or ID...")
             {
                 txtSearch.Text = "";
                 txtSearch.ForeColor = Color.Black;
@@ -152,7 +152,7 @@ namespace Project5LMS.Forms.Admin.Search
         private void PerformSearch()
         {
             string searchText = txtSearch.Text.Trim();
-            if (searchText == "?? Search by title, author, ISBN, member name, or ID..." || string.IsNullOrWhiteSpace(searchText))
+            if (searchText == "🔍 Search by title, author, ISBN, member name, or ID..." || string.IsNullOrWhiteSpace(searchText))
             {
                 MessageBox.Show("Please enter a search term.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

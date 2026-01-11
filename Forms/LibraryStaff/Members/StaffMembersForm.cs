@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -90,7 +90,7 @@ namespace Project5LMS.Forms.LibraryStaff.Members
             {
                 Name = "Edit",
                 HeaderText = "ACTIONS",
-                Text = "?",
+                Text = "✏️",
                 UseColumnTextForButtonValue = true,
                 Width = 50,
                 FlatStyle = FlatStyle.Flat

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -801,7 +801,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 rowFilter += $"Status = '{currentStatusFilter}'";
             }
             string searchText = txtSearch.Text.Trim();
-            if (!string.IsNullOrEmpty(searchText) && searchText != "?? Search inventory...")
+            if (!string.IsNullOrEmpty(searchText) && searchText != "🔍 Search inventory...")
             {
                 if (!string.IsNullOrEmpty(rowFilter))
                     rowFilter += " AND ";
@@ -812,7 +812,7 @@ namespace Project5LMS.Forms.Admin.Inventory
         }
         private void txtSearch_Enter(object sender, EventArgs e)
         {
-            if (txtSearch.Text == "?? Search inventory...")
+            if (txtSearch.Text == "🔍 Search inventory...")
             {
                 txtSearch.Text = "";
                 txtSearch.ForeColor = Color.Black;

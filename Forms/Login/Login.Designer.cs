@@ -197,7 +197,7 @@ namespace Project5LMS
             this.lnkForgotPassword.Size = new System.Drawing.Size(113, 17);
             this.lnkForgotPassword.TabIndex = 15;
             this.lnkForgotPassword.TabStop = true;
-            this.lnkForgotPassword.Text = "Forgot Password?";
+            this.lnkForgotPassword.Text = "Forgot Password ❓";
             this.lnkForgotPassword.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(200)))));
             this.lnkForgotPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkForgotPassword_LinkClicked);
             this.lnkForgotPassword.MouseEnter += new System.EventHandler(this.lnkForgotPassword_MouseEnter);

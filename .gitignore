@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Markdown documentation files
 *.md
+
+# SQL files
+*.sql

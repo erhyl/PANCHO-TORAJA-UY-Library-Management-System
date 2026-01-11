@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -329,7 +329,7 @@ namespace Project5LMS.Forms.Admin.UserManagement
             card.Controls.Add(btnSuspend);
             Button btnEdit = new Button
             {
-                Text = "?",
+                Text = "✏️",
                 Font = new Font("Segoe UI", 12),
                 ForeColor = Color.FromArgb(13, 110, 253),
                 BackColor = Color.Transparent,

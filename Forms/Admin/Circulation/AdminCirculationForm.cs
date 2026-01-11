@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -235,7 +235,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                         iconColor = Color.FromArgb(40, 167, 69);
                         break;
                     case "renew":
-                        icon = "??";
+                        icon = "📋";
                         iconColor = Color.FromArgb(221, 160, 221);
                         break;
                 }
