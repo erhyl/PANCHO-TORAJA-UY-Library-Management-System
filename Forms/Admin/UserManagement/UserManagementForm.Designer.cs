@@ -326,11 +326,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelUsersContainer.AutoScroll = true;
             this.panelUsersContainer.BackColor = System.Drawing.Color.White;
+            this.panelUsersContainer.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
             this.panelUsersContainer.Location = new System.Drawing.Point(24, 296);
             this.panelUsersContainer.Name = "panelUsersContainer";
             this.panelUsersContainer.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
             this.panelUsersContainer.Size = new System.Drawing.Size(1152, 480);
             this.panelUsersContainer.TabIndex = 3;
+            this.panelUsersContainer.WrapContents = true;
             // 
             // UserManagementForm
             // 

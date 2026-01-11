@@ -40,7 +40,6 @@ namespace Project5LMS.Forms.Admin.UserManagement
         private void UserManagementForm_Load(object sender, EventArgs e)
         {
             cmbRoleFilter.SelectedIndex = 0;
-            this.Resize += UserManagementForm_Resize;
             // Delay loading to ensure form is properly sized
             this.Shown += UserManagementForm_Shown;
         }
@@ -63,8 +62,16 @@ namespace Project5LMS.Forms.Admin.UserManagement
                     this.PerformLayout();
                 }
             }
+            
+            // Disable horizontal scrollbars by setting AutoScrollMinSize width to 0
+            this.AutoScrollMinSize = new Size(0, this.AutoScrollMinSize.Height);
+            this.panelMainContainer.AutoScrollMinSize = new Size(0, this.panelMainContainer.AutoScrollMinSize.Height);
+            this.panelUsersContainer.AutoScrollMinSize = new Size(0, this.panelUsersContainer.AutoScrollMinSize.Height);
+            
             // Auto-size panels based on available space
             AdjustPanelSizes();
+            // Ensure resize handler is attached
+            this.Resize += UserManagementForm_Resize;
             LoadMetrics();
             LoadUsers();
         }
@@ -210,7 +217,13 @@ namespace Project5LMS.Forms.Admin.UserManagement
             int containerWidth = panelUsersContainer.Width > 0 
                 ? panelUsersContainer.Width - panelUsersContainer.Padding.Left - panelUsersContainer.Padding.Right
                 : 1200; // Default width if container not initialized
-            int cardWidth = Math.Max(400, (containerWidth - 48) / 2); // 48 = margins (16*3)
+            
+            // Account for card margins (16px on right, 16px spacing between cards)
+            int availableWidth = containerWidth - 16; // Leave space for right margin
+            int cardWidth = Math.Max(400, (availableWidth - 16) / 2); // 16 = spacing between cards
+            
+            // Ensure card doesn't exceed container width
+            cardWidth = Math.Min(cardWidth, availableWidth);
             
             Panel card = new Panel
             {

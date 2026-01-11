@@ -376,11 +376,11 @@ namespace Project5LMS.Forms.Admin.Dashboard
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelPieChart.BackColor = System.Drawing.Color.White;
             this.panelPieChart.Controls.Add(this.lblPieChartTitle);
-            this.panelPieChart.Location = new System.Drawing.Point(857, 386);
+            this.panelPieChart.Location = new System.Drawing.Point(842, 284);
             this.panelPieChart.Margin = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panelPieChart.Name = "panelPieChart";
             this.panelPieChart.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelPieChart.Size = new System.Drawing.Size(472, 383);
+            this.panelPieChart.Size = new System.Drawing.Size(487, 383);
             this.panelPieChart.TabIndex = 1;
             this.panelPieChart.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPieChart_Paint);
             // 
@@ -402,11 +402,11 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.panelRecentActivities.BackColor = System.Drawing.Color.White;
             this.panelRecentActivities.Controls.Add(this.lblRecentActivitiesTitle);
             this.panelRecentActivities.Controls.Add(this.panelActivitiesList);
-            this.panelRecentActivities.Location = new System.Drawing.Point(18, 777);
+            this.panelRecentActivities.Location = new System.Drawing.Point(3, 674);
             this.panelRecentActivities.Margin = new System.Windows.Forms.Padding(0, 8, 0, 16);
             this.panelRecentActivities.Name = "panelRecentActivities";
             this.panelRecentActivities.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelRecentActivities.Size = new System.Drawing.Size(1311, 212);
+            this.panelRecentActivities.Size = new System.Drawing.Size(1326, 299);
             this.panelRecentActivities.TabIndex = 3;
             this.panelRecentActivities.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRecentActivities_Paint);
             // 
@@ -430,7 +430,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.panelActivitiesList.Location = new System.Drawing.Point(15, 49);
             this.panelActivitiesList.Margin = new System.Windows.Forms.Padding(0);
             this.panelActivitiesList.Name = "panelActivitiesList";
-            this.panelActivitiesList.Size = new System.Drawing.Size(1281, 147);
+            this.panelActivitiesList.Size = new System.Drawing.Size(1296, 234);
             this.panelActivitiesList.TabIndex = 1;
             // 
             // panelBarChart
@@ -440,7 +440,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBarChart.BackColor = System.Drawing.Color.White;
             this.panelBarChart.Controls.Add(this.lblBarChartTitle);
-            this.panelBarChart.Location = new System.Drawing.Point(17, 386);
+            this.panelBarChart.Location = new System.Drawing.Point(3, 284);
             this.panelBarChart.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panelBarChart.Name = "panelBarChart";
             this.panelBarChart.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
@@ -472,21 +472,20 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.panelMetrics.Location = new System.Drawing.Point(3, 0);
             this.panelMetrics.Margin = new System.Windows.Forms.Padding(0, 8, 15, 8);
             this.panelMetrics.Name = "panelMetrics";
-            this.panelMetrics.Size = new System.Drawing.Size(1326, 378);
+            this.panelMetrics.Size = new System.Drawing.Size(1326, 280);
             this.panelMetrics.TabIndex = 1;
             // 
             // panelMetricBooks
             // 
-            this.panelMetricBooks.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panelMetricBooks.BackColor = System.Drawing.Color.White;
             this.panelMetricBooks.Controls.Add(this.lblBooksChange);
             this.panelMetricBooks.Controls.Add(this.lblBooksValue);
             this.panelMetricBooks.Controls.Add(this.lblBooksTitle);
-            this.panelMetricBooks.Location = new System.Drawing.Point(157, 7);
+            this.panelMetricBooks.Location = new System.Drawing.Point(3, 7);
             this.panelMetricBooks.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.panelMetricBooks.Name = "panelMetricBooks";
-            this.panelMetricBooks.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricBooks.Size = new System.Drawing.Size(311, 115);
+            this.panelMetricBooks.Padding = new System.Windows.Forms.Padding(12);
+            this.panelMetricBooks.Size = new System.Drawing.Size(311, 106);
             this.panelMetricBooks.TabIndex = 0;
             // 
             // lblBooksChange
@@ -524,16 +523,15 @@ namespace Project5LMS.Forms.Admin.Dashboard
             // 
             // panelMetricMembers
             // 
-            this.panelMetricMembers.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panelMetricMembers.BackColor = System.Drawing.Color.White;
             this.panelMetricMembers.Controls.Add(this.lblMembersChange);
             this.panelMetricMembers.Controls.Add(this.lblMembersValue);
             this.panelMetricMembers.Controls.Add(this.lblMembersTitle);
-            this.panelMetricMembers.Location = new System.Drawing.Point(531, 7);
+            this.panelMetricMembers.Location = new System.Drawing.Point(322, 7);
             this.panelMetricMembers.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panelMetricMembers.Name = "panelMetricMembers";
-            this.panelMetricMembers.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricMembers.Size = new System.Drawing.Size(298, 115);
+            this.panelMetricMembers.Padding = new System.Windows.Forms.Padding(12);
+            this.panelMetricMembers.Size = new System.Drawing.Size(357, 106);
             this.panelMetricMembers.TabIndex = 1;
             // 
             // lblMembersChange
@@ -571,16 +569,15 @@ namespace Project5LMS.Forms.Admin.Dashboard
             // 
             // panelMetricBorrowed
             // 
-            this.panelMetricBorrowed.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panelMetricBorrowed.BackColor = System.Drawing.Color.White;
             this.panelMetricBorrowed.Controls.Add(this.lblBorrowedChange);
             this.panelMetricBorrowed.Controls.Add(this.lblBorrowedValue);
             this.panelMetricBorrowed.Controls.Add(this.lblBorrowedTitle);
-            this.panelMetricBorrowed.Location = new System.Drawing.Point(890, 7);
+            this.panelMetricBorrowed.Location = new System.Drawing.Point(687, 7);
             this.panelMetricBorrowed.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.panelMetricBorrowed.Name = "panelMetricBorrowed";
-            this.panelMetricBorrowed.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricBorrowed.Size = new System.Drawing.Size(291, 115);
+            this.panelMetricBorrowed.Padding = new System.Windows.Forms.Padding(12);
+            this.panelMetricBorrowed.Size = new System.Drawing.Size(357, 106);
             this.panelMetricBorrowed.TabIndex = 2;
             // 
             // lblBorrowedChange
@@ -618,16 +615,15 @@ namespace Project5LMS.Forms.Admin.Dashboard
             // 
             // panelMetricFines
             // 
-            this.panelMetricFines.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panelMetricFines.BackColor = System.Drawing.Color.White;
             this.panelMetricFines.Controls.Add(this.lblFinesChange);
             this.panelMetricFines.Controls.Add(this.lblFinesValue);
             this.panelMetricFines.Controls.Add(this.lblFinesTitle);
-            this.panelMetricFines.Location = new System.Drawing.Point(157, 125);
+            this.panelMetricFines.Location = new System.Drawing.Point(4, 117);
             this.panelMetricFines.Margin = new System.Windows.Forms.Padding(4, 16, 4, 0);
             this.panelMetricFines.Name = "panelMetricFines";
-            this.panelMetricFines.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricFines.Size = new System.Drawing.Size(311, 137);
+            this.panelMetricFines.Padding = new System.Windows.Forms.Padding(12);
+            this.panelMetricFines.Size = new System.Drawing.Size(311, 145);
             this.panelMetricFines.TabIndex = 4;
             // 
             // lblFinesChange
@@ -635,7 +631,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.lblFinesChange.AutoSize = true;
             this.lblFinesChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFinesChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblFinesChange.Location = new System.Drawing.Point(22, 99);
+            this.lblFinesChange.Location = new System.Drawing.Point(22, 86);
             this.lblFinesChange.Name = "lblFinesChange";
             this.lblFinesChange.Size = new System.Drawing.Size(137, 19);
             this.lblFinesChange.TabIndex = 3;
@@ -646,7 +642,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.lblFinesValue.AutoSize = true;
             this.lblFinesValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFinesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFinesValue.Location = new System.Drawing.Point(18, 54);
+            this.lblFinesValue.Location = new System.Drawing.Point(18, 37);
             this.lblFinesValue.Name = "lblFinesValue";
             this.lblFinesValue.Size = new System.Drawing.Size(119, 45);
             this.lblFinesValue.TabIndex = 2;
@@ -665,24 +661,24 @@ namespace Project5LMS.Forms.Admin.Dashboard
             // 
             // panelMetricOverdue
             // 
-            this.panelMetricOverdue.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panelMetricOverdue.BackColor = System.Drawing.Color.White;
             this.panelMetricOverdue.Controls.Add(this.lblOverdueChange);
             this.panelMetricOverdue.Controls.Add(this.lblOverdueValue);
             this.panelMetricOverdue.Controls.Add(this.lblOverdueTitle);
-            this.panelMetricOverdue.Location = new System.Drawing.Point(531, 125);
+            this.panelMetricOverdue.Location = new System.Drawing.Point(322, 117);
             this.panelMetricOverdue.Margin = new System.Windows.Forms.Padding(0, 16, 4, 0);
             this.panelMetricOverdue.Name = "panelMetricOverdue";
-            this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricOverdue.Size = new System.Drawing.Size(298, 137);
+            this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(12);
+            this.panelMetricOverdue.Size = new System.Drawing.Size(357, 145);
             this.panelMetricOverdue.TabIndex = 3;
+            this.panelMetricOverdue.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMetricOverdue_Paint);
             // 
             // lblOverdueChange
             // 
             this.lblOverdueChange.AutoSize = true;
             this.lblOverdueChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOverdueChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblOverdueChange.Location = new System.Drawing.Point(23, 100);
+            this.lblOverdueChange.Location = new System.Drawing.Point(23, 86);
             this.lblOverdueChange.Name = "lblOverdueChange";
             this.lblOverdueChange.Size = new System.Drawing.Size(124, 19);
             this.lblOverdueChange.TabIndex = 3;
@@ -693,7 +689,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.lblOverdueValue.AutoSize = true;
             this.lblOverdueValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOverdueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblOverdueValue.Location = new System.Drawing.Point(19, 54);
+            this.lblOverdueValue.Location = new System.Drawing.Point(19, 37);
             this.lblOverdueValue.Name = "lblOverdueValue";
             this.lblOverdueValue.Size = new System.Drawing.Size(74, 45);
             this.lblOverdueValue.TabIndex = 2;
@@ -712,16 +708,15 @@ namespace Project5LMS.Forms.Admin.Dashboard
             // 
             // panelMetricReservations
             // 
-            this.panelMetricReservations.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panelMetricReservations.BackColor = System.Drawing.Color.White;
             this.panelMetricReservations.Controls.Add(this.lblReservationsChange);
             this.panelMetricReservations.Controls.Add(this.lblReservationsValue);
             this.panelMetricReservations.Controls.Add(this.lblReservationsTitle);
-            this.panelMetricReservations.Location = new System.Drawing.Point(890, 125);
+            this.panelMetricReservations.Location = new System.Drawing.Point(687, 117);
             this.panelMetricReservations.Margin = new System.Windows.Forms.Padding(4, 16, 0, 0);
             this.panelMetricReservations.Name = "panelMetricReservations";
-            this.panelMetricReservations.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricReservations.Size = new System.Drawing.Size(291, 137);
+            this.panelMetricReservations.Padding = new System.Windows.Forms.Padding(12);
+            this.panelMetricReservations.Size = new System.Drawing.Size(357, 145);
             this.panelMetricReservations.TabIndex = 5;
             // 
             // lblReservationsChange
@@ -729,7 +724,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.lblReservationsChange.AutoSize = true;
             this.lblReservationsChange.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReservationsChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblReservationsChange.Location = new System.Drawing.Point(22, 100);
+            this.lblReservationsChange.Location = new System.Drawing.Point(31, 86);
             this.lblReservationsChange.Name = "lblReservationsChange";
             this.lblReservationsChange.Size = new System.Drawing.Size(79, 19);
             this.lblReservationsChange.TabIndex = 3;
@@ -740,7 +735,7 @@ namespace Project5LMS.Forms.Admin.Dashboard
             this.lblReservationsValue.AutoSize = true;
             this.lblReservationsValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReservationsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReservationsValue.Location = new System.Drawing.Point(18, 54);
+            this.lblReservationsValue.Location = new System.Drawing.Point(27, 35);
             this.lblReservationsValue.Name = "lblReservationsValue";
             this.lblReservationsValue.Size = new System.Drawing.Size(74, 45);
             this.lblReservationsValue.TabIndex = 2;

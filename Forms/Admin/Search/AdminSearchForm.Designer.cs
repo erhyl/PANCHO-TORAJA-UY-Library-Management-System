@@ -16,7 +16,9 @@ namespace Project5LMS.Forms.Admin.Search
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelCards = new System.Windows.Forms.Panel();
+            this.lblCategory = new System.Windows.Forms.Label();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
+            this.lblSearchIn = new System.Windows.Forms.Label();
             this.cardPopularBooks = new System.Windows.Forms.Panel();
             this.lblPopularLink = new System.Windows.Forms.LinkLabel();
             this.lblPopularDescription = new System.Windows.Forms.Label();
@@ -33,8 +35,6 @@ namespace Project5LMS.Forms.Admin.Search
             this.panelSearchForm = new System.Windows.Forms.Panel();
             this.btnSearch = new System.Windows.Forms.Button();
             this.panelFilters = new System.Windows.Forms.Panel();
-            this.lblCategory = new System.Windows.Forms.Label();
-            this.lblSearchIn = new System.Windows.Forms.Label();
             this.panelSearchInput = new System.Windows.Forms.Panel();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.panelHeader = new System.Windows.Forms.Panel();
@@ -62,12 +62,12 @@ namespace Project5LMS.Forms.Admin.Search
             this.panelMainContainer.Controls.Add(this.panelCards);
             this.panelMainContainer.Controls.Add(this.panelSearchForm);
             this.panelMainContainer.Controls.Add(this.panelHeader);
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1266, 800);
             this.panelMainContainer.TabIndex = 0;
+            this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
             // 
             // panelCards
             // 
@@ -81,9 +81,20 @@ namespace Project5LMS.Forms.Admin.Search
             this.panelCards.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCards.Location = new System.Drawing.Point(24, 92);
             this.panelCards.Name = "panelCards";
-            this.panelCards.Size = new System.Drawing.Size(1152, 162);
+            this.panelCards.Size = new System.Drawing.Size(1218, 162);
             this.panelCards.TabIndex = 2;
             this.panelCards.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCards_Paint);
+            // 
+            // lblCategory
+            // 
+            this.lblCategory.AutoSize = true;
+            this.lblCategory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCategory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblCategory.Location = new System.Drawing.Point(844, 133);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(65, 19);
+            this.lblCategory.TabIndex = 2;
+            this.lblCategory.Text = "Category";
             // 
             // cmbCategory
             // 
@@ -97,6 +108,17 @@ namespace Project5LMS.Forms.Admin.Search
             this.cmbCategory.TabIndex = 3;
             this.cmbCategory.SelectedIndexChanged += new System.EventHandler(this.cmbCategory_SelectedIndexChanged);
             // 
+            // lblSearchIn
+            // 
+            this.lblSearchIn.AutoSize = true;
+            this.lblSearchIn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearchIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSearchIn.Location = new System.Drawing.Point(441, 133);
+            this.lblSearchIn.Name = "lblSearchIn";
+            this.lblSearchIn.Size = new System.Drawing.Size(65, 19);
+            this.lblSearchIn.TabIndex = 0;
+            this.lblSearchIn.Text = "Search In";
+            // 
             // cardPopularBooks
             // 
             this.cardPopularBooks.BackColor = System.Drawing.Color.White;
@@ -104,11 +126,12 @@ namespace Project5LMS.Forms.Admin.Search
             this.cardPopularBooks.Controls.Add(this.lblPopularLink);
             this.cardPopularBooks.Controls.Add(this.lblPopularDescription);
             this.cardPopularBooks.Controls.Add(this.lblPopularTitle);
-            this.cardPopularBooks.Location = new System.Drawing.Point(768, 0);
+            this.cardPopularBooks.Location = new System.Drawing.Point(790, 0);
             this.cardPopularBooks.Name = "cardPopularBooks";
             this.cardPopularBooks.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.cardPopularBooks.Size = new System.Drawing.Size(384, 124);
+            this.cardPopularBooks.Size = new System.Drawing.Size(425, 124);
             this.cardPopularBooks.TabIndex = 2;
+            this.cardPopularBooks.Paint += new System.Windows.Forms.PaintEventHandler(this.cardPopularBooks_Paint);
             // 
             // lblPopularLink
             // 
@@ -153,10 +176,10 @@ namespace Project5LMS.Forms.Admin.Search
             this.cardNewArrivals.Controls.Add(this.lblNewLink);
             this.cardNewArrivals.Controls.Add(this.lblNewDescription);
             this.cardNewArrivals.Controls.Add(this.lblNewTitle);
-            this.cardNewArrivals.Location = new System.Drawing.Point(384, 0);
+            this.cardNewArrivals.Location = new System.Drawing.Point(404, 0);
             this.cardNewArrivals.Name = "cardNewArrivals";
             this.cardNewArrivals.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.cardNewArrivals.Size = new System.Drawing.Size(384, 124);
+            this.cardNewArrivals.Size = new System.Drawing.Size(380, 124);
             this.cardNewArrivals.TabIndex = 1;
             // 
             // lblNewLink
@@ -217,7 +240,7 @@ namespace Project5LMS.Forms.Admin.Search
             this.cardBrowseCategory.Location = new System.Drawing.Point(0, 0);
             this.cardBrowseCategory.Name = "cardBrowseCategory";
             this.cardBrowseCategory.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.cardBrowseCategory.Size = new System.Drawing.Size(384, 124);
+            this.cardBrowseCategory.Size = new System.Drawing.Size(398, 124);
             this.cardBrowseCategory.TabIndex = 0;
             // 
             // lblCategoryLink
@@ -266,7 +289,7 @@ namespace Project5LMS.Forms.Admin.Search
             this.panelSearchForm.Location = new System.Drawing.Point(24, 260);
             this.panelSearchForm.Name = "panelSearchForm";
             this.panelSearchForm.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
-            this.panelSearchForm.Size = new System.Drawing.Size(1152, 183);
+            this.panelSearchForm.Size = new System.Drawing.Size(1215, 183);
             this.panelSearchForm.TabIndex = 1;
             // 
             // btnSearch
@@ -278,7 +301,7 @@ namespace Project5LMS.Forms.Admin.Search
             this.btnSearch.ForeColor = System.Drawing.Color.White;
             this.btnSearch.Location = new System.Drawing.Point(18, 130);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(1107, 38);
+            this.btnSearch.Size = new System.Drawing.Size(1170, 38);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "🔍 Search";
             this.btnSearch.UseVisualStyleBackColor = false;
@@ -288,38 +311,17 @@ namespace Project5LMS.Forms.Admin.Search
             // 
             this.panelFilters.Location = new System.Drawing.Point(-1, 72);
             this.panelFilters.Name = "panelFilters";
-            this.panelFilters.Size = new System.Drawing.Size(1130, 45);
+            this.panelFilters.Size = new System.Drawing.Size(1189, 45);
             this.panelFilters.TabIndex = 1;
-            // 
-            // lblCategory
-            // 
-            this.lblCategory.AutoSize = true;
-            this.lblCategory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCategory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCategory.Location = new System.Drawing.Point(844, 133);
-            this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(65, 19);
-            this.lblCategory.TabIndex = 2;
-            this.lblCategory.Text = "Category";
-            // 
-            // lblSearchIn
-            // 
-            this.lblSearchIn.AutoSize = true;
-            this.lblSearchIn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearchIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblSearchIn.Location = new System.Drawing.Point(441, 133);
-            this.lblSearchIn.Name = "lblSearchIn";
-            this.lblSearchIn.Size = new System.Drawing.Size(65, 19);
-            this.lblSearchIn.TabIndex = 0;
-            this.lblSearchIn.Text = "Search In";
             // 
             // panelSearchInput
             // 
             this.panelSearchInput.Controls.Add(this.txtSearch);
             this.panelSearchInput.Location = new System.Drawing.Point(22, 24);
             this.panelSearchInput.Name = "panelSearchInput";
-            this.panelSearchInput.Size = new System.Drawing.Size(1107, 41);
+            this.panelSearchInput.Size = new System.Drawing.Size(1166, 41);
             this.panelSearchInput.TabIndex = 0;
+            this.panelSearchInput.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSearchInput_Paint);
             // 
             // txtSearch
             // 
@@ -329,7 +331,7 @@ namespace Project5LMS.Forms.Admin.Search
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
             this.txtSearch.Location = new System.Drawing.Point(0, 0);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(1107, 27);
+            this.txtSearch.Size = new System.Drawing.Size(1166, 27);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.Text = "🔍 Search by title, author, ISBN, member name, or ID...";
             this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
@@ -343,7 +345,7 @@ namespace Project5LMS.Forms.Admin.Search
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1152, 68);
+            this.panelHeader.Size = new System.Drawing.Size(1218, 68);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -426,7 +428,7 @@ namespace Project5LMS.Forms.Admin.Search
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1266, 800);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AdminSearchForm";

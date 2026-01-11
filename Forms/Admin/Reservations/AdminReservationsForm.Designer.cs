@@ -14,9 +14,9 @@ namespace Project5LMS.Forms.Admin.Reservations
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
             this.panelTableContainer = new System.Windows.Forms.Panel();
             this.dataGridViewReservations = new System.Windows.Forms.DataGridView();
@@ -64,17 +64,15 @@ namespace Project5LMS.Forms.Admin.Reservations
             // 
             // panelMainContainer
             // 
-            this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelMainContainer.Controls.Add(this.panelTableContainer);
             this.panelMainContainer.Controls.Add(this.panelFilter);
             this.panelMainContainer.Controls.Add(this.panelMetrics);
             this.panelMainContainer.Controls.Add(this.panelHeader);
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1202, 800);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelTableContainer
@@ -84,26 +82,26 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelTableContainer.Controls.Add(this.dataGridViewReservations);
             this.panelTableContainer.Location = new System.Drawing.Point(24, 220);
             this.panelTableContainer.Name = "panelTableContainer";
-            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16);
             this.panelTableContainer.Size = new System.Drawing.Size(1152, 556);
             this.panelTableContainer.TabIndex = 3;
             // 
             // dataGridViewReservations
             // 
             this.dataGridViewReservations.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.dataGridViewReservations.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewReservations.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewReservations.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewReservations.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewReservations.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewReservations.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewReservations.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewReservations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewReservations.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colReservationID,
@@ -114,15 +112,15 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.colPriority,
             this.colStatus,
             this.colActions});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewReservations.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewReservations.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewReservations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewReservations.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dataGridViewReservations.Location = new System.Drawing.Point(16, 16);
@@ -251,7 +249,7 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelMetricExpired.Location = new System.Drawing.Point(938, 0);
             this.panelMetricExpired.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricExpired.Name = "panelMetricExpired";
-            this.panelMetricExpired.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricExpired.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricExpired.Size = new System.Drawing.Size(214, 90);
             this.panelMetricExpired.TabIndex = 4;
             // 
@@ -285,7 +283,7 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelMetricFulfilled.Location = new System.Drawing.Point(634, 0);
             this.panelMetricFulfilled.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricFulfilled.Name = "panelMetricFulfilled";
-            this.panelMetricFulfilled.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricFulfilled.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricFulfilled.Size = new System.Drawing.Size(214, 90);
             this.panelMetricFulfilled.TabIndex = 3;
             // 
@@ -319,7 +317,7 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelMetricPending.Location = new System.Drawing.Point(328, 0);
             this.panelMetricPending.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricPending.Name = "panelMetricPending";
-            this.panelMetricPending.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricPending.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricPending.Size = new System.Drawing.Size(214, 90);
             this.panelMetricPending.TabIndex = 1;
             // 
@@ -353,7 +351,7 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelMetricTotal.Location = new System.Drawing.Point(0, 0);
             this.panelMetricTotal.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricTotal.Name = "panelMetricTotal";
-            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricTotal.Size = new System.Drawing.Size(214, 90);
             this.panelMetricTotal.TabIndex = 0;
             // 
@@ -421,7 +419,7 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelMetricReady.Location = new System.Drawing.Point(490, 72);
             this.panelMetricReady.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.panelMetricReady.Name = "panelMetricReady";
-            this.panelMetricReady.Padding = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.panelMetricReady.Padding = new System.Windows.Forms.Padding(16);
             this.panelMetricReady.Size = new System.Drawing.Size(214, 63);
             this.panelMetricReady.TabIndex = 2;
             // 

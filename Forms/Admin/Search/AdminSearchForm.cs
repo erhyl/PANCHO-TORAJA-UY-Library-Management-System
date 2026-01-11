@@ -499,5 +499,20 @@ namespace Project5LMS.Forms.Admin.Search
         {
 
         }
+
+        private void panelMainContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelSearchInput_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cardPopularBooks_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

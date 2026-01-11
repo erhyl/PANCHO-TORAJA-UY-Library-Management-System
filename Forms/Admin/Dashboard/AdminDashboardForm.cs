@@ -138,6 +138,8 @@ namespace Project5LMS.Forms.Admin.Dashboard
             try
             {
                 if (panelMetrics == null || panelMetrics.Width <= 0) return;
+                
+                // Ensure all metric panels are added to container
                 if (panelMetricBooks != null && !panelMetrics.Controls.Contains(panelMetricBooks))
                 {
                     panelMetrics.Controls.Add(panelMetricBooks);
@@ -162,48 +164,49 @@ namespace Project5LMS.Forms.Admin.Dashboard
                 {
                     panelMetrics.Controls.Add(panelMetricReservations);
                 }
+                
+                // Reduced height for smaller metrics (from 400 to 280)
                 int panelWidth = panelMetrics.Width;
-                int panelHeight = 400;
-                int spacing = 10;
-                int cardWidth = Math.Max(300, (panelWidth - (spacing * 4)) / 3);
-                int cardHeight = (panelHeight - spacing) / 2;
-                int remainingWidth = panelWidth - (cardWidth * 2 + spacing * 2);
-                if (panelMetricBooks != null)
+                int panelHeight = 280; // Reduced from 400
+                int spacing = 12; // Slightly increased spacing for better balance
+                int columns = 3;
+                int rows = 2;
+                
+                // Calculate balanced card dimensions - all panels same size
+                int cardWidth = Math.Max(200, (panelWidth - (spacing * (columns + 1))) / columns);
+                int cardHeight = Math.Max(120, (panelHeight - (spacing * (rows + 1))) / rows);
+                
+                // Arrange panels in a balanced 3x2 grid
+                Panel[] metricPanels = new Panel[]
                 {
-                    panelMetricBooks.Location = new Point(0, 0);
-                    panelMetricBooks.Size = new Size(cardWidth, cardHeight);
-                    panelMetricBooks.Visible = true;
-                }
-                if (panelMetricMembers != null)
+                    panelMetricBooks,
+                    panelMetricMembers,
+                    panelMetricBorrowed,
+                    panelMetricFines,
+                    panelMetricOverdue,
+                    panelMetricReservations
+                };
+                
+                int index = 0;
+                for (int row = 0; row < rows; row++)
                 {
-                    panelMetricMembers.Location = new Point(cardWidth + spacing, 0);
-                    panelMetricMembers.Size = new Size(cardWidth, cardHeight);
-                    panelMetricMembers.Visible = true;
+                    for (int col = 0; col < columns; col++)
+                    {
+                        if (index < metricPanels.Length && metricPanels[index] != null)
+                        {
+                            int x = spacing + (col * (cardWidth + spacing));
+                            int y = spacing + (row * (cardHeight + spacing));
+                            
+                            metricPanels[index].Location = new Point(x, y);
+                            metricPanels[index].Size = new Size(cardWidth, cardHeight);
+                            metricPanels[index].Visible = true;
+                            index++;
+                        }
+                    }
                 }
-                if (panelMetricBorrowed != null)
-                {
-                    panelMetricBorrowed.Location = new Point((cardWidth + spacing) * 2, 0);
-                    panelMetricBorrowed.Size = new Size(remainingWidth, cardHeight);
-                    panelMetricBorrowed.Visible = true;
-                }
-                if (panelMetricFines != null)
-                {
-                    panelMetricFines.Location = new Point(0, cardHeight + spacing);
-                    panelMetricFines.Size = new Size(cardWidth, cardHeight);
-                    panelMetricFines.Visible = true;
-                }
-                if (panelMetricOverdue != null)
-                {
-                    panelMetricOverdue.Location = new Point(cardWidth + spacing, cardHeight + spacing);
-                    panelMetricOverdue.Size = new Size(cardWidth, cardHeight);
-                    panelMetricOverdue.Visible = true;
-                }
-                if (panelMetricReservations != null)
-                {
-                    panelMetricReservations.Location = new Point((cardWidth + spacing) * 2, cardHeight + spacing);
-                    panelMetricReservations.Size = new Size(remainingWidth, cardHeight);
-                    panelMetricReservations.Visible = true;
-                }
+                
+                // Update metrics panel height to match content
+                panelMetrics.Height = (rows * cardHeight) + (spacing * (rows + 1));
             }
             catch (Exception ex)
             {
@@ -812,6 +815,11 @@ namespace Project5LMS.Forms.Admin.Dashboard
             {
                 g.DrawString($"Error loading chart: {ex.Message}", new Font("Segoe UI", 10F), Brushes.Red, 20, 20);
             }
+        }
+
+        private void panelMetricOverdue_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
