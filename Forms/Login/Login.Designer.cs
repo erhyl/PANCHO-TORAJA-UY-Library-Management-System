@@ -42,8 +42,7 @@ namespace Project5LMS
             this.cmbRole.FormattingEnabled = true;
             this.cmbRole.Items.AddRange(new object[] {
             "Admin",
-            "LibraryStaff",
-            "Member"});
+            "LibraryStaff"});
             this.cmbRole.Location = new System.Drawing.Point(226, 485);
             this.cmbRole.Margin = new System.Windows.Forms.Padding(5);
             this.cmbRole.Name = "cmbRole";

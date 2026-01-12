@@ -171,35 +171,11 @@
     <Compile Include="Forms\Admin\Catalog\EBookForm.Designer.cs">
       <DependentUpon>EBookForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Member\Fines\MemberFinesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Member\Fines\MemberFinesForm.Designer.cs">
-      <DependentUpon>MemberFinesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Member\Profile\MemberProfileForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Member\Profile\MemberProfileForm.Designer.cs">
-      <DependentUpon>MemberProfileForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Member\Borrowings\MyBorrowingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Member\Borrowings\MyBorrowingsForm.Designer.cs">
-      <DependentUpon>MyBorrowingsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Admin\Reports\AdminReportsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Admin\Reports\AdminReportsForm.Designer.cs">
       <DependentUpon>AdminReportsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Member\Reservations\MemberReservationsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Member\Reservations\MemberReservationsForm.Designer.cs">
-      <DependentUpon>MemberReservationsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Admin\Search\AdminSearchForm.cs">
       <SubType>Form</SubType>
@@ -237,12 +213,6 @@
     <Compile Include="Forms\LibraryStaff\Search\StaffSearchForm.Designer.cs">
       <DependentUpon>StaffSearchForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Member\Search\MemberSearchForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Member\Search\MemberSearchForm.Designer.cs">
-      <DependentUpon>MemberSearchForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Admin\Settings\AdminSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,12 +248,6 @@
     </Compile>
     <Compile Include="Forms\LibraryStaff\Fines\StaffFinesForm.Designer.cs">
       <DependentUpon>StaffFinesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Member\Dashboard\MemberDashboardForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Member\Dashboard\MemberDashboardForm.Designer.cs">
-      <DependentUpon>MemberDashboardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Admin\Members\AdminMembersForm.cs">
       <SubType>Form</SubType>
@@ -508,15 +472,6 @@
     <EmbeddedResource Include="Forms\LibraryStaff\Reservations\StaffReservationsForm.resx">
       <DependentUpon>StaffReservationsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Member\Borrowings\MyBorrowingsForm.resx">
-      <DependentUpon>MyBorrowingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Member\Dashboard\MemberDashboardForm.resx">
-      <DependentUpon>MemberDashboardForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Member\Profile\MemberProfileForm.resx">
-      <DependentUpon>MemberProfileForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Admin\Members\AdminMembersForm.resx">
       <DependentUpon>AdminMembersForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -529,14 +484,8 @@
     <EmbeddedResource Include="Forms\Admin\Reservations\AdminReservationsForm.resx">
       <DependentUpon>AdminReservationsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Member\Reservations\MemberReservationsForm.resx">
-      <DependentUpon>MemberReservationsForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Admin\Fines\AdminFinesForm.resx">
       <DependentUpon>AdminFinesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Member\Fines\MemberFinesForm.resx">
-      <DependentUpon>MemberFinesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Admin\Inventory\AdminInventoryForm.resx">
       <DependentUpon>AdminInventoryForm.cs</DependentUpon>
@@ -549,9 +498,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LibraryStaff\Search\StaffSearchForm.resx">
       <DependentUpon>StaffSearchForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Member\Search\MemberSearchForm.resx">
-      <DependentUpon>MemberSearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Admin\Settings\AdminSettingsForm.resx">
       <DependentUpon>AdminSettingsForm.cs</DependentUpon>

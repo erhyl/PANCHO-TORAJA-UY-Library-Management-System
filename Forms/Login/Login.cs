@@ -1,6 +1,5 @@
 using Project5LMS.Forms.Admin.Dashboard;
 using Project5LMS.Forms.LibraryStaff.Dashboard;
-using Project5LMS.Forms.Member.Dashboard;
 using Project5LMS.Helpers;
 using Project5LMS.Properties;
 using Project5LMS.Services;
@@ -282,13 +281,6 @@ namespace Project5LMS
                     {
                         var staffForm = new StaffDashboardForm();
                         staffForm.Show();
-                        this.Hide();
-                        break;
-                    }
-                case "Member":
-                    {
-                        var memberForm = new MemberDashboardForm();
-                        memberForm.Show();
                         this.Hide();
                         break;
                     }
