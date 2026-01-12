@@ -182,94 +182,131 @@ namespace Project5LMS.Forms.Admin.Inventory
         {
             dataGridViewInventory.Columns.Clear();
             dataGridViewInventory.AutoGenerateColumns = false;
+            
+            // Inventory ID - Fixed width, small column
             DataGridViewTextBoxColumn colInventoryID = new DataGridViewTextBoxColumn
             {
                 Name = "InventoryID",
                 HeaderText = "INVENTORY ID",
                 DataPropertyName = "InventoryID",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 120,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colInventoryID);
+            
+            // Book Details - Fill mode with wrapping for long content
             DataGridViewTextBoxColumn colBookDetails = new DataGridViewTextBoxColumn
             {
                 Name = "BookDetails",
                 HeaderText = "BOOK DETAILS",
                 DataPropertyName = "BookDetails",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                MinimumWidth = 250,
                 ReadOnly = true
             };
+            colBookDetails.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dataGridViewInventory.Columns.Add(colBookDetails);
+            
+            // Category - Auto-size based on content
             DataGridViewTextBoxColumn colCategory = new DataGridViewTextBoxColumn
             {
                 Name = "Category",
                 HeaderText = "CATEGORY",
                 DataPropertyName = "Category",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 120,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCategory);
+            
+            // Location - Auto-size based on content
             DataGridViewTextBoxColumn colLocation = new DataGridViewTextBoxColumn
             {
                 Name = "Location",
                 HeaderText = "LOCATION",
                 DataPropertyName = "Location",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 100,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colLocation);
+            
+            // Copy - Fixed small width
             DataGridViewTextBoxColumn colCopy = new DataGridViewTextBoxColumn
             {
                 Name = "Copy",
                 HeaderText = "COPY",
                 DataPropertyName = "Copy",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 80,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCopy);
+            
+            // Condition - Auto-size for badge display
             DataGridViewColumn colCondition = new DataGridViewTextBoxColumn
             {
                 Name = "Condition",
                 HeaderText = "CONDITION",
                 DataPropertyName = "Condition",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 120,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCondition);
+            
+            // Status - Auto-size for badge display
             DataGridViewColumn colStatus = new DataGridViewTextBoxColumn
             {
                 Name = "Status",
                 HeaderText = "STATUS",
                 DataPropertyName = "Status",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 120,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colStatus);
+            
+            // Last Verified - Auto-size based on date format
             DataGridViewTextBoxColumn colLastVerified = new DataGridViewTextBoxColumn
             {
                 Name = "LastVerified",
                 HeaderText = "LAST VERIFIED",
                 DataPropertyName = "LastVerified",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                MinimumWidth = 130,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colLastVerified);
+            
+            // Actions - Fixed width for buttons
             DataGridViewColumn colActions = new DataGridViewTextBoxColumn
             {
                 Name = "Actions",
                 HeaderText = "ACTIONS",
                 DataPropertyName = "Actions",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
+                Width = 180,
+                MinimumWidth = 180,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colActions);
+            
+            // Configure DataGridView appearance
             dataGridViewInventory.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dataGridViewInventory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
             dataGridViewInventory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dataGridViewInventory.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
             dataGridViewInventory.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
             dataGridViewInventory.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
             dataGridViewInventory.RowTemplate.Height = 60;
-            dataGridViewInventory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
+            dataGridViewInventory.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewInventory.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            
+            // Enable text wrapping for BookDetails column specifically
+            colBookDetails.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            
             dataGridViewInventory.CellFormatting += DataGridViewInventory_CellFormatting;
             dataGridViewInventory.CellPainting += DataGridViewInventory_CellPainting;
             dataGridViewInventory.CellContentClick += DataGridViewInventory_CellContentClick;

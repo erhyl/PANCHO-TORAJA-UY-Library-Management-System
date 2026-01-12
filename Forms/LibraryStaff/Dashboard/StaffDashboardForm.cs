@@ -122,13 +122,35 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
         private void SetupListView()
         {
             listViewRecentActivity.Columns.Clear();
-            listViewRecentActivity.Columns.Add("Activity", 450);
-            listViewRecentActivity.Columns.Add("Time", 150);
+            // Activity column will fill remaining space, Time column has fixed width
+            listViewRecentActivity.Columns.Add("Activity", -2); // -2 means fill remaining space
+            listViewRecentActivity.Columns.Add("Time", 200); // Fixed width for time column
             listViewRecentActivity.View = View.Details;
             listViewRecentActivity.OwnerDraw = true;
             listViewRecentActivity.DrawItem += ListViewRecentActivity_DrawItem;
             listViewRecentActivity.DrawSubItem += ListViewRecentActivity_DrawSubItem;
             listViewRecentActivity.DrawColumnHeader += ListViewRecentActivity_DrawColumnHeader;
+            // Wire up resize event handlers
+            listViewRecentActivity.Resize += listViewRecentActivity_Resize;
+            // Ensure columns resize when ListView resizes
+            AdjustListViewColumns();
+        }
+        
+        private void AdjustListViewColumns()
+        {
+            if (listViewRecentActivity.Columns.Count >= 2)
+            {
+                // Activity column fills remaining space (auto-adjusts to fill gaps)
+                listViewRecentActivity.Columns[0].Width = -2; // -2 means fill remaining space
+                // Time column has a fixed width that accommodates larger font
+                listViewRecentActivity.Columns[1].Width = 220; // Increased for larger font
+            }
+        }
+        
+        private void listViewRecentActivity_Resize(object sender, EventArgs e)
+        {
+            // Auto-adjust columns when ListView resizes or when gaps appear
+            AdjustListViewColumns();
         }
         private void ListViewRecentActivity_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
@@ -202,14 +224,31 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
         {
             try
             {
-                panelOverdueBooksList.Controls.Clear();
+                // Clear all controls except the title label
+                var controlsToRemove = new List<Control>();
+                foreach (Control control in panelOverdueBooksList.Controls)
+                {
+                    if (control != lblOverdueBooksTitle)
+                    {
+                        controlsToRemove.Add(control);
+                    }
+                }
+                foreach (var control in controlsToRemove)
+                {
+                    panelOverdueBooksList.Controls.Remove(control);
+                    control.Dispose();
+                }
+                
                 var dbContext = ServiceFactory.GetDbContext();
                 var transactionRepository = new TransactionRepository(dbContext);
                 var bookService = ServiceFactory.CreateBookService();
                 var membersService = ServiceFactory.CreateMembersService();
                 var overdueTransactions = transactionRepository.GetOverdue().Take(10);
-                int yPos = 0;
-                int spacing = 10;
+                
+                // Start positioning cards below the title (title height + margin)
+                int yPos = lblOverdueBooksTitle.Height + 12; // Increased margin
+                int spacing = 12; // Increased spacing between cards
+                
                 foreach (var transaction in overdueTransactions)
                 {
                     var book = bookService.GetBook(transaction.BookID);
@@ -220,7 +259,7 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
                     int daysOverdue = (DateTime.Now - dueDate).Days;
                     Panel card = CreateOverdueBookCard(title, borrower, dueDate, daysOverdue, yPos);
                     panelOverdueBooksList.Controls.Add(card);
-                    yPos += 120 + spacing;
+                    yPos += 140 + spacing; // Updated to match new card height (140)
                 }
             }
             catch (Exception ex)
@@ -230,45 +269,58 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
         }
         private Panel CreateOverdueBookCard(string title, string borrower, DateTime dueDate, int daysOverdue, int yPos)
         {
+            // Get the width of the parent container to fill gaps
+            int cardWidth = panelOverdueBooksList.Width - 30; // Account for padding
+            if (cardWidth < 500) cardWidth = 500; // Minimum width
+            
             Panel card = new Panel
             {
                 BackColor = Color.FromArgb(255, 240, 240),
                 BorderStyle = BorderStyle.FixedSingle,
-                Size = new Size(568, 120),
+                Size = new Size(cardWidth, 140), // Increased height for bigger fonts
                 Location = new Point(0, yPos),
-                Padding = new Padding(15)
+                Padding = new Padding(20), // Increased padding
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Fill width
             };
             Label lblTitle = new Label
             {
                 Text = title,
-                Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 14F, FontStyle.Bold), // Increased from 12F
                 ForeColor = Color.FromArgb(64, 64, 64),
-                AutoSize = true,
-                Location = new Point(15, 15)
+                AutoSize = false,
+                Location = new Point(20, 20),
+                Size = new Size(cardWidth - 40, 30), // Fill width with margin
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
             Label lblBorrower = new Label
             {
                 Text = $"Borrower: {borrower}",
-                Font = new Font("Segoe UI", 10F),
+                Font = new Font("Segoe UI", 12F), // Increased from 10F
                 ForeColor = Color.FromArgb(128, 128, 128),
-                AutoSize = true,
-                Location = new Point(15, 45)
+                AutoSize = false,
+                Location = new Point(20, 55),
+                Size = new Size(cardWidth - 40, 25),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
             Label lblDue = new Label
             {
                 Text = $"Due: {dueDate:yyyy-MM-dd}",
-                Font = new Font("Segoe UI", 10F),
+                Font = new Font("Segoe UI", 12F), // Increased from 10F
                 ForeColor = Color.FromArgb(128, 128, 128),
-                AutoSize = true,
-                Location = new Point(15, 70)
+                AutoSize = false,
+                Location = new Point(20, 85),
+                Size = new Size(cardWidth - 40, 25),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
             Label lblStatus = new Label
             {
                 Text = $"{daysOverdue} days overdue",
-                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 12F, FontStyle.Bold), // Increased from 10F
                 ForeColor = Color.FromArgb(220, 53, 69),
-                AutoSize = true,
-                Location = new Point(15, 95)
+                AutoSize = false,
+                Location = new Point(20, 115),
+                Size = new Size(cardWidth - 40, 25),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
             card.Controls.AddRange(new Control[] { lblTitle, lblBorrower, lblDue, lblStatus });
             return card;
@@ -292,6 +344,50 @@ namespace Project5LMS.Forms.LibraryStaff.Dashboard
         private void lblActiveLoansTitle_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void panelMainContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelMainContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelMetricsContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        
+        private void panelRecentActivity_Resize(object sender, EventArgs e)
+        {
+            // Adjust ListView columns when panel resizes
+            AdjustListViewColumns();
+        }
+        
+        private void panelOverdueBooks_Resize(object sender, EventArgs e)
+        {
+            // Update card widths when panel resizes to fill gaps
+            foreach (Control control in panelOverdueBooksList.Controls)
+            {
+                if (control is Panel card && control != lblOverdueBooksTitle)
+                {
+                    int cardWidth = panelOverdueBooksList.Width - 30; // Account for padding
+                    if (cardWidth < 500) cardWidth = 500; // Minimum width
+                    card.Width = cardWidth;
+                    
+                    // Update all label widths inside the card
+                    foreach (Control label in card.Controls)
+                    {
+                        if (label is Label)
+                        {
+                            label.Width = cardWidth - 40; // Account for card padding
+                        }
+                    }
+                }
+            }
         }
     }
 }

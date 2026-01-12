@@ -77,26 +77,30 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             }
         }
         
+        private void panelCirculationManagement_Resize(object sender, EventArgs e)
+        {
+            // Adjust panel sizes when circulation management panel resizes
+            AdjustPanelSizes();
+        }
+        
         private void AdjustPanelSizes()
         {
             try
             {
-                // Adjust checkout and return panels to be side-by-side (each 45% of width)
-                if (panelCheckOutBook != null && panelReturnBook != null)
+                // Adjust checkout and return panels to be side-by-side with no gaps
+                if (panelCheckOutBook != null && panelReturnBook != null && panelCirculationManagement != null)
                 {
-                    int panelWidth = PanelSizeHelper.CalculateWidth(this, 0.45, padding: 48, minWidth: 400);
+                    int availableWidth = panelCirculationManagement.Width;
+                    int gap = 8; // Small gap between panels
+                    int panelWidth = (availableWidth - gap) / 2; // Each panel gets half the width minus gap
                     
-                    if (panelCheckOutBook.Width != panelWidth)
-                    {
-                        panelCheckOutBook.Width = panelWidth;
-                    }
+                    // Set checkout panel width and position
+                    panelCheckOutBook.Width = panelWidth;
+                    panelCheckOutBook.Location = new Point(0, panelCheckOutBook.Top);
                     
-                    if (panelReturnBook.Width != panelWidth)
-                    {
-                        panelReturnBook.Width = panelWidth;
-                        // Reposition return panel next to checkout panel
-                        panelReturnBook.Location = new Point(panelCheckOutBook.Right + 16, panelReturnBook.Top);
-                    }
+                    // Set return panel width and position (right next to checkout panel)
+                    panelReturnBook.Width = panelWidth;
+                    panelReturnBook.Location = new Point(panelCheckOutBook.Right + gap, panelReturnBook.Top);
                 }
                 
                 // Adjust transaction history panel height (35% of available height, minimum 200px)
@@ -992,6 +996,121 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         }
 
         private void flowLayoutTransactions_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelReturnBook_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelMainContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelTransactionHistory_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelTransactionsList_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tabAll_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabCheckouts_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabReturns_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTransactionHistory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelCirculationManagement_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblReturnDate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtReturnDate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtReturnBookID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblReturnBookID_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblReturnBookTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelCheckOutBook_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtCheckOutBookID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCheckOutBookID_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCheckOutMemberID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCheckOutMemberID_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCheckOutBookTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSubtitle_Click(object sender, EventArgs e)
         {
 
         }

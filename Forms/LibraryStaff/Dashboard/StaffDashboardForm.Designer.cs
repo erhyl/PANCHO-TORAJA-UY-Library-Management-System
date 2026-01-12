@@ -289,8 +289,9 @@
             this.panelMainContent.Location = new System.Drawing.Point(210, 0);
             this.panelMainContent.Margin = new System.Windows.Forms.Padding(0);
             this.panelMainContent.Name = "panelMainContent";
-            this.panelMainContent.Size = new System.Drawing.Size(990, 800);
+            this.panelMainContent.Size = new System.Drawing.Size(1609, 800);
             this.panelMainContent.TabIndex = 1;
+            this.panelMainContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContent_Paint);
             // 
             // panelMainContainer
             // 
@@ -304,18 +305,19 @@
             this.panelMainContainer.Margin = new System.Windows.Forms.Padding(0);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMainContainer.Size = new System.Drawing.Size(990, 800);
+            this.panelMainContainer.Size = new System.Drawing.Size(1609, 800);
             this.panelMainContainer.TabIndex = 0;
+            this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
             // 
             // panelBottomSection
             // 
             this.panelBottomSection.Controls.Add(this.panelOverdueBooks);
             this.panelBottomSection.Controls.Add(this.panelRecentActivity);
             this.panelBottomSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBottomSection.Location = new System.Drawing.Point(15, 274);
-            this.panelBottomSection.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.panelBottomSection.Location = new System.Drawing.Point(15, 269);
+            this.panelBottomSection.Margin = new System.Windows.Forms.Padding(0);
             this.panelBottomSection.Name = "panelBottomSection";
-            this.panelBottomSection.Size = new System.Drawing.Size(960, 510);
+            this.panelBottomSection.Size = new System.Drawing.Size(1579, 515);
             this.panelBottomSection.TabIndex = 2;
             // 
             // panelOverdueBooks
@@ -324,12 +326,13 @@
             this.panelOverdueBooks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOverdueBooks.Controls.Add(this.panelOverdueBooksList);
             this.panelOverdueBooks.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelOverdueBooks.Location = new System.Drawing.Point(483, 0);
-            this.panelOverdueBooks.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.panelOverdueBooks.Location = new System.Drawing.Point(702, 0);
+            this.panelOverdueBooks.Margin = new System.Windows.Forms.Padding(0);
             this.panelOverdueBooks.Name = "panelOverdueBooks";
             this.panelOverdueBooks.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelOverdueBooks.Size = new System.Drawing.Size(477, 510);
+            this.panelOverdueBooks.Size = new System.Drawing.Size(877, 515);
             this.panelOverdueBooks.TabIndex = 1;
+            this.panelOverdueBooks.Resize += new System.EventHandler(this.panelOverdueBooks_Resize);
             // 
             // panelOverdueBooksList
             // 
@@ -337,9 +340,9 @@
             this.panelOverdueBooksList.Controls.Add(this.lblOverdueBooksTitle);
             this.panelOverdueBooksList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOverdueBooksList.Location = new System.Drawing.Point(15, 16);
+            this.panelOverdueBooksList.Margin = new System.Windows.Forms.Padding(0);
             this.panelOverdueBooksList.Name = "panelOverdueBooksList";
-            this.panelOverdueBooksList.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.panelOverdueBooksList.Size = new System.Drawing.Size(445, 476);
+            this.panelOverdueBooksList.Size = new System.Drawing.Size(845, 481);
             this.panelOverdueBooksList.TabIndex = 0;
             // 
             // lblOverdueBooksTitle
@@ -347,7 +350,8 @@
             this.lblOverdueBooksTitle.AutoSize = true;
             this.lblOverdueBooksTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOverdueBooksTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblOverdueBooksTitle.Location = new System.Drawing.Point(3, 6);
+            this.lblOverdueBooksTitle.Location = new System.Drawing.Point(3, 0);
+            this.lblOverdueBooksTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.lblOverdueBooksTitle.Name = "lblOverdueBooksTitle";
             this.lblOverdueBooksTitle.Size = new System.Drawing.Size(175, 25);
             this.lblOverdueBooksTitle.TabIndex = 1;
@@ -361,18 +365,20 @@
             this.panelRecentActivity.Controls.Add(this.listViewRecentActivity);
             this.panelRecentActivity.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRecentActivity.Location = new System.Drawing.Point(0, 0);
-            this.panelRecentActivity.Margin = new System.Windows.Forms.Padding(0);
+            this.panelRecentActivity.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panelRecentActivity.Name = "panelRecentActivity";
             this.panelRecentActivity.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelRecentActivity.Size = new System.Drawing.Size(960, 510);
+            this.panelRecentActivity.Size = new System.Drawing.Size(1579, 515);
             this.panelRecentActivity.TabIndex = 0;
+            this.panelRecentActivity.Resize += new System.EventHandler(this.panelRecentActivity_Resize);
             // 
             // lblRecentActivityTitle
             // 
             this.lblRecentActivityTitle.AutoSize = true;
             this.lblRecentActivityTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRecentActivityTitle.Location = new System.Drawing.Point(19, 22);
+            this.lblRecentActivityTitle.Location = new System.Drawing.Point(15, 16);
+            this.lblRecentActivityTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.lblRecentActivityTitle.Name = "lblRecentActivityTitle";
             this.lblRecentActivityTitle.Size = new System.Drawing.Size(143, 25);
             this.lblRecentActivityTitle.TabIndex = 1;
@@ -382,14 +388,15 @@
             // 
             this.listViewRecentActivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewRecentActivity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewRecentActivity.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listViewRecentActivity.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listViewRecentActivity.FullRowSelect = true;
             this.listViewRecentActivity.HideSelection = false;
             this.listViewRecentActivity.Location = new System.Drawing.Point(15, 16);
+            this.listViewRecentActivity.Margin = new System.Windows.Forms.Padding(0);
             this.listViewRecentActivity.MultiSelect = false;
             this.listViewRecentActivity.Name = "listViewRecentActivity";
             this.listViewRecentActivity.OwnerDraw = true;
-            this.listViewRecentActivity.Size = new System.Drawing.Size(928, 476);
+            this.listViewRecentActivity.Size = new System.Drawing.Size(1547, 481);
             this.listViewRecentActivity.TabIndex = 0;
             this.listViewRecentActivity.UseCompatibleStateImageBehavior = false;
             this.listViewRecentActivity.View = System.Windows.Forms.View.Details;
@@ -400,12 +407,12 @@
             this.panelMetricsContainer.Controls.Add(this.panelMetricActiveLoans);
             this.panelMetricsContainer.Controls.Add(this.panelMetricBooksCatalog);
             this.panelMetricsContainer.Controls.Add(this.panelMetricTotalMembers);
-            this.panelMetricsContainer.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMetricsContainer.Location = new System.Drawing.Point(15, 95);
-            this.panelMetricsContainer.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.panelMetricsContainer.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
             this.panelMetricsContainer.Name = "panelMetricsContainer";
-            this.panelMetricsContainer.Size = new System.Drawing.Size(960, 179);
+            this.panelMetricsContainer.Size = new System.Drawing.Size(1563, 163);
             this.panelMetricsContainer.TabIndex = 1;
+            this.panelMetricsContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMetricsContainer_Paint);
             // 
             // panelMetricPendingFines
             // 
@@ -413,10 +420,11 @@
             this.panelMetricPendingFines.Controls.Add(this.lblPendingFinesChange);
             this.panelMetricPendingFines.Controls.Add(this.lblPendingFinesValue);
             this.panelMetricPendingFines.Controls.Add(this.lblPendingFinesTitle);
-            this.panelMetricPendingFines.Location = new System.Drawing.Point(724, 0);
+            this.panelMetricPendingFines.Location = new System.Drawing.Point(1212, 0);
+            this.panelMetricPendingFines.Margin = new System.Windows.Forms.Padding(0);
             this.panelMetricPendingFines.Name = "panelMetricPendingFines";
             this.panelMetricPendingFines.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricPendingFines.Size = new System.Drawing.Size(236, 163);
+            this.panelMetricPendingFines.Size = new System.Drawing.Size(351, 163);
             this.panelMetricPendingFines.TabIndex = 3;
             // 
             // lblPendingFinesChange
@@ -458,10 +466,11 @@
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansChange);
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansValue);
             this.panelMetricActiveLoans.Controls.Add(this.lblActiveLoansTitle);
-            this.panelMetricActiveLoans.Location = new System.Drawing.Point(483, 0);
+            this.panelMetricActiveLoans.Location = new System.Drawing.Point(811, 0);
+            this.panelMetricActiveLoans.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panelMetricActiveLoans.Name = "panelMetricActiveLoans";
             this.panelMetricActiveLoans.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricActiveLoans.Size = new System.Drawing.Size(236, 163);
+            this.panelMetricActiveLoans.Size = new System.Drawing.Size(393, 163);
             this.panelMetricActiveLoans.TabIndex = 2;
             // 
             // lblActiveLoansChange
@@ -505,10 +514,11 @@
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogChange);
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogValue);
             this.panelMetricBooksCatalog.Controls.Add(this.lblBooksCatalogTitle);
-            this.panelMetricBooksCatalog.Location = new System.Drawing.Point(242, 0);
+            this.panelMetricBooksCatalog.Location = new System.Drawing.Point(396, 0);
+            this.panelMetricBooksCatalog.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panelMetricBooksCatalog.Name = "panelMetricBooksCatalog";
             this.panelMetricBooksCatalog.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricBooksCatalog.Size = new System.Drawing.Size(236, 163);
+            this.panelMetricBooksCatalog.Size = new System.Drawing.Size(407, 163);
             this.panelMetricBooksCatalog.TabIndex = 1;
             // 
             // lblBooksCatalogChange
@@ -551,9 +561,10 @@
             this.panelMetricTotalMembers.Controls.Add(this.lblTotalMembersValue);
             this.panelMetricTotalMembers.Controls.Add(this.lblTotalMembersTitle);
             this.panelMetricTotalMembers.Location = new System.Drawing.Point(0, 0);
+            this.panelMetricTotalMembers.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panelMetricTotalMembers.Name = "panelMetricTotalMembers";
             this.panelMetricTotalMembers.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelMetricTotalMembers.Size = new System.Drawing.Size(236, 163);
+            this.panelMetricTotalMembers.Size = new System.Drawing.Size(388, 163);
             this.panelMetricTotalMembers.TabIndex = 0;
             // 
             // lblTotalMembersChange
@@ -595,9 +606,9 @@
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(15, 16);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(960, 79);
+            this.panelHeader.Size = new System.Drawing.Size(1579, 253);
             this.panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
@@ -627,7 +638,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1819, 800);
             this.Controls.Add(this.panelMainContent);
             this.Controls.Add(this.panelSidebar);
             this.Name = "StaffDashboardForm";

@@ -239,7 +239,6 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         private void RenderReservationCards()
         {
             panelReservationsList.Controls.Clear();
-            panelReservationsList.Controls.Add(panelCreateReservation);
             reservationCards.Clear();
             DataView dv = allReservationsData.DefaultView;
             if (currentFilter == "Active")
