@@ -882,5 +882,10 @@ namespace Project5LMS.Forms.Admin.Catalog
         private void panelSearchFilter_Paint(object sender, PaintEventArgs e)
         {
         }
+
+        private void panelTableContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -23,6 +23,7 @@ namespace Project5LMS.Forms.Admin.Reservations
         }
         private void AdminReservationsForm_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
             EnsureReservationsTableExists();
             SetupDataGridView();
             LoadMetrics();
@@ -94,7 +95,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "ReservationID",
                 HeaderText = "RESERVATION ID",
                 DataPropertyName = "ReservationID",
-                Width = 150,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colReservationID);
@@ -103,7 +104,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "Member",
                 HeaderText = "MEMBER",
                 DataPropertyName = "Member",
-                Width = 200,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colMember);
@@ -112,7 +113,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "Book",
                 HeaderText = "BOOK",
                 DataPropertyName = "Book",
-                Width = 300,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colBook);
@@ -121,7 +122,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "ReservedDate",
                 HeaderText = "RESERVED DATE",
                 DataPropertyName = "ReservedDate",
-                Width = 130,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colReservedDate);
@@ -130,7 +131,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "ExpiryDate",
                 HeaderText = "EXPIRY DATE",
                 DataPropertyName = "ExpiryDate",
-                Width = 130,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colExpiryDate);
@@ -139,7 +140,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "Priority",
                 HeaderText = "PRIORITY",
                 DataPropertyName = "Priority",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colPriority);
@@ -148,7 +149,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "Status",
                 HeaderText = "STATUS",
                 DataPropertyName = "Status",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colStatus);
@@ -157,7 +158,7 @@ namespace Project5LMS.Forms.Admin.Reservations
                 Name = "Actions",
                 HeaderText = "ACTIONS",
                 DataPropertyName = "Actions",
-                Width = 200,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewReservations.Columns.Add(colActions);

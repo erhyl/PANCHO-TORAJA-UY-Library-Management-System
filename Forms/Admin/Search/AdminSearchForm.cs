@@ -22,6 +22,11 @@ namespace Project5LMS.Forms.Admin.Search
         private Panel panelResults;
         private DataGridView dataGridViewResults;
         private readonly ISearchService _searchService;
+        private string currentFilter = "All";
+        private Button btnFilterAll;
+        private Button btnFilterBooks;
+        private Button btnFilterMembers;
+        private Panel panelQuickExamples;
         public AdminSearchForm()
         {
             InitializeComponent();
@@ -29,14 +34,82 @@ namespace Project5LMS.Forms.Admin.Search
         }
         private void AdminSearchForm_Load(object sender, EventArgs e)
         {
-            InitializeSearchInDropdown();
+            InitializeFilterButtons();
             LoadCategories();
             SetupResultsPanel();
+            SetupQuickExamples();
         }
-        private void InitializeSearchInDropdown()
+        private void InitializeFilterButtons()
         {
-            cmbSearchIn.Items.AddRange(new string[] { "All", "Books", "Members", "Resources" });
-            cmbSearchIn.SelectedIndex = 0;
+            currentFilter = "All";
+            panelFilters.Controls.Clear();
+            Label lblFilter = new Label
+            {
+                Text = "Search in:",
+                Font = new Font("Segoe UI", 10F),
+                ForeColor = Color.FromArgb(64, 64, 64),
+                AutoSize = true,
+                Location = new Point(22, 12)
+            };
+            panelFilters.Controls.Add(lblFilter);
+            int xPos = 120;
+            string[] filters = { "All", "Books Only", "Members Only" };
+            foreach (string filter in filters)
+            {
+                Button btnFilter = new Button
+                {
+                    Text = filter,
+                    Font = new Font("Segoe UI", 10F),
+                    BackColor = filter == currentFilter ? Color.FromArgb(139, 0, 0) : Color.FromArgb(248, 249, 250),
+                    ForeColor = filter == currentFilter ? Color.White : Color.FromArgb(64, 64, 64),
+                    FlatStyle = FlatStyle.Flat,
+                    FlatAppearance = { BorderSize = 0 },
+                    AutoSize = true,
+                    Padding = new Padding(20, 8, 20, 8),
+                    Location = new Point(xPos, 8),
+                    Cursor = Cursors.Hand,
+                    Tag = filter
+                };
+                btnFilter.FlatAppearance.MouseOverBackColor = filter == currentFilter ? Color.FromArgb(120, 0, 0) : Color.FromArgb(230, 230, 230);
+                btnFilter.Click += BtnFilter_Click;
+                panelFilters.Controls.Add(btnFilter);
+                if (filter == "All")
+                    btnFilterAll = btnFilter;
+                else if (filter == "Books Only")
+                    btnFilterBooks = btnFilter;
+                else if (filter == "Members Only")
+                    btnFilterMembers = btnFilter;
+                xPos += btnFilter.Width + 10;
+            }
+        }
+        private void BtnFilter_Click(object sender, EventArgs e)
+        {
+            Button clickedBtn = sender as Button;
+            if (clickedBtn == null) return;
+            currentFilter = clickedBtn.Tag?.ToString() ?? "All";
+            UpdateFilterButtons();
+        }
+        private void UpdateFilterButtons()
+        {
+            foreach (Control ctrl in panelFilters.Controls)
+            {
+                if (ctrl is Button btn && btn.Tag != null)
+                {
+                    string filter = btn.Tag.ToString();
+                    if (filter == currentFilter)
+                    {
+                        btn.BackColor = Color.FromArgb(139, 0, 0);
+                        btn.ForeColor = Color.White;
+                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(120, 0, 0);
+                    }
+                    else
+                    {
+                        btn.BackColor = Color.FromArgb(248, 249, 250);
+                        btn.ForeColor = Color.FromArgb(64, 64, 64);
+                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(230, 230, 230);
+                    }
+                }
+            }
         }
         private void LoadCategories()
         {
@@ -121,9 +194,83 @@ namespace Project5LMS.Forms.Admin.Search
             panelMainContainer.Controls.Add(panelResults);
             panelResults.BringToFront();
         }
+        private void SetupQuickExamples()
+        {
+            panelQuickExamples = new Panel
+            {
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                Padding = new Padding(20),
+                Location = new Point(24, 688),
+                Size = new Size(1777, 120),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            };
+            Label lblQuickTitle = new Label
+            {
+                Text = "Quick Search Examples",
+                Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(64, 64, 64),
+                AutoSize = true,
+                Location = new Point(20, 20)
+            };
+            panelQuickExamples.Controls.Add(lblQuickTitle);
+            string[] examples = { "The Great Gatsby", "Orwell", "978-0", "Sarah Johnson", "M1001", "Fiction" };
+            int xPos = 20;
+            int yPos = 55;
+            foreach (string example in examples)
+            {
+                Button btnExample = new Button
+                {
+                    Text = example,
+                    Font = new Font("Segoe UI", 10F),
+                    BackColor = Color.FromArgb(248, 249, 250),
+                    ForeColor = Color.FromArgb(64, 64, 64),
+                    FlatStyle = FlatStyle.Flat,
+                    FlatAppearance = { BorderSize = 0 },
+                    AutoSize = true,
+                    Padding = new Padding(15, 8, 15, 8),
+                    Location = new Point(xPos, yPos),
+                    Cursor = Cursors.Hand
+                };
+                btnExample.FlatAppearance.MouseOverBackColor = Color.FromArgb(230, 230, 230);
+                btnExample.Click += (s, e) =>
+                {
+                    txtSearch.Text = example;
+                    txtSearch.ForeColor = Color.Black;
+                    PerformSearch();
+                };
+                panelQuickExamples.Controls.Add(btnExample);
+                xPos += btnExample.Width + 10;
+                if (xPos + 150 > panelQuickExamples.Width - 40)
+                {
+                    xPos = 20;
+                    yPos += 45;
+                }
+            }
+            panelMainContainer.Controls.Add(panelQuickExamples);
+        }
+        private void DrawSearchIcon(Graphics g, Panel panel, Color iconColor)
+        {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            int size = Math.Min(panel.Width, panel.Height) - 20;
+            int x = (panel.Width - size) / 2;
+            int y = (panel.Height - size) / 2;
+            using (Pen pen = new Pen(iconColor, 3))
+            {
+                float centerX = x + size * 0.5f;
+                float centerY = y + size * 0.5f;
+                float radius = size * 0.35f;
+                g.DrawEllipse(pen, centerX - radius, centerY - radius, radius * 2, radius * 2);
+                float handleLength = size * 0.25f;
+                float handleAngle = 45f * (float)Math.PI / 180f;
+                float handleX = centerX + radius * (float)Math.Cos(handleAngle);
+                float handleY = centerY + radius * (float)Math.Sin(handleAngle);
+                g.DrawLine(pen, handleX, handleY, handleX + handleLength * (float)Math.Cos(handleAngle), handleY + handleLength * (float)Math.Sin(handleAngle));
+            }
+        }
         private void txtSearch_Enter(object sender, EventArgs e)
         {
-            if (txtSearch.Text == "🔍 Search by title, author, ISBN, member name, or ID...")
+            if (txtSearch.Text == "Search by title, author, ISBN, member name, email, or ID...")
             {
                 txtSearch.Text = "";
                 txtSearch.ForeColor = Color.Black;
@@ -133,7 +280,7 @@ namespace Project5LMS.Forms.Admin.Search
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                txtSearch.Text = "🔍 Search by title, author, ISBN, member name, or ID...";
+                txtSearch.Text = "Search by title, author, ISBN, member name, email, or ID...";
                 txtSearch.ForeColor = Color.Gray;
             }
         }
@@ -152,23 +299,23 @@ namespace Project5LMS.Forms.Admin.Search
         private void PerformSearch()
         {
             string searchText = txtSearch.Text.Trim();
-            if (searchText == "🔍 Search by title, author, ISBN, member name, or ID..." || string.IsNullOrWhiteSpace(searchText))
+            if (searchText == "Search by title, author, ISBN, member name, email, or ID..." || string.IsNullOrWhiteSpace(searchText))
             {
                 MessageBox.Show("Please enter a search term.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string searchIn = cmbSearchIn.SelectedItem?.ToString() ?? "All";
+            string searchIn = currentFilter;
             string category = cmbCategory.SelectedItem?.ToString();
             if (category == "All Categories")
                 category = null;
             try
             {
                 SearchResults results;
-                if (searchIn == "Books")
+                if (searchIn == "Books Only")
                 {
                     results = _searchService.SearchBooks(searchText);
                 }
-                else if (searchIn == "Members")
+                else if (searchIn == "Members Only")
                 {
                     results = _searchService.SearchMembers(searchText);
                 }
@@ -247,7 +394,6 @@ namespace Project5LMS.Forms.Admin.Search
         {
             if (searchResults == null || searchResults.Rows.Count == 0)
             {
-                MessageBox.Show("No results found.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 panelResults.Visible = false;
                 return;
             }

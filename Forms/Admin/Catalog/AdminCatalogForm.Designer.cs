@@ -82,9 +82,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1455, 894);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
+            this.panelMainContainer.Size = new System.Drawing.Size(1903, 1100);
             this.panelMainContainer.TabIndex = 0;
             // 
             // panelTableContainer
@@ -92,11 +93,13 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelTableContainer.BackColor = System.Drawing.Color.White;
             this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTableContainer.Controls.Add(this.dataGridViewBooks);
-            this.panelTableContainer.Location = new System.Drawing.Point(24, 241);
+            this.panelTableContainer.Location = new System.Drawing.Point(32, 297);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelTableContainer.Name = "panelTableContainer";
-            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16);
-            this.panelTableContainer.Size = new System.Drawing.Size(1419, 629);
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelTableContainer.Size = new System.Drawing.Size(1812, 774);
             this.panelTableContainer.TabIndex = 3;
+            this.panelTableContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTableContainer_Paint);
             // 
             // dataGridViewBooks
             // 
@@ -137,14 +140,15 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.dataGridViewBooks.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewBooks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewBooks.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dataGridViewBooks.Location = new System.Drawing.Point(16, 16);
+            this.dataGridViewBooks.Location = new System.Drawing.Point(21, 20);
+            this.dataGridViewBooks.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridViewBooks.MultiSelect = false;
             this.dataGridViewBooks.Name = "dataGridViewBooks";
             this.dataGridViewBooks.RowHeadersVisible = false;
             this.dataGridViewBooks.RowHeadersWidth = 51;
             this.dataGridViewBooks.RowTemplate.Height = 80;
             this.dataGridViewBooks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewBooks.Size = new System.Drawing.Size(1385, 595);
+            this.dataGridViewBooks.Size = new System.Drawing.Size(1768, 732);
             this.dataGridViewBooks.TabIndex = 0;
             this.dataGridViewBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBooks_CellContentClick);
             this.dataGridViewBooks.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewBooks_CellFormatting);
@@ -287,10 +291,11 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelSearchFilter.Controls.Add(this.cmbCategoryFilter);
             this.panelSearchFilter.Controls.Add(this.lblCategoryFilter);
             this.panelSearchFilter.Controls.Add(this.txtSearch);
-            this.panelSearchFilter.Location = new System.Drawing.Point(24, 181);
+            this.panelSearchFilter.Location = new System.Drawing.Point(32, 223);
+            this.panelSearchFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelSearchFilter.Name = "panelSearchFilter";
-            this.panelSearchFilter.Padding = new System.Windows.Forms.Padding(16);
-            this.panelSearchFilter.Size = new System.Drawing.Size(1419, 60);
+            this.panelSearchFilter.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelSearchFilter.Size = new System.Drawing.Size(1812, 74);
             this.panelSearchFilter.TabIndex = 2;
             this.panelSearchFilter.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSearchFilter_Paint);
             // 
@@ -299,9 +304,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbResourceTypeFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbResourceTypeFilter.FormattingEnabled = true;
-            this.cmbResourceTypeFilter.Location = new System.Drawing.Point(702, 16);
+            this.cmbResourceTypeFilter.Location = new System.Drawing.Point(936, 20);
+            this.cmbResourceTypeFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbResourceTypeFilter.Name = "cmbResourceTypeFilter";
-            this.cmbResourceTypeFilter.Size = new System.Drawing.Size(170, 25);
+            this.cmbResourceTypeFilter.Size = new System.Drawing.Size(225, 31);
             this.cmbResourceTypeFilter.TabIndex = 3;
             this.cmbResourceTypeFilter.SelectedIndexChanged += new System.EventHandler(this.cmbResourceTypeFilter_SelectedIndexChanged);
             // 
@@ -310,9 +316,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblResourceTypeFilter.AutoSize = true;
             this.lblResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResourceTypeFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblResourceTypeFilter.Location = new System.Drawing.Point(572, 19);
+            this.lblResourceTypeFilter.Location = new System.Drawing.Point(763, 23);
+            this.lblResourceTypeFilter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResourceTypeFilter.Name = "lblResourceTypeFilter";
-            this.lblResourceTypeFilter.Size = new System.Drawing.Size(124, 19);
+            this.lblResourceTypeFilter.Size = new System.Drawing.Size(154, 23);
             this.lblResourceTypeFilter.TabIndex = 4;
             this.lblResourceTypeFilter.Text = "All Resource Types:";
             this.lblResourceTypeFilter.Click += new System.EventHandler(this.lblResourceTypeFilter_Click);
@@ -322,9 +329,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.cmbCategoryFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCategoryFilter.FormattingEnabled = true;
-            this.cmbCategoryFilter.Location = new System.Drawing.Point(1006, 16);
+            this.cmbCategoryFilter.Location = new System.Drawing.Point(1341, 20);
+            this.cmbCategoryFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbCategoryFilter.Name = "cmbCategoryFilter";
-            this.cmbCategoryFilter.Size = new System.Drawing.Size(264, 25);
+            this.cmbCategoryFilter.Size = new System.Drawing.Size(351, 31);
             this.cmbCategoryFilter.TabIndex = 2;
             this.cmbCategoryFilter.SelectedIndexChanged += new System.EventHandler(this.cmbCategoryFilter_SelectedIndexChanged);
             // 
@@ -333,9 +341,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblCategoryFilter.AutoSize = true;
             this.lblCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCategoryFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCategoryFilter.Location = new System.Drawing.Point(904, 19);
+            this.lblCategoryFilter.Location = new System.Drawing.Point(1205, 23);
+            this.lblCategoryFilter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCategoryFilter.Name = "lblCategoryFilter";
-            this.lblCategoryFilter.Size = new System.Drawing.Size(96, 19);
+            this.lblCategoryFilter.Size = new System.Drawing.Size(119, 23);
             this.lblCategoryFilter.TabIndex = 1;
             this.lblCategoryFilter.Text = "All Categories:";
             // 
@@ -344,9 +353,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(16, 16);
+            this.txtSearch.Location = new System.Drawing.Point(21, 20);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(503, 25);
+            this.txtSearch.Size = new System.Drawing.Size(670, 30);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.Text = "🔍 Search by title, author, ISBN, or accession number...";
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
@@ -360,9 +370,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMetrics.Controls.Add(this.panelMetricAvailable);
             this.panelMetrics.Controls.Add(this.panelMetricTotalCopies);
             this.panelMetrics.Controls.Add(this.panelMetricTotalTitles);
-            this.panelMetrics.Location = new System.Drawing.Point(24, 100);
+            this.panelMetrics.Location = new System.Drawing.Point(32, 123);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMetrics.Name = "panelMetrics";
-            this.panelMetrics.Size = new System.Drawing.Size(1419, 81);
+            this.panelMetrics.Size = new System.Drawing.Size(1812, 100);
             this.panelMetrics.TabIndex = 1;
             // 
             // panelMetricOnLoan
@@ -370,11 +381,11 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMetricOnLoan.BackColor = System.Drawing.Color.White;
             this.panelMetricOnLoan.Controls.Add(this.lblMetricOnLoanValue);
             this.panelMetricOnLoan.Controls.Add(this.lblMetricOnLoanTitle);
-            this.panelMetricOnLoan.Location = new System.Drawing.Point(1134, 1);
-            this.panelMetricOnLoan.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
+            this.panelMetricOnLoan.Location = new System.Drawing.Point(1512, 1);
+            this.panelMetricOnLoan.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
             this.panelMetricOnLoan.Name = "panelMetricOnLoan";
-            this.panelMetricOnLoan.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricOnLoan.Size = new System.Drawing.Size(253, 84);
+            this.panelMetricOnLoan.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricOnLoan.Size = new System.Drawing.Size(295, 103);
             this.panelMetricOnLoan.TabIndex = 3;
             // 
             // lblMetricOnLoanValue
@@ -382,9 +393,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricOnLoanValue.AutoSize = true;
             this.lblMetricOnLoanValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricOnLoanValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricOnLoanValue.Location = new System.Drawing.Point(16, 35);
+            this.lblMetricOnLoanValue.Location = new System.Drawing.Point(21, 43);
+            this.lblMetricOnLoanValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricOnLoanValue.Name = "lblMetricOnLoanValue";
-            this.lblMetricOnLoanValue.Size = new System.Drawing.Size(38, 45);
+            this.lblMetricOnLoanValue.Size = new System.Drawing.Size(46, 54);
             this.lblMetricOnLoanValue.TabIndex = 2;
             this.lblMetricOnLoanValue.Text = "0";
             // 
@@ -393,9 +405,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricOnLoanTitle.AutoSize = true;
             this.lblMetricOnLoanTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricOnLoanTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricOnLoanTitle.Location = new System.Drawing.Point(12, 16);
+            this.lblMetricOnLoanTitle.Location = new System.Drawing.Point(16, 20);
+            this.lblMetricOnLoanTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricOnLoanTitle.Name = "lblMetricOnLoanTitle";
-            this.lblMetricOnLoanTitle.Size = new System.Drawing.Size(85, 19);
+            this.lblMetricOnLoanTitle.Size = new System.Drawing.Size(103, 23);
             this.lblMetricOnLoanTitle.TabIndex = 1;
             this.lblMetricOnLoanTitle.Text = "📤 On Loan";
             // 
@@ -404,11 +417,11 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMetricAvailable.BackColor = System.Drawing.Color.White;
             this.panelMetricAvailable.Controls.Add(this.lblMetricAvailableValue);
             this.panelMetricAvailable.Controls.Add(this.lblMetricAvailableTitle);
-            this.panelMetricAvailable.Location = new System.Drawing.Point(746, 0);
-            this.panelMetricAvailable.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
+            this.panelMetricAvailable.Location = new System.Drawing.Point(995, 0);
+            this.panelMetricAvailable.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
             this.panelMetricAvailable.Name = "panelMetricAvailable";
-            this.panelMetricAvailable.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricAvailable.Size = new System.Drawing.Size(272, 82);
+            this.panelMetricAvailable.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricAvailable.Size = new System.Drawing.Size(363, 101);
             this.panelMetricAvailable.TabIndex = 2;
             // 
             // lblMetricAvailableValue
@@ -416,9 +429,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricAvailableValue.AutoSize = true;
             this.lblMetricAvailableValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricAvailableValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricAvailableValue.Location = new System.Drawing.Point(19, 37);
+            this.lblMetricAvailableValue.Location = new System.Drawing.Point(25, 46);
+            this.lblMetricAvailableValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricAvailableValue.Name = "lblMetricAvailableValue";
-            this.lblMetricAvailableValue.Size = new System.Drawing.Size(38, 45);
+            this.lblMetricAvailableValue.Size = new System.Drawing.Size(46, 54);
             this.lblMetricAvailableValue.TabIndex = 2;
             this.lblMetricAvailableValue.Text = "0";
             // 
@@ -427,9 +441,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricAvailableTitle.AutoSize = true;
             this.lblMetricAvailableTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricAvailableTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricAvailableTitle.Location = new System.Drawing.Point(19, 16);
+            this.lblMetricAvailableTitle.Location = new System.Drawing.Point(25, 20);
+            this.lblMetricAvailableTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricAvailableTitle.Name = "lblMetricAvailableTitle";
-            this.lblMetricAvailableTitle.Size = new System.Drawing.Size(86, 19);
+            this.lblMetricAvailableTitle.Size = new System.Drawing.Size(106, 23);
             this.lblMetricAvailableTitle.TabIndex = 1;
             this.lblMetricAvailableTitle.Text = "✅ Available";
             // 
@@ -438,11 +453,11 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMetricTotalCopies.BackColor = System.Drawing.Color.White;
             this.panelMetricTotalCopies.Controls.Add(this.lblMetricTotalCopiesValue);
             this.panelMetricTotalCopies.Controls.Add(this.lblMetricTotalCopiesTitle);
-            this.panelMetricTotalCopies.Location = new System.Drawing.Point(375, 1);
-            this.panelMetricTotalCopies.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
+            this.panelMetricTotalCopies.Location = new System.Drawing.Point(500, 1);
+            this.panelMetricTotalCopies.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
             this.panelMetricTotalCopies.Name = "panelMetricTotalCopies";
-            this.panelMetricTotalCopies.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricTotalCopies.Size = new System.Drawing.Size(270, 82);
+            this.panelMetricTotalCopies.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricTotalCopies.Size = new System.Drawing.Size(360, 101);
             this.panelMetricTotalCopies.TabIndex = 1;
             // 
             // lblMetricTotalCopiesValue
@@ -450,9 +465,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricTotalCopiesValue.AutoSize = true;
             this.lblMetricTotalCopiesValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalCopiesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricTotalCopiesValue.Location = new System.Drawing.Point(19, 32);
+            this.lblMetricTotalCopiesValue.Location = new System.Drawing.Point(25, 39);
+            this.lblMetricTotalCopiesValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricTotalCopiesValue.Name = "lblMetricTotalCopiesValue";
-            this.lblMetricTotalCopiesValue.Size = new System.Drawing.Size(38, 45);
+            this.lblMetricTotalCopiesValue.Size = new System.Drawing.Size(46, 54);
             this.lblMetricTotalCopiesValue.TabIndex = 2;
             this.lblMetricTotalCopiesValue.Text = "0";
             // 
@@ -461,9 +477,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricTotalCopiesTitle.AutoSize = true;
             this.lblMetricTotalCopiesTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalCopiesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTotalCopiesTitle.Location = new System.Drawing.Point(19, 13);
+            this.lblMetricTotalCopiesTitle.Location = new System.Drawing.Point(25, 16);
+            this.lblMetricTotalCopiesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricTotalCopiesTitle.Name = "lblMetricTotalCopiesTitle";
-            this.lblMetricTotalCopiesTitle.Size = new System.Drawing.Size(106, 19);
+            this.lblMetricTotalCopiesTitle.Size = new System.Drawing.Size(130, 23);
             this.lblMetricTotalCopiesTitle.TabIndex = 1;
             this.lblMetricTotalCopiesTitle.Text = "📚 Total Copies";
             // 
@@ -473,10 +490,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelMetricTotalTitles.Controls.Add(this.lblMetricTotalTitlesValue);
             this.panelMetricTotalTitles.Controls.Add(this.lblMetricTotalTitlesTitle);
             this.panelMetricTotalTitles.Location = new System.Drawing.Point(0, 1);
-            this.panelMetricTotalTitles.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
+            this.panelMetricTotalTitles.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
             this.panelMetricTotalTitles.Name = "panelMetricTotalTitles";
-            this.panelMetricTotalTitles.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricTotalTitles.Size = new System.Drawing.Size(270, 82);
+            this.panelMetricTotalTitles.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricTotalTitles.Size = new System.Drawing.Size(360, 101);
             this.panelMetricTotalTitles.TabIndex = 0;
             // 
             // lblMetricTotalTitlesValue
@@ -484,9 +501,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricTotalTitlesValue.AutoSize = true;
             this.lblMetricTotalTitlesValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalTitlesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricTotalTitlesValue.Location = new System.Drawing.Point(19, 32);
+            this.lblMetricTotalTitlesValue.Location = new System.Drawing.Point(25, 39);
+            this.lblMetricTotalTitlesValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricTotalTitlesValue.Name = "lblMetricTotalTitlesValue";
-            this.lblMetricTotalTitlesValue.Size = new System.Drawing.Size(38, 45);
+            this.lblMetricTotalTitlesValue.Size = new System.Drawing.Size(46, 54);
             this.lblMetricTotalTitlesValue.TabIndex = 2;
             this.lblMetricTotalTitlesValue.Text = "0";
             // 
@@ -495,9 +513,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblMetricTotalTitlesTitle.AutoSize = true;
             this.lblMetricTotalTitlesTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetricTotalTitlesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTotalTitlesTitle.Location = new System.Drawing.Point(19, 13);
+            this.lblMetricTotalTitlesTitle.Location = new System.Drawing.Point(25, 16);
+            this.lblMetricTotalTitlesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMetricTotalTitlesTitle.Name = "lblMetricTotalTitlesTitle";
-            this.lblMetricTotalTitlesTitle.Size = new System.Drawing.Size(96, 19);
+            this.lblMetricTotalTitlesTitle.Size = new System.Drawing.Size(118, 23);
             this.lblMetricTotalTitlesTitle.TabIndex = 1;
             this.lblMetricTotalTitlesTitle.Text = "📖 Total Titles";
             // 
@@ -508,9 +527,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.panelHeader.Controls.Add(this.btnAddNewBook);
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
-            this.panelHeader.Location = new System.Drawing.Point(24, 24);
+            this.panelHeader.Location = new System.Drawing.Point(32, 30);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1419, 76);
+            this.panelHeader.Size = new System.Drawing.Size(1812, 94);
             this.panelHeader.TabIndex = 0;
             // 
             // btnImportCSV
@@ -521,9 +541,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnImportCSV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImportCSV.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImportCSV.ForeColor = System.Drawing.Color.White;
-            this.btnImportCSV.Location = new System.Drawing.Point(944, 16);
+            this.btnImportCSV.Location = new System.Drawing.Point(1179, 20);
+            this.btnImportCSV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnImportCSV.Name = "btnImportCSV";
-            this.btnImportCSV.Size = new System.Drawing.Size(194, 40);
+            this.btnImportCSV.Size = new System.Drawing.Size(259, 49);
             this.btnImportCSV.TabIndex = 3;
             this.btnImportCSV.Text = "📥 Import CSV";
             this.btnImportCSV.UseVisualStyleBackColor = false;
@@ -537,9 +558,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.btnAddNewBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNewBook.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddNewBook.ForeColor = System.Drawing.Color.White;
-            this.btnAddNewBook.Location = new System.Drawing.Point(1173, 16);
+            this.btnAddNewBook.Location = new System.Drawing.Point(1484, 20);
+            this.btnAddNewBook.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddNewBook.Name = "btnAddNewBook";
-            this.btnAddNewBook.Size = new System.Drawing.Size(202, 40);
+            this.btnAddNewBook.Size = new System.Drawing.Size(269, 49);
             this.btnAddNewBook.TabIndex = 2;
             this.btnAddNewBook.Text = "➕ Add New Book";
             this.btnAddNewBook.UseVisualStyleBackColor = false;
@@ -550,9 +572,10 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(13, 50);
+            this.lblSubtitle.Location = new System.Drawing.Point(17, 62);
+            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(231, 19);
+            this.lblSubtitle.Size = new System.Drawing.Size(285, 23);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Manage library books and resources";
             // 
@@ -561,20 +584,22 @@ namespace Project5LMS.Forms.Admin.Catalog
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(9, 6);
+            this.lblTitle.Location = new System.Drawing.Point(12, 7);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(223, 45);
+            this.lblTitle.Size = new System.Drawing.Size(275, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Book Catalog";
             // 
             // AdminCatalogForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1455, 894);
+            this.ClientSize = new System.Drawing.Size(1903, 1100);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AdminCatalogForm";
             this.Text = "Book Catalog";
             this.Load += new System.EventHandler(this.AdminCatalogForm_Load);

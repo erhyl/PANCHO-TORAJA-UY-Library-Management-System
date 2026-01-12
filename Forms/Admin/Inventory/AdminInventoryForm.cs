@@ -23,6 +23,7 @@ namespace Project5LMS.Forms.Admin.Inventory
         }
         private void AdminInventoryForm_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
             try
             {
                 EnsureInventoryTableExists();
@@ -186,7 +187,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "InventoryID",
                 HeaderText = "INVENTORY ID",
                 DataPropertyName = "InventoryID",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colInventoryID);
@@ -195,7 +196,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "BookDetails",
                 HeaderText = "BOOK DETAILS",
                 DataPropertyName = "BookDetails",
-                Width = 300,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colBookDetails);
@@ -204,7 +205,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "Category",
                 HeaderText = "CATEGORY",
                 DataPropertyName = "Category",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCategory);
@@ -213,7 +214,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "Location",
                 HeaderText = "LOCATION",
                 DataPropertyName = "Location",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colLocation);
@@ -222,7 +223,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "Copy",
                 HeaderText = "COPY",
                 DataPropertyName = "Copy",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCopy);
@@ -231,7 +232,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "Condition",
                 HeaderText = "CONDITION",
                 DataPropertyName = "Condition",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colCondition);
@@ -240,7 +241,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "Status",
                 HeaderText = "STATUS",
                 DataPropertyName = "Status",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colStatus);
@@ -249,7 +250,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "LastVerified",
                 HeaderText = "LAST VERIFIED",
                 DataPropertyName = "LastVerified",
-                Width = 130,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colLastVerified);
@@ -258,7 +259,7 @@ namespace Project5LMS.Forms.Admin.Inventory
                 Name = "Actions",
                 HeaderText = "ACTIONS",
                 DataPropertyName = "Actions",
-                Width = 200,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewInventory.Columns.Add(colActions);

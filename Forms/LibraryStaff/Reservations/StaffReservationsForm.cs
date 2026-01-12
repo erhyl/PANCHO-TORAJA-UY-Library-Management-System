@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
+using Project5LMS.Models;
 namespace Project5LMS.Forms.LibraryStaff.Reservations
 {
     public partial class StaffReservationsForm : Form
@@ -682,7 +684,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         }
         private void txtBookID_Enter(object sender, EventArgs e)
         {
-            if (txtBookID.Text == "Enter book ID")
+            if (txtBookID.Text == "Enter book ID or title")
             {
                 txtBookID.Text = "";
                 txtBookID.ForeColor = Color.Black;
@@ -692,7 +694,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         {
             if (string.IsNullOrWhiteSpace(txtBookID.Text))
             {
-                txtBookID.Text = "Enter book ID";
+                txtBookID.Text = "Enter book ID or title";
                 txtBookID.ForeColor = Color.Gray;
             }
         }
@@ -705,9 +707,9 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show("Please enter a Member ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (bookIdText == "Enter book ID" || string.IsNullOrWhiteSpace(bookIdText))
+            if (bookIdText == "Enter book ID or title" || string.IsNullOrWhiteSpace(bookIdText))
             {
-                MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a Book ID or Book Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -715,24 +717,84 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 int memberId = Project5LMS.Helpers.IDFormatter.ParseMemberID(memberIdText);
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
-                var book = bookService.GetBookByAccessionNumber(bookIdText);
-                if (book != null)
+                Book book = null;
+                
+                // Check if input looks like an ID (purely numeric, or accession pattern like ACC-####)
+                // This helps prioritize ID search for ID-like inputs, but title search always works
+                bool looksLikeId = (bookIdText.Length <= 10 && int.TryParse(bookIdText, out int parsedId)) || 
+                                   (bookIdText.StartsWith("ACC-", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 20) ||
+                                   (bookIdText.StartsWith("B", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 10 && int.TryParse(bookIdText.Substring(1), out _));
+                
+                // If it looks like an ID, try ID-based searches first (but title search is always available as fallback)
+                if (looksLikeId)
                 {
-                    bookId = book.BookID;
-                }
-                else
-                {
-                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
-                    if (bookId > 0)
+                    // Try to find by Accession Number
+                    book = bookService.GetBookByAccessionNumber(bookIdText);
+                    if (book != null)
                     {
-                        var bookById = bookService.GetBook(bookId);
-                        if (bookById == null)
-                            bookId = 0;
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        // Try to find by Book ID
+                        bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                        if (bookId > 0)
+                        {
+                            var bookById = bookService.GetBook(bookId);
+                            if (bookById != null)
+                            {
+                                book = bookById;
+                            }
+                            else
+                            {
+                                bookId = 0;
+                            }
+                        }
                     }
                 }
-                if (memberId == 0 || bookId == 0)
+                
+                // Always search by Title/Author/ISBN/AccessionNo if:
+                // 1. Input doesn't look like an ID, OR
+                // 2. ID search didn't find anything
+                // This ensures title search works even when there's no Book ID
+                if (bookId == 0 || book == null)
                 {
-                    MessageBox.Show("Invalid Member ID or Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var searchResults = bookService.SearchBooks(bookIdText);
+                    var booksList = searchResults.ToList();
+                    
+                    if (booksList.Count == 0)
+                    {
+                        MessageBox.Show($"No book found matching '{bookIdText}'.\n\nPlease check:\n- Book ID format\n- Book Title spelling\n- Accession Number", "Book Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else if (booksList.Count == 1)
+                    {
+                        // Single match found - use it
+                        book = booksList.First();
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        // Multiple matches found - show selection dialog with more details
+                        string bookList = string.Join("\n", booksList.Take(10).Select((b, idx) => 
+                            $"{idx + 1}. \"{b.Title}\" by {b.Author} (ID: {b.BookID}, Accession: {b.AccessionNo ?? "N/A"})"));
+                        string message = $"Multiple books found matching '{bookIdText}':\n\n{bookList}";
+                        if (booksList.Count > 10)
+                        {
+                            message += $"\n\n... and {booksList.Count - 10} more. Please enter a more specific Book ID or Title.";
+                        }
+                        else
+                        {
+                            message += "\n\nPlease enter a more specific Book ID or Title, or use the Book ID from the list above.";
+                        }
+                        MessageBox.Show(message, "Multiple Books Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+                
+                if (memberId == 0 || bookId == 0 || book == null)
+                {
+                    MessageBox.Show("Invalid Member ID or Book ID/Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 bool memberExists = false;
@@ -805,7 +867,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 MessageBox.Show("Reservation created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtMemberID.Text = "Enter member ID";
                 txtMemberID.ForeColor = Color.Gray;
-                txtBookID.Text = "Enter book ID";
+                txtBookID.Text = "Enter book ID or title";
                 txtBookID.ForeColor = Color.Gray;
                 LoadMetrics();
                 LoadReservations();

@@ -1,12 +1,14 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Project5LMS.Helpers;
 using Project5LMS.Data;
 using Project5LMS.Services;
+using Project5LMS.Models;
 namespace Project5LMS.Forms.LibraryStaff.Inventory
 {
     public partial class StaffInventoryForm : Form
@@ -81,6 +83,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
             dataGridViewInventory.RowTemplate.Height = 40;
             dataGridViewInventory.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
             dataGridViewInventory.CellFormatting += DataGridViewInventory_CellFormatting;
+            dataGridViewInventory.DataError += DataGridViewInventory_DataError;
             dataGridViewInventory.Columns.Clear();
             dataGridViewInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -161,38 +164,85 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 Width = 120
             });
         }
+        private void DataGridViewInventory_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // Suppress DataGridView errors to prevent error dialogs
+            e.ThrowException = false;
+            System.Diagnostics.Debug.WriteLine($"DataGridView error at row {e.RowIndex}, column {e.ColumnIndex}: {e.Exception.Message}");
+        }
         private void DataGridViewInventory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-            string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
-            if (columnName == "BookID" && e.Value != null)
+            try
             {
-                string bookIdStr = e.Value.ToString();
-                if (int.TryParse(bookIdStr, out int bookId))
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+                
+                string columnName = dataGridViewInventory.Columns[e.ColumnIndex].Name;
+                
+                // Handle null or DBNull values
+                if (e.Value == null || e.Value == DBNull.Value)
                 {
-                    e.Value = $"B{bookId}";
+                    e.Value = "";
+                    e.FormattingApplied = true;
+                    return;
                 }
-                e.FormattingApplied = true;
-            }
-            if (columnName == "Available" && e.Value != null)
-            {
-                e.CellStyle.ForeColor = Color.FromArgb(40, 167, 69);
-                e.FormattingApplied = true;
-            }
-            if (columnName == "CheckedOut" && e.Value != null)
-            {
-                e.CellStyle.ForeColor = Color.FromArgb(13, 110, 253);
-                e.FormattingApplied = true;
-            }
-            if (columnName == "Status" && e.Value != null)
-            {
-                string status = e.Value.ToString();
-                if (status == "Good" || status == "Available")
+                
+                if (columnName == "BookID")
                 {
-                    e.Value = "? Good";
+                    string bookIdStr = e.Value.ToString();
+                    if (int.TryParse(bookIdStr, out int bookId))
+                    {
+                        e.Value = $"B{bookId}";
+                    }
+                    e.FormattingApplied = true;
+                }
+                else if (columnName == "Available")
+                {
                     e.CellStyle.ForeColor = Color.FromArgb(40, 167, 69);
+                    e.FormattingApplied = true;
                 }
-                e.FormattingApplied = true;
+                else if (columnName == "CheckedOut")
+                {
+                    e.CellStyle.ForeColor = Color.FromArgb(13, 110, 253);
+                    e.FormattingApplied = true;
+                }
+                else if (columnName == "Status")
+                {
+                    string status = e.Value?.ToString() ?? "";
+                    if (status == "Good" || status == "Available")
+                    {
+                        e.Value = "✓ Good";
+                        e.CellStyle.ForeColor = Color.FromArgb(40, 167, 69);
+                    }
+                    else if (status == "Needs Attention")
+                    {
+                        e.CellStyle.ForeColor = Color.FromArgb(220, 53, 69);
+                    }
+                    e.FormattingApplied = true;
+                }
+                else if (columnName == "LastUpdated")
+                {
+                    // Format date if it's a DateTime
+                    if (e.Value is DateTime dateTime)
+                    {
+                        e.Value = dateTime.ToString("MM/dd/yyyy");
+                        e.FormattingApplied = true;
+                    }
+                    else if (e.Value != null)
+                    {
+                        // Try to parse as DateTime
+                        if (DateTime.TryParse(e.Value.ToString(), out DateTime parsedDate))
+                        {
+                            e.Value = parsedDate.ToString("MM/dd/yyyy");
+                            e.FormattingApplied = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Suppress formatting errors to prevent dialog
+                System.Diagnostics.Debug.WriteLine($"Cell formatting error: {ex.Message}");
+                e.FormattingApplied = false;
             }
         }
         private void LoadCategories()
@@ -230,7 +280,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                 using (var conn = _dbContext.GetConnection())
                 {
                     conn.Open();
-                    string queryTotal = "SELECT COALESCE(SUM(Copies), 0) FROM Books";
+                    string queryTotal = "SELECT COALESCE(SUM(TotalCopies), 0) FROM Books";
                     using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                     {
                         int total = Convert.ToInt32(cmd.ExecuteScalar());
@@ -303,16 +353,16 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         : @"(SELECT BookID, 0 as LostCount
                             FROM (SELECT 1) as dummy
                             WHERE 1=0)";
-                    string lastVerifiedSelect = hasLastVerified ? "COALESCE(MAX(i.LastVerified), b.DateAdded)" : "b.DateAdded";
+                    string lastVerifiedSelect = hasLastVerified ? "COALESCE(MAX(i.LastVerified), COALESCE(b.CreatedDate, NOW()))" : "COALESCE(b.CreatedDate, NOW())";
                     string inventoryJoin = hasInventoryTable ? "LEFT JOIN Inventory i ON b.BookID = i.BookID" : "";
                     string query = $@"SELECT
                                     b.BookID,
                                     b.Title,
                                     b.Category,
                                     COALESCE(b.Location, 'N/A') as Location,
-                                    b.Copies as Total,
-                                    b.Available,
-                                    (b.Copies - b.Available) as CheckedOut,
+                                    COALESCE(b.TotalCopies, 0) as Total,
+                                    COALESCE(b.Available, 0) as Available,
+                                    (COALESCE(b.TotalCopies, 0) - COALESCE(b.Available, 0)) as CheckedOut,
                                     COALESCE(damaged.DamagedCount, 0) as Damaged,
                                     COALESCE(lost.LostCount, 0) as Lost,
                                     {lastVerifiedSelect} as LastUpdated,
@@ -328,7 +378,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     {
                         query += " WHERE b.Category = @Category";
                     }
-                    query += " GROUP BY b.BookID, b.Title, b.Category, b.Location, b.Copies, b.Available, damaged.DamagedCount, lost.LostCount, b.DateAdded";
+                    query += " GROUP BY b.BookID, b.Title, b.Category, b.Location, b.TotalCopies, b.Available, damaged.DamagedCount, lost.LostCount, b.CreatedDate";
                     query += " ORDER BY b.BookID";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -361,7 +411,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         }
         private void txtUpdateStockBookID_Enter(object sender, EventArgs e)
         {
-            if (txtUpdateStockBookID.Text == "Book ID")
+            if (txtUpdateStockBookID.Text == "Book ID or Title")
             {
                 txtUpdateStockBookID.Text = "";
                 txtUpdateStockBookID.ForeColor = Color.Black;
@@ -371,7 +421,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             if (string.IsNullOrWhiteSpace(txtUpdateStockBookID.Text))
             {
-                txtUpdateStockBookID.Text = "Book ID";
+                txtUpdateStockBookID.Text = "Book ID or Title";
                 txtUpdateStockBookID.ForeColor = Color.Gray;
             }
         }
@@ -402,9 +452,9 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             string bookIdText = txtUpdateStockBookID.Text.Trim();
             string quantityText = txtUpdateStockQuantity.Text.Trim();
-            if (bookIdText == "Book ID" || string.IsNullOrWhiteSpace(bookIdText))
+            if (bookIdText == "Book ID or Title" || string.IsNullOrWhiteSpace(bookIdText))
             {
-                MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a Book ID or Book Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (quantityText == "Quantity" || string.IsNullOrWhiteSpace(quantityText))
@@ -421,24 +471,76 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
             {
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
-                var book = bookService.GetBookByAccessionNumber(bookIdText);
-                if (book != null)
+                Book book = null;
+                
+                // Check if input looks like an ID
+                bool looksLikeId = (bookIdText.Length <= 10 && int.TryParse(bookIdText, out int parsedId)) || 
+                                   (bookIdText.StartsWith("ACC-", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 20) ||
+                                   (bookIdText.StartsWith("B", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 10 && int.TryParse(bookIdText.Substring(1), out _));
+                
+                // If it looks like an ID, try ID-based searches first
+                if (looksLikeId)
                 {
-                    bookId = book.BookID;
-                }
-                else
-                {
-                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
-                    if (bookId > 0)
+                    book = bookService.GetBookByAccessionNumber(bookIdText);
+                    if (book != null)
                     {
-                        var bookById = bookService.GetBook(bookId);
-                        if (bookById == null)
-                            bookId = 0;
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                        if (bookId > 0)
+                        {
+                            var bookById = bookService.GetBook(bookId);
+                            if (bookById != null)
+                            {
+                                book = bookById;
+                            }
+                            else
+                            {
+                                bookId = 0;
+                            }
+                        }
                     }
                 }
-                if (bookId == 0)
+                
+                // If not found by ID (or doesn't look like an ID), search by Title
+                if (bookId == 0 || book == null)
                 {
-                    MessageBox.Show("Invalid Book ID or Accession Number format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var searchResults = bookService.SearchBooks(bookIdText);
+                    var booksList = searchResults.ToList();
+                    
+                    if (booksList.Count == 0)
+                    {
+                        MessageBox.Show($"No book found matching '{bookIdText}'.\n\nPlease check:\n- Book ID format\n- Book Title spelling\n- Accession Number", "Book Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else if (booksList.Count == 1)
+                    {
+                        book = booksList.First();
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        string bookList = string.Join("\n", booksList.Take(10).Select((b, idx) => 
+                            $"{idx + 1}. \"{b.Title}\" by {b.Author} (ID: {b.BookID}, Accession: {b.AccessionNo ?? "N/A"})"));
+                        string message = $"Multiple books found matching '{bookIdText}':\n\n{bookList}";
+                        if (booksList.Count > 10)
+                        {
+                            message += $"\n\n... and {booksList.Count - 10} more. Please enter a more specific Book ID or Title.";
+                        }
+                        else
+                        {
+                            message += "\n\nPlease enter a more specific Book ID or Title, or use the Book ID from the list above.";
+                        }
+                        MessageBox.Show(message, "Multiple Books Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+                
+                if (bookId == 0 || book == null)
+                {
+                    MessageBox.Show("Invalid Book ID or Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 using (var conn = _dbContext.GetConnection())
@@ -455,7 +557,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             return;
                         }
                     }
-                    string getBookQuery = "SELECT Copies, Location FROM Books WHERE BookID = @BookID";
+                    string getBookQuery = "SELECT TotalCopies, Location FROM Books WHERE BookID = @BookID";
                     int currentCopies = 0;
                     string location = "";
                     using (MySqlCommand getCmd = new MySqlCommand(getBookQuery, conn))
@@ -465,7 +567,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                         {
                             if (reader.Read())
                             {
-                                currentCopies = reader["Copies"] != DBNull.Value ? Convert.ToInt32(reader["Copies"]) : 0;
+                                currentCopies = reader["TotalCopies"] != DBNull.Value ? Convert.ToInt32(reader["TotalCopies"]) : 0;
                                 location = reader["Location"] != DBNull.Value ? reader["Location"].ToString() : "";
                             }
                         }
@@ -483,7 +585,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                             insertCmd.ExecuteNonQuery();
                         }
                     }
-                    string updateQuery = "UPDATE Books SET Copies = Copies + @Quantity, Available = Available + @Quantity WHERE BookID = @BookID";
+                    string updateQuery = "UPDATE Books SET TotalCopies = TotalCopies + @Quantity, Available = Available + @Quantity WHERE BookID = @BookID";
                     using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn))
                     {
                         updateCmd.Parameters.AddWithValue("@Quantity", quantity);
@@ -492,7 +594,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     }
                 }
                 MessageBox.Show($"{quantity} copy/copies added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtUpdateStockBookID.Text = "Book ID";
+                txtUpdateStockBookID.Text = "Book ID or Title";
                 txtUpdateStockBookID.ForeColor = Color.Gray;
                 txtUpdateStockQuantity.Text = "Quantity";
                 txtUpdateStockQuantity.ForeColor = Color.Gray;
@@ -506,7 +608,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         }
         private void txtReportDamageBookID_Enter(object sender, EventArgs e)
         {
-            if (txtReportDamageBookID.Text == "Book ID")
+            if (txtReportDamageBookID.Text == "Book ID or Title")
             {
                 txtReportDamageBookID.Text = "";
                 txtReportDamageBookID.ForeColor = Color.Black;
@@ -516,7 +618,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             if (string.IsNullOrWhiteSpace(txtReportDamageBookID.Text))
             {
-                txtReportDamageBookID.Text = "Book ID";
+                txtReportDamageBookID.Text = "Book ID or Title";
                 txtReportDamageBookID.ForeColor = Color.Gray;
             }
         }
@@ -540,9 +642,9 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             string bookIdText = txtReportDamageBookID.Text.Trim();
             string description = txtReportDamageDescription.Text.Trim();
-            if (bookIdText == "Book ID" || string.IsNullOrWhiteSpace(bookIdText))
+            if (bookIdText == "Book ID or Title" || string.IsNullOrWhiteSpace(bookIdText))
             {
-                MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a Book ID or Book Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (description == "Damage description" || string.IsNullOrWhiteSpace(description))
@@ -554,24 +656,76 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
             {
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
-                var book = bookService.GetBookByAccessionNumber(bookIdText);
-                if (book != null)
+                Book book = null;
+                
+                // Check if input looks like an ID
+                bool looksLikeId = (bookIdText.Length <= 10 && int.TryParse(bookIdText, out int parsedId)) || 
+                                   (bookIdText.StartsWith("ACC-", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 20) ||
+                                   (bookIdText.StartsWith("B", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 10 && int.TryParse(bookIdText.Substring(1), out _));
+                
+                // If it looks like an ID, try ID-based searches first
+                if (looksLikeId)
                 {
-                    bookId = book.BookID;
-                }
-                else
-                {
-                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
-                    if (bookId > 0)
+                    book = bookService.GetBookByAccessionNumber(bookIdText);
+                    if (book != null)
                     {
-                        var bookById = bookService.GetBook(bookId);
-                        if (bookById == null)
-                            bookId = 0;
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                        if (bookId > 0)
+                        {
+                            var bookById = bookService.GetBook(bookId);
+                            if (bookById != null)
+                            {
+                                book = bookById;
+                            }
+                            else
+                            {
+                                bookId = 0;
+                            }
+                        }
                     }
                 }
-                if (bookId == 0)
+                
+                // If not found by ID (or doesn't look like an ID), search by Title
+                if (bookId == 0 || book == null)
                 {
-                    MessageBox.Show("Invalid Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var searchResults = bookService.SearchBooks(bookIdText);
+                    var booksList = searchResults.ToList();
+                    
+                    if (booksList.Count == 0)
+                    {
+                        MessageBox.Show($"No book found matching '{bookIdText}'.\n\nPlease check:\n- Book ID format\n- Book Title spelling\n- Accession Number", "Book Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else if (booksList.Count == 1)
+                    {
+                        book = booksList.First();
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        string bookList = string.Join("\n", booksList.Take(10).Select((b, idx) => 
+                            $"{idx + 1}. \"{b.Title}\" by {b.Author} (ID: {b.BookID}, Accession: {b.AccessionNo ?? "N/A"})"));
+                        string message = $"Multiple books found matching '{bookIdText}':\n\n{bookList}";
+                        if (booksList.Count > 10)
+                        {
+                            message += $"\n\n... and {booksList.Count - 10} more. Please enter a more specific Book ID or Title.";
+                        }
+                        else
+                        {
+                            message += "\n\nPlease enter a more specific Book ID or Title, or use the Book ID from the list above.";
+                        }
+                        MessageBox.Show(message, "Multiple Books Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+                
+                if (bookId == 0 || book == null)
+                {
+                    MessageBox.Show("Invalid Book ID or Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 using (var conn = _dbContext.GetConnection())
@@ -618,7 +772,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     }
                 }
                 MessageBox.Show("Damage reported successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtReportDamageBookID.Text = "Book ID";
+                txtReportDamageBookID.Text = "Book ID or Title";
                 txtReportDamageBookID.ForeColor = Color.Gray;
                 txtReportDamageDescription.Text = "Damage description";
                 txtReportDamageDescription.ForeColor = Color.Gray;
@@ -632,7 +786,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         }
         private void txtReportLostBookID_Enter(object sender, EventArgs e)
         {
-            if (txtReportLostBookID.Text == "Book ID")
+            if (txtReportLostBookID.Text == "Book ID or Title")
             {
                 txtReportLostBookID.Text = "";
                 txtReportLostBookID.ForeColor = Color.Black;
@@ -642,7 +796,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             if (string.IsNullOrWhiteSpace(txtReportLostBookID.Text))
             {
-                txtReportLostBookID.Text = "Book ID";
+                txtReportLostBookID.Text = "Book ID or Title";
                 txtReportLostBookID.ForeColor = Color.Gray;
             }
         }
@@ -666,9 +820,9 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
         {
             string bookIdText = txtReportLostBookID.Text.Trim();
             string notes = txtReportLostNotes.Text.Trim();
-            if (bookIdText == "Book ID" || string.IsNullOrWhiteSpace(bookIdText))
+            if (bookIdText == "Book ID or Title" || string.IsNullOrWhiteSpace(bookIdText))
             {
-                MessageBox.Show("Please enter a Book ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a Book ID or Book Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (notes == "Additional notes" || string.IsNullOrWhiteSpace(notes))
@@ -679,24 +833,76 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
             {
                 int bookId = 0;
                 var bookService = ServiceFactory.CreateBookService();
-                var book = bookService.GetBookByAccessionNumber(bookIdText);
-                if (book != null)
+                Book book = null;
+                
+                // Check if input looks like an ID
+                bool looksLikeId = (bookIdText.Length <= 10 && int.TryParse(bookIdText, out int parsedId)) || 
+                                   (bookIdText.StartsWith("ACC-", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 20) ||
+                                   (bookIdText.StartsWith("B", StringComparison.OrdinalIgnoreCase) && bookIdText.Length <= 10 && int.TryParse(bookIdText.Substring(1), out _));
+                
+                // If it looks like an ID, try ID-based searches first
+                if (looksLikeId)
                 {
-                    bookId = book.BookID;
-                }
-                else
-                {
-                    bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
-                    if (bookId > 0)
+                    book = bookService.GetBookByAccessionNumber(bookIdText);
+                    if (book != null)
                     {
-                        var bookById = bookService.GetBook(bookId);
-                        if (bookById == null)
-                            bookId = 0;
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        bookId = Project5LMS.Helpers.IDFormatter.ParseBookID(bookIdText);
+                        if (bookId > 0)
+                        {
+                            var bookById = bookService.GetBook(bookId);
+                            if (bookById != null)
+                            {
+                                book = bookById;
+                            }
+                            else
+                            {
+                                bookId = 0;
+                            }
+                        }
                     }
                 }
-                if (bookId == 0)
+                
+                // If not found by ID (or doesn't look like an ID), search by Title
+                if (bookId == 0 || book == null)
                 {
-                    MessageBox.Show("Invalid Book ID format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var searchResults = bookService.SearchBooks(bookIdText);
+                    var booksList = searchResults.ToList();
+                    
+                    if (booksList.Count == 0)
+                    {
+                        MessageBox.Show($"No book found matching '{bookIdText}'.\n\nPlease check:\n- Book ID format\n- Book Title spelling\n- Accession Number", "Book Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else if (booksList.Count == 1)
+                    {
+                        book = booksList.First();
+                        bookId = book.BookID;
+                    }
+                    else
+                    {
+                        string bookList = string.Join("\n", booksList.Take(10).Select((b, idx) => 
+                            $"{idx + 1}. \"{b.Title}\" by {b.Author} (ID: {b.BookID}, Accession: {b.AccessionNo ?? "N/A"})"));
+                        string message = $"Multiple books found matching '{bookIdText}':\n\n{bookList}";
+                        if (booksList.Count > 10)
+                        {
+                            message += $"\n\n... and {booksList.Count - 10} more. Please enter a more specific Book ID or Title.";
+                        }
+                        else
+                        {
+                            message += "\n\nPlease enter a more specific Book ID or Title, or use the Book ID from the list above.";
+                        }
+                        MessageBox.Show(message, "Multiple Books Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+                
+                if (bookId == 0 || book == null)
+                {
+                    MessageBox.Show("Invalid Book ID or Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 using (var conn = _dbContext.GetConnection())
@@ -736,8 +942,8 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     }
                     string updateBookQuery = @"UPDATE Books
                                                SET Available = Available - 1,
-                                                   Copies = Copies - 1
-                                               WHERE BookID = @BookID AND Available > 0 AND Copies > 0";
+                                                   TotalCopies = TotalCopies - 1
+                                               WHERE BookID = @BookID AND Available > 0 AND TotalCopies > 0";
                     using (MySqlCommand updateBookCmd = new MySqlCommand(updateBookQuery, conn))
                     {
                         updateBookCmd.Parameters.AddWithValue("@BookID", bookId);
@@ -745,7 +951,7 @@ namespace Project5LMS.Forms.LibraryStaff.Inventory
                     }
                 }
                 MessageBox.Show("Lost book reported successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtReportLostBookID.Text = "Book ID";
+                txtReportLostBookID.Text = "Book ID or Title";
                 txtReportLostBookID.ForeColor = Color.Gray;
                 txtReportLostNotes.Text = "Additional notes";
                 txtReportLostNotes.ForeColor = Color.Gray;

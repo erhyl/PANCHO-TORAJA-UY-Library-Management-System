@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.LibraryStaff.Search
+namespace Project5LMS.Forms.LibraryStaff.Search
 {
     partial class StaffSearchForm
     {
@@ -225,30 +225,33 @@
             this.panelSearchGuidance.Location = new System.Drawing.Point(24, 229);
             this.panelSearchGuidance.Name = "panelSearchGuidance";
             this.panelSearchGuidance.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
-            this.panelSearchGuidance.Size = new System.Drawing.Size(1152, 77);
+            this.panelSearchGuidance.Size = new System.Drawing.Size(1152, 200);
             this.panelSearchGuidance.TabIndex = 2;
+            this.panelSearchGuidance.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSearchGuidance_Paint);
             // 
             // lblGuidanceSubtext
             // 
-            this.lblGuidanceSubtext.AutoSize = true;
-            this.lblGuidanceSubtext.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGuidanceSubtext.AutoSize = false;
+            this.lblGuidanceSubtext.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGuidanceSubtext.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblGuidanceSubtext.Location = new System.Drawing.Point(12, 45);
+            this.lblGuidanceSubtext.Location = new System.Drawing.Point(0, 0);
             this.lblGuidanceSubtext.Name = "lblGuidanceSubtext";
-            this.lblGuidanceSubtext.Size = new System.Drawing.Size(348, 19);
+            this.lblGuidanceSubtext.Size = new System.Drawing.Size(1108, 29);
             this.lblGuidanceSubtext.TabIndex = 2;
             this.lblGuidanceSubtext.Text = "Enter a search query above to find books and members";
+            this.lblGuidanceSubtext.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblGuidanceTitle
             // 
             this.lblGuidanceTitle.AutoSize = true;
-            this.lblGuidanceTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGuidanceTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblGuidanceTitle.Location = new System.Drawing.Point(10, 11);
+            this.lblGuidanceTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGuidanceTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblGuidanceTitle.Location = new System.Drawing.Point(0, 0);
             this.lblGuidanceTitle.Name = "lblGuidanceTitle";
-            this.lblGuidanceTitle.Size = new System.Drawing.Size(149, 25);
+            this.lblGuidanceTitle.Size = new System.Drawing.Size(180, 32);
             this.lblGuidanceTitle.TabIndex = 1;
             this.lblGuidanceTitle.Text = "Start Searching";
+            this.lblGuidanceTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelAdvancedSearch
             // 
@@ -276,11 +279,12 @@
             // 
             // btnMembersOnly
             // 
-            this.btnMembersOnly.BackColor = System.Drawing.Color.Transparent;
+            this.btnMembersOnly.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.btnMembersOnly.FlatAppearance.BorderSize = 0;
+            this.btnMembersOnly.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.btnMembersOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMembersOnly.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMembersOnly.ForeColor = System.Drawing.Color.Black;
+            this.btnMembersOnly.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMembersOnly.Location = new System.Drawing.Point(326, 2);
             this.btnMembersOnly.Name = "btnMembersOnly";
             this.btnMembersOnly.Size = new System.Drawing.Size(112, 35);
@@ -291,11 +295,12 @@
             // 
             // btnBooksOnly
             // 
-            this.btnBooksOnly.BackColor = System.Drawing.Color.Transparent;
+            this.btnBooksOnly.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.btnBooksOnly.FlatAppearance.BorderSize = 0;
+            this.btnBooksOnly.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.btnBooksOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBooksOnly.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBooksOnly.ForeColor = System.Drawing.Color.Black;
+            this.btnBooksOnly.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnBooksOnly.Location = new System.Drawing.Point(199, 5);
             this.btnBooksOnly.Name = "btnBooksOnly";
             this.btnBooksOnly.Size = new System.Drawing.Size(112, 32);
@@ -306,10 +311,12 @@
             // 
             // btnAll
             // 
+            this.btnAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnAll.FlatAppearance.BorderSize = 0;
+            this.btnAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAll.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAll.ForeColor = System.Drawing.Color.Black;
+            this.btnAll.ForeColor = System.Drawing.Color.White;
             this.btnAll.Location = new System.Drawing.Point(114, 5);
             this.btnAll.Name = "btnAll";
             this.btnAll.Size = new System.Drawing.Size(79, 32);
@@ -328,7 +335,7 @@
             this.lblSearchIn.Name = "lblSearchIn";
             this.lblSearchIn.Size = new System.Drawing.Size(90, 19);
             this.lblSearchIn.TabIndex = 0;
-            this.lblSearchIn.Text = "🔍 Search in:";
+            this.lblSearchIn.Text = "Search in:";
             // 
             // panelSearchInput
             // 
@@ -341,10 +348,10 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.BackColor = System.Drawing.Color.Maroon;
+            this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
             this.btnSearch.Location = new System.Drawing.Point(968, 8);
             this.btnSearch.Name = "btnSearch";
@@ -387,7 +394,7 @@
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(119, 45);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Search";
+            this.lblTitle.Text = "Advanced Search";
             // 
             // lblAdvancedSearchSubtitle
             // 
@@ -398,7 +405,7 @@
             this.lblAdvancedSearchSubtitle.Name = "lblAdvancedSearchSubtitle";
             this.lblAdvancedSearchSubtitle.Size = new System.Drawing.Size(244, 19);
             this.lblAdvancedSearchSubtitle.TabIndex = 1;
-            this.lblAdvancedSearchSubtitle.Text = "Search for books, members, and more.";
+            this.lblAdvancedSearchSubtitle.Text = "Search for books, members, and more";
             // 
             // StaffSearchForm
             // 

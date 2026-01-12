@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -38,6 +38,7 @@ namespace Project5LMS.Forms.Admin.Fines
         {
             try
             {
+                this.WindowState = FormWindowState.Maximized;
                 EnsureFinesTableExists();
                 SetupDataGridView();
                 
@@ -126,7 +127,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "FineID",
                 HeaderText = "FINE ID",
                 DataPropertyName = "FineID",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colFineID);
@@ -135,7 +136,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "Member",
                 HeaderText = "MEMBER",
                 DataPropertyName = "Member",
-                Width = 200,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colMember);
@@ -144,7 +145,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "BookItem",
                 HeaderText = "BOOK/ITEM",
                 DataPropertyName = "BookItem",
-                Width = 250,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colBook);
@@ -153,7 +154,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "Type",
                 HeaderText = "TYPE",
                 DataPropertyName = "Type",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colType);
@@ -162,7 +163,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "DaysOverdue",
                 HeaderText = "DAYS OVERDUE",
                 DataPropertyName = "DaysOverdue",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colDaysOverdue);
@@ -171,7 +172,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "Amount",
                 HeaderText = "AMOUNT",
                 DataPropertyName = "Amount",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colAmount);
@@ -180,7 +181,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "Paid",
                 HeaderText = "PAID",
                 DataPropertyName = "Paid",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colPaid);
@@ -189,7 +190,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "Status",
                 HeaderText = "STATUS",
                 DataPropertyName = "Status",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colStatus);
@@ -198,7 +199,7 @@ namespace Project5LMS.Forms.Admin.Fines
                 Name = "Actions",
                 HeaderText = "ACTIONS",
                 DataPropertyName = "Actions",
-                Width = 200,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewFines.Columns.Add(colActions);

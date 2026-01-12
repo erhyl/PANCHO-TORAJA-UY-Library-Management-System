@@ -1,4 +1,4 @@
-﻿namespace Project5LMS.Forms.LibraryStaff.Reservations
+namespace Project5LMS.Forms.LibraryStaff.Reservations
 {
     partial class StaffReservationsForm
     {
@@ -106,7 +106,7 @@
             this.btnCreateReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateReservation.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateReservation.ForeColor = System.Drawing.Color.White;
-            this.btnCreateReservation.Location = new System.Drawing.Point(434, 48);
+            this.btnCreateReservation.Location = new System.Drawing.Point(460, 48);
             this.btnCreateReservation.Name = "btnCreateReservation";
             this.btnCreateReservation.Size = new System.Drawing.Size(150, 37);
             this.btnCreateReservation.TabIndex = 5;
@@ -121,9 +121,9 @@
             this.txtBookID.ForeColor = System.Drawing.Color.Gray;
             this.txtBookID.Location = new System.Drawing.Point(240, 58);
             this.txtBookID.Name = "txtBookID";
-            this.txtBookID.Size = new System.Drawing.Size(143, 27);
+            this.txtBookID.Size = new System.Drawing.Size(200, 27);
             this.txtBookID.TabIndex = 4;
-            this.txtBookID.Text = "Enter book ID";
+            this.txtBookID.Text = "Enter book ID or title";
             this.txtBookID.Enter += new System.EventHandler(this.txtBookID_Enter);
             this.txtBookID.Leave += new System.EventHandler(this.txtBookID_Leave);
             // 
@@ -134,9 +134,9 @@
             this.lblBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblBookID.Location = new System.Drawing.Point(237, 36);
             this.lblBookID.Name = "lblBookID";
-            this.lblBookID.Size = new System.Drawing.Size(58, 19);
+            this.lblBookID.Size = new System.Drawing.Size(120, 19);
             this.lblBookID.TabIndex = 3;
-            this.lblBookID.Text = "Book ID";
+            this.lblBookID.Text = "Book ID or Title";
             // 
             // txtMemberID
             // 

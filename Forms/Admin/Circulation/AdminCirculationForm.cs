@@ -42,6 +42,7 @@ namespace Project5LMS.Forms.Admin.Circulation
         }
         private void AdminCirculationForm_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
             this.Shown += AdminCirculationForm_Shown;
         }
         
@@ -167,7 +168,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "TransactionID",
                 HeaderText = "TRANSACTION ID",
                 DataPropertyName = "TransactionID",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colTransactionID);
@@ -176,7 +177,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "Type",
                 HeaderText = "TYPE",
                 DataPropertyName = "Type",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colType);
@@ -185,7 +186,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "Member",
                 HeaderText = "MEMBER",
                 DataPropertyName = "Member",
-                Width = 200,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colMember);
@@ -194,7 +195,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "Book",
                 HeaderText = "BOOK",
                 DataPropertyName = "Book",
-                Width = 250,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colBook);
@@ -203,7 +204,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "BorrowDate",
                 HeaderText = "BORROW DATE",
                 DataPropertyName = "BorrowDate",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colBorrowDate);
@@ -212,7 +213,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "DueDate",
                 HeaderText = "DUE DATE",
                 DataPropertyName = "DueDate",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colDueDate);
@@ -221,7 +222,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "Status",
                 HeaderText = "STATUS",
                 DataPropertyName = "Status",
-                Width = 120,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colStatus);
@@ -230,7 +231,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 Name = "Fine",
                 HeaderText = "FINE",
                 DataPropertyName = "Fine",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 ReadOnly = true
             };
             dataGridViewTransactions.Columns.Add(colFine);
@@ -894,6 +895,11 @@ namespace Project5LMS.Forms.Admin.Circulation
         }
 
         private void panelTableContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dataGridViewTransactions_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -18,17 +18,6 @@ namespace Project5LMS.Forms.Admin.Circulation
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMainContainer = new System.Windows.Forms.Panel();
-            this.panelTableContainer = new System.Windows.Forms.Panel();
-            this.lblRecentTransactions = new System.Windows.Forms.Label();
-            this.dataGridViewTransactions = new System.Windows.Forms.DataGridView();
-            this.colTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBorrowDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelActionTabs = new System.Windows.Forms.Panel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabBorrow = new System.Windows.Forms.TabPage();
@@ -41,8 +30,8 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.tabReturn = new System.Windows.Forms.TabPage();
             this.panelReturnContent = new System.Windows.Forms.Panel();
             this.btnProcessReturn = new System.Windows.Forms.Button();
-            this.lblReturnBookAccession = new System.Windows.Forms.Label();
             this.txtReturnBookAccession = new System.Windows.Forms.TextBox();
+            this.lblReturnBookAccession = new System.Windows.Forms.Label();
             this.tabHistory = new System.Windows.Forms.TabPage();
             this.panelMetrics = new System.Windows.Forms.Panel();
             this.panelMetricTotalTransactions = new System.Windows.Forms.Panel();
@@ -58,11 +47,20 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.lblMetricOverdueValue = new System.Windows.Forms.Label();
             this.lblMetricOverdueTitle = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.panelTableContainer = new System.Windows.Forms.Panel();
+            this.lblRecentTransactions = new System.Windows.Forms.Label();
+            this.dataGridViewTransactions = new System.Windows.Forms.DataGridView();
+            this.colTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBorrowDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelMainContainer.SuspendLayout();
-            this.panelTableContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).BeginInit();
             this.panelActionTabs.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabBorrow.SuspendLayout();
@@ -75,22 +73,402 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.panelMetricCurrentlyBorrowed.SuspendLayout();
             this.panelMetricOverdue.SuspendLayout();
             this.panelHeader.SuspendLayout();
+            this.panelTableContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMainContainer
             // 
             this.panelMainContainer.AutoScroll = true;
             this.panelMainContainer.BackColor = System.Drawing.Color.Transparent;
-            this.panelMainContainer.Controls.Add(this.panelTableContainer);
             this.panelMainContainer.Controls.Add(this.panelActionTabs);
             this.panelMainContainer.Controls.Add(this.panelMetrics);
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
-            this.panelMainContainer.Size = new System.Drawing.Size(1200, 800);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
+            this.panelMainContainer.Size = new System.Drawing.Size(1696, 900);
             this.panelMainContainer.TabIndex = 0;
+            // 
+            // panelActionTabs
+            // 
+            this.panelActionTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelActionTabs.BackColor = System.Drawing.Color.White;
+            this.panelActionTabs.Controls.Add(this.tabControl);
+            this.panelActionTabs.Location = new System.Drawing.Point(32, 257);
+            this.panelActionTabs.Margin = new System.Windows.Forms.Padding(4);
+            this.panelActionTabs.Name = "panelActionTabs";
+            this.panelActionTabs.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelActionTabs.Size = new System.Drawing.Size(1631, 320);
+            this.panelActionTabs.TabIndex = 2;
+            // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabBorrow);
+            this.tabControl.Controls.Add(this.tabReturn);
+            this.tabControl.Controls.Add(this.tabHistory);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControl.Location = new System.Drawing.Point(21, 20);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(1589, 280);
+            this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            // 
+            // tabBorrow
+            // 
+            this.tabBorrow.BackColor = System.Drawing.Color.White;
+            this.tabBorrow.Controls.Add(this.panelBorrowContent);
+            this.tabBorrow.Location = new System.Drawing.Point(4, 32);
+            this.tabBorrow.Margin = new System.Windows.Forms.Padding(4);
+            this.tabBorrow.Name = "tabBorrow";
+            this.tabBorrow.Padding = new System.Windows.Forms.Padding(4);
+            this.tabBorrow.Size = new System.Drawing.Size(1583, 245);
+            this.tabBorrow.TabIndex = 0;
+            this.tabBorrow.Text = "Borrow Book";
+            // 
+            // panelBorrowContent
+            // 
+            this.panelBorrowContent.Controls.Add(this.btnProcessBorrowing);
+            this.panelBorrowContent.Controls.Add(this.lblBorrowBookAccession);
+            this.panelBorrowContent.Controls.Add(this.txtBorrowBookAccession);
+            this.panelBorrowContent.Controls.Add(this.lblBorrowMemberID);
+            this.panelBorrowContent.Controls.Add(this.txtBorrowMemberID);
+            this.panelBorrowContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelBorrowContent.Location = new System.Drawing.Point(4, 4);
+            this.panelBorrowContent.Margin = new System.Windows.Forms.Padding(4);
+            this.panelBorrowContent.Name = "panelBorrowContent";
+            this.panelBorrowContent.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
+            this.panelBorrowContent.Size = new System.Drawing.Size(1575, 237);
+            this.panelBorrowContent.TabIndex = 0;
+            // 
+            // btnProcessBorrowing
+            // 
+            this.btnProcessBorrowing.BackColor = System.Drawing.Color.Maroon;
+            this.btnProcessBorrowing.FlatAppearance.BorderSize = 0;
+            this.btnProcessBorrowing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProcessBorrowing.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProcessBorrowing.ForeColor = System.Drawing.Color.White;
+            this.btnProcessBorrowing.Location = new System.Drawing.Point(11, 170);
+            this.btnProcessBorrowing.Margin = new System.Windows.Forms.Padding(4);
+            this.btnProcessBorrowing.Name = "btnProcessBorrowing";
+            this.btnProcessBorrowing.Size = new System.Drawing.Size(1491, 55);
+            this.btnProcessBorrowing.TabIndex = 4;
+            this.btnProcessBorrowing.Text = "Process Borrowing";
+            this.btnProcessBorrowing.UseVisualStyleBackColor = false;
+            this.btnProcessBorrowing.Click += new System.EventHandler(this.btnProcessBorrowing_Click);
+            // 
+            // lblBorrowBookAccession
+            // 
+            this.lblBorrowBookAccession.AutoSize = true;
+            this.lblBorrowBookAccession.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBorrowBookAccession.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBorrowBookAccession.Location = new System.Drawing.Point(8, 89);
+            this.lblBorrowBookAccession.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowBookAccession.Name = "lblBorrowBookAccession";
+            this.lblBorrowBookAccession.Size = new System.Drawing.Size(196, 23);
+            this.lblBorrowBookAccession.TabIndex = 3;
+            this.lblBorrowBookAccession.Text = "Book Accession Number";
+            this.lblBorrowBookAccession.Click += new System.EventHandler(this.lblBorrowBookAccession_Click);
+            // 
+            // txtBorrowBookAccession
+            // 
+            this.txtBorrowBookAccession.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBorrowBookAccession.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBorrowBookAccession.ForeColor = System.Drawing.Color.Gray;
+            this.txtBorrowBookAccession.Location = new System.Drawing.Point(12, 116);
+            this.txtBorrowBookAccession.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBorrowBookAccession.Name = "txtBorrowBookAccession";
+            this.txtBorrowBookAccession.Size = new System.Drawing.Size(1490, 30);
+            this.txtBorrowBookAccession.TabIndex = 2;
+            this.txtBorrowBookAccession.Text = "Scan or enter book accession number...";
+            this.txtBorrowBookAccession.Enter += new System.EventHandler(this.txtBorrowBookAccession_Enter);
+            this.txtBorrowBookAccession.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBorrowBookAccession_KeyDown);
+            this.txtBorrowBookAccession.Leave += new System.EventHandler(this.txtBorrowBookAccession_Leave);
+            // 
+            // lblBorrowMemberID
+            // 
+            this.lblBorrowMemberID.AutoSize = true;
+            this.lblBorrowMemberID.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBorrowMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBorrowMemberID.Location = new System.Drawing.Point(7, 11);
+            this.lblBorrowMemberID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowMemberID.Name = "lblBorrowMemberID";
+            this.lblBorrowMemberID.Size = new System.Drawing.Size(97, 23);
+            this.lblBorrowMemberID.TabIndex = 1;
+            this.lblBorrowMemberID.Text = "Member ID";
+            // 
+            // txtBorrowMemberID
+            // 
+            this.txtBorrowMemberID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBorrowMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBorrowMemberID.ForeColor = System.Drawing.Color.Gray;
+            this.txtBorrowMemberID.Location = new System.Drawing.Point(12, 38);
+            this.txtBorrowMemberID.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBorrowMemberID.Name = "txtBorrowMemberID";
+            this.txtBorrowMemberID.Size = new System.Drawing.Size(1490, 30);
+            this.txtBorrowMemberID.TabIndex = 0;
+            this.txtBorrowMemberID.Text = "Scan or enter member ID...";
+            this.txtBorrowMemberID.TextChanged += new System.EventHandler(this.txtBorrowMemberID_TextChanged);
+            this.txtBorrowMemberID.Enter += new System.EventHandler(this.txtBorrowMemberID_Enter);
+            this.txtBorrowMemberID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBorrowMemberID_KeyDown);
+            this.txtBorrowMemberID.Leave += new System.EventHandler(this.txtBorrowMemberID_Leave);
+            // 
+            // tabReturn
+            // 
+            this.tabReturn.BackColor = System.Drawing.Color.White;
+            this.tabReturn.Controls.Add(this.panelReturnContent);
+            this.tabReturn.Location = new System.Drawing.Point(4, 32);
+            this.tabReturn.Margin = new System.Windows.Forms.Padding(4);
+            this.tabReturn.Name = "tabReturn";
+            this.tabReturn.Padding = new System.Windows.Forms.Padding(4);
+            this.tabReturn.Size = new System.Drawing.Size(1583, 245);
+            this.tabReturn.TabIndex = 1;
+            this.tabReturn.Text = "Return Book";
+            // 
+            // panelReturnContent
+            // 
+            this.panelReturnContent.Controls.Add(this.btnProcessReturn);
+            this.panelReturnContent.Controls.Add(this.txtReturnBookAccession);
+            this.panelReturnContent.Controls.Add(this.lblReturnBookAccession);
+            this.panelReturnContent.Location = new System.Drawing.Point(5, 4);
+            this.panelReturnContent.Margin = new System.Windows.Forms.Padding(4);
+            this.panelReturnContent.Name = "panelReturnContent";
+            this.panelReturnContent.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
+            this.panelReturnContent.Size = new System.Drawing.Size(1520, 236);
+            this.panelReturnContent.TabIndex = 1;
+            // 
+            // btnProcessReturn
+            // 
+            this.btnProcessReturn.BackColor = System.Drawing.Color.Maroon;
+            this.btnProcessReturn.FlatAppearance.BorderSize = 0;
+            this.btnProcessReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProcessReturn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProcessReturn.ForeColor = System.Drawing.Color.White;
+            this.btnProcessReturn.Location = new System.Drawing.Point(11, 127);
+            this.btnProcessReturn.Margin = new System.Windows.Forms.Padding(4);
+            this.btnProcessReturn.Name = "btnProcessReturn";
+            this.btnProcessReturn.Size = new System.Drawing.Size(1491, 55);
+            this.btnProcessReturn.TabIndex = 2;
+            this.btnProcessReturn.Text = "Process Return";
+            this.btnProcessReturn.UseVisualStyleBackColor = false;
+            this.btnProcessReturn.Click += new System.EventHandler(this.btnProcessReturn_Click);
+            // 
+            // txtReturnBookAccession
+            // 
+            this.txtReturnBookAccession.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtReturnBookAccession.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtReturnBookAccession.ForeColor = System.Drawing.Color.Gray;
+            this.txtReturnBookAccession.Location = new System.Drawing.Point(11, 65);
+            this.txtReturnBookAccession.Margin = new System.Windows.Forms.Padding(4);
+            this.txtReturnBookAccession.Name = "txtReturnBookAccession";
+            this.txtReturnBookAccession.Size = new System.Drawing.Size(1490, 30);
+            this.txtReturnBookAccession.TabIndex = 0;
+            this.txtReturnBookAccession.Text = "Scan or enter book accession number...";
+            this.txtReturnBookAccession.Enter += new System.EventHandler(this.txtReturnBookAccession_Enter);
+            this.txtReturnBookAccession.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtReturnBookAccession_KeyDown);
+            this.txtReturnBookAccession.Leave += new System.EventHandler(this.txtReturnBookAccession_Leave);
+            // 
+            // lblReturnBookAccession
+            // 
+            this.lblReturnBookAccession.AutoSize = true;
+            this.lblReturnBookAccession.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblReturnBookAccession.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblReturnBookAccession.Location = new System.Drawing.Point(8, 38);
+            this.lblReturnBookAccession.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReturnBookAccession.Name = "lblReturnBookAccession";
+            this.lblReturnBookAccession.Size = new System.Drawing.Size(196, 23);
+            this.lblReturnBookAccession.TabIndex = 1;
+            this.lblReturnBookAccession.Text = "Book Accession Number";
+            // 
+            // tabHistory
+            // 
+            this.tabHistory.BackColor = System.Drawing.Color.White;
+            this.tabHistory.Location = new System.Drawing.Point(4, 32);
+            this.tabHistory.Margin = new System.Windows.Forms.Padding(4);
+            this.tabHistory.Name = "tabHistory";
+            this.tabHistory.Padding = new System.Windows.Forms.Padding(4);
+            this.tabHistory.Size = new System.Drawing.Size(1583, 245);
+            this.tabHistory.TabIndex = 2;
+            this.tabHistory.Text = "Transaction History";
+            // 
+            // panelMetrics
+            // 
+            this.panelMetrics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelMetrics.BackColor = System.Drawing.Color.White;
+            this.panelMetrics.Controls.Add(this.panelMetricTotalTransactions);
+            this.panelMetrics.Controls.Add(this.panelMetricTodayActivity);
+            this.panelMetrics.Controls.Add(this.panelMetricCurrentlyBorrowed);
+            this.panelMetrics.Controls.Add(this.panelMetricOverdue);
+            this.panelMetrics.Location = new System.Drawing.Point(32, 130);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMetrics.Name = "panelMetrics";
+            this.panelMetrics.Size = new System.Drawing.Size(1631, 123);
+            this.panelMetrics.TabIndex = 1;
+            // 
+            // panelMetricTotalTransactions
+            // 
+            this.panelMetricTotalTransactions.BackColor = System.Drawing.Color.White;
+            this.panelMetricTotalTransactions.Controls.Add(this.lblMetricTotalTransactionsValue);
+            this.panelMetricTotalTransactions.Controls.Add(this.lblMetricTotalTransactionsTitle);
+            this.panelMetricTotalTransactions.Location = new System.Drawing.Point(1241, 0);
+            this.panelMetricTotalTransactions.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricTotalTransactions.Name = "panelMetricTotalTransactions";
+            this.panelMetricTotalTransactions.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricTotalTransactions.Size = new System.Drawing.Size(293, 123);
+            this.panelMetricTotalTransactions.TabIndex = 3;
+            // 
+            // lblMetricTotalTransactionsValue
+            // 
+            this.lblMetricTotalTransactionsValue.AutoSize = true;
+            this.lblMetricTotalTransactionsValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTotalTransactionsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricTotalTransactionsValue.Location = new System.Drawing.Point(21, 62);
+            this.lblMetricTotalTransactionsValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalTransactionsValue.Name = "lblMetricTotalTransactionsValue";
+            this.lblMetricTotalTransactionsValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricTotalTransactionsValue.TabIndex = 2;
+            this.lblMetricTotalTransactionsValue.Text = "0";
+            // 
+            // lblMetricTotalTransactionsTitle
+            // 
+            this.lblMetricTotalTransactionsTitle.AutoSize = true;
+            this.lblMetricTotalTransactionsTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTotalTransactionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricTotalTransactionsTitle.Location = new System.Drawing.Point(21, 20);
+            this.lblMetricTotalTransactionsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalTransactionsTitle.Name = "lblMetricTotalTransactionsTitle";
+            this.lblMetricTotalTransactionsTitle.Size = new System.Drawing.Size(173, 23);
+            this.lblMetricTotalTransactionsTitle.TabIndex = 1;
+            this.lblMetricTotalTransactionsTitle.Text = "📋 Total Transactions";
+            // 
+            // panelMetricTodayActivity
+            // 
+            this.panelMetricTodayActivity.BackColor = System.Drawing.Color.White;
+            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityValue);
+            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityTitle);
+            this.panelMetricTodayActivity.Location = new System.Drawing.Point(0, 0);
+            this.panelMetricTodayActivity.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricTodayActivity.Name = "panelMetricTodayActivity";
+            this.panelMetricTodayActivity.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricTodayActivity.Size = new System.Drawing.Size(293, 123);
+            this.panelMetricTodayActivity.TabIndex = 0;
+            // 
+            // lblMetricTodayActivityValue
+            // 
+            this.lblMetricTodayActivityValue.AutoSize = true;
+            this.lblMetricTodayActivityValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTodayActivityValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricTodayActivityValue.Location = new System.Drawing.Point(21, 62);
+            this.lblMetricTodayActivityValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTodayActivityValue.Name = "lblMetricTodayActivityValue";
+            this.lblMetricTodayActivityValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricTodayActivityValue.TabIndex = 2;
+            this.lblMetricTodayActivityValue.Text = "0";
+            // 
+            // lblMetricTodayActivityTitle
+            // 
+            this.lblMetricTodayActivityTitle.AutoSize = true;
+            this.lblMetricTodayActivityTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTodayActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricTodayActivityTitle.Location = new System.Drawing.Point(21, 20);
+            this.lblMetricTodayActivityTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTodayActivityTitle.Name = "lblMetricTodayActivityTitle";
+            this.lblMetricTodayActivityTitle.Size = new System.Drawing.Size(153, 23);
+            this.lblMetricTodayActivityTitle.TabIndex = 1;
+            this.lblMetricTodayActivityTitle.Text = "📅 Today\'s Activity";
+            // 
+            // panelMetricCurrentlyBorrowed
+            // 
+            this.panelMetricCurrentlyBorrowed.BackColor = System.Drawing.Color.White;
+            this.panelMetricCurrentlyBorrowed.Controls.Add(this.lblMetricCurrentlyBorrowedValue);
+            this.panelMetricCurrentlyBorrowed.Controls.Add(this.lblMetricCurrentlyBorrowedTitle);
+            this.panelMetricCurrentlyBorrowed.Location = new System.Drawing.Point(415, 0);
+            this.panelMetricCurrentlyBorrowed.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricCurrentlyBorrowed.Name = "panelMetricCurrentlyBorrowed";
+            this.panelMetricCurrentlyBorrowed.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricCurrentlyBorrowed.Size = new System.Drawing.Size(293, 123);
+            this.panelMetricCurrentlyBorrowed.TabIndex = 1;
+            // 
+            // lblMetricCurrentlyBorrowedValue
+            // 
+            this.lblMetricCurrentlyBorrowedValue.AutoSize = true;
+            this.lblMetricCurrentlyBorrowedValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricCurrentlyBorrowedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricCurrentlyBorrowedValue.Location = new System.Drawing.Point(21, 62);
+            this.lblMetricCurrentlyBorrowedValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricCurrentlyBorrowedValue.Name = "lblMetricCurrentlyBorrowedValue";
+            this.lblMetricCurrentlyBorrowedValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricCurrentlyBorrowedValue.TabIndex = 2;
+            this.lblMetricCurrentlyBorrowedValue.Text = "0";
+            // 
+            // lblMetricCurrentlyBorrowedTitle
+            // 
+            this.lblMetricCurrentlyBorrowedTitle.AutoSize = true;
+            this.lblMetricCurrentlyBorrowedTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricCurrentlyBorrowedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricCurrentlyBorrowedTitle.Location = new System.Drawing.Point(21, 20);
+            this.lblMetricCurrentlyBorrowedTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricCurrentlyBorrowedTitle.Name = "lblMetricCurrentlyBorrowedTitle";
+            this.lblMetricCurrentlyBorrowedTitle.Size = new System.Drawing.Size(186, 23);
+            this.lblMetricCurrentlyBorrowedTitle.TabIndex = 1;
+            this.lblMetricCurrentlyBorrowedTitle.Text = "📖 Currently Borrowed";
+            // 
+            // panelMetricOverdue
+            // 
+            this.panelMetricOverdue.BackColor = System.Drawing.Color.White;
+            this.panelMetricOverdue.Controls.Add(this.lblMetricOverdueValue);
+            this.panelMetricOverdue.Controls.Add(this.lblMetricOverdueTitle);
+            this.panelMetricOverdue.Location = new System.Drawing.Point(829, 0);
+            this.panelMetricOverdue.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricOverdue.Name = "panelMetricOverdue";
+            this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricOverdue.Size = new System.Drawing.Size(293, 123);
+            this.panelMetricOverdue.TabIndex = 2;
+            // 
+            // lblMetricOverdueValue
+            // 
+            this.lblMetricOverdueValue.AutoSize = true;
+            this.lblMetricOverdueValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricOverdueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricOverdueValue.Location = new System.Drawing.Point(21, 62);
+            this.lblMetricOverdueValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricOverdueValue.Name = "lblMetricOverdueValue";
+            this.lblMetricOverdueValue.Size = new System.Drawing.Size(46, 54);
+            this.lblMetricOverdueValue.TabIndex = 2;
+            this.lblMetricOverdueValue.Text = "0";
+            // 
+            // lblMetricOverdueTitle
+            // 
+            this.lblMetricOverdueTitle.AutoSize = true;
+            this.lblMetricOverdueTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricOverdueTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricOverdueTitle.Location = new System.Drawing.Point(21, 20);
+            this.lblMetricOverdueTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricOverdueTitle.Name = "lblMetricOverdueTitle";
+            this.lblMetricOverdueTitle.Size = new System.Drawing.Size(153, 23);
+            this.lblMetricOverdueTitle.TabIndex = 1;
+            this.lblMetricOverdueTitle.Text = "⚠️ Overdue Books";
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelHeader.BackColor = System.Drawing.Color.White;
+            this.panelHeader.Controls.Add(this.panelTableContainer);
+            this.panelHeader.Controls.Add(this.lblSubtitle);
+            this.panelHeader.Controls.Add(this.lblTitle);
+            this.panelHeader.Location = new System.Drawing.Point(32, 30);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1612, 994);
+            this.panelHeader.TabIndex = 0;
             // 
             // panelTableContainer
             // 
@@ -101,10 +479,11 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTableContainer.Controls.Add(this.lblRecentTransactions);
             this.panelTableContainer.Controls.Add(this.dataGridViewTransactions);
-            this.panelTableContainer.Location = new System.Drawing.Point(24, 472);
+            this.panelTableContainer.Location = new System.Drawing.Point(21, 560);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelTableContainer.Name = "panelTableContainer";
-            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(16);
-            this.panelTableContainer.Size = new System.Drawing.Size(1016, 355);
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelTableContainer.Size = new System.Drawing.Size(1608, 451);
             this.panelTableContainer.TabIndex = 3;
             this.panelTableContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTableContainer_Paint);
             // 
@@ -113,11 +492,13 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.lblRecentTransactions.AutoSize = true;
             this.lblRecentTransactions.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentTransactions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRecentTransactions.Location = new System.Drawing.Point(16, -1);
+            this.lblRecentTransactions.Location = new System.Drawing.Point(21, 0);
+            this.lblRecentTransactions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRecentTransactions.Name = "lblRecentTransactions";
-            this.lblRecentTransactions.Size = new System.Drawing.Size(130, 17);
+            this.lblRecentTransactions.Size = new System.Drawing.Size(167, 23);
             this.lblRecentTransactions.TabIndex = 1;
             this.lblRecentTransactions.Text = "Recent Transactions";
+            this.lblRecentTransactions.BringToFront();
             // 
             // dataGridViewTransactions
             // 
@@ -129,7 +510,7 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.dataGridViewTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -147,89 +528,85 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.colFine});
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTransactions.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTransactions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewTransactions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewTransactions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dataGridViewTransactions.Location = new System.Drawing.Point(16, 16);
-            this.dataGridViewTransactions.Margin = new System.Windows.Forms.Padding(16, 0, 16, 16);
+            this.dataGridViewTransactions.Location = new System.Drawing.Point(21, 30);
+            this.dataGridViewTransactions.Margin = new System.Windows.Forms.Padding(21, 0, 21, 20);
             this.dataGridViewTransactions.MultiSelect = false;
             this.dataGridViewTransactions.Name = "dataGridViewTransactions";
             this.dataGridViewTransactions.RowHeadersVisible = false;
             this.dataGridViewTransactions.RowHeadersWidth = 51;
             this.dataGridViewTransactions.RowTemplate.Height = 60;
             this.dataGridViewTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewTransactions.Size = new System.Drawing.Size(982, 321);
+            this.dataGridViewTransactions.Size = new System.Drawing.Size(1564, 399);
             this.dataGridViewTransactions.TabIndex = 0;
+            this.dataGridViewTransactions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTransactions_CellContentClick_2);
             // 
             // colTransactionID
             // 
-            this.colTransactionID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colTransactionID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTransactionID.DataPropertyName = "TransactionID";
             this.colTransactionID.HeaderText = "TRANSACTION ID";
             this.colTransactionID.MinimumWidth = 6;
             this.colTransactionID.Name = "colTransactionID";
             this.colTransactionID.ReadOnly = true;
-            this.colTransactionID.Width = 120;
             // 
             // colType
             // 
-            this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colType.DataPropertyName = "Type";
             this.colType.HeaderText = "TYPE";
             this.colType.MinimumWidth = 6;
             this.colType.Name = "colType";
-            this.colType.Width = 120;
             // 
             // colMember
             // 
-            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colMember.DataPropertyName = "Member";
             this.colMember.HeaderText = "MEMBER";
             this.colMember.MinimumWidth = 6;
             this.colMember.Name = "colMember";
-            this.colMember.Width = 200;
             // 
             // colBook
             // 
-            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colBook.DataPropertyName = "Book";
             this.colBook.HeaderText = "BOOK";
             this.colBook.MinimumWidth = 6;
             this.colBook.Name = "colBook";
-            this.colBook.Width = 250;
             // 
             // colBorrowDate
             // 
-            this.colBorrowDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBorrowDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colBorrowDate.DataPropertyName = "BorrowDate";
             this.colBorrowDate.HeaderText = "BORROW DATE";
             this.colBorrowDate.MinimumWidth = 6;
             this.colBorrowDate.Name = "colBorrowDate";
-            this.colBorrowDate.Width = 120;
             // 
             // colDueDate
             // 
-            this.colDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colDueDate.DataPropertyName = "DueDate";
             this.colDueDate.HeaderText = "DUE DATE";
             this.colDueDate.MinimumWidth = 6;
             this.colDueDate.Name = "colDueDate";
-            this.colDueDate.Width = 120;
             // 
             // colStatus
             // 
-            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "STATUS";
             this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
-            this.colStatus.Width = 120;
             // 
             // colFine
             // 
@@ -240,362 +617,15 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.colFine.MinimumWidth = 6;
             this.colFine.Name = "colFine";
             // 
-            // panelActionTabs
-            // 
-            this.panelActionTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelActionTabs.BackColor = System.Drawing.Color.White;
-            this.panelActionTabs.Controls.Add(this.tabControl);
-            this.panelActionTabs.Location = new System.Drawing.Point(24, 209);
-            this.panelActionTabs.Name = "panelActionTabs";
-            this.panelActionTabs.Padding = new System.Windows.Forms.Padding(16);
-            this.panelActionTabs.Size = new System.Drawing.Size(1005, 260);
-            this.panelActionTabs.TabIndex = 2;
-            // 
-            // tabControl
-            // 
-            this.tabControl.Controls.Add(this.tabBorrow);
-            this.tabControl.Controls.Add(this.tabReturn);
-            this.tabControl.Controls.Add(this.tabHistory);
-            this.tabControl.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl.Location = new System.Drawing.Point(16, 16);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1157, 228);
-            this.tabControl.TabIndex = 0;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
-            // 
-            // tabBorrow
-            // 
-            this.tabBorrow.BackColor = System.Drawing.Color.White;
-            this.tabBorrow.Controls.Add(this.panelBorrowContent);
-            this.tabBorrow.Location = new System.Drawing.Point(4, 26);
-            this.tabBorrow.Name = "tabBorrow";
-            this.tabBorrow.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBorrow.Size = new System.Drawing.Size(1149, 198);
-            this.tabBorrow.TabIndex = 0;
-            this.tabBorrow.Text = "Borrow Book";
-            // 
-            // panelBorrowContent
-            // 
-            this.panelBorrowContent.Controls.Add(this.btnProcessBorrowing);
-            this.panelBorrowContent.Controls.Add(this.lblBorrowBookAccession);
-            this.panelBorrowContent.Controls.Add(this.txtBorrowBookAccession);
-            this.panelBorrowContent.Controls.Add(this.lblBorrowMemberID);
-            this.panelBorrowContent.Controls.Add(this.txtBorrowMemberID);
-            this.panelBorrowContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBorrowContent.Location = new System.Drawing.Point(3, 3);
-            this.panelBorrowContent.Name = "panelBorrowContent";
-            this.panelBorrowContent.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
-            this.panelBorrowContent.Size = new System.Drawing.Size(1143, 192);
-            this.panelBorrowContent.TabIndex = 0;
-            // 
-            // btnProcessBorrowing
-            // 
-            this.btnProcessBorrowing.BackColor = System.Drawing.Color.Maroon;
-            this.btnProcessBorrowing.FlatAppearance.BorderSize = 0;
-            this.btnProcessBorrowing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProcessBorrowing.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProcessBorrowing.ForeColor = System.Drawing.Color.White;
-            this.btnProcessBorrowing.Location = new System.Drawing.Point(8, 138);
-            this.btnProcessBorrowing.Name = "btnProcessBorrowing";
-            this.btnProcessBorrowing.Size = new System.Drawing.Size(1118, 45);
-            this.btnProcessBorrowing.TabIndex = 4;
-            this.btnProcessBorrowing.Text = "Process Borrowing";
-            this.btnProcessBorrowing.UseVisualStyleBackColor = false;
-            this.btnProcessBorrowing.Click += new System.EventHandler(this.btnProcessBorrowing_Click);
-            // 
-            // lblBorrowBookAccession
-            // 
-            this.lblBorrowBookAccession.AutoSize = true;
-            this.lblBorrowBookAccession.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBorrowBookAccession.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowBookAccession.Location = new System.Drawing.Point(6, 72);
-            this.lblBorrowBookAccession.Name = "lblBorrowBookAccession";
-            this.lblBorrowBookAccession.Size = new System.Drawing.Size(161, 19);
-            this.lblBorrowBookAccession.TabIndex = 3;
-            this.lblBorrowBookAccession.Text = "Book Accession Number";
-            this.lblBorrowBookAccession.Click += new System.EventHandler(this.lblBorrowBookAccession_Click);
-            // 
-            // txtBorrowBookAccession
-            // 
-            this.txtBorrowBookAccession.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBorrowBookAccession.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBorrowBookAccession.ForeColor = System.Drawing.Color.Gray;
-            this.txtBorrowBookAccession.Location = new System.Drawing.Point(9, 94);
-            this.txtBorrowBookAccession.Name = "txtBorrowBookAccession";
-            this.txtBorrowBookAccession.Size = new System.Drawing.Size(1118, 25);
-            this.txtBorrowBookAccession.TabIndex = 2;
-            this.txtBorrowBookAccession.Text = "Scan or enter book accession number...";
-            this.txtBorrowBookAccession.Enter += new System.EventHandler(this.txtBorrowBookAccession_Enter);
-            this.txtBorrowBookAccession.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBorrowBookAccession_KeyDown);
-            this.txtBorrowBookAccession.Leave += new System.EventHandler(this.txtBorrowBookAccession_Leave);
-            // 
-            // lblBorrowMemberID
-            // 
-            this.lblBorrowMemberID.AutoSize = true;
-            this.lblBorrowMemberID.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBorrowMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowMemberID.Location = new System.Drawing.Point(5, 9);
-            this.lblBorrowMemberID.Name = "lblBorrowMemberID";
-            this.lblBorrowMemberID.Size = new System.Drawing.Size(79, 19);
-            this.lblBorrowMemberID.TabIndex = 1;
-            this.lblBorrowMemberID.Text = "Member ID";
-            // 
-            // txtBorrowMemberID
-            // 
-            this.txtBorrowMemberID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBorrowMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBorrowMemberID.ForeColor = System.Drawing.Color.Gray;
-            this.txtBorrowMemberID.Location = new System.Drawing.Point(9, 31);
-            this.txtBorrowMemberID.Name = "txtBorrowMemberID";
-            this.txtBorrowMemberID.Size = new System.Drawing.Size(1118, 25);
-            this.txtBorrowMemberID.TabIndex = 0;
-            this.txtBorrowMemberID.Text = "Scan or enter member ID...";
-            this.txtBorrowMemberID.TextChanged += new System.EventHandler(this.txtBorrowMemberID_TextChanged);
-            this.txtBorrowMemberID.Enter += new System.EventHandler(this.txtBorrowMemberID_Enter);
-            this.txtBorrowMemberID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBorrowMemberID_KeyDown);
-            this.txtBorrowMemberID.Leave += new System.EventHandler(this.txtBorrowMemberID_Leave);
-            // 
-            // tabReturn
-            // 
-            this.tabReturn.BackColor = System.Drawing.Color.White;
-            this.tabReturn.Controls.Add(this.panelReturnContent);
-            this.tabReturn.Location = new System.Drawing.Point(4, 26);
-            this.tabReturn.Name = "tabReturn";
-            this.tabReturn.Padding = new System.Windows.Forms.Padding(3);
-            this.tabReturn.Size = new System.Drawing.Size(1149, 198);
-            this.tabReturn.TabIndex = 1;
-            this.tabReturn.Text = "Return Book";
-            // 
-            // panelReturnContent
-            // 
-            this.panelReturnContent.Controls.Add(this.btnProcessReturn);
-            this.panelReturnContent.Controls.Add(this.txtReturnBookAccession);
-            this.panelReturnContent.Controls.Add(this.lblReturnBookAccession);
-            this.panelReturnContent.Location = new System.Drawing.Point(4, 3);
-            this.panelReturnContent.Name = "panelReturnContent";
-            this.panelReturnContent.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
-            this.panelReturnContent.Size = new System.Drawing.Size(1140, 192);
-            this.panelReturnContent.TabIndex = 1;
-            // 
-            // btnProcessReturn
-            // 
-            this.btnProcessReturn.BackColor = System.Drawing.Color.Maroon;
-            this.btnProcessReturn.FlatAppearance.BorderSize = 0;
-            this.btnProcessReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProcessReturn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProcessReturn.ForeColor = System.Drawing.Color.White;
-            this.btnProcessReturn.Location = new System.Drawing.Point(8, 103);
-            this.btnProcessReturn.Name = "btnProcessReturn";
-            this.btnProcessReturn.Size = new System.Drawing.Size(1118, 45);
-            this.btnProcessReturn.TabIndex = 2;
-            this.btnProcessReturn.Text = "Process Return";
-            this.btnProcessReturn.UseVisualStyleBackColor = false;
-            this.btnProcessReturn.Click += new System.EventHandler(this.btnProcessReturn_Click);
-            // 
-            // lblReturnBookAccession
-            // 
-            this.lblReturnBookAccession.AutoSize = true;
-            this.lblReturnBookAccession.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReturnBookAccession.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReturnBookAccession.Location = new System.Drawing.Point(6, 31);
-            this.lblReturnBookAccession.Name = "lblReturnBookAccession";
-            this.lblReturnBookAccession.Size = new System.Drawing.Size(161, 19);
-            this.lblReturnBookAccession.TabIndex = 1;
-            this.lblReturnBookAccession.Text = "Book Accession Number";
-            // 
-            // txtReturnBookAccession
-            // 
-            this.txtReturnBookAccession.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtReturnBookAccession.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtReturnBookAccession.ForeColor = System.Drawing.Color.Gray;
-            this.txtReturnBookAccession.Location = new System.Drawing.Point(8, 53);
-            this.txtReturnBookAccession.Name = "txtReturnBookAccession";
-            this.txtReturnBookAccession.Size = new System.Drawing.Size(1118, 25);
-            this.txtReturnBookAccession.TabIndex = 0;
-            this.txtReturnBookAccession.Text = "Scan or enter book accession number...";
-            this.txtReturnBookAccession.Enter += new System.EventHandler(this.txtReturnBookAccession_Enter);
-            this.txtReturnBookAccession.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtReturnBookAccession_KeyDown);
-            this.txtReturnBookAccession.Leave += new System.EventHandler(this.txtReturnBookAccession_Leave);
-            // 
-            // tabHistory
-            // 
-            this.tabHistory.BackColor = System.Drawing.Color.White;
-            this.tabHistory.Location = new System.Drawing.Point(4, 26);
-            this.tabHistory.Name = "tabHistory";
-            this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHistory.Size = new System.Drawing.Size(1093, 198);
-            this.tabHistory.TabIndex = 2;
-            this.tabHistory.Text = "Transaction History";
-            // 
-            // panelMetrics
-            // 
-            this.panelMetrics.BackColor = System.Drawing.Color.White;
-            this.panelMetrics.Controls.Add(this.panelMetricTotalTransactions);
-            this.panelMetrics.Controls.Add(this.panelMetricTodayActivity);
-            this.panelMetrics.Controls.Add(this.panelMetricCurrentlyBorrowed);
-            this.panelMetrics.Controls.Add(this.panelMetricOverdue);
-            this.panelMetrics.Location = new System.Drawing.Point(24, 106);
-            this.panelMetrics.Name = "panelMetrics";
-            this.panelMetrics.Size = new System.Drawing.Size(1152, 100);
-            this.panelMetrics.TabIndex = 1;
-            // 
-            // panelMetricTotalTransactions
-            // 
-            this.panelMetricTotalTransactions.BackColor = System.Drawing.Color.White;
-            this.panelMetricTotalTransactions.Controls.Add(this.lblMetricTotalTransactionsValue);
-            this.panelMetricTotalTransactions.Controls.Add(this.lblMetricTotalTransactionsTitle);
-            this.panelMetricTotalTransactions.Location = new System.Drawing.Point(931, 0);
-            this.panelMetricTotalTransactions.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.panelMetricTotalTransactions.Name = "panelMetricTotalTransactions";
-            this.panelMetricTotalTransactions.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricTotalTransactions.Size = new System.Drawing.Size(220, 100);
-            this.panelMetricTotalTransactions.TabIndex = 3;
-            // 
-            // lblMetricTotalTransactionsValue
-            // 
-            this.lblMetricTotalTransactionsValue.AutoSize = true;
-            this.lblMetricTotalTransactionsValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricTotalTransactionsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricTotalTransactionsValue.Location = new System.Drawing.Point(16, 50);
-            this.lblMetricTotalTransactionsValue.Name = "lblMetricTotalTransactionsValue";
-            this.lblMetricTotalTransactionsValue.Size = new System.Drawing.Size(38, 45);
-            this.lblMetricTotalTransactionsValue.TabIndex = 2;
-            this.lblMetricTotalTransactionsValue.Text = "0";
-            // 
-            // lblMetricTotalTransactionsTitle
-            // 
-            this.lblMetricTotalTransactionsTitle.AutoSize = true;
-            this.lblMetricTotalTransactionsTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricTotalTransactionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTotalTransactionsTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblMetricTotalTransactionsTitle.Name = "lblMetricTotalTransactionsTitle";
-            this.lblMetricTotalTransactionsTitle.Size = new System.Drawing.Size(140, 19);
-            this.lblMetricTotalTransactionsTitle.TabIndex = 1;
-            this.lblMetricTotalTransactionsTitle.Text = "📋 Total Transactions";
-            // 
-            // panelMetricTodayActivity
-            // 
-            this.panelMetricTodayActivity.BackColor = System.Drawing.Color.White;
-            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityValue);
-            this.panelMetricTodayActivity.Controls.Add(this.lblMetricTodayActivityTitle);
-            this.panelMetricTodayActivity.Location = new System.Drawing.Point(0, 0);
-            this.panelMetricTodayActivity.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.panelMetricTodayActivity.Name = "panelMetricTodayActivity";
-            this.panelMetricTodayActivity.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricTodayActivity.Size = new System.Drawing.Size(220, 100);
-            this.panelMetricTodayActivity.TabIndex = 0;
-            // 
-            // lblMetricTodayActivityValue
-            // 
-            this.lblMetricTodayActivityValue.AutoSize = true;
-            this.lblMetricTodayActivityValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricTodayActivityValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricTodayActivityValue.Location = new System.Drawing.Point(16, 50);
-            this.lblMetricTodayActivityValue.Name = "lblMetricTodayActivityValue";
-            this.lblMetricTodayActivityValue.Size = new System.Drawing.Size(38, 45);
-            this.lblMetricTodayActivityValue.TabIndex = 2;
-            this.lblMetricTodayActivityValue.Text = "0";
-            // 
-            // lblMetricTodayActivityTitle
-            // 
-            this.lblMetricTodayActivityTitle.AutoSize = true;
-            this.lblMetricTodayActivityTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricTodayActivityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricTodayActivityTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblMetricTodayActivityTitle.Name = "lblMetricTodayActivityTitle";
-            this.lblMetricTodayActivityTitle.Size = new System.Drawing.Size(126, 19);
-            this.lblMetricTodayActivityTitle.TabIndex = 1;
-            this.lblMetricTodayActivityTitle.Text = "📅 Today\'s Activity";
-            // 
-            // panelMetricCurrentlyBorrowed
-            // 
-            this.panelMetricCurrentlyBorrowed.BackColor = System.Drawing.Color.White;
-            this.panelMetricCurrentlyBorrowed.Controls.Add(this.lblMetricCurrentlyBorrowedValue);
-            this.panelMetricCurrentlyBorrowed.Controls.Add(this.lblMetricCurrentlyBorrowedTitle);
-            this.panelMetricCurrentlyBorrowed.Location = new System.Drawing.Point(311, 0);
-            this.panelMetricCurrentlyBorrowed.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.panelMetricCurrentlyBorrowed.Name = "panelMetricCurrentlyBorrowed";
-            this.panelMetricCurrentlyBorrowed.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricCurrentlyBorrowed.Size = new System.Drawing.Size(220, 100);
-            this.panelMetricCurrentlyBorrowed.TabIndex = 1;
-            // 
-            // lblMetricCurrentlyBorrowedValue
-            // 
-            this.lblMetricCurrentlyBorrowedValue.AutoSize = true;
-            this.lblMetricCurrentlyBorrowedValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricCurrentlyBorrowedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricCurrentlyBorrowedValue.Location = new System.Drawing.Point(16, 50);
-            this.lblMetricCurrentlyBorrowedValue.Name = "lblMetricCurrentlyBorrowedValue";
-            this.lblMetricCurrentlyBorrowedValue.Size = new System.Drawing.Size(38, 45);
-            this.lblMetricCurrentlyBorrowedValue.TabIndex = 2;
-            this.lblMetricCurrentlyBorrowedValue.Text = "0";
-            // 
-            // lblMetricCurrentlyBorrowedTitle
-            // 
-            this.lblMetricCurrentlyBorrowedTitle.AutoSize = true;
-            this.lblMetricCurrentlyBorrowedTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricCurrentlyBorrowedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricCurrentlyBorrowedTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblMetricCurrentlyBorrowedTitle.Name = "lblMetricCurrentlyBorrowedTitle";
-            this.lblMetricCurrentlyBorrowedTitle.Size = new System.Drawing.Size(152, 19);
-            this.lblMetricCurrentlyBorrowedTitle.TabIndex = 1;
-            this.lblMetricCurrentlyBorrowedTitle.Text = "📖 Currently Borrowed";
-            // 
-            // panelMetricOverdue
-            // 
-            this.panelMetricOverdue.BackColor = System.Drawing.Color.White;
-            this.panelMetricOverdue.Controls.Add(this.lblMetricOverdueValue);
-            this.panelMetricOverdue.Controls.Add(this.lblMetricOverdueTitle);
-            this.panelMetricOverdue.Location = new System.Drawing.Point(622, 0);
-            this.panelMetricOverdue.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.panelMetricOverdue.Name = "panelMetricOverdue";
-            this.panelMetricOverdue.Padding = new System.Windows.Forms.Padding(16);
-            this.panelMetricOverdue.Size = new System.Drawing.Size(220, 100);
-            this.panelMetricOverdue.TabIndex = 2;
-            // 
-            // lblMetricOverdueValue
-            // 
-            this.lblMetricOverdueValue.AutoSize = true;
-            this.lblMetricOverdueValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricOverdueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMetricOverdueValue.Location = new System.Drawing.Point(16, 50);
-            this.lblMetricOverdueValue.Name = "lblMetricOverdueValue";
-            this.lblMetricOverdueValue.Size = new System.Drawing.Size(38, 45);
-            this.lblMetricOverdueValue.TabIndex = 2;
-            this.lblMetricOverdueValue.Text = "0";
-            // 
-            // lblMetricOverdueTitle
-            // 
-            this.lblMetricOverdueTitle.AutoSize = true;
-            this.lblMetricOverdueTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetricOverdueTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblMetricOverdueTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblMetricOverdueTitle.Name = "lblMetricOverdueTitle";
-            this.lblMetricOverdueTitle.Size = new System.Drawing.Size(126, 19);
-            this.lblMetricOverdueTitle.TabIndex = 1;
-            this.lblMetricOverdueTitle.Text = "⚠️ Overdue Books";
-            // 
-            // panelHeader
-            // 
-            this.panelHeader.BackColor = System.Drawing.Color.White;
-            this.panelHeader.Controls.Add(this.lblSubtitle);
-            this.panelHeader.Controls.Add(this.lblTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelHeader.Location = new System.Drawing.Point(24, 24);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1152, 752);
-            this.panelHeader.TabIndex = 0;
-            // 
             // lblSubtitle
             // 
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(14, 52);
+            this.lblSubtitle.Location = new System.Drawing.Point(19, 64);
+            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(295, 19);
+            this.lblSubtitle.Size = new System.Drawing.Size(365, 23);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Process book borrowing, returns, and renewals";
             // 
@@ -604,29 +634,30 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(3, 8);
+            this.lblTitle.Location = new System.Drawing.Point(4, 10);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(389, 45);
+            this.lblTitle.Size = new System.Drawing.Size(489, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Circulation Management";
             // 
             // AdminCirculationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1720, 985);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(1067, 738);
             this.Name = "AdminCirculationForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Circulation Management";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.AdminCirculationForm_Load);
             this.panelMainContainer.ResumeLayout(false);
-            this.panelTableContainer.ResumeLayout(false);
-            this.panelTableContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).EndInit();
             this.panelActionTabs.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabBorrow.ResumeLayout(false);
@@ -646,6 +677,9 @@ namespace Project5LMS.Forms.Admin.Circulation
             this.panelMetricOverdue.PerformLayout();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
+            this.panelTableContainer.ResumeLayout(false);
+            this.panelTableContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).EndInit();
             this.ResumeLayout(false);
 
         }

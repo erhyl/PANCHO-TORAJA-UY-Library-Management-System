@@ -69,6 +69,7 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.panelMainContainer.Controls.Add(this.panelFilter);
             this.panelMainContainer.Controls.Add(this.panelMetrics);
             this.panelMainContainer.Controls.Add(this.panelHeader);
+            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
             this.panelMainContainer.Name = "panelMainContainer";
             this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24);
@@ -77,6 +78,9 @@ namespace Project5LMS.Forms.Admin.Reservations
             // 
             // panelTableContainer
             // 
+            this.panelTableContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTableContainer.BackColor = System.Drawing.Color.White;
             this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTableContainer.Controls.Add(this.dataGridViewReservations);
@@ -135,78 +139,72 @@ namespace Project5LMS.Forms.Admin.Reservations
             // 
             // colReservationID
             // 
-            this.colReservationID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colReservationID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colReservationID.DataPropertyName = "ReservationID";
             this.colReservationID.HeaderText = "RESERVATION ID";
             this.colReservationID.MinimumWidth = 6;
             this.colReservationID.Name = "colReservationID";
-            this.colReservationID.Width = 150;
             // 
             // colMember
             // 
-            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colMember.DataPropertyName = "Member";
             this.colMember.HeaderText = "MEMBER";
             this.colMember.MinimumWidth = 6;
             this.colMember.Name = "colMember";
-            this.colMember.Width = 200;
             // 
             // colBook
             // 
-            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colBook.DataPropertyName = "Book";
             this.colBook.HeaderText = "BOOK";
             this.colBook.MinimumWidth = 6;
             this.colBook.Name = "colBook";
-            this.colBook.Width = 300;
             // 
             // colReservedDate
             // 
-            this.colReservedDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colReservedDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colReservedDate.DataPropertyName = "ReservedDate";
             this.colReservedDate.HeaderText = "RESERVED DATE";
             this.colReservedDate.MinimumWidth = 6;
             this.colReservedDate.Name = "colReservedDate";
-            this.colReservedDate.Width = 130;
             // 
             // colExpiryDate
             // 
-            this.colExpiryDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colExpiryDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colExpiryDate.DataPropertyName = "ExpiryDate";
             this.colExpiryDate.HeaderText = "EXPIRY DATE";
             this.colExpiryDate.MinimumWidth = 6;
             this.colExpiryDate.Name = "colExpiryDate";
-            this.colExpiryDate.Width = 130;
             // 
             // colPriority
             // 
-            this.colPriority.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colPriority.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colPriority.DataPropertyName = "Priority";
             this.colPriority.HeaderText = "PRIORITY";
             this.colPriority.MinimumWidth = 6;
             this.colPriority.Name = "colPriority";
-            this.colPriority.Width = 125;
             // 
             // colStatus
             // 
-            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "STATUS";
             this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
-            this.colStatus.Width = 120;
             // 
             // colActions
             // 
-            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colActions.DataPropertyName = "Actions";
             this.colActions.HeaderText = "ACTIONS";
             this.colActions.MinimumWidth = 6;
             this.colActions.Name = "colActions";
-            this.colActions.Width = 200;
             // 
             // panelFilter
             // 
+            this.panelFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelFilter.Controls.Add(this.btnFilter);
             this.panelFilter.Location = new System.Drawing.Point(23, 185);
             this.panelFilter.Name = "panelFilter";
@@ -231,6 +229,8 @@ namespace Project5LMS.Forms.Admin.Reservations
             // 
             // panelMetrics
             // 
+            this.panelMetrics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelMetrics.BackColor = System.Drawing.Color.White;
             this.panelMetrics.Controls.Add(this.panelMetricExpired);
             this.panelMetrics.Controls.Add(this.panelMetricFulfilled);
@@ -379,6 +379,8 @@ namespace Project5LMS.Forms.Admin.Reservations
             // 
             // panelHeader
             // 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHeader.Controls.Add(this.lblSubtitle);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.panelMetricReady);
@@ -455,7 +457,9 @@ namespace Project5LMS.Forms.Admin.Reservations
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AdminReservationsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reservation Management";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.AdminReservationsForm_Load);
             this.panelMainContainer.ResumeLayout(false);
             this.panelTableContainer.ResumeLayout(false);
