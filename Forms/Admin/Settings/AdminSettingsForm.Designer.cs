@@ -1,0 +1,1697 @@
+namespace Project5LMS.Forms.Admin.Settings
+{
+    partial class AdminSettingsForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        #region Windows Form Designer generated code
+        private void InitializeComponent()
+        {
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.tabControlSettings = new System.Windows.Forms.TabControl();
+            this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.panelGeneralContent = new System.Windows.Forms.Panel();
+            this.btnSaveGeneral = new System.Windows.Forms.Button();
+            this.txtPhoneNumber = new System.Windows.Forms.TextBox();
+            this.lblPhoneNumber = new System.Windows.Forms.Label();
+            this.txtContactEmail = new System.Windows.Forms.TextBox();
+            this.lblContactEmail = new System.Windows.Forms.Label();
+            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.txtLibraryCode = new System.Windows.Forms.TextBox();
+            this.lblLibraryCode = new System.Windows.Forms.Label();
+            this.txtLibraryName = new System.Windows.Forms.TextBox();
+            this.lblLibraryName = new System.Windows.Forms.Label();
+            this.lblGeneralTitle = new System.Windows.Forms.Label();
+            this.tabPageLibraryRules = new System.Windows.Forms.TabPage();
+            this.panelLibraryRulesMainContent = new System.Windows.Forms.Panel();
+            this.panelRenewalSettingsCard = new System.Windows.Forms.Panel();
+            this.btnSaveLibraryRules = new System.Windows.Forms.Button();
+            this.txtMaxRenewals = new System.Windows.Forms.TextBox();
+            this.lblMaxRenewals = new System.Windows.Forms.Label();
+            this.lblRenewalSettings = new System.Windows.Forms.Label();
+            this.panelLibraryRulesContent = new System.Windows.Forms.Panel();
+            this.txtGuestPeriod = new System.Windows.Forms.TextBox();
+            this.lblGuestPeriod = new System.Windows.Forms.Label();
+            this.txtStaffPeriod = new System.Windows.Forms.TextBox();
+            this.lblStaffPeriod = new System.Windows.Forms.Label();
+            this.txtFacultyPeriod = new System.Windows.Forms.TextBox();
+            this.lblFacultyPeriod = new System.Windows.Forms.Label();
+            this.txtStudentPeriod = new System.Windows.Forms.TextBox();
+            this.lblStudentPeriod = new System.Windows.Forms.Label();
+            this.lblBorrowingPeriod = new System.Windows.Forms.Label();
+            this.txtGuestLimit = new System.Windows.Forms.TextBox();
+            this.lblGuestLimit = new System.Windows.Forms.Label();
+            this.txtStaffLimit = new System.Windows.Forms.TextBox();
+            this.lblStaffLimit = new System.Windows.Forms.Label();
+            this.txtFacultyLimit = new System.Windows.Forms.TextBox();
+            this.lblFacultyLimit = new System.Windows.Forms.Label();
+            this.txtStudentLimit = new System.Windows.Forms.TextBox();
+            this.lblStudentLimit = new System.Windows.Forms.Label();
+            this.lblBorrowingLimits = new System.Windows.Forms.Label();
+            this.lblLibraryRulesTitle = new System.Windows.Forms.Label();
+            this.panelLibraryRulesSidebar = new System.Windows.Forms.Panel();
+            this.tabPageFineRates = new System.Windows.Forms.TabPage();
+            this.panelFineRatesContent = new System.Windows.Forms.Panel();
+            this.btnSaveFineRates = new System.Windows.Forms.Button();
+            this.txtMaxFineCap = new System.Windows.Forms.TextBox();
+            this.lblMaxFineCap = new System.Windows.Forms.Label();
+            this.txtLostCardReplacement = new System.Windows.Forms.TextBox();
+            this.lblLostCardReplacement = new System.Windows.Forms.Label();
+            this.lblOtherCharges = new System.Windows.Forms.Label();
+            this.txtGuestFineRate = new System.Windows.Forms.TextBox();
+            this.lblGuestFineRate = new System.Windows.Forms.Label();
+            this.txtStaffFineRate = new System.Windows.Forms.TextBox();
+            this.lblStaffFineRate = new System.Windows.Forms.Label();
+            this.txtFacultyFineRate = new System.Windows.Forms.TextBox();
+            this.lblFacultyFineRate = new System.Windows.Forms.Label();
+            this.txtStudentFineRate = new System.Windows.Forms.TextBox();
+            this.lblStudentFineRate = new System.Windows.Forms.Label();
+            this.lblOverdueRates = new System.Windows.Forms.Label();
+            this.lblFineRatesTitle = new System.Windows.Forms.Label();
+            this.tabPageNotifications = new System.Windows.Forms.TabPage();
+            this.panelNotificationsContent = new System.Windows.Forms.Panel();
+            this.panelNewArrivalsCard = new System.Windows.Forms.Panel();
+            this.btnTurnOffNewArrivals = new System.Windows.Forms.Button();
+            this.btnTurnOnNewArrivals = new System.Windows.Forms.Button();
+            this.chkNewArrivals = new System.Windows.Forms.CheckBox();
+            this.lblNewArrivalsDesc = new System.Windows.Forms.Label();
+            this.lblNewArrivalsTitle = new System.Windows.Forms.Label();
+            this.panelReservationNotificationsCard = new System.Windows.Forms.Panel();
+            this.btnTurnOffReservationNotifications = new System.Windows.Forms.Button();
+            this.btnTurnOnReservationNotifications = new System.Windows.Forms.Button();
+            this.chkReservationNotifications = new System.Windows.Forms.CheckBox();
+            this.lblReservationNotificationsDesc = new System.Windows.Forms.Label();
+            this.lblReservationNotificationsTitle = new System.Windows.Forms.Label();
+            this.panelOverdueRemindersCard = new System.Windows.Forms.Panel();
+            this.btnTurnOffOverdueReminders = new System.Windows.Forms.Button();
+            this.btnTurnOnOverdueReminders = new System.Windows.Forms.Button();
+            this.chkOverdueReminders = new System.Windows.Forms.CheckBox();
+            this.lblOverdueRemindersDesc = new System.Windows.Forms.Label();
+            this.lblOverdueRemindersTitle = new System.Windows.Forms.Label();
+            this.lblNotificationsTitle = new System.Windows.Forms.Label();
+            this.tabPageSecurity = new System.Windows.Forms.TabPage();
+            this.panelSecurityContent = new System.Windows.Forms.Panel();
+            this.btnUpdatePassword = new System.Windows.Forms.Button();
+            this.txtConfirmPassword = new System.Windows.Forms.TextBox();
+            this.lblConfirmPassword = new System.Windows.Forms.Label();
+            this.txtNewPassword = new System.Windows.Forms.TextBox();
+            this.lblNewPassword = new System.Windows.Forms.Label();
+            this.txtCurrentPassword = new System.Windows.Forms.TextBox();
+            this.lblCurrentPassword = new System.Windows.Forms.Label();
+            this.lblChangePassword = new System.Windows.Forms.Label();
+            this.lblSecurityTitle = new System.Windows.Forms.Label();
+            this.tabPageSystem = new System.Windows.Forms.TabPage();
+            this.panelSystemContent = new System.Windows.Forms.Panel();
+            this.panelSystemInfoCard = new System.Windows.Forms.Panel();
+            this.lblStorageUsedValue = new System.Windows.Forms.Label();
+            this.lblStorageUsed = new System.Windows.Forms.Label();
+            this.lblLastBackupValue = new System.Windows.Forms.Label();
+            this.lblLastBackup = new System.Windows.Forms.Label();
+            this.lblDatabaseStatusValue = new System.Windows.Forms.Label();
+            this.lblDatabaseStatus = new System.Windows.Forms.Label();
+            this.lblSystemVersionValue = new System.Windows.Forms.Label();
+            this.lblSystemVersion = new System.Windows.Forms.Label();
+            this.lblSystemInfoTitle = new System.Windows.Forms.Label();
+            this.panelHeader.SuspendLayout();
+            this.tabControlSettings.SuspendLayout();
+            this.tabPageGeneral.SuspendLayout();
+            this.panelGeneralContent.SuspendLayout();
+            this.tabPageLibraryRules.SuspendLayout();
+            this.panelLibraryRulesMainContent.SuspendLayout();
+            this.panelRenewalSettingsCard.SuspendLayout();
+            this.panelLibraryRulesContent.SuspendLayout();
+            this.panelLibraryRulesSidebar.SuspendLayout();
+            this.tabPageFineRates.SuspendLayout();
+            this.panelFineRatesContent.SuspendLayout();
+            this.tabPageNotifications.SuspendLayout();
+            this.panelNotificationsContent.SuspendLayout();
+            this.panelNewArrivalsCard.SuspendLayout();
+            this.panelReservationNotificationsCard.SuspendLayout();
+            this.panelOverdueRemindersCard.SuspendLayout();
+            this.tabPageSecurity.SuspendLayout();
+            this.panelSecurityContent.SuspendLayout();
+            this.tabPageSystem.SuspendLayout();
+            this.panelSystemContent.SuspendLayout();
+            this.panelSystemInfoCard.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.Controls.Add(this.lblSubtitle);
+            this.panelHeader.Controls.Add(this.lblTitle);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Padding = new System.Windows.Forms.Padding(30, 24, 30, 16);
+            this.panelHeader.Size = new System.Drawing.Size(1200, 86);
+            this.panelHeader.TabIndex = 0;
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(34, 58);
+            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(301, 21);
+            this.lblSubtitle.TabIndex = 1;
+            this.lblSubtitle.Text = "Manage your library system configuration";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.Black;
+            this.lblTitle.Location = new System.Drawing.Point(30, 7);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(169, 51);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Settings";
+            // 
+            // tabControlSettings
+            // 
+            this.tabControlSettings.Controls.Add(this.tabPageGeneral);
+            this.tabControlSettings.Controls.Add(this.tabPageLibraryRules);
+            this.tabControlSettings.Controls.Add(this.tabPageFineRates);
+            this.tabControlSettings.Controls.Add(this.tabPageNotifications);
+            this.tabControlSettings.Controls.Add(this.tabPageSecurity);
+            this.tabControlSettings.Controls.Add(this.tabPageSystem);
+            this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlSettings.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlSettings.Location = new System.Drawing.Point(0, 86);
+            this.tabControlSettings.Name = "tabControlSettings";
+            this.tabControlSettings.SelectedIndex = 0;
+            this.tabControlSettings.Size = new System.Drawing.Size(1200, 714);
+            this.tabControlSettings.TabIndex = 1;
+            this.tabControlSettings.SelectedIndexChanged += new System.EventHandler(this.tabControlSettings_SelectedIndexChanged);
+            // 
+            // tabPageGeneral
+            // 
+            this.tabPageGeneral.Controls.Add(this.panelGeneralContent);
+            this.tabPageGeneral.Location = new System.Drawing.Point(4, 26);
+            this.tabPageGeneral.Name = "tabPageGeneral";
+            this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(30, 32, 30, 32);
+            this.tabPageGeneral.Size = new System.Drawing.Size(1192, 684);
+            this.tabPageGeneral.TabIndex = 0;
+            this.tabPageGeneral.Text = "⚙️ General";
+            this.tabPageGeneral.UseVisualStyleBackColor = true;
+            // 
+            // panelGeneralContent
+            // 
+            this.panelGeneralContent.AutoScroll = true;
+            this.panelGeneralContent.BackColor = System.Drawing.Color.Transparent;
+            this.panelGeneralContent.Controls.Add(this.btnSaveGeneral);
+            this.panelGeneralContent.Controls.Add(this.txtPhoneNumber);
+            this.panelGeneralContent.Controls.Add(this.lblPhoneNumber);
+            this.panelGeneralContent.Controls.Add(this.txtContactEmail);
+            this.panelGeneralContent.Controls.Add(this.lblContactEmail);
+            this.panelGeneralContent.Controls.Add(this.txtAddress);
+            this.panelGeneralContent.Controls.Add(this.lblAddress);
+            this.panelGeneralContent.Controls.Add(this.txtLibraryCode);
+            this.panelGeneralContent.Controls.Add(this.lblLibraryCode);
+            this.panelGeneralContent.Controls.Add(this.txtLibraryName);
+            this.panelGeneralContent.Controls.Add(this.lblLibraryName);
+            this.panelGeneralContent.Controls.Add(this.lblGeneralTitle);
+            this.panelGeneralContent.Location = new System.Drawing.Point(329, 51);
+            this.panelGeneralContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelGeneralContent.Name = "panelGeneralContent";
+            this.panelGeneralContent.Size = new System.Drawing.Size(503, 483);
+            this.panelGeneralContent.TabIndex = 0;
+            // 
+            // btnSaveGeneral
+            // 
+            this.btnSaveGeneral.BackColor = System.Drawing.Color.Maroon;
+            this.btnSaveGeneral.FlatAppearance.BorderSize = 0;
+            this.btnSaveGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveGeneral.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveGeneral.ForeColor = System.Drawing.Color.White;
+            this.btnSaveGeneral.Location = new System.Drawing.Point(16, 425);
+            this.btnSaveGeneral.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSaveGeneral.Name = "btnSaveGeneral";
+            this.btnSaveGeneral.Size = new System.Drawing.Size(462, 37);
+            this.btnSaveGeneral.TabIndex = 11;
+            this.btnSaveGeneral.Text = "Save Changes";
+            this.btnSaveGeneral.UseVisualStyleBackColor = false;
+            this.btnSaveGeneral.Click += new System.EventHandler(this.btnSaveGeneral_Click);
+            // 
+            // txtPhoneNumber
+            // 
+            this.txtPhoneNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPhoneNumber.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPhoneNumber.Location = new System.Drawing.Point(13, 365);
+            this.txtPhoneNumber.Margin = new System.Windows.Forms.Padding(0);
+            this.txtPhoneNumber.Name = "txtPhoneNumber";
+            this.txtPhoneNumber.Size = new System.Drawing.Size(463, 25);
+            this.txtPhoneNumber.TabIndex = 10;
+            this.txtPhoneNumber.Text = "(555) 123-4567";
+            // 
+            // lblPhoneNumber
+            // 
+            this.lblPhoneNumber.AutoSize = true;
+            this.lblPhoneNumber.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPhoneNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblPhoneNumber.Location = new System.Drawing.Point(10, 346);
+            this.lblPhoneNumber.Margin = new System.Windows.Forms.Padding(0);
+            this.lblPhoneNumber.Name = "lblPhoneNumber";
+            this.lblPhoneNumber.Size = new System.Drawing.Size(102, 19);
+            this.lblPhoneNumber.TabIndex = 9;
+            this.lblPhoneNumber.Text = "Phone Number";
+            // 
+            // txtContactEmail
+            // 
+            this.txtContactEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtContactEmail.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtContactEmail.Location = new System.Drawing.Point(13, 304);
+            this.txtContactEmail.Margin = new System.Windows.Forms.Padding(0);
+            this.txtContactEmail.Name = "txtContactEmail";
+            this.txtContactEmail.Size = new System.Drawing.Size(463, 25);
+            this.txtContactEmail.TabIndex = 8;
+            this.txtContactEmail.Text = "contact@library.com";
+            // 
+            // lblContactEmail
+            // 
+            this.lblContactEmail.AutoSize = true;
+            this.lblContactEmail.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblContactEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblContactEmail.Location = new System.Drawing.Point(13, 285);
+            this.lblContactEmail.Margin = new System.Windows.Forms.Padding(0);
+            this.lblContactEmail.Name = "lblContactEmail";
+            this.lblContactEmail.Size = new System.Drawing.Size(93, 19);
+            this.lblContactEmail.TabIndex = 7;
+            this.lblContactEmail.Text = "Contact Email";
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddress.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAddress.Location = new System.Drawing.Point(12, 194);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(0);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(463, 65);
+            this.txtAddress.TabIndex = 6;
+            this.txtAddress.Text = "123 Main Street, City, State 12345";
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblAddress.Location = new System.Drawing.Point(13, 175);
+            this.lblAddress.Margin = new System.Windows.Forms.Padding(0);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(58, 19);
+            this.lblAddress.TabIndex = 5;
+            this.lblAddress.Text = "Address";
+            // 
+            // txtLibraryCode
+            // 
+            this.txtLibraryCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLibraryCode.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLibraryCode.Location = new System.Drawing.Point(12, 133);
+            this.txtLibraryCode.Margin = new System.Windows.Forms.Padding(0);
+            this.txtLibraryCode.Name = "txtLibraryCode";
+            this.txtLibraryCode.Size = new System.Drawing.Size(463, 25);
+            this.txtLibraryCode.TabIndex = 4;
+            this.txtLibraryCode.Text = "CCL-001";
+            // 
+            // lblLibraryCode
+            // 
+            this.lblLibraryCode.AutoSize = true;
+            this.lblLibraryCode.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLibraryCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLibraryCode.Location = new System.Drawing.Point(13, 114);
+            this.lblLibraryCode.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLibraryCode.Name = "lblLibraryCode";
+            this.lblLibraryCode.Size = new System.Drawing.Size(87, 19);
+            this.lblLibraryCode.TabIndex = 3;
+            this.lblLibraryCode.Text = "Library Code";
+            // 
+            // txtLibraryName
+            // 
+            this.txtLibraryName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLibraryName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLibraryName.Location = new System.Drawing.Point(13, 72);
+            this.txtLibraryName.Margin = new System.Windows.Forms.Padding(0);
+            this.txtLibraryName.Name = "txtLibraryName";
+            this.txtLibraryName.Size = new System.Drawing.Size(463, 25);
+            this.txtLibraryName.TabIndex = 2;
+            this.txtLibraryName.Text = "City Central Library";
+            // 
+            // lblLibraryName
+            // 
+            this.lblLibraryName.AutoSize = true;
+            this.lblLibraryName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLibraryName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLibraryName.Location = new System.Drawing.Point(13, 53);
+            this.lblLibraryName.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLibraryName.Name = "lblLibraryName";
+            this.lblLibraryName.Size = new System.Drawing.Size(91, 19);
+            this.lblLibraryName.TabIndex = 1;
+            this.lblLibraryName.Text = "Library Name";
+            // 
+            // lblGeneralTitle
+            // 
+            this.lblGeneralTitle.AutoSize = true;
+            this.lblGeneralTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGeneralTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblGeneralTitle.Location = new System.Drawing.Point(16, 11);
+            this.lblGeneralTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblGeneralTitle.Name = "lblGeneralTitle";
+            this.lblGeneralTitle.Size = new System.Drawing.Size(201, 32);
+            this.lblGeneralTitle.TabIndex = 0;
+            this.lblGeneralTitle.Text = "General Settings";
+            // 
+            // tabPageLibraryRules
+            // 
+            this.tabPageLibraryRules.Controls.Add(this.panelLibraryRulesSidebar);
+            this.tabPageLibraryRules.Location = new System.Drawing.Point(4, 26);
+            this.tabPageLibraryRules.Name = "tabPageLibraryRules";
+            this.tabPageLibraryRules.Size = new System.Drawing.Size(1192, 684);
+            this.tabPageLibraryRules.TabIndex = 1;
+            this.tabPageLibraryRules.Text = "📋 Library Rules";
+            this.tabPageLibraryRules.UseVisualStyleBackColor = true;
+            // 
+            // panelLibraryRulesMainContent
+            // 
+            this.panelLibraryRulesMainContent.AutoScroll = true;
+            this.panelLibraryRulesMainContent.BackColor = System.Drawing.Color.White;
+            this.panelLibraryRulesMainContent.Controls.Add(this.panelRenewalSettingsCard);
+            this.panelLibraryRulesMainContent.Controls.Add(this.panelLibraryRulesContent);
+            this.panelLibraryRulesMainContent.Location = new System.Drawing.Point(128, 11);
+            this.panelLibraryRulesMainContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelLibraryRulesMainContent.Name = "panelLibraryRulesMainContent";
+            this.panelLibraryRulesMainContent.Padding = new System.Windows.Forms.Padding(30, 32, 30, 32);
+            this.panelLibraryRulesMainContent.Size = new System.Drawing.Size(914, 633);
+            this.panelLibraryRulesMainContent.TabIndex = 1;
+            // 
+            // panelRenewalSettingsCard
+            // 
+            this.panelRenewalSettingsCard.BackColor = System.Drawing.Color.Transparent;
+            this.panelRenewalSettingsCard.Controls.Add(this.btnSaveLibraryRules);
+            this.panelRenewalSettingsCard.Controls.Add(this.txtMaxRenewals);
+            this.panelRenewalSettingsCard.Controls.Add(this.lblMaxRenewals);
+            this.panelRenewalSettingsCard.Controls.Add(this.lblRenewalSettings);
+            this.panelRenewalSettingsCard.Location = new System.Drawing.Point(30, 444);
+            this.panelRenewalSettingsCard.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.panelRenewalSettingsCard.Name = "panelRenewalSettingsCard";
+            this.panelRenewalSettingsCard.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelRenewalSettingsCard.Size = new System.Drawing.Size(854, 162);
+            this.panelRenewalSettingsCard.TabIndex = 1;
+            // 
+            // btnSaveLibraryRules
+            // 
+            this.btnSaveLibraryRules.BackColor = System.Drawing.Color.Maroon;
+            this.btnSaveLibraryRules.FlatAppearance.BorderSize = 0;
+            this.btnSaveLibraryRules.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveLibraryRules.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveLibraryRules.ForeColor = System.Drawing.Color.White;
+            this.btnSaveLibraryRules.Location = new System.Drawing.Point(15, 114);
+            this.btnSaveLibraryRules.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSaveLibraryRules.Name = "btnSaveLibraryRules";
+            this.btnSaveLibraryRules.Size = new System.Drawing.Size(816, 37);
+            this.btnSaveLibraryRules.TabIndex = 3;
+            this.btnSaveLibraryRules.Text = "Save Changes";
+            this.btnSaveLibraryRules.UseVisualStyleBackColor = false;
+            this.btnSaveLibraryRules.Click += new System.EventHandler(this.btnSaveLibraryRules_Click);
+            // 
+            // txtMaxRenewals
+            // 
+            this.txtMaxRenewals.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMaxRenewals.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMaxRenewals.Location = new System.Drawing.Point(15, 73);
+            this.txtMaxRenewals.Margin = new System.Windows.Forms.Padding(0);
+            this.txtMaxRenewals.Name = "txtMaxRenewals";
+            this.txtMaxRenewals.Size = new System.Drawing.Size(816, 25);
+            this.txtMaxRenewals.TabIndex = 2;
+            this.txtMaxRenewals.Text = "2";
+            // 
+            // lblMaxRenewals
+            // 
+            this.lblMaxRenewals.AutoSize = true;
+            this.lblMaxRenewals.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxRenewals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMaxRenewals.Location = new System.Drawing.Point(15, 54);
+            this.lblMaxRenewals.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMaxRenewals.Name = "lblMaxRenewals";
+            this.lblMaxRenewals.Size = new System.Drawing.Size(133, 19);
+            this.lblMaxRenewals.TabIndex = 1;
+            this.lblMaxRenewals.Text = "Maximum Renewals:";
+            // 
+            // lblRenewalSettings
+            // 
+            this.lblRenewalSettings.AutoSize = true;
+            this.lblRenewalSettings.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRenewalSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblRenewalSettings.Location = new System.Drawing.Point(15, 16);
+            this.lblRenewalSettings.Margin = new System.Windows.Forms.Padding(0);
+            this.lblRenewalSettings.Name = "lblRenewalSettings";
+            this.lblRenewalSettings.Size = new System.Drawing.Size(141, 21);
+            this.lblRenewalSettings.TabIndex = 0;
+            this.lblRenewalSettings.Text = "Renewal Settings";
+            // 
+            // panelLibraryRulesContent
+            // 
+            this.panelLibraryRulesContent.BackColor = System.Drawing.Color.Transparent;
+            this.panelLibraryRulesContent.Controls.Add(this.txtGuestPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.lblGuestPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.txtStaffPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.lblStaffPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.txtFacultyPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.lblFacultyPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.txtStudentPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.lblStudentPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.lblBorrowingPeriod);
+            this.panelLibraryRulesContent.Controls.Add(this.txtGuestLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.lblGuestLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.txtStaffLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.lblStaffLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.txtFacultyLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.lblFacultyLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.txtStudentLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.lblStudentLimit);
+            this.panelLibraryRulesContent.Controls.Add(this.lblBorrowingLimits);
+            this.panelLibraryRulesContent.Controls.Add(this.lblLibraryRulesTitle);
+            this.panelLibraryRulesContent.Location = new System.Drawing.Point(30, 15);
+            this.panelLibraryRulesContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelLibraryRulesContent.Name = "panelLibraryRulesContent";
+            this.panelLibraryRulesContent.Size = new System.Drawing.Size(854, 412);
+            this.panelLibraryRulesContent.TabIndex = 0;
+            // 
+            // txtGuestPeriod
+            // 
+            this.txtGuestPeriod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtGuestPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGuestPeriod.Location = new System.Drawing.Point(456, 344);
+            this.txtGuestPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.txtGuestPeriod.Name = "txtGuestPeriod";
+            this.txtGuestPeriod.Size = new System.Drawing.Size(376, 25);
+            this.txtGuestPeriod.TabIndex = 18;
+            this.txtGuestPeriod.Text = "7";
+            // 
+            // lblGuestPeriod
+            // 
+            this.lblGuestPeriod.AutoSize = true;
+            this.lblGuestPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGuestPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblGuestPeriod.Location = new System.Drawing.Point(453, 318);
+            this.lblGuestPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.lblGuestPeriod.Name = "lblGuestPeriod";
+            this.lblGuestPeriod.Size = new System.Drawing.Size(48, 19);
+            this.lblGuestPeriod.TabIndex = 17;
+            this.lblGuestPeriod.Text = "Guest:";
+            // 
+            // txtStaffPeriod
+            // 
+            this.txtStaffPeriod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStaffPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStaffPeriod.Location = new System.Drawing.Point(456, 274);
+            this.txtStaffPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.txtStaffPeriod.Name = "txtStaffPeriod";
+            this.txtStaffPeriod.Size = new System.Drawing.Size(376, 25);
+            this.txtStaffPeriod.TabIndex = 16;
+            this.txtStaffPeriod.Text = "21";
+            // 
+            // lblStaffPeriod
+            // 
+            this.lblStaffPeriod.AutoSize = true;
+            this.lblStaffPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStaffPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStaffPeriod.Location = new System.Drawing.Point(453, 247);
+            this.lblStaffPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.lblStaffPeriod.Name = "lblStaffPeriod";
+            this.lblStaffPeriod.Size = new System.Drawing.Size(39, 19);
+            this.lblStaffPeriod.TabIndex = 15;
+            this.lblStaffPeriod.Text = "Staff:";
+            // 
+            // txtFacultyPeriod
+            // 
+            this.txtFacultyPeriod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFacultyPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFacultyPeriod.Location = new System.Drawing.Point(15, 344);
+            this.txtFacultyPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.txtFacultyPeriod.Name = "txtFacultyPeriod";
+            this.txtFacultyPeriod.Size = new System.Drawing.Size(376, 25);
+            this.txtFacultyPeriod.TabIndex = 14;
+            this.txtFacultyPeriod.Text = "30";
+            // 
+            // lblFacultyPeriod
+            // 
+            this.lblFacultyPeriod.AutoSize = true;
+            this.lblFacultyPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFacultyPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblFacultyPeriod.Location = new System.Drawing.Point(12, 318);
+            this.lblFacultyPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFacultyPeriod.Name = "lblFacultyPeriod";
+            this.lblFacultyPeriod.Size = new System.Drawing.Size(55, 19);
+            this.lblFacultyPeriod.TabIndex = 13;
+            this.lblFacultyPeriod.Text = "Faculty:";
+            // 
+            // txtStudentPeriod
+            // 
+            this.txtStudentPeriod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStudentPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStudentPeriod.Location = new System.Drawing.Point(15, 274);
+            this.txtStudentPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.txtStudentPeriod.Name = "txtStudentPeriod";
+            this.txtStudentPeriod.Size = new System.Drawing.Size(376, 25);
+            this.txtStudentPeriod.TabIndex = 12;
+            this.txtStudentPeriod.Text = "14";
+            // 
+            // lblStudentPeriod
+            // 
+            this.lblStudentPeriod.AutoSize = true;
+            this.lblStudentPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStudentPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStudentPeriod.Location = new System.Drawing.Point(12, 247);
+            this.lblStudentPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.lblStudentPeriod.Name = "lblStudentPeriod";
+            this.lblStudentPeriod.Size = new System.Drawing.Size(60, 19);
+            this.lblStudentPeriod.TabIndex = 11;
+            this.lblStudentPeriod.Text = "Student:";
+            // 
+            // lblBorrowingPeriod
+            // 
+            this.lblBorrowingPeriod.AutoSize = true;
+            this.lblBorrowingPeriod.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBorrowingPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBorrowingPeriod.Location = new System.Drawing.Point(14, 211);
+            this.lblBorrowingPeriod.Margin = new System.Windows.Forms.Padding(0);
+            this.lblBorrowingPeriod.Name = "lblBorrowingPeriod";
+            this.lblBorrowingPeriod.Size = new System.Drawing.Size(197, 21);
+            this.lblBorrowingPeriod.TabIndex = 10;
+            this.lblBorrowingPeriod.Text = "Borrowing Period (Days)";
+            // 
+            // txtGuestLimit
+            // 
+            this.txtGuestLimit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtGuestLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGuestLimit.Location = new System.Drawing.Point(456, 158);
+            this.txtGuestLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.txtGuestLimit.Name = "txtGuestLimit";
+            this.txtGuestLimit.Size = new System.Drawing.Size(376, 25);
+            this.txtGuestLimit.TabIndex = 9;
+            this.txtGuestLimit.Text = "3";
+            // 
+            // lblGuestLimit
+            // 
+            this.lblGuestLimit.AutoSize = true;
+            this.lblGuestLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGuestLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblGuestLimit.Location = new System.Drawing.Point(453, 130);
+            this.lblGuestLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.lblGuestLimit.Name = "lblGuestLimit";
+            this.lblGuestLimit.Size = new System.Drawing.Size(48, 19);
+            this.lblGuestLimit.TabIndex = 8;
+            this.lblGuestLimit.Text = "Guest:";
+            // 
+            // txtStaffLimit
+            // 
+            this.txtStaffLimit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStaffLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStaffLimit.Location = new System.Drawing.Point(456, 98);
+            this.txtStaffLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.txtStaffLimit.Name = "txtStaffLimit";
+            this.txtStaffLimit.Size = new System.Drawing.Size(376, 25);
+            this.txtStaffLimit.TabIndex = 7;
+            this.txtStaffLimit.Text = "7";
+            // 
+            // lblStaffLimit
+            // 
+            this.lblStaffLimit.AutoSize = true;
+            this.lblStaffLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStaffLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStaffLimit.Location = new System.Drawing.Point(453, 72);
+            this.lblStaffLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.lblStaffLimit.Name = "lblStaffLimit";
+            this.lblStaffLimit.Size = new System.Drawing.Size(39, 19);
+            this.lblStaffLimit.TabIndex = 6;
+            this.lblStaffLimit.Text = "Staff:";
+            // 
+            // txtFacultyLimit
+            // 
+            this.txtFacultyLimit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFacultyLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFacultyLimit.Location = new System.Drawing.Point(15, 158);
+            this.txtFacultyLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.txtFacultyLimit.Name = "txtFacultyLimit";
+            this.txtFacultyLimit.Size = new System.Drawing.Size(376, 25);
+            this.txtFacultyLimit.TabIndex = 5;
+            this.txtFacultyLimit.Text = "10";
+            // 
+            // lblFacultyLimit
+            // 
+            this.lblFacultyLimit.AutoSize = true;
+            this.lblFacultyLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFacultyLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblFacultyLimit.Location = new System.Drawing.Point(12, 130);
+            this.lblFacultyLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFacultyLimit.Name = "lblFacultyLimit";
+            this.lblFacultyLimit.Size = new System.Drawing.Size(55, 19);
+            this.lblFacultyLimit.TabIndex = 4;
+            this.lblFacultyLimit.Text = "Faculty:";
+            // 
+            // txtStudentLimit
+            // 
+            this.txtStudentLimit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStudentLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStudentLimit.Location = new System.Drawing.Point(15, 98);
+            this.txtStudentLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.txtStudentLimit.Name = "txtStudentLimit";
+            this.txtStudentLimit.Size = new System.Drawing.Size(376, 25);
+            this.txtStudentLimit.TabIndex = 3;
+            this.txtStudentLimit.Text = "5";
+            // 
+            // lblStudentLimit
+            // 
+            this.lblStudentLimit.AutoSize = true;
+            this.lblStudentLimit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStudentLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStudentLimit.Location = new System.Drawing.Point(12, 72);
+            this.lblStudentLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.lblStudentLimit.Name = "lblStudentLimit";
+            this.lblStudentLimit.Size = new System.Drawing.Size(60, 19);
+            this.lblStudentLimit.TabIndex = 2;
+            this.lblStudentLimit.Text = "Student:";
+            // 
+            // lblBorrowingLimits
+            // 
+            this.lblBorrowingLimits.AutoSize = true;
+            this.lblBorrowingLimits.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBorrowingLimits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBorrowingLimits.Location = new System.Drawing.Point(11, 41);
+            this.lblBorrowingLimits.Margin = new System.Windows.Forms.Padding(0);
+            this.lblBorrowingLimits.Name = "lblBorrowingLimits";
+            this.lblBorrowingLimits.Size = new System.Drawing.Size(262, 21);
+            this.lblBorrowingLimits.TabIndex = 1;
+            this.lblBorrowingLimits.Text = "Borrowing Limits by Member Type";
+            // 
+            // lblLibraryRulesTitle
+            // 
+            this.lblLibraryRulesTitle.AutoSize = true;
+            this.lblLibraryRulesTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLibraryRulesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLibraryRulesTitle.Location = new System.Drawing.Point(10, 7);
+            this.lblLibraryRulesTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLibraryRulesTitle.Name = "lblLibraryRulesTitle";
+            this.lblLibraryRulesTitle.Size = new System.Drawing.Size(307, 32);
+            this.lblLibraryRulesTitle.TabIndex = 0;
+            this.lblLibraryRulesTitle.Text = "Library Rules and Policies";
+            // 
+            // panelLibraryRulesSidebar
+            // 
+            this.panelLibraryRulesSidebar.BackColor = System.Drawing.Color.White;
+            this.panelLibraryRulesSidebar.Controls.Add(this.panelLibraryRulesMainContent);
+            this.panelLibraryRulesSidebar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLibraryRulesSidebar.Location = new System.Drawing.Point(0, 0);
+            this.panelLibraryRulesSidebar.Margin = new System.Windows.Forms.Padding(0);
+            this.panelLibraryRulesSidebar.Name = "panelLibraryRulesSidebar";
+            this.panelLibraryRulesSidebar.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelLibraryRulesSidebar.Size = new System.Drawing.Size(1192, 684);
+            this.panelLibraryRulesSidebar.TabIndex = 0;
+            // 
+            // tabPageFineRates
+            // 
+            this.tabPageFineRates.BackColor = System.Drawing.Color.White;
+            this.tabPageFineRates.Controls.Add(this.panelFineRatesContent);
+            this.tabPageFineRates.Location = new System.Drawing.Point(4, 26);
+            this.tabPageFineRates.Name = "tabPageFineRates";
+            this.tabPageFineRates.Padding = new System.Windows.Forms.Padding(30, 32, 30, 32);
+            this.tabPageFineRates.Size = new System.Drawing.Size(1192, 684);
+            this.tabPageFineRates.TabIndex = 2;
+            this.tabPageFineRates.Text = "💰 Fine Rates";
+            // 
+            // panelFineRatesContent
+            // 
+            this.panelFineRatesContent.AutoScroll = true;
+            this.panelFineRatesContent.BackColor = System.Drawing.Color.Transparent;
+            this.panelFineRatesContent.Controls.Add(this.btnSaveFineRates);
+            this.panelFineRatesContent.Controls.Add(this.txtMaxFineCap);
+            this.panelFineRatesContent.Controls.Add(this.lblMaxFineCap);
+            this.panelFineRatesContent.Controls.Add(this.txtLostCardReplacement);
+            this.panelFineRatesContent.Controls.Add(this.lblLostCardReplacement);
+            this.panelFineRatesContent.Controls.Add(this.lblOtherCharges);
+            this.panelFineRatesContent.Controls.Add(this.txtGuestFineRate);
+            this.panelFineRatesContent.Controls.Add(this.lblGuestFineRate);
+            this.panelFineRatesContent.Controls.Add(this.txtStaffFineRate);
+            this.panelFineRatesContent.Controls.Add(this.lblStaffFineRate);
+            this.panelFineRatesContent.Controls.Add(this.txtFacultyFineRate);
+            this.panelFineRatesContent.Controls.Add(this.lblFacultyFineRate);
+            this.panelFineRatesContent.Controls.Add(this.txtStudentFineRate);
+            this.panelFineRatesContent.Controls.Add(this.lblStudentFineRate);
+            this.panelFineRatesContent.Controls.Add(this.lblOverdueRates);
+            this.panelFineRatesContent.Controls.Add(this.lblFineRatesTitle);
+            this.panelFineRatesContent.Location = new System.Drawing.Point(159, 104);
+            this.panelFineRatesContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelFineRatesContent.Name = "panelFineRatesContent";
+            this.panelFineRatesContent.Size = new System.Drawing.Size(864, 374);
+            this.panelFineRatesContent.TabIndex = 0;
+            // 
+            // btnSaveFineRates
+            // 
+            this.btnSaveFineRates.BackColor = System.Drawing.Color.Maroon;
+            this.btnSaveFineRates.FlatAppearance.BorderSize = 0;
+            this.btnSaveFineRates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveFineRates.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveFineRates.ForeColor = System.Drawing.Color.White;
+            this.btnSaveFineRates.Location = new System.Drawing.Point(11, 316);
+            this.btnSaveFineRates.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSaveFineRates.Name = "btnSaveFineRates";
+            this.btnSaveFineRates.Size = new System.Drawing.Size(840, 37);
+            this.btnSaveFineRates.TabIndex = 15;
+            this.btnSaveFineRates.Text = "Save Changes";
+            this.btnSaveFineRates.UseVisualStyleBackColor = false;
+            this.btnSaveFineRates.Click += new System.EventHandler(this.btnSaveFineRates_Click);
+            // 
+            // txtMaxFineCap
+            // 
+            this.txtMaxFineCap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMaxFineCap.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMaxFineCap.Location = new System.Drawing.Point(476, 268);
+            this.txtMaxFineCap.Margin = new System.Windows.Forms.Padding(0);
+            this.txtMaxFineCap.Name = "txtMaxFineCap";
+            this.txtMaxFineCap.Size = new System.Drawing.Size(376, 25);
+            this.txtMaxFineCap.TabIndex = 14;
+            this.txtMaxFineCap.Text = "$ 50.00";
+            // 
+            // lblMaxFineCap
+            // 
+            this.lblMaxFineCap.AutoSize = true;
+            this.lblMaxFineCap.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxFineCap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMaxFineCap.Location = new System.Drawing.Point(473, 249);
+            this.lblMaxFineCap.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMaxFineCap.Name = "lblMaxFineCap";
+            this.lblMaxFineCap.Size = new System.Drawing.Size(187, 19);
+            this.lblMaxFineCap.TabIndex = 13;
+            this.lblMaxFineCap.Text = "Maximum Overdue Fine Cap:";
+            // 
+            // txtLostCardReplacement
+            // 
+            this.txtLostCardReplacement.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLostCardReplacement.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLostCardReplacement.Location = new System.Drawing.Point(10, 268);
+            this.txtLostCardReplacement.Margin = new System.Windows.Forms.Padding(0);
+            this.txtLostCardReplacement.Name = "txtLostCardReplacement";
+            this.txtLostCardReplacement.Size = new System.Drawing.Size(376, 25);
+            this.txtLostCardReplacement.TabIndex = 12;
+            this.txtLostCardReplacement.Text = "$ 10.00";
+            // 
+            // lblLostCardReplacement
+            // 
+            this.lblLostCardReplacement.AutoSize = true;
+            this.lblLostCardReplacement.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLostCardReplacement.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLostCardReplacement.Location = new System.Drawing.Point(8, 249);
+            this.lblLostCardReplacement.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLostCardReplacement.Name = "lblLostCardReplacement";
+            this.lblLostCardReplacement.Size = new System.Drawing.Size(153, 19);
+            this.lblLostCardReplacement.TabIndex = 11;
+            this.lblLostCardReplacement.Text = "Lost Card Replacement:";
+            // 
+            // lblOtherCharges
+            // 
+            this.lblOtherCharges.AutoSize = true;
+            this.lblOtherCharges.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOtherCharges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblOtherCharges.Location = new System.Drawing.Point(6, 218);
+            this.lblOtherCharges.Margin = new System.Windows.Forms.Padding(0);
+            this.lblOtherCharges.Name = "lblOtherCharges";
+            this.lblOtherCharges.Size = new System.Drawing.Size(118, 21);
+            this.lblOtherCharges.TabIndex = 10;
+            this.lblOtherCharges.Text = "Other Charges";
+            // 
+            // txtGuestFineRate
+            // 
+            this.txtGuestFineRate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtGuestFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGuestFineRate.Location = new System.Drawing.Point(476, 157);
+            this.txtGuestFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.txtGuestFineRate.Name = "txtGuestFineRate";
+            this.txtGuestFineRate.Size = new System.Drawing.Size(376, 25);
+            this.txtGuestFineRate.TabIndex = 9;
+            this.txtGuestFineRate.Text = "$ 1.50";
+            // 
+            // lblGuestFineRate
+            // 
+            this.lblGuestFineRate.AutoSize = true;
+            this.lblGuestFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGuestFineRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblGuestFineRate.Location = new System.Drawing.Point(473, 138);
+            this.lblGuestFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.lblGuestFineRate.Name = "lblGuestFineRate";
+            this.lblGuestFineRate.Size = new System.Drawing.Size(48, 19);
+            this.lblGuestFineRate.TabIndex = 8;
+            this.lblGuestFineRate.Text = "Guest:";
+            // 
+            // txtStaffFineRate
+            // 
+            this.txtStaffFineRate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStaffFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStaffFineRate.Location = new System.Drawing.Point(476, 96);
+            this.txtStaffFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.txtStaffFineRate.Name = "txtStaffFineRate";
+            this.txtStaffFineRate.Size = new System.Drawing.Size(376, 25);
+            this.txtStaffFineRate.TabIndex = 7;
+            this.txtStaffFineRate.Text = "$ 0.75";
+            // 
+            // lblStaffFineRate
+            // 
+            this.lblStaffFineRate.AutoSize = true;
+            this.lblStaffFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStaffFineRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStaffFineRate.Location = new System.Drawing.Point(473, 77);
+            this.lblStaffFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.lblStaffFineRate.Name = "lblStaffFineRate";
+            this.lblStaffFineRate.Size = new System.Drawing.Size(39, 19);
+            this.lblStaffFineRate.TabIndex = 6;
+            this.lblStaffFineRate.Text = "Staff:";
+            // 
+            // txtFacultyFineRate
+            // 
+            this.txtFacultyFineRate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFacultyFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFacultyFineRate.Location = new System.Drawing.Point(10, 157);
+            this.txtFacultyFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.txtFacultyFineRate.Name = "txtFacultyFineRate";
+            this.txtFacultyFineRate.Size = new System.Drawing.Size(376, 25);
+            this.txtFacultyFineRate.TabIndex = 5;
+            this.txtFacultyFineRate.Text = "$ 0.50";
+            // 
+            // lblFacultyFineRate
+            // 
+            this.lblFacultyFineRate.AutoSize = true;
+            this.lblFacultyFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFacultyFineRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblFacultyFineRate.Location = new System.Drawing.Point(7, 138);
+            this.lblFacultyFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFacultyFineRate.Name = "lblFacultyFineRate";
+            this.lblFacultyFineRate.Size = new System.Drawing.Size(55, 19);
+            this.lblFacultyFineRate.TabIndex = 4;
+            this.lblFacultyFineRate.Text = "Faculty:";
+            // 
+            // txtStudentFineRate
+            // 
+            this.txtStudentFineRate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStudentFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStudentFineRate.Location = new System.Drawing.Point(10, 96);
+            this.txtStudentFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.txtStudentFineRate.Name = "txtStudentFineRate";
+            this.txtStudentFineRate.Size = new System.Drawing.Size(376, 25);
+            this.txtStudentFineRate.TabIndex = 3;
+            this.txtStudentFineRate.Text = "$ 1.00";
+            // 
+            // lblStudentFineRate
+            // 
+            this.lblStudentFineRate.AutoSize = true;
+            this.lblStudentFineRate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStudentFineRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStudentFineRate.Location = new System.Drawing.Point(7, 77);
+            this.lblStudentFineRate.Margin = new System.Windows.Forms.Padding(0);
+            this.lblStudentFineRate.Name = "lblStudentFineRate";
+            this.lblStudentFineRate.Size = new System.Drawing.Size(60, 19);
+            this.lblStudentFineRate.TabIndex = 2;
+            this.lblStudentFineRate.Text = "Student:";
+            // 
+            // lblOverdueRates
+            // 
+            this.lblOverdueRates.AutoSize = true;
+            this.lblOverdueRates.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOverdueRates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblOverdueRates.Location = new System.Drawing.Point(6, 41);
+            this.lblOverdueRates.Margin = new System.Windows.Forms.Padding(0);
+            this.lblOverdueRates.Name = "lblOverdueRates";
+            this.lblOverdueRates.Size = new System.Drawing.Size(219, 21);
+            this.lblOverdueRates.TabIndex = 1;
+            this.lblOverdueRates.Text = "Overdue Fine Rates (Per Day)";
+            // 
+            // lblFineRatesTitle
+            // 
+            this.lblFineRatesTitle.AutoSize = true;
+            this.lblFineRatesTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFineRatesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblFineRatesTitle.Location = new System.Drawing.Point(4, 7);
+            this.lblFineRatesTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFineRatesTitle.Name = "lblFineRatesTitle";
+            this.lblFineRatesTitle.Size = new System.Drawing.Size(271, 32);
+            this.lblFineRatesTitle.TabIndex = 0;
+            this.lblFineRatesTitle.Text = "Fine and Penalty Rates";
+            // 
+            // tabPageNotifications
+            // 
+            this.tabPageNotifications.BackColor = System.Drawing.Color.White;
+            this.tabPageNotifications.Controls.Add(this.panelNotificationsContent);
+            this.tabPageNotifications.Location = new System.Drawing.Point(4, 26);
+            this.tabPageNotifications.Name = "tabPageNotifications";
+            this.tabPageNotifications.Padding = new System.Windows.Forms.Padding(30, 32, 30, 32);
+            this.tabPageNotifications.Size = new System.Drawing.Size(1192, 684);
+            this.tabPageNotifications.TabIndex = 3;
+            this.tabPageNotifications.Text = "🔔 Notifications";
+            // 
+            // panelNotificationsContent
+            // 
+            this.panelNotificationsContent.AutoScroll = true;
+            this.panelNotificationsContent.BackColor = System.Drawing.Color.Transparent;
+            this.panelNotificationsContent.Controls.Add(this.panelNewArrivalsCard);
+            this.panelNotificationsContent.Controls.Add(this.panelReservationNotificationsCard);
+            this.panelNotificationsContent.Controls.Add(this.panelOverdueRemindersCard);
+            this.panelNotificationsContent.Controls.Add(this.lblNotificationsTitle);
+            this.panelNotificationsContent.Location = new System.Drawing.Point(328, 32);
+            this.panelNotificationsContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelNotificationsContent.Name = "panelNotificationsContent";
+            this.panelNotificationsContent.Size = new System.Drawing.Size(477, 303);
+            this.panelNotificationsContent.TabIndex = 0;
+            // 
+            // panelNewArrivalsCard
+            // 
+            this.panelNewArrivalsCard.BackColor = System.Drawing.Color.White;
+            this.panelNewArrivalsCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelNewArrivalsCard.Controls.Add(this.btnTurnOffNewArrivals);
+            this.panelNewArrivalsCard.Controls.Add(this.btnTurnOnNewArrivals);
+            this.panelNewArrivalsCard.Controls.Add(this.chkNewArrivals);
+            this.panelNewArrivalsCard.Controls.Add(this.lblNewArrivalsDesc);
+            this.panelNewArrivalsCard.Controls.Add(this.lblNewArrivalsTitle);
+            this.panelNewArrivalsCard.Location = new System.Drawing.Point(5, 211);
+            this.panelNewArrivalsCard.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.panelNewArrivalsCard.Name = "panelNewArrivalsCard";
+            this.panelNewArrivalsCard.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelNewArrivalsCard.Size = new System.Drawing.Size(450, 65);
+            this.panelNewArrivalsCard.TabIndex = 3;
+            // 
+            // btnTurnOffNewArrivals
+            // 
+            this.btnTurnOffNewArrivals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnTurnOffNewArrivals.FlatAppearance.BorderSize = 0;
+            this.btnTurnOffNewArrivals.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnOffNewArrivals.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnOffNewArrivals.ForeColor = System.Drawing.Color.White;
+            this.btnTurnOffNewArrivals.Location = new System.Drawing.Point(300, 20);
+            this.btnTurnOffNewArrivals.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.btnTurnOffNewArrivals.Name = "btnTurnOffNewArrivals";
+            this.btnTurnOffNewArrivals.Size = new System.Drawing.Size(60, 24);
+            this.btnTurnOffNewArrivals.TabIndex = 4;
+            this.btnTurnOffNewArrivals.Text = "Turn Off";
+            this.btnTurnOffNewArrivals.UseVisualStyleBackColor = false;
+            this.btnTurnOffNewArrivals.Visible = false;
+            this.btnTurnOffNewArrivals.Click += new System.EventHandler(this.btnTurnOffNewArrivals_Click);
+            // 
+            // btnTurnOnNewArrivals
+            // 
+            this.btnTurnOnNewArrivals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnTurnOnNewArrivals.FlatAppearance.BorderSize = 0;
+            this.btnTurnOnNewArrivals.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnOnNewArrivals.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnOnNewArrivals.ForeColor = System.Drawing.Color.White;
+            this.btnTurnOnNewArrivals.Location = new System.Drawing.Point(300, 20);
+            this.btnTurnOnNewArrivals.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.btnTurnOnNewArrivals.Name = "btnTurnOnNewArrivals";
+            this.btnTurnOnNewArrivals.Size = new System.Drawing.Size(60, 24);
+            this.btnTurnOnNewArrivals.TabIndex = 3;
+            this.btnTurnOnNewArrivals.Text = "Turn On";
+            this.btnTurnOnNewArrivals.UseVisualStyleBackColor = false;
+            this.btnTurnOnNewArrivals.Click += new System.EventHandler(this.btnTurnOnNewArrivals_Click);
+            // 
+            // chkNewArrivals
+            // 
+            this.chkNewArrivals.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkNewArrivals.FlatAppearance.BorderSize = 0;
+            this.chkNewArrivals.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkNewArrivals.Location = new System.Drawing.Point(375, 20);
+            this.chkNewArrivals.Margin = new System.Windows.Forms.Padding(0);
+            this.chkNewArrivals.Name = "chkNewArrivals";
+            this.chkNewArrivals.Size = new System.Drawing.Size(38, 24);
+            this.chkNewArrivals.TabIndex = 2;
+            this.chkNewArrivals.UseVisualStyleBackColor = false;
+            this.chkNewArrivals.CheckedChanged += new System.EventHandler(this.chkNewArrivals_CheckedChanged);
+            // 
+            // lblNewArrivalsDesc
+            // 
+            this.lblNewArrivalsDesc.AutoSize = true;
+            this.lblNewArrivalsDesc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNewArrivalsDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblNewArrivalsDesc.Location = new System.Drawing.Point(15, 37);
+            this.lblNewArrivalsDesc.Margin = new System.Windows.Forms.Padding(0);
+            this.lblNewArrivalsDesc.Name = "lblNewArrivalsDesc";
+            this.lblNewArrivalsDesc.Size = new System.Drawing.Size(217, 19);
+            this.lblNewArrivalsDesc.TabIndex = 1;
+            this.lblNewArrivalsDesc.Text = "Notify members about new books";
+            // 
+            // lblNewArrivalsTitle
+            // 
+            this.lblNewArrivalsTitle.AutoSize = true;
+            this.lblNewArrivalsTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNewArrivalsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblNewArrivalsTitle.Location = new System.Drawing.Point(14, 14);
+            this.lblNewArrivalsTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblNewArrivalsTitle.Name = "lblNewArrivalsTitle";
+            this.lblNewArrivalsTitle.Size = new System.Drawing.Size(107, 21);
+            this.lblNewArrivalsTitle.TabIndex = 0;
+            this.lblNewArrivalsTitle.Text = "New Arrivals";
+            // 
+            // panelReservationNotificationsCard
+            // 
+            this.panelReservationNotificationsCard.BackColor = System.Drawing.Color.White;
+            this.panelReservationNotificationsCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelReservationNotificationsCard.Controls.Add(this.btnTurnOffReservationNotifications);
+            this.panelReservationNotificationsCard.Controls.Add(this.btnTurnOnReservationNotifications);
+            this.panelReservationNotificationsCard.Controls.Add(this.chkReservationNotifications);
+            this.panelReservationNotificationsCard.Controls.Add(this.lblReservationNotificationsDesc);
+            this.panelReservationNotificationsCard.Controls.Add(this.lblReservationNotificationsTitle);
+            this.panelReservationNotificationsCard.Location = new System.Drawing.Point(5, 130);
+            this.panelReservationNotificationsCard.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.panelReservationNotificationsCard.Name = "panelReservationNotificationsCard";
+            this.panelReservationNotificationsCard.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelReservationNotificationsCard.Size = new System.Drawing.Size(450, 65);
+            this.panelReservationNotificationsCard.TabIndex = 2;
+            // 
+            // btnTurnOffReservationNotifications
+            // 
+            this.btnTurnOffReservationNotifications.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnTurnOffReservationNotifications.FlatAppearance.BorderSize = 0;
+            this.btnTurnOffReservationNotifications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnOffReservationNotifications.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnOffReservationNotifications.ForeColor = System.Drawing.Color.White;
+            this.btnTurnOffReservationNotifications.Location = new System.Drawing.Point(300, 20);
+            this.btnTurnOffReservationNotifications.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.btnTurnOffReservationNotifications.Name = "btnTurnOffReservationNotifications";
+            this.btnTurnOffReservationNotifications.Size = new System.Drawing.Size(60, 24);
+            this.btnTurnOffReservationNotifications.TabIndex = 4;
+            this.btnTurnOffReservationNotifications.Text = "Turn Off";
+            this.btnTurnOffReservationNotifications.UseVisualStyleBackColor = false;
+            this.btnTurnOffReservationNotifications.Click += new System.EventHandler(this.btnTurnOffReservationNotifications_Click);
+            // 
+            // btnTurnOnReservationNotifications
+            // 
+            this.btnTurnOnReservationNotifications.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnTurnOnReservationNotifications.FlatAppearance.BorderSize = 0;
+            this.btnTurnOnReservationNotifications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnOnReservationNotifications.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnOnReservationNotifications.ForeColor = System.Drawing.Color.White;
+            this.btnTurnOnReservationNotifications.Location = new System.Drawing.Point(300, 20);
+            this.btnTurnOnReservationNotifications.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.btnTurnOnReservationNotifications.Name = "btnTurnOnReservationNotifications";
+            this.btnTurnOnReservationNotifications.Size = new System.Drawing.Size(60, 24);
+            this.btnTurnOnReservationNotifications.TabIndex = 3;
+            this.btnTurnOnReservationNotifications.Text = "Turn On";
+            this.btnTurnOnReservationNotifications.UseVisualStyleBackColor = false;
+            this.btnTurnOnReservationNotifications.Visible = false;
+            this.btnTurnOnReservationNotifications.Click += new System.EventHandler(this.btnTurnOnReservationNotifications_Click);
+            // 
+            // chkReservationNotifications
+            // 
+            this.chkReservationNotifications.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkReservationNotifications.FlatAppearance.BorderSize = 0;
+            this.chkReservationNotifications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkReservationNotifications.Location = new System.Drawing.Point(375, 20);
+            this.chkReservationNotifications.Margin = new System.Windows.Forms.Padding(0);
+            this.chkReservationNotifications.Name = "chkReservationNotifications";
+            this.chkReservationNotifications.Size = new System.Drawing.Size(38, 24);
+            this.chkReservationNotifications.TabIndex = 2;
+            this.chkReservationNotifications.UseVisualStyleBackColor = false;
+            this.chkReservationNotifications.CheckedChanged += new System.EventHandler(this.chkReservationNotifications_CheckedChanged);
+            // 
+            // lblReservationNotificationsDesc
+            // 
+            this.lblReservationNotificationsDesc.AutoSize = true;
+            this.lblReservationNotificationsDesc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblReservationNotificationsDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblReservationNotificationsDesc.Location = new System.Drawing.Point(15, 37);
+            this.lblReservationNotificationsDesc.Margin = new System.Windows.Forms.Padding(0);
+            this.lblReservationNotificationsDesc.Name = "lblReservationNotificationsDesc";
+            this.lblReservationNotificationsDesc.Size = new System.Drawing.Size(259, 19);
+            this.lblReservationNotificationsDesc.TabIndex = 1;
+            this.lblReservationNotificationsDesc.Text = "Notify when reserved books are available";
+            // 
+            // lblReservationNotificationsTitle
+            // 
+            this.lblReservationNotificationsTitle.AutoSize = true;
+            this.lblReservationNotificationsTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblReservationNotificationsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblReservationNotificationsTitle.Location = new System.Drawing.Point(15, 14);
+            this.lblReservationNotificationsTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblReservationNotificationsTitle.Name = "lblReservationNotificationsTitle";
+            this.lblReservationNotificationsTitle.Size = new System.Drawing.Size(205, 21);
+            this.lblReservationNotificationsTitle.TabIndex = 0;
+            this.lblReservationNotificationsTitle.Text = "Reservation Notifications";
+            // 
+            // panelOverdueRemindersCard
+            // 
+            this.panelOverdueRemindersCard.BackColor = System.Drawing.Color.White;
+            this.panelOverdueRemindersCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelOverdueRemindersCard.Controls.Add(this.btnTurnOffOverdueReminders);
+            this.panelOverdueRemindersCard.Controls.Add(this.btnTurnOnOverdueReminders);
+            this.panelOverdueRemindersCard.Controls.Add(this.chkOverdueReminders);
+            this.panelOverdueRemindersCard.Controls.Add(this.lblOverdueRemindersDesc);
+            this.panelOverdueRemindersCard.Controls.Add(this.lblOverdueRemindersTitle);
+            this.panelOverdueRemindersCard.Location = new System.Drawing.Point(5, 49);
+            this.panelOverdueRemindersCard.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.panelOverdueRemindersCard.Name = "panelOverdueRemindersCard";
+            this.panelOverdueRemindersCard.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
+            this.panelOverdueRemindersCard.Size = new System.Drawing.Size(450, 65);
+            this.panelOverdueRemindersCard.TabIndex = 1;
+            // 
+            // btnTurnOffOverdueReminders
+            // 
+            this.btnTurnOffOverdueReminders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnTurnOffOverdueReminders.FlatAppearance.BorderSize = 0;
+            this.btnTurnOffOverdueReminders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnOffOverdueReminders.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnOffOverdueReminders.ForeColor = System.Drawing.Color.White;
+            this.btnTurnOffOverdueReminders.Location = new System.Drawing.Point(300, 20);
+            this.btnTurnOffOverdueReminders.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.btnTurnOffOverdueReminders.Name = "btnTurnOffOverdueReminders";
+            this.btnTurnOffOverdueReminders.Size = new System.Drawing.Size(60, 24);
+            this.btnTurnOffOverdueReminders.TabIndex = 4;
+            this.btnTurnOffOverdueReminders.Text = "Turn Off";
+            this.btnTurnOffOverdueReminders.UseVisualStyleBackColor = false;
+            this.btnTurnOffOverdueReminders.Click += new System.EventHandler(this.btnTurnOffOverdueReminders_Click);
+            // 
+            // btnTurnOnOverdueReminders
+            // 
+            this.btnTurnOnOverdueReminders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnTurnOnOverdueReminders.FlatAppearance.BorderSize = 0;
+            this.btnTurnOnOverdueReminders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnOnOverdueReminders.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnOnOverdueReminders.ForeColor = System.Drawing.Color.White;
+            this.btnTurnOnOverdueReminders.Location = new System.Drawing.Point(300, 20);
+            this.btnTurnOnOverdueReminders.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.btnTurnOnOverdueReminders.Name = "btnTurnOnOverdueReminders";
+            this.btnTurnOnOverdueReminders.Size = new System.Drawing.Size(60, 24);
+            this.btnTurnOnOverdueReminders.TabIndex = 3;
+            this.btnTurnOnOverdueReminders.Text = "Turn On";
+            this.btnTurnOnOverdueReminders.UseVisualStyleBackColor = false;
+            this.btnTurnOnOverdueReminders.Visible = false;
+            this.btnTurnOnOverdueReminders.Click += new System.EventHandler(this.btnTurnOnOverdueReminders_Click);
+            // 
+            // chkOverdueReminders
+            // 
+            this.chkOverdueReminders.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkOverdueReminders.FlatAppearance.BorderSize = 0;
+            this.chkOverdueReminders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkOverdueReminders.Location = new System.Drawing.Point(375, 20);
+            this.chkOverdueReminders.Margin = new System.Windows.Forms.Padding(0);
+            this.chkOverdueReminders.Name = "chkOverdueReminders";
+            this.chkOverdueReminders.Size = new System.Drawing.Size(38, 24);
+            this.chkOverdueReminders.TabIndex = 2;
+            this.chkOverdueReminders.UseVisualStyleBackColor = false;
+            this.chkOverdueReminders.CheckedChanged += new System.EventHandler(this.chkOverdueReminders_CheckedChanged);
+            // 
+            // lblOverdueRemindersDesc
+            // 
+            this.lblOverdueRemindersDesc.AutoSize = true;
+            this.lblOverdueRemindersDesc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOverdueRemindersDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblOverdueRemindersDesc.Location = new System.Drawing.Point(15, 37);
+            this.lblOverdueRemindersDesc.Margin = new System.Windows.Forms.Padding(0);
+            this.lblOverdueRemindersDesc.Name = "lblOverdueRemindersDesc";
+            this.lblOverdueRemindersDesc.Size = new System.Drawing.Size(256, 19);
+            this.lblOverdueRemindersDesc.TabIndex = 1;
+            this.lblOverdueRemindersDesc.Text = "Send email reminders for overdue books";
+            // 
+            // lblOverdueRemindersTitle
+            // 
+            this.lblOverdueRemindersTitle.AutoSize = true;
+            this.lblOverdueRemindersTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOverdueRemindersTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblOverdueRemindersTitle.Location = new System.Drawing.Point(15, 14);
+            this.lblOverdueRemindersTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblOverdueRemindersTitle.Name = "lblOverdueRemindersTitle";
+            this.lblOverdueRemindersTitle.Size = new System.Drawing.Size(203, 21);
+            this.lblOverdueRemindersTitle.TabIndex = 0;
+            this.lblOverdueRemindersTitle.Text = "Overdue Book Reminders";
+            // 
+            // lblNotificationsTitle
+            // 
+            this.lblNotificationsTitle.AutoSize = true;
+            this.lblNotificationsTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNotificationsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblNotificationsTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblNotificationsTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblNotificationsTitle.Name = "lblNotificationsTitle";
+            this.lblNotificationsTitle.Size = new System.Drawing.Size(250, 32);
+            this.lblNotificationsTitle.TabIndex = 0;
+            this.lblNotificationsTitle.Text = "Notification Settings";
+            // 
+            // tabPageSecurity
+            // 
+            this.tabPageSecurity.BackColor = System.Drawing.Color.White;
+            this.tabPageSecurity.Controls.Add(this.panelSecurityContent);
+            this.tabPageSecurity.Location = new System.Drawing.Point(4, 26);
+            this.tabPageSecurity.Name = "tabPageSecurity";
+            this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(30, 32, 30, 32);
+            this.tabPageSecurity.Size = new System.Drawing.Size(1192, 684);
+            this.tabPageSecurity.TabIndex = 4;
+            this.tabPageSecurity.Text = "🔒 Security";
+            // 
+            // panelSecurityContent
+            // 
+            this.panelSecurityContent.AutoScroll = true;
+            this.panelSecurityContent.BackColor = System.Drawing.Color.Transparent;
+            this.panelSecurityContent.Controls.Add(this.btnUpdatePassword);
+            this.panelSecurityContent.Controls.Add(this.txtConfirmPassword);
+            this.panelSecurityContent.Controls.Add(this.lblConfirmPassword);
+            this.panelSecurityContent.Controls.Add(this.txtNewPassword);
+            this.panelSecurityContent.Controls.Add(this.lblNewPassword);
+            this.panelSecurityContent.Controls.Add(this.txtCurrentPassword);
+            this.panelSecurityContent.Controls.Add(this.lblCurrentPassword);
+            this.panelSecurityContent.Controls.Add(this.lblChangePassword);
+            this.panelSecurityContent.Controls.Add(this.lblSecurityTitle);
+            this.panelSecurityContent.Location = new System.Drawing.Point(407, 32);
+            this.panelSecurityContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelSecurityContent.Name = "panelSecurityContent";
+            this.panelSecurityContent.Size = new System.Drawing.Size(314, 334);
+            this.panelSecurityContent.TabIndex = 0;
+            // 
+            // btnUpdatePassword
+            // 
+            this.btnUpdatePassword.BackColor = System.Drawing.Color.Maroon;
+            this.btnUpdatePassword.FlatAppearance.BorderSize = 0;
+            this.btnUpdatePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdatePassword.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdatePassword.ForeColor = System.Drawing.Color.White;
+            this.btnUpdatePassword.Location = new System.Drawing.Point(5, 260);
+            this.btnUpdatePassword.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.btnUpdatePassword.Name = "btnUpdatePassword";
+            this.btnUpdatePassword.Size = new System.Drawing.Size(295, 37);
+            this.btnUpdatePassword.TabIndex = 8;
+            this.btnUpdatePassword.Text = "Update Password";
+            this.btnUpdatePassword.UseVisualStyleBackColor = false;
+            this.btnUpdatePassword.Click += new System.EventHandler(this.btnUpdatePassword_Click);
+            // 
+            // txtConfirmPassword
+            // 
+            this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtConfirmPassword.Location = new System.Drawing.Point(5, 219);
+            this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.txtConfirmPassword.Name = "txtConfirmPassword";
+            this.txtConfirmPassword.PasswordChar = '●';
+            this.txtConfirmPassword.Size = new System.Drawing.Size(295, 25);
+            this.txtConfirmPassword.TabIndex = 7;
+            // 
+            // lblConfirmPassword
+            // 
+            this.lblConfirmPassword.AutoSize = true;
+            this.lblConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblConfirmPassword.Location = new System.Drawing.Point(2, 199);
+            this.lblConfirmPassword.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.lblConfirmPassword.Name = "lblConfirmPassword";
+            this.lblConfirmPassword.Size = new System.Drawing.Size(149, 19);
+            this.lblConfirmPassword.TabIndex = 6;
+            this.lblConfirmPassword.Text = "Confirm new password";
+            // 
+            // txtNewPassword
+            // 
+            this.txtNewPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNewPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNewPassword.Location = new System.Drawing.Point(5, 158);
+            this.txtNewPassword.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.txtNewPassword.Name = "txtNewPassword";
+            this.txtNewPassword.PasswordChar = '●';
+            this.txtNewPassword.Size = new System.Drawing.Size(295, 25);
+            this.txtNewPassword.TabIndex = 5;
+            // 
+            // lblNewPassword
+            // 
+            this.lblNewPassword.AutoSize = true;
+            this.lblNewPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNewPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblNewPassword.Location = new System.Drawing.Point(2, 138);
+            this.lblNewPassword.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.lblNewPassword.Name = "lblNewPassword";
+            this.lblNewPassword.Size = new System.Drawing.Size(98, 19);
+            this.lblNewPassword.TabIndex = 4;
+            this.lblNewPassword.Text = "New password";
+            // 
+            // txtCurrentPassword
+            // 
+            this.txtCurrentPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCurrentPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCurrentPassword.Location = new System.Drawing.Point(5, 98);
+            this.txtCurrentPassword.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.txtCurrentPassword.Name = "txtCurrentPassword";
+            this.txtCurrentPassword.PasswordChar = '●';
+            this.txtCurrentPassword.Size = new System.Drawing.Size(295, 25);
+            this.txtCurrentPassword.TabIndex = 3;
+            // 
+            // lblCurrentPassword
+            // 
+            this.lblCurrentPassword.AutoSize = true;
+            this.lblCurrentPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblCurrentPassword.Location = new System.Drawing.Point(2, 77);
+            this.lblCurrentPassword.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.lblCurrentPassword.Name = "lblCurrentPassword";
+            this.lblCurrentPassword.Size = new System.Drawing.Size(118, 19);
+            this.lblCurrentPassword.TabIndex = 2;
+            this.lblCurrentPassword.Text = "Current password";
+            // 
+            // lblChangePassword
+            // 
+            this.lblChangePassword.AutoSize = true;
+            this.lblChangePassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChangePassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblChangePassword.Location = new System.Drawing.Point(2, 49);
+            this.lblChangePassword.Margin = new System.Windows.Forms.Padding(0, 16, 0, 0);
+            this.lblChangePassword.Name = "lblChangePassword";
+            this.lblChangePassword.Size = new System.Drawing.Size(144, 21);
+            this.lblChangePassword.TabIndex = 1;
+            this.lblChangePassword.Text = "Change Password";
+            // 
+            // lblSecurityTitle
+            // 
+            this.lblSecurityTitle.AutoSize = true;
+            this.lblSecurityTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSecurityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSecurityTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblSecurityTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSecurityTitle.Name = "lblSecurityTitle";
+            this.lblSecurityTitle.Size = new System.Drawing.Size(205, 32);
+            this.lblSecurityTitle.TabIndex = 0;
+            this.lblSecurityTitle.Text = "Security Settings";
+            // 
+            // tabPageSystem
+            // 
+            this.tabPageSystem.BackColor = System.Drawing.Color.White;
+            this.tabPageSystem.Controls.Add(this.panelSystemContent);
+            this.tabPageSystem.Location = new System.Drawing.Point(4, 26);
+            this.tabPageSystem.Name = "tabPageSystem";
+            this.tabPageSystem.Padding = new System.Windows.Forms.Padding(30, 32, 30, 32);
+            this.tabPageSystem.Size = new System.Drawing.Size(1192, 684);
+            this.tabPageSystem.TabIndex = 5;
+            this.tabPageSystem.Text = "⚙️ System";
+            // 
+            // panelSystemContent
+            // 
+            this.panelSystemContent.AutoScroll = true;
+            this.panelSystemContent.BackColor = System.Drawing.Color.White;
+            this.panelSystemContent.Controls.Add(this.panelSystemInfoCard);
+            this.panelSystemContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSystemContent.Location = new System.Drawing.Point(30, 32);
+            this.panelSystemContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelSystemContent.Name = "panelSystemContent";
+            this.panelSystemContent.Size = new System.Drawing.Size(1132, 620);
+            this.panelSystemContent.TabIndex = 0;
+            // 
+            // panelSystemInfoCard
+            // 
+            this.panelSystemInfoCard.BackColor = System.Drawing.Color.White;
+            this.panelSystemInfoCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSystemInfoCard.Controls.Add(this.lblStorageUsedValue);
+            this.panelSystemInfoCard.Controls.Add(this.lblStorageUsed);
+            this.panelSystemInfoCard.Controls.Add(this.lblLastBackupValue);
+            this.panelSystemInfoCard.Controls.Add(this.lblLastBackup);
+            this.panelSystemInfoCard.Controls.Add(this.lblDatabaseStatusValue);
+            this.panelSystemInfoCard.Controls.Add(this.lblDatabaseStatus);
+            this.panelSystemInfoCard.Controls.Add(this.lblSystemVersionValue);
+            this.panelSystemInfoCard.Controls.Add(this.lblSystemVersion);
+            this.panelSystemInfoCard.Controls.Add(this.lblSystemInfoTitle);
+            this.panelSystemInfoCard.Location = new System.Drawing.Point(279, 32);
+            this.panelSystemInfoCard.Margin = new System.Windows.Forms.Padding(0);
+            this.panelSystemInfoCard.Name = "panelSystemInfoCard";
+            this.panelSystemInfoCard.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
+            this.panelSystemInfoCard.Size = new System.Drawing.Size(600, 320);
+            this.panelSystemInfoCard.TabIndex = 0;
+            // 
+            // lblStorageUsedValue
+            // 
+            this.lblStorageUsedValue.AutoSize = true;
+            this.lblStorageUsedValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStorageUsedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStorageUsedValue.Location = new System.Drawing.Point(320, 186);
+            this.lblStorageUsedValue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblStorageUsedValue.Name = "lblStorageUsedValue";
+            this.lblStorageUsedValue.Size = new System.Drawing.Size(117, 19);
+            this.lblStorageUsedValue.TabIndex = 8;
+            this.lblStorageUsedValue.Text = "245 GB / 500 GB";
+            // 
+            // lblStorageUsed
+            // 
+            this.lblStorageUsed.AutoSize = true;
+            this.lblStorageUsed.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStorageUsed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStorageUsed.Location = new System.Drawing.Point(20, 186);
+            this.lblStorageUsed.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblStorageUsed.Name = "lblStorageUsed";
+            this.lblStorageUsed.Size = new System.Drawing.Size(91, 19);
+            this.lblStorageUsed.TabIndex = 7;
+            this.lblStorageUsed.Text = "Storage Used";
+            // 
+            // lblLastBackupValue
+            // 
+            this.lblLastBackupValue.AutoSize = true;
+            this.lblLastBackupValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastBackupValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLastBackupValue.Location = new System.Drawing.Point(320, 148);
+            this.lblLastBackupValue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblLastBackupValue.Name = "lblLastBackupValue";
+            this.lblLastBackupValue.Size = new System.Drawing.Size(152, 19);
+            this.lblLastBackupValue.TabIndex = 6;
+            this.lblLastBackupValue.Text = "2026-01-04 02:00 AM";
+            // 
+            // lblLastBackup
+            // 
+            this.lblLastBackup.AutoSize = true;
+            this.lblLastBackup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastBackup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblLastBackup.Location = new System.Drawing.Point(20, 148);
+            this.lblLastBackup.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblLastBackup.Name = "lblLastBackup";
+            this.lblLastBackup.Size = new System.Drawing.Size(82, 19);
+            this.lblLastBackup.TabIndex = 5;
+            this.lblLastBackup.Text = "Last Backup";
+            // 
+            // lblDatabaseStatusValue
+            // 
+            this.lblDatabaseStatusValue.AutoSize = true;
+            this.lblDatabaseStatusValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.lblDatabaseStatusValue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDatabaseStatusValue.ForeColor = System.Drawing.Color.White;
+            this.lblDatabaseStatusValue.Location = new System.Drawing.Point(320, 108);
+            this.lblDatabaseStatusValue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblDatabaseStatusValue.Name = "lblDatabaseStatusValue";
+            this.lblDatabaseStatusValue.Padding = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.lblDatabaseStatusValue.Size = new System.Drawing.Size(79, 21);
+            this.lblDatabaseStatusValue.TabIndex = 4;
+            this.lblDatabaseStatusValue.Text = "Connected";
+            // 
+            // lblDatabaseStatus
+            // 
+            this.lblDatabaseStatus.AutoSize = true;
+            this.lblDatabaseStatus.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDatabaseStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblDatabaseStatus.Location = new System.Drawing.Point(20, 110);
+            this.lblDatabaseStatus.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblDatabaseStatus.Name = "lblDatabaseStatus";
+            this.lblDatabaseStatus.Size = new System.Drawing.Size(108, 19);
+            this.lblDatabaseStatus.TabIndex = 3;
+            this.lblDatabaseStatus.Text = "Database Status";
+            // 
+            // lblSystemVersionValue
+            // 
+            this.lblSystemVersionValue.AutoSize = true;
+            this.lblSystemVersionValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSystemVersionValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSystemVersionValue.Location = new System.Drawing.Point(320, 72);
+            this.lblSystemVersionValue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblSystemVersionValue.Name = "lblSystemVersionValue";
+            this.lblSystemVersionValue.Size = new System.Drawing.Size(49, 19);
+            this.lblSystemVersionValue.TabIndex = 2;
+            this.lblSystemVersionValue.Text = "v2.5.1";
+            // 
+            // lblSystemVersion
+            // 
+            this.lblSystemVersion.AutoSize = true;
+            this.lblSystemVersion.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSystemVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSystemVersion.Location = new System.Drawing.Point(20, 72);
+            this.lblSystemVersion.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblSystemVersion.Name = "lblSystemVersion";
+            this.lblSystemVersion.Size = new System.Drawing.Size(102, 19);
+            this.lblSystemVersion.TabIndex = 1;
+            this.lblSystemVersion.Text = "System Version";
+            // 
+            // lblSystemInfoTitle
+            // 
+            this.lblSystemInfoTitle.AutoSize = true;
+            this.lblSystemInfoTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSystemInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSystemInfoTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblSystemInfoTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 20);
+            this.lblSystemInfoTitle.Name = "lblSystemInfoTitle";
+            this.lblSystemInfoTitle.Size = new System.Drawing.Size(239, 32);
+            this.lblSystemInfoTitle.TabIndex = 0;
+            this.lblSystemInfoTitle.Text = "System Information";
+            // 
+            // AdminSettingsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.Controls.Add(this.tabControlSettings);
+            this.Controls.Add(this.panelHeader);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "AdminSettingsForm";
+            this.Text = "Settings";
+            this.Load += new System.EventHandler(this.AdminSettingsForm_Load);
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.tabControlSettings.ResumeLayout(false);
+            this.tabPageGeneral.ResumeLayout(false);
+            this.panelGeneralContent.ResumeLayout(false);
+            this.panelGeneralContent.PerformLayout();
+            this.tabPageLibraryRules.ResumeLayout(false);
+            this.panelLibraryRulesMainContent.ResumeLayout(false);
+            this.panelRenewalSettingsCard.ResumeLayout(false);
+            this.panelRenewalSettingsCard.PerformLayout();
+            this.panelLibraryRulesContent.ResumeLayout(false);
+            this.panelLibraryRulesContent.PerformLayout();
+            this.panelLibraryRulesSidebar.ResumeLayout(false);
+            this.tabPageFineRates.ResumeLayout(false);
+            this.panelFineRatesContent.ResumeLayout(false);
+            this.panelFineRatesContent.PerformLayout();
+            this.tabPageNotifications.ResumeLayout(false);
+            this.panelNotificationsContent.ResumeLayout(false);
+            this.panelNotificationsContent.PerformLayout();
+            this.panelNewArrivalsCard.ResumeLayout(false);
+            this.panelNewArrivalsCard.PerformLayout();
+            this.panelReservationNotificationsCard.ResumeLayout(false);
+            this.panelReservationNotificationsCard.PerformLayout();
+            this.panelOverdueRemindersCard.ResumeLayout(false);
+            this.panelOverdueRemindersCard.PerformLayout();
+            this.tabPageSecurity.ResumeLayout(false);
+            this.panelSecurityContent.ResumeLayout(false);
+            this.panelSecurityContent.PerformLayout();
+            this.tabPageSystem.ResumeLayout(false);
+            this.panelSystemContent.ResumeLayout(false);
+            this.panelSystemInfoCard.ResumeLayout(false);
+            this.panelSystemInfoCard.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+        #endregion
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.TabControl tabControlSettings;
+        private System.Windows.Forms.TabPage tabPageGeneral;
+        private System.Windows.Forms.Panel panelGeneralContent;
+        private System.Windows.Forms.Label lblGeneralTitle;
+        private System.Windows.Forms.Label lblLibraryName;
+        private System.Windows.Forms.TextBox txtLibraryName;
+        private System.Windows.Forms.Label lblLibraryCode;
+        private System.Windows.Forms.TextBox txtLibraryCode;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.Label lblContactEmail;
+        private System.Windows.Forms.TextBox txtContactEmail;
+        private System.Windows.Forms.Label lblPhoneNumber;
+        private System.Windows.Forms.TextBox txtPhoneNumber;
+        private System.Windows.Forms.Button btnSaveGeneral;
+        private System.Windows.Forms.TabPage tabPageLibraryRules;
+        private System.Windows.Forms.Panel panelLibraryRulesSidebar;
+        private System.Windows.Forms.Panel panelLibraryRulesMainContent;
+        private System.Windows.Forms.Panel panelLibraryRulesContent;
+        private System.Windows.Forms.Panel panelRenewalSettingsCard;
+        private System.Windows.Forms.Label lblLibraryRulesTitle;
+        private System.Windows.Forms.Label lblBorrowingLimits;
+        private System.Windows.Forms.Label lblStudentLimit;
+        private System.Windows.Forms.TextBox txtStudentLimit;
+        private System.Windows.Forms.Label lblFacultyLimit;
+        private System.Windows.Forms.TextBox txtFacultyLimit;
+        private System.Windows.Forms.Label lblStaffLimit;
+        private System.Windows.Forms.TextBox txtStaffLimit;
+        private System.Windows.Forms.Label lblGuestLimit;
+        private System.Windows.Forms.TextBox txtGuestLimit;
+        private System.Windows.Forms.Label lblBorrowingPeriod;
+        private System.Windows.Forms.Label lblStudentPeriod;
+        private System.Windows.Forms.TextBox txtStudentPeriod;
+        private System.Windows.Forms.Label lblFacultyPeriod;
+        private System.Windows.Forms.TextBox txtFacultyPeriod;
+        private System.Windows.Forms.Label lblStaffPeriod;
+        private System.Windows.Forms.TextBox txtStaffPeriod;
+        private System.Windows.Forms.Label lblGuestPeriod;
+        private System.Windows.Forms.TextBox txtGuestPeriod;
+        private System.Windows.Forms.Label lblRenewalSettings;
+        private System.Windows.Forms.Label lblMaxRenewals;
+        private System.Windows.Forms.TextBox txtMaxRenewals;
+        private System.Windows.Forms.Button btnSaveLibraryRules;
+        private System.Windows.Forms.TabPage tabPageFineRates;
+        private System.Windows.Forms.Panel panelFineRatesContent;
+        private System.Windows.Forms.Label lblFineRatesTitle;
+        private System.Windows.Forms.Label lblOverdueRates;
+        private System.Windows.Forms.Label lblStudentFineRate;
+        private System.Windows.Forms.TextBox txtStudentFineRate;
+        private System.Windows.Forms.Label lblFacultyFineRate;
+        private System.Windows.Forms.TextBox txtFacultyFineRate;
+        private System.Windows.Forms.Label lblStaffFineRate;
+        private System.Windows.Forms.TextBox txtStaffFineRate;
+        private System.Windows.Forms.Label lblGuestFineRate;
+        private System.Windows.Forms.TextBox txtGuestFineRate;
+        private System.Windows.Forms.Label lblOtherCharges;
+        private System.Windows.Forms.Label lblLostCardReplacement;
+        private System.Windows.Forms.TextBox txtLostCardReplacement;
+        private System.Windows.Forms.Label lblMaxFineCap;
+        private System.Windows.Forms.TextBox txtMaxFineCap;
+        private System.Windows.Forms.Button btnSaveFineRates;
+        private System.Windows.Forms.TabPage tabPageNotifications;
+        private System.Windows.Forms.Panel panelNotificationsContent;
+        private System.Windows.Forms.Label lblNotificationsTitle;
+        private System.Windows.Forms.Panel panelOverdueRemindersCard;
+        private System.Windows.Forms.Label lblOverdueRemindersTitle;
+        private System.Windows.Forms.Label lblOverdueRemindersDesc;
+        private System.Windows.Forms.CheckBox chkOverdueReminders;
+        private System.Windows.Forms.Button btnTurnOnOverdueReminders;
+        private System.Windows.Forms.Button btnTurnOffOverdueReminders;
+        private System.Windows.Forms.Panel panelReservationNotificationsCard;
+        private System.Windows.Forms.Label lblReservationNotificationsTitle;
+        private System.Windows.Forms.Label lblReservationNotificationsDesc;
+        private System.Windows.Forms.CheckBox chkReservationNotifications;
+        private System.Windows.Forms.Button btnTurnOnReservationNotifications;
+        private System.Windows.Forms.Button btnTurnOffReservationNotifications;
+        private System.Windows.Forms.Panel panelNewArrivalsCard;
+        private System.Windows.Forms.Label lblNewArrivalsTitle;
+        private System.Windows.Forms.Label lblNewArrivalsDesc;
+        private System.Windows.Forms.CheckBox chkNewArrivals;
+        private System.Windows.Forms.Button btnTurnOnNewArrivals;
+        private System.Windows.Forms.Button btnTurnOffNewArrivals;
+        private System.Windows.Forms.TabPage tabPageSecurity;
+        private System.Windows.Forms.Panel panelSecurityContent;
+        private System.Windows.Forms.Label lblSecurityTitle;
+        private System.Windows.Forms.Label lblChangePassword;
+        private System.Windows.Forms.Label lblCurrentPassword;
+        private System.Windows.Forms.TextBox txtCurrentPassword;
+        private System.Windows.Forms.Label lblNewPassword;
+        private System.Windows.Forms.TextBox txtNewPassword;
+        private System.Windows.Forms.Label lblConfirmPassword;
+        private System.Windows.Forms.TextBox txtConfirmPassword;
+        private System.Windows.Forms.Button btnUpdatePassword;
+        private System.Windows.Forms.TabPage tabPageSystem;
+        private System.Windows.Forms.Panel panelSystemContent;
+        private System.Windows.Forms.Panel panelSystemInfoCard;
+        private System.Windows.Forms.Label lblSystemInfoTitle;
+        private System.Windows.Forms.Label lblSystemVersion;
+        private System.Windows.Forms.Label lblSystemVersionValue;
+        private System.Windows.Forms.Label lblDatabaseStatus;
+        private System.Windows.Forms.Label lblDatabaseStatusValue;
+        private System.Windows.Forms.Label lblLastBackup;
+        private System.Windows.Forms.Label lblLastBackupValue;
+        private System.Windows.Forms.Label lblStorageUsed;
+        private System.Windows.Forms.Label lblStorageUsedValue;
+    }
+}

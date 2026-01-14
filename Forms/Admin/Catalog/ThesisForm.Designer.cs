@@ -1,0 +1,272 @@
+namespace Project5LMS.Forms.Admin.Catalog
+{
+    partial class ThesisForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.Label lblStudentName;
+        private System.Windows.Forms.TextBox txtStudentName;
+        private System.Windows.Forms.Label lblStudentID;
+        private System.Windows.Forms.TextBox txtStudentID;
+        private System.Windows.Forms.Label lblDegree;
+        private System.Windows.Forms.TextBox txtDegree;
+        private System.Windows.Forms.Label lblDepartment;
+        private System.Windows.Forms.TextBox txtDepartment;
+        private System.Windows.Forms.Label lblAdvisor;
+        private System.Windows.Forms.TextBox txtAdvisor;
+        private System.Windows.Forms.Label lblDefenseDate;
+        private System.Windows.Forms.DateTimePicker dtpDefenseDate;
+        private System.Windows.Forms.Label lblAbstract;
+        private System.Windows.Forms.TextBox txtAbstract;
+        private System.Windows.Forms.CheckBox chkIsRestricted;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        #region Windows Form Designer generated code
+        private void InitializeComponent()
+        {
+            this.chkIsRestricted = new System.Windows.Forms.CheckBox();
+            this.txtAbstract = new System.Windows.Forms.TextBox();
+            this.lblAbstract = new System.Windows.Forms.Label();
+            this.dtpDefenseDate = new System.Windows.Forms.DateTimePicker();
+            this.lblDefenseDate = new System.Windows.Forms.Label();
+            this.txtAdvisor = new System.Windows.Forms.TextBox();
+            this.lblAdvisor = new System.Windows.Forms.Label();
+            this.txtDepartment = new System.Windows.Forms.TextBox();
+            this.lblDepartment = new System.Windows.Forms.Label();
+            this.txtDegree = new System.Windows.Forms.TextBox();
+            this.lblDegree = new System.Windows.Forms.Label();
+            this.txtStudentID = new System.Windows.Forms.TextBox();
+            this.lblStudentID = new System.Windows.Forms.Label();
+            this.txtStudentName = new System.Windows.Forms.TextBox();
+            this.lblStudentName = new System.Windows.Forms.Label();
+            this.panelMain.SuspendLayout();
+            this.panelContent.SuspendLayout();
+            this.panelHeader.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelMain
+            // 
+            this.panelMain.Controls.Add(this.btnCancel);
+            this.panelMain.Controls.Add(this.btnSave);
+            this.panelMain.Controls.Add(this.chkIsRestricted);
+            this.panelMain.Controls.Add(this.txtAbstract);
+            this.panelMain.Controls.Add(this.lblAbstract);
+            this.panelMain.Controls.Add(this.dtpDefenseDate);
+            this.panelMain.Controls.Add(this.lblDefenseDate);
+            this.panelMain.Controls.Add(this.txtAdvisor);
+            this.panelMain.Controls.Add(this.lblAdvisor);
+            this.panelMain.Controls.Add(this.txtDepartment);
+            this.panelMain.Controls.Add(this.lblDepartment);
+            this.panelMain.Controls.Add(this.txtDegree);
+            this.panelMain.Controls.Add(this.lblDegree);
+            this.panelMain.Controls.Add(this.txtStudentID);
+            this.panelMain.Controls.Add(this.lblStudentID);
+            this.panelMain.Controls.Add(this.txtStudentName);
+            this.panelMain.Controls.Add(this.lblStudentName);
+            this.panelMain.Size = new System.Drawing.Size(500, 500);
+            this.panelMain.Controls.SetChildIndex(this.lblStudentName, 0);
+            this.panelMain.Controls.SetChildIndex(this.txtStudentName, 0);
+            this.panelMain.Controls.SetChildIndex(this.lblStudentID, 0);
+            this.panelMain.Controls.SetChildIndex(this.txtStudentID, 0);
+            this.panelMain.Controls.SetChildIndex(this.lblDegree, 0);
+            this.panelMain.Controls.SetChildIndex(this.txtDegree, 0);
+            this.panelMain.Controls.SetChildIndex(this.lblDepartment, 0);
+            this.panelMain.Controls.SetChildIndex(this.txtDepartment, 0);
+            this.panelMain.Controls.SetChildIndex(this.lblAdvisor, 0);
+            this.panelMain.Controls.SetChildIndex(this.txtAdvisor, 0);
+            this.panelMain.Controls.SetChildIndex(this.lblDefenseDate, 0);
+            this.panelMain.Controls.SetChildIndex(this.dtpDefenseDate, 0);
+            this.panelMain.Controls.SetChildIndex(this.lblAbstract, 0);
+            this.panelMain.Controls.SetChildIndex(this.txtAbstract, 0);
+            this.panelMain.Controls.SetChildIndex(this.chkIsRestricted, 0);
+            this.panelMain.Controls.SetChildIndex(this.btnSave, 0);
+            this.panelMain.Controls.SetChildIndex(this.btnCancel, 0);
+            this.panelMain.Controls.SetChildIndex(this.panelButtons, 0);
+            this.panelMain.Controls.SetChildIndex(this.panelContent, 0);
+            // 
+            // panelContent
+            // 
+            this.panelContent.Size = new System.Drawing.Size(460, 400);
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.Size = new System.Drawing.Size(430, 40);
+            // 
+            // panelSeparator
+            // 
+            this.panelSeparator.Size = new System.Drawing.Size(430, 1);
+            // 
+            // lblInstructions
+            // 
+            this.lblInstructions.Click += new System.EventHandler(this.lblInstructions_Click);
+            // 
+            // panelFieldsContainer
+            // 
+            this.panelFieldsContainer.Size = new System.Drawing.Size(430, 329);
+            // 
+            // panelButtons
+            // 
+            this.panelButtons.Location = new System.Drawing.Point(20, 420);
+            this.panelButtons.Size = new System.Drawing.Size(460, 60);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(230, 504);
+            this.btnSave.Size = new System.Drawing.Size(100, 49);
+            this.btnSave.TabIndex = 15;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(30, 504);
+            this.btnCancel.Size = new System.Drawing.Size(100, 49);
+            this.btnCancel.TabIndex = 16;
+            // 
+            // chkIsRestricted
+            // 
+            this.chkIsRestricted.AutoSize = true;
+            this.chkIsRestricted.Location = new System.Drawing.Point(130, 340);
+            this.chkIsRestricted.Name = "chkIsRestricted";
+            this.chkIsRestricted.Size = new System.Drawing.Size(138, 20);
+            this.chkIsRestricted.TabIndex = 14;
+            this.chkIsRestricted.Text = "Restricted Access";
+            this.chkIsRestricted.UseVisualStyleBackColor = true;
+            // 
+            // txtAbstract
+            // 
+            this.txtAbstract.Location = new System.Drawing.Point(130, 257);
+            this.txtAbstract.Multiline = true;
+            this.txtAbstract.Name = "txtAbstract";
+            this.txtAbstract.Size = new System.Drawing.Size(300, 60);
+            this.txtAbstract.TabIndex = 13;
+            // 
+            // lblAbstract
+            // 
+            this.lblAbstract.AutoSize = true;
+            this.lblAbstract.Location = new System.Drawing.Point(20, 260);
+            this.lblAbstract.Name = "lblAbstract";
+            this.lblAbstract.Size = new System.Drawing.Size(59, 16);
+            this.lblAbstract.TabIndex = 12;
+            this.lblAbstract.Text = "Abstract:";
+            // 
+            // dtpDefenseDate
+            // 
+            this.dtpDefenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDefenseDate.Location = new System.Drawing.Point(130, 217);
+            this.dtpDefenseDate.Name = "dtpDefenseDate";
+            this.dtpDefenseDate.Size = new System.Drawing.Size(300, 22);
+            this.dtpDefenseDate.TabIndex = 11;
+            // 
+            // lblDefenseDate
+            // 
+            this.lblDefenseDate.AutoSize = true;
+            this.lblDefenseDate.Location = new System.Drawing.Point(20, 220);
+            this.lblDefenseDate.Name = "lblDefenseDate";
+            this.lblDefenseDate.Size = new System.Drawing.Size(93, 16);
+            this.lblDefenseDate.TabIndex = 10;
+            this.lblDefenseDate.Text = "Defense Date:";
+            // 
+            // txtAdvisor
+            // 
+            this.txtAdvisor.Location = new System.Drawing.Point(130, 177);
+            this.txtAdvisor.Name = "txtAdvisor";
+            this.txtAdvisor.Size = new System.Drawing.Size(300, 22);
+            this.txtAdvisor.TabIndex = 9;
+            // 
+            // lblAdvisor
+            // 
+            this.lblAdvisor.AutoSize = true;
+            this.lblAdvisor.Location = new System.Drawing.Point(20, 180);
+            this.lblAdvisor.Name = "lblAdvisor";
+            this.lblAdvisor.Size = new System.Drawing.Size(56, 16);
+            this.lblAdvisor.TabIndex = 8;
+            this.lblAdvisor.Text = "Advisor:";
+            // 
+            // txtDepartment
+            // 
+            this.txtDepartment.Location = new System.Drawing.Point(130, 137);
+            this.txtDepartment.Name = "txtDepartment";
+            this.txtDepartment.Size = new System.Drawing.Size(300, 22);
+            this.txtDepartment.TabIndex = 7;
+            // 
+            // lblDepartment
+            // 
+            this.lblDepartment.AutoSize = true;
+            this.lblDepartment.Location = new System.Drawing.Point(20, 140);
+            this.lblDepartment.Name = "lblDepartment";
+            this.lblDepartment.Size = new System.Drawing.Size(80, 16);
+            this.lblDepartment.TabIndex = 6;
+            this.lblDepartment.Text = "Department:";
+            // 
+            // txtDegree
+            // 
+            this.txtDegree.Location = new System.Drawing.Point(130, 97);
+            this.txtDegree.Name = "txtDegree";
+            this.txtDegree.Size = new System.Drawing.Size(300, 22);
+            this.txtDegree.TabIndex = 5;
+            // 
+            // lblDegree
+            // 
+            this.lblDegree.AutoSize = true;
+            this.lblDegree.Location = new System.Drawing.Point(20, 100);
+            this.lblDegree.Name = "lblDegree";
+            this.lblDegree.Size = new System.Drawing.Size(56, 16);
+            this.lblDegree.TabIndex = 4;
+            this.lblDegree.Text = "Degree:";
+            // 
+            // txtStudentID
+            // 
+            this.txtStudentID.Location = new System.Drawing.Point(130, 57);
+            this.txtStudentID.Name = "txtStudentID";
+            this.txtStudentID.Size = new System.Drawing.Size(300, 22);
+            this.txtStudentID.TabIndex = 3;
+            // 
+            // lblStudentID
+            // 
+            this.lblStudentID.AutoSize = true;
+            this.lblStudentID.Location = new System.Drawing.Point(20, 60);
+            this.lblStudentID.Name = "lblStudentID";
+            this.lblStudentID.Size = new System.Drawing.Size(71, 16);
+            this.lblStudentID.TabIndex = 2;
+            this.lblStudentID.Text = "Student ID:";
+            // 
+            // txtStudentName
+            // 
+            this.txtStudentName.Location = new System.Drawing.Point(130, 17);
+            this.txtStudentName.Name = "txtStudentName";
+            this.txtStudentName.Size = new System.Drawing.Size(300, 22);
+            this.txtStudentName.TabIndex = 1;
+            // 
+            // lblStudentName
+            // 
+            this.lblStudentName.AutoSize = true;
+            this.lblStudentName.Location = new System.Drawing.Point(20, 20);
+            this.lblStudentName.Name = "lblStudentName";
+            this.lblStudentName.Size = new System.Drawing.Size(95, 16);
+            this.lblStudentName.TabIndex = 0;
+            this.lblStudentName.Text = "Student Name:";
+            // 
+            // ThesisForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(500, 500);
+            this.Name = "ThesisForm";
+            this.Text = "Add Thesis/Dissertation";
+            this.panelMain.ResumeLayout(false);
+            this.panelMain.PerformLayout();
+            this.panelContent.ResumeLayout(false);
+            this.panelContent.PerformLayout();
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+        #endregion
+    }
+}

@@ -1,0 +1,555 @@
+namespace Project5LMS.Forms.Admin.Reservations
+{
+    partial class AdminReservationsForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        #region Windows Form Designer generated code
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.panelMainContainer = new System.Windows.Forms.Panel();
+            this.panelTableContainer = new System.Windows.Forms.Panel();
+            this.dataGridViewReservations = new System.Windows.Forms.DataGridView();
+            this.colReservationID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colReservedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colExpiryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPriority = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panelFilter = new System.Windows.Forms.Panel();
+            this.btnFilter = new System.Windows.Forms.Button();
+            this.panelMetrics = new System.Windows.Forms.Panel();
+            this.panelMetricExpired = new System.Windows.Forms.Panel();
+            this.lblMetricExpiredValue = new System.Windows.Forms.Label();
+            this.lblMetricExpiredTitle = new System.Windows.Forms.Label();
+            this.panelMetricFulfilled = new System.Windows.Forms.Panel();
+            this.lblMetricFulfilledValue = new System.Windows.Forms.Label();
+            this.lblMetricFulfilledTitle = new System.Windows.Forms.Label();
+            this.panelMetricPending = new System.Windows.Forms.Panel();
+            this.lblMetricPendingValue = new System.Windows.Forms.Label();
+            this.lblMetricPendingTitle = new System.Windows.Forms.Label();
+            this.panelMetricTotal = new System.Windows.Forms.Panel();
+            this.lblMetricTotalValue = new System.Windows.Forms.Label();
+            this.lblMetricTotalTitle = new System.Windows.Forms.Label();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.panelMetricReady = new System.Windows.Forms.Panel();
+            this.lblMetricReadyValue = new System.Windows.Forms.Label();
+            this.lblMetricReadyTitle = new System.Windows.Forms.Label();
+            this.btnReserveBook = new System.Windows.Forms.Button();
+            this.panelMainContainer.SuspendLayout();
+            this.panelTableContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReservations)).BeginInit();
+            this.panelFilter.SuspendLayout();
+            this.panelMetrics.SuspendLayout();
+            this.panelMetricExpired.SuspendLayout();
+            this.panelMetricFulfilled.SuspendLayout();
+            this.panelMetricPending.SuspendLayout();
+            this.panelMetricTotal.SuspendLayout();
+            this.panelHeader.SuspendLayout();
+            this.panelMetricReady.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelMainContainer
+            // 
+            this.panelMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.panelMainContainer.Controls.Add(this.panelTableContainer);
+            this.panelMainContainer.Controls.Add(this.panelFilter);
+            this.panelMainContainer.Controls.Add(this.panelMetrics);
+            this.panelMainContainer.Controls.Add(this.panelHeader);
+            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMainContainer.Name = "panelMainContainer";
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
+            this.panelMainContainer.Size = new System.Drawing.Size(1600, 985);
+            this.panelMainContainer.TabIndex = 0;
+            // 
+            // panelTableContainer
+            // 
+            this.panelTableContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTableContainer.BackColor = System.Drawing.Color.White;
+            this.panelTableContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTableContainer.Controls.Add(this.dataGridViewReservations);
+            this.panelTableContainer.Location = new System.Drawing.Point(32, 271);
+            this.panelTableContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTableContainer.Name = "panelTableContainer";
+            this.panelTableContainer.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelTableContainer.Size = new System.Drawing.Size(1532, 684);
+            this.panelTableContainer.TabIndex = 3;
+            // 
+            // dataGridViewReservations
+            // 
+            this.dataGridViewReservations.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dataGridViewReservations.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewReservations.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewReservations.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewReservations.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewReservations.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewReservations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewReservations.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colReservationID,
+            this.colMember,
+            this.colBook,
+            this.colReservedDate,
+            this.colExpiryDate,
+            this.colPriority,
+            this.colStatus,
+            this.colActions});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewReservations.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridViewReservations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewReservations.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.dataGridViewReservations.Location = new System.Drawing.Point(21, 20);
+            this.dataGridViewReservations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewReservations.MultiSelect = false;
+            this.dataGridViewReservations.Name = "dataGridViewReservations";
+            this.dataGridViewReservations.RowHeadersVisible = false;
+            this.dataGridViewReservations.RowHeadersWidth = 51;
+            this.dataGridViewReservations.RowTemplate.Height = 60;
+            this.dataGridViewReservations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewReservations.Size = new System.Drawing.Size(1488, 642);
+            this.dataGridViewReservations.TabIndex = 0;
+            // 
+            // colReservationID
+            // 
+            this.colReservationID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colReservationID.DataPropertyName = "ReservationID";
+            this.colReservationID.HeaderText = "RESERVATION ID";
+            this.colReservationID.MinimumWidth = 6;
+            this.colReservationID.Name = "colReservationID";
+            // 
+            // colMember
+            // 
+            this.colMember.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colMember.DataPropertyName = "Member";
+            this.colMember.HeaderText = "MEMBER";
+            this.colMember.MinimumWidth = 6;
+            this.colMember.Name = "colMember";
+            // 
+            // colBook
+            // 
+            this.colBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colBook.DataPropertyName = "Book";
+            this.colBook.HeaderText = "BOOK";
+            this.colBook.MinimumWidth = 6;
+            this.colBook.Name = "colBook";
+            // 
+            // colReservedDate
+            // 
+            this.colReservedDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colReservedDate.DataPropertyName = "ReservedDate";
+            this.colReservedDate.HeaderText = "RESERVED DATE";
+            this.colReservedDate.MinimumWidth = 6;
+            this.colReservedDate.Name = "colReservedDate";
+            // 
+            // colExpiryDate
+            // 
+            this.colExpiryDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colExpiryDate.DataPropertyName = "ExpiryDate";
+            this.colExpiryDate.HeaderText = "EXPIRY DATE";
+            this.colExpiryDate.MinimumWidth = 6;
+            this.colExpiryDate.Name = "colExpiryDate";
+            // 
+            // colPriority
+            // 
+            this.colPriority.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colPriority.DataPropertyName = "Priority";
+            this.colPriority.HeaderText = "PRIORITY";
+            this.colPriority.MinimumWidth = 6;
+            this.colPriority.Name = "colPriority";
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colStatus.DataPropertyName = "Status";
+            this.colStatus.HeaderText = "STATUS";
+            this.colStatus.MinimumWidth = 6;
+            this.colStatus.Name = "colStatus";
+            // 
+            // colActions
+            // 
+            this.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colActions.DataPropertyName = "Actions";
+            this.colActions.HeaderText = "ACTIONS";
+            this.colActions.MinimumWidth = 6;
+            this.colActions.Name = "colActions";
+            // 
+            // panelFilter
+            // 
+            this.panelFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFilter.Controls.Add(this.btnFilter);
+            this.panelFilter.Location = new System.Drawing.Point(31, 228);
+            this.panelFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelFilter.Name = "panelFilter";
+            this.panelFilter.Size = new System.Drawing.Size(1533, 43);
+            this.panelFilter.TabIndex = 2;
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.BackColor = System.Drawing.Color.White;
+            this.btnFilter.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnFilter.Location = new System.Drawing.Point(1383, 4);
+            this.btnFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(149, 36);
+            this.btnFilter.TabIndex = 0;
+            this.btnFilter.Text = "🔽 All Status";
+            this.btnFilter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFilter.UseVisualStyleBackColor = false;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
+            // 
+            // panelMetrics
+            // 
+            this.panelMetrics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelMetrics.BackColor = System.Drawing.Color.White;
+            this.panelMetrics.Controls.Add(this.panelMetricExpired);
+            this.panelMetrics.Controls.Add(this.panelMetricFulfilled);
+            this.panelMetrics.Controls.Add(this.panelMetricPending);
+            this.panelMetrics.Controls.Add(this.panelMetricTotal);
+            this.panelMetrics.Location = new System.Drawing.Point(32, 119);
+            this.panelMetrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMetrics.Name = "panelMetrics";
+            this.panelMetrics.Size = new System.Drawing.Size(1533, 111);
+            this.panelMetrics.TabIndex = 1;
+            // 
+            // panelMetricExpired
+            // 
+            this.panelMetricExpired.BackColor = System.Drawing.Color.White;
+            this.panelMetricExpired.Controls.Add(this.lblMetricExpiredValue);
+            this.panelMetricExpired.Controls.Add(this.lblMetricExpiredTitle);
+            this.panelMetricExpired.Location = new System.Drawing.Point(1251, 0);
+            this.panelMetricExpired.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricExpired.Name = "panelMetricExpired";
+            this.panelMetricExpired.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricExpired.Size = new System.Drawing.Size(285, 111);
+            this.panelMetricExpired.TabIndex = 4;
+            // 
+            // lblMetricExpiredValue
+            // 
+            this.lblMetricExpiredValue.AutoSize = true;
+            this.lblMetricExpiredValue.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricExpiredValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricExpiredValue.Location = new System.Drawing.Point(45, 38);
+            this.lblMetricExpiredValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricExpiredValue.Name = "lblMetricExpiredValue";
+            this.lblMetricExpiredValue.Size = new System.Drawing.Size(50, 60);
+            this.lblMetricExpiredValue.TabIndex = 2;
+            this.lblMetricExpiredValue.Text = "0";
+            // 
+            // lblMetricExpiredTitle
+            // 
+            this.lblMetricExpiredTitle.AutoSize = true;
+            this.lblMetricExpiredTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricExpiredTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricExpiredTitle.Location = new System.Drawing.Point(25, 10);
+            this.lblMetricExpiredTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricExpiredTitle.Name = "lblMetricExpiredTitle";
+            this.lblMetricExpiredTitle.Size = new System.Drawing.Size(109, 28);
+            this.lblMetricExpiredTitle.TabIndex = 1;
+            this.lblMetricExpiredTitle.Text = "⏰ Expired";
+            // 
+            // panelMetricFulfilled
+            // 
+            this.panelMetricFulfilled.BackColor = System.Drawing.Color.White;
+            this.panelMetricFulfilled.Controls.Add(this.lblMetricFulfilledValue);
+            this.panelMetricFulfilled.Controls.Add(this.lblMetricFulfilledTitle);
+            this.panelMetricFulfilled.Location = new System.Drawing.Point(845, 0);
+            this.panelMetricFulfilled.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricFulfilled.Name = "panelMetricFulfilled";
+            this.panelMetricFulfilled.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricFulfilled.Size = new System.Drawing.Size(285, 111);
+            this.panelMetricFulfilled.TabIndex = 3;
+            // 
+            // lblMetricFulfilledValue
+            // 
+            this.lblMetricFulfilledValue.AutoSize = true;
+            this.lblMetricFulfilledValue.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricFulfilledValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricFulfilledValue.Location = new System.Drawing.Point(55, 38);
+            this.lblMetricFulfilledValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricFulfilledValue.Name = "lblMetricFulfilledValue";
+            this.lblMetricFulfilledValue.Size = new System.Drawing.Size(50, 60);
+            this.lblMetricFulfilledValue.TabIndex = 2;
+            this.lblMetricFulfilledValue.Text = "0";
+            // 
+            // lblMetricFulfilledTitle
+            // 
+            this.lblMetricFulfilledTitle.AutoSize = true;
+            this.lblMetricFulfilledTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricFulfilledTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricFulfilledTitle.Location = new System.Drawing.Point(31, 14);
+            this.lblMetricFulfilledTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricFulfilledTitle.Name = "lblMetricFulfilledTitle";
+            this.lblMetricFulfilledTitle.Size = new System.Drawing.Size(113, 28);
+            this.lblMetricFulfilledTitle.TabIndex = 1;
+            this.lblMetricFulfilledTitle.Text = "✅ Fulfilled";
+            // 
+            // panelMetricPending
+            // 
+            this.panelMetricPending.BackColor = System.Drawing.Color.White;
+            this.panelMetricPending.Controls.Add(this.lblMetricPendingValue);
+            this.panelMetricPending.Controls.Add(this.lblMetricPendingTitle);
+            this.panelMetricPending.Location = new System.Drawing.Point(437, 0);
+            this.panelMetricPending.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricPending.Name = "panelMetricPending";
+            this.panelMetricPending.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricPending.Size = new System.Drawing.Size(285, 111);
+            this.panelMetricPending.TabIndex = 1;
+            // 
+            // lblMetricPendingValue
+            // 
+            this.lblMetricPendingValue.AutoSize = true;
+            this.lblMetricPendingValue.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricPendingValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricPendingValue.Location = new System.Drawing.Point(51, 38);
+            this.lblMetricPendingValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricPendingValue.Name = "lblMetricPendingValue";
+            this.lblMetricPendingValue.Size = new System.Drawing.Size(50, 60);
+            this.lblMetricPendingValue.TabIndex = 2;
+            this.lblMetricPendingValue.Text = "0";
+            // 
+            // lblMetricPendingTitle
+            // 
+            this.lblMetricPendingTitle.AutoSize = true;
+            this.lblMetricPendingTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricPendingTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricPendingTitle.Location = new System.Drawing.Point(29, 14);
+            this.lblMetricPendingTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricPendingTitle.Name = "lblMetricPendingTitle";
+            this.lblMetricPendingTitle.Size = new System.Drawing.Size(115, 28);
+            this.lblMetricPendingTitle.TabIndex = 1;
+            this.lblMetricPendingTitle.Text = "⏳ Pending";
+            // 
+            // panelMetricTotal
+            // 
+            this.panelMetricTotal.BackColor = System.Drawing.Color.White;
+            this.panelMetricTotal.Controls.Add(this.lblMetricTotalValue);
+            this.panelMetricTotal.Controls.Add(this.lblMetricTotalTitle);
+            this.panelMetricTotal.Location = new System.Drawing.Point(0, 0);
+            this.panelMetricTotal.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricTotal.Name = "panelMetricTotal";
+            this.panelMetricTotal.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricTotal.Size = new System.Drawing.Size(285, 111);
+            this.panelMetricTotal.TabIndex = 0;
+            // 
+            // lblMetricTotalValue
+            // 
+            this.lblMetricTotalValue.AutoSize = true;
+            this.lblMetricTotalValue.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTotalValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricTotalValue.Location = new System.Drawing.Point(49, 38);
+            this.lblMetricTotalValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalValue.Name = "lblMetricTotalValue";
+            this.lblMetricTotalValue.Size = new System.Drawing.Size(50, 60);
+            this.lblMetricTotalValue.TabIndex = 2;
+            this.lblMetricTotalValue.Text = "0";
+            // 
+            // lblMetricTotalTitle
+            // 
+            this.lblMetricTotalTitle.AutoSize = true;
+            this.lblMetricTotalTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricTotalTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricTotalTitle.Location = new System.Drawing.Point(31, 14);
+            this.lblMetricTotalTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricTotalTitle.Name = "lblMetricTotalTitle";
+            this.lblMetricTotalTitle.Size = new System.Drawing.Size(200, 28);
+            this.lblMetricTotalTitle.TabIndex = 1;
+            this.lblMetricTotalTitle.Text = "📅 Total Reservations";
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelHeader.Controls.Add(this.btnReserveBook);
+            this.panelHeader.Controls.Add(this.lblSubtitle);
+            this.panelHeader.Controls.Add(this.lblTitle);
+            this.panelHeader.Controls.Add(this.panelMetricReady);
+            this.panelHeader.Location = new System.Drawing.Point(32, 33);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1533, 89);
+            this.panelHeader.TabIndex = 0;
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(19, 54);
+            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(353, 23);
+            this.lblSubtitle.TabIndex = 1;
+            this.lblSubtitle.Text = "Manage book reservations and hold requests";
+            this.lblSubtitle.Click += new System.EventHandler(this.lblSubtitle_Click);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblTitle.Location = new System.Drawing.Point(4, 0);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(509, 54);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Reservation Management";
+            // 
+            // panelMetricReady
+            // 
+            this.panelMetricReady.BackColor = System.Drawing.Color.White;
+            this.panelMetricReady.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMetricReady.Controls.Add(this.lblMetricReadyValue);
+            this.panelMetricReady.Controls.Add(this.lblMetricReadyTitle);
+            this.panelMetricReady.Location = new System.Drawing.Point(653, 89);
+            this.panelMetricReady.Margin = new System.Windows.Forms.Padding(0, 0, 21, 0);
+            this.panelMetricReady.Name = "panelMetricReady";
+            this.panelMetricReady.Padding = new System.Windows.Forms.Padding(21, 20, 21, 20);
+            this.panelMetricReady.Size = new System.Drawing.Size(285, 77);
+            this.panelMetricReady.TabIndex = 2;
+            // 
+            // lblMetricReadyValue
+            // 
+            this.lblMetricReadyValue.AutoSize = true;
+            this.lblMetricReadyValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricReadyValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMetricReadyValue.Location = new System.Drawing.Point(17, 30);
+            this.lblMetricReadyValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricReadyValue.Name = "lblMetricReadyValue";
+            this.lblMetricReadyValue.Size = new System.Drawing.Size(40, 46);
+            this.lblMetricReadyValue.TabIndex = 2;
+            this.lblMetricReadyValue.Text = "0";
+            this.lblMetricReadyValue.Click += new System.EventHandler(this.lblMetricReadyValue_Click);
+            // 
+            // lblMetricReadyTitle
+            // 
+            this.lblMetricReadyTitle.AutoSize = true;
+            this.lblMetricReadyTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricReadyTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.lblMetricReadyTitle.Location = new System.Drawing.Point(21, 10);
+            this.lblMetricReadyTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMetricReadyTitle.Name = "lblMetricReadyTitle";
+            this.lblMetricReadyTitle.Size = new System.Drawing.Size(120, 20);
+            this.lblMetricReadyTitle.TabIndex = 1;
+            this.lblMetricReadyTitle.Text = "Ready for Pickup";
+            // 
+            // btnReserveBook
+            // 
+            this.btnReserveBook.BackColor = System.Drawing.Color.Maroon;
+            this.btnReserveBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReserveBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReserveBook.ForeColor = System.Drawing.Color.White;
+            this.btnReserveBook.Location = new System.Drawing.Point(1306, 15);
+            this.btnReserveBook.Name = "btnReserveBook";
+            this.btnReserveBook.Size = new System.Drawing.Size(195, 47);
+            this.btnReserveBook.TabIndex = 3;
+            this.btnReserveBook.Text = "Reserve Book";
+            this.btnReserveBook.UseVisualStyleBackColor = false;
+            this.btnReserveBook.Click += new System.EventHandler(this.btnReserveBook_Click);
+            // 
+            // AdminReservationsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1600, 985);
+            this.Controls.Add(this.panelMainContainer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "AdminReservationsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Reservation Management";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.AdminReservationsForm_Load);
+            this.panelMainContainer.ResumeLayout(false);
+            this.panelTableContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReservations)).EndInit();
+            this.panelFilter.ResumeLayout(false);
+            this.panelMetrics.ResumeLayout(false);
+            this.panelMetricExpired.ResumeLayout(false);
+            this.panelMetricExpired.PerformLayout();
+            this.panelMetricFulfilled.ResumeLayout(false);
+            this.panelMetricFulfilled.PerformLayout();
+            this.panelMetricPending.ResumeLayout(false);
+            this.panelMetricPending.PerformLayout();
+            this.panelMetricTotal.ResumeLayout(false);
+            this.panelMetricTotal.PerformLayout();
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.panelMetricReady.ResumeLayout(false);
+            this.panelMetricReady.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+        #endregion
+        private System.Windows.Forms.Panel panelMainContainer;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.Panel panelMetrics;
+        private System.Windows.Forms.Panel panelMetricTotal;
+        private System.Windows.Forms.Label lblMetricTotalValue;
+        private System.Windows.Forms.Label lblMetricTotalTitle;
+        private System.Windows.Forms.Panel panelMetricPending;
+        private System.Windows.Forms.Label lblMetricPendingValue;
+        private System.Windows.Forms.Label lblMetricPendingTitle;
+        private System.Windows.Forms.Panel panelMetricReady;
+        private System.Windows.Forms.Label lblMetricReadyValue;
+        private System.Windows.Forms.Label lblMetricReadyTitle;
+        private System.Windows.Forms.Panel panelMetricFulfilled;
+        private System.Windows.Forms.Label lblMetricFulfilledValue;
+        private System.Windows.Forms.Label lblMetricFulfilledTitle;
+        private System.Windows.Forms.Panel panelMetricExpired;
+        private System.Windows.Forms.Label lblMetricExpiredValue;
+        private System.Windows.Forms.Label lblMetricExpiredTitle;
+        private System.Windows.Forms.Panel panelFilter;
+        private System.Windows.Forms.Panel panelTableContainer;
+        private System.Windows.Forms.DataGridView dataGridViewReservations;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colReservationID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMember;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBook;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colReservedDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colExpiryDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPriority;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colActions;
+        private System.Windows.Forms.Button btnFilter;
+        private System.Windows.Forms.Button btnReserveBook;
+    }
+}
