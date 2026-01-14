@@ -19,10 +19,19 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         private string currentFilter = "All";
         private Dictionary<int, Panel> reservationCards = new Dictionary<int, Panel>();
         private readonly DatabaseContext _dbContext;
+        private readonly IBookService _bookService;
+        private readonly IMembersService _membersService;
+        private readonly IReservationService _reservationService;
+        private readonly BorrowingValidator _borrowingValidator;
+        
         public StaffReservationsForm()
         {
             InitializeComponent();
             _dbContext = ServiceFactory.GetDbContext();
+            _bookService = ServiceFactory.CreateBookService();
+            _membersService = ServiceFactory.CreateMembersService();
+            _reservationService = ServiceFactory.CreateReservationService();
+            _borrowingValidator = DependencyInjection.GetRequiredService<BorrowingValidator>();
         }
         private void StaffReservationsForm_Load(object sender, EventArgs e)
         {
@@ -965,6 +974,216 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtMemberID.ForeColor = Color.Gray;
             }
         }
+        
+        private void txtMemberID_TextChanged(object sender, EventArgs e)
+        {
+            string memberIdText = txtMemberID.Text.Trim();
+            if (string.IsNullOrWhiteSpace(memberIdText) || memberIdText == "Enter member ID" || memberIdText.Contains("Enter"))
+            {
+                ClearMemberEligibilityDisplay();
+                return;
+            }
+            
+            try
+            {
+                int memberId = IDFormatter.ParseMemberID(memberIdText);
+                if (memberId > 0)
+                {
+                    DisplayMemberEligibility(memberId);
+                    return;
+                }
+                
+                // Try partial search
+                string numericPart = System.Text.RegularExpressions.Regex.Replace(memberIdText, @"[^\d]", "");
+                if (!string.IsNullOrWhiteSpace(numericPart) && numericPart.Length >= 1)
+                {
+                    var searchResults = _membersService.SearchMembers(memberIdText);
+                    var matchingMember = searchResults.FirstOrDefault(m => 
+                        IDFormatter.FormatMemberID(m.MemberID).IndexOf(memberIdText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        m.MemberID.ToString().Contains(numericPart));
+                    
+                    if (matchingMember != null)
+                    {
+                        DisplayMemberEligibility(matchingMember.MemberID);
+                        return;
+                    }
+                }
+                
+                ClearMemberEligibilityDisplay();
+            }
+            catch
+            {
+                ClearMemberEligibilityDisplay();
+            }
+        }
+        
+        private void DisplayMemberEligibility(int memberId)
+        {
+            try
+            {
+                var eligibilityInfo = _borrowingValidator.GetMemberEligibility(memberId);
+                if (eligibilityInfo == null)
+                {
+                    ClearMemberEligibilityDisplay();
+                    return;
+                }
+                
+                var member = eligibilityInfo.Member;
+                var privileges = MemberTypePrivileges.GetDefaultPrivileges(member.Type);
+                int overdueCount = eligibilityInfo.OverdueCount;
+                decimal totalFines = eligibilityInfo.TotalFines;
+                bool isActive = eligibilityInfo.IsActive;
+                bool noOverdue = eligibilityInfo.NoOverdue;
+                bool finesPaid = eligibilityInfo.FinesPaid;
+                
+                // Get reservation count
+                var memberReservations = _reservationService.GetMemberReservations(memberId)
+                    .Where(r => !r.IsCancelled && !r.IsFulfilled && !r.IsExpired && (r.IsPending || r.IsActive || r.IsReady))
+                    .ToList();
+                int currentReservations = memberReservations.Count;
+                bool withinReservationLimit = currentReservations < privileges.ReservationLimit;
+                
+                // Check if member is suspended
+                bool isSuspended = member.Status?.Equals("Suspended", StringComparison.OrdinalIgnoreCase) == true;
+                
+                // Eligibility for reservation
+                bool canReserve = privileges.CanReserve && 
+                                 withinReservationLimit &&
+                                 isActive && 
+                                 !member.IsExpired && 
+                                 !isSuspended;
+                
+                if (panelStaffReservationMemberInfo != null)
+                {
+                    panelStaffReservationMemberInfo.Visible = true;
+                    
+                    // Member Name
+                    if (lblMemberName != null)
+                    {
+                        lblMemberName.Text = $"Name: {member.FullName}";
+                    }
+                    
+                    // Member Type
+                    if (lblMemberType != null)
+                    {
+                        lblMemberType.Text = $"Type: {member.Type}";
+                    }
+                    
+                    // Member Status
+                    if (lblMemberStatus != null)
+                    {
+                        string actualStatus = member.Status ?? "Active";
+                        if (member.IsExpired && (actualStatus.Equals("Active", StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(actualStatus)))
+                        {
+                            actualStatus = "Expired";
+                        }
+                        lblMemberStatus.Text = $"Status: {actualStatus}";
+                        
+                        switch (actualStatus.ToLower())
+                        {
+                            case "active":
+                                lblMemberStatus.ForeColor = Color.FromArgb(40, 167, 69);
+                                break;
+                            case "suspended":
+                                lblMemberStatus.ForeColor = Color.FromArgb(220, 53, 69);
+                                break;
+                            case "expired":
+                                lblMemberStatus.ForeColor = Color.FromArgb(255, 193, 7);
+                                break;
+                            default:
+                                lblMemberStatus.ForeColor = Color.FromArgb(220, 53, 69);
+                                break;
+                        }
+                    }
+                    
+                    // Reservations
+                    if (lblMemberReservations != null)
+                    {
+                        lblMemberReservations.Text = $"Reservations: {currentReservations}/{privileges.ReservationLimit}";
+                        lblMemberReservations.ForeColor = withinReservationLimit ? Constants.GetNeutralColor() : Constants.GetErrorColor();
+                    }
+                    
+                    // Overdue
+                    if (lblMemberOverdue != null)
+                    {
+                        lblMemberOverdue.Text = overdueCount > 0 ? $"Overdue: {overdueCount} book(s)" : "Overdue: None";
+                        lblMemberOverdue.ForeColor = noOverdue ? Constants.GetNeutralColor() : Constants.GetErrorColor();
+                    }
+                    
+                    // Fines
+                    if (lblMemberFines != null)
+                    {
+                        lblMemberFines.Text = totalFines > 0 ? $"Fines: {IDFormatter.FormatCurrency(totalFines)}" : "Fines: None";
+                        lblMemberFines.ForeColor = finesPaid ? Constants.GetNeutralColor() : Constants.GetErrorColor();
+                    }
+                    
+                    // Eligibility Status
+                    if (lblMemberEligibilityStatus != null)
+                    {
+                        if (canReserve)
+                        {
+                            lblMemberEligibilityStatus.Text = "✓ ELIGIBLE";
+                            lblMemberEligibilityStatus.ForeColor = Constants.GetSuccessColor();
+                        }
+                        else
+                        {
+                            var reasons = new List<string>();
+                            string actualStatus = member.Status ?? "Active";
+                            if (member.IsExpired && (actualStatus.Equals("Active", StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(actualStatus)))
+                            {
+                                actualStatus = "Expired";
+                            }
+                            if (actualStatus.Equals("Suspended", StringComparison.OrdinalIgnoreCase))
+                            {
+                                reasons.Add("Account suspended");
+                            }
+                            else if (member.IsExpired)
+                            {
+                                reasons.Add("Membership expired");
+                            }
+                            else if (!isActive)
+                            {
+                                reasons.Add("Account inactive");
+                            }
+                            if (!withinReservationLimit) reasons.Add("Reservation limit reached");
+                            if (!noOverdue) reasons.Add("Has overdue books");
+                            if (!finesPaid) reasons.Add("Unpaid fines");
+                            
+                            lblMemberEligibilityStatus.Text = $"✗ NOT ELIGIBLE - {string.Join(", ", reasons)}";
+                            lblMemberEligibilityStatus.ForeColor = Constants.GetErrorColor();
+                        }
+                    }
+                    
+                    // Refresh book eligibility if book is already entered
+                    if (!string.IsNullOrWhiteSpace(txtBookID.Text) && txtBookID.Text != "Enter book ID or title")
+                    {
+                        DisplayBookEligibility(txtBookID.Text.Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error displaying member eligibility: {ex.Message}");
+                ClearMemberEligibilityDisplay();
+            }
+        }
+        
+        private void ClearMemberEligibilityDisplay()
+        {
+            if (panelStaffReservationMemberInfo != null)
+            {
+                panelStaffReservationMemberInfo.Visible = false;
+            }
+            
+            if (lblMemberName != null) lblMemberName.Text = "";
+            if (lblMemberType != null) lblMemberType.Text = "";
+            if (lblMemberStatus != null) lblMemberStatus.Text = "";
+            if (lblMemberReservations != null) lblMemberReservations.Text = "";
+            if (lblMemberOverdue != null) lblMemberOverdue.Text = "";
+            if (lblMemberFines != null) lblMemberFines.Text = "";
+            if (lblMemberEligibilityStatus != null) lblMemberEligibilityStatus.Text = "";
+        }
+        
         private void txtBookID_Enter(object sender, EventArgs e)
         {
             if (txtBookID.Text == "Enter book ID or title")
@@ -981,6 +1200,137 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtBookID.ForeColor = Color.Gray;
             }
         }
+        
+        private void txtBookID_TextChanged(object sender, EventArgs e)
+        {
+            string bookIdText = txtBookID.Text.Trim();
+            if (string.IsNullOrWhiteSpace(bookIdText) || bookIdText == "Enter book ID or title" || bookIdText.Contains("Enter"))
+            {
+                ClearBookInfoDisplay();
+                return;
+            }
+            
+            try
+            {
+                DisplayBookEligibility(bookIdText);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error displaying book eligibility: {ex.Message}");
+                ClearBookInfoDisplay();
+            }
+        }
+        
+        private void DisplayBookEligibility(string bookIdText)
+        {
+            Book book = null;
+            int bookId = 0;
+            
+            // Try to find book by accession number
+            book = _bookService.GetBookByAccessionNumber(bookIdText);
+            if (book != null)
+            {
+                bookId = book.BookID;
+            }
+            else
+            {
+                // Try parsing as ID
+                bookId = IDFormatter.ParseBookID(bookIdText);
+                if (bookId > 0)
+                {
+                    book = _bookService.GetBook(bookId);
+                }
+            }
+            
+            // If still not found, try search
+            if (book == null || bookId == 0)
+            {
+                var searchResults = _bookService.SearchBooks(bookIdText);
+                var booksList = searchResults.ToList();
+                if (booksList.Count == 1)
+                {
+                    book = booksList.First();
+                    bookId = book.BookID;
+                }
+                else
+                {
+                    ClearBookInfoDisplay();
+                    return;
+                }
+            }
+            
+            if (book == null || bookId == 0)
+            {
+                ClearBookInfoDisplay();
+                return;
+            }
+            
+            // Refresh book data
+            book = _bookService.GetBook(bookId);
+            bool isAvailable = _bookService.IsBookAvailable(bookId);
+            bool canReserve = isAvailable;
+            
+            if (panelStaffReservationBookInfo != null)
+            {
+                panelStaffReservationBookInfo.Visible = true;
+                
+                // Book Title
+                if (lblBookTitle != null)
+                {
+                    lblBookTitle.Text = $"Title: {book.Title}";
+                }
+                
+                // Author
+                if (lblBookAuthor != null)
+                {
+                    lblBookAuthor.Text = $"Author: {book.Author}";
+                }
+                
+                // Status
+                if (lblBookStatus != null)
+                {
+                    lblBookStatus.Text = isAvailable ? "Status: Available" : "Status: Not Available";
+                    lblBookStatus.ForeColor = isAvailable ? Constants.GetSuccessColor() : Constants.GetErrorColor();
+                }
+                
+                // Copies
+                if (lblBookCopies != null)
+                {
+                    lblBookCopies.Text = $"Copies: {book.Available}/{book.TotalCopies}";
+                }
+                
+                // Eligibility Status
+                if (lblBookEligibilityStatus != null)
+                {
+                    if (canReserve)
+                    {
+                        lblBookEligibilityStatus.Text = "✓ ELIGIBLE";
+                        lblBookEligibilityStatus.ForeColor = Constants.GetSuccessColor();
+                    }
+                    else
+                    {
+                        lblBookEligibilityStatus.Text = "✗ NOT ELIGIBLE - Book not available";
+                        lblBookEligibilityStatus.ForeColor = Constants.GetErrorColor();
+                    }
+                }
+                
+            }
+        }
+        
+        private void ClearBookInfoDisplay()
+        {
+            if (panelStaffReservationBookInfo != null)
+            {
+                panelStaffReservationBookInfo.Visible = false;
+            }
+            
+            if (lblBookTitle != null) lblBookTitle.Text = "";
+            if (lblBookAuthor != null) lblBookAuthor.Text = "";
+            if (lblBookStatus != null) lblBookStatus.Text = "";
+            if (lblBookCopies != null) lblBookCopies.Text = "";
+            if (lblBookEligibilityStatus != null) lblBookEligibilityStatus.Text = "";
+        }
+        
         private void btnCreateReservation_Click(object sender, EventArgs e)
         {
             string memberIdText = txtMemberID.Text.Trim();
@@ -1152,6 +1502,8 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 txtMemberID.ForeColor = Color.Gray;
                 txtBookID.Text = "Enter book ID or title";
                 txtBookID.ForeColor = Color.Gray;
+                ClearMemberEligibilityDisplay();
+                ClearBookInfoDisplay();
                 LoadMetrics();
                 LoadReservations();
             }
@@ -1210,6 +1562,11 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
                 g.DrawLine(pen, x + size * 0.35f, y + size * 0.35f, x + size * 0.65f, y + size * 0.65f);
                 g.DrawLine(pen, x + size * 0.65f, y + size * 0.35f, x + size * 0.35f, y + size * 0.65f);
             }
+        }
+
+        private void panelFilterTabs_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

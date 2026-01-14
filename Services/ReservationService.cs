@@ -328,7 +328,16 @@ namespace Project5LMS.Services
         }
         public bool HasActiveReservations(int bookId)
         {
-            return GetBookReservations(bookId).Any(r => r.IsPending || r.IsActive || r.IsReady);
+            // Only consider reservations that are:
+            // 1. Not cancelled
+            // 2. Not fulfilled
+            // 3. Not expired (ExpiryDate >= Now or ExpiryDate is null)
+            // 4. Status is Pending, Active, or Ready
+            return GetBookReservations(bookId).Any(r => 
+                !r.IsCancelled && 
+                !r.IsFulfilled && 
+                !r.IsExpired && 
+                (r.IsPending || r.IsActive || r.IsReady));
         }
         private IEnumerable<Reservation> GetReservations(string whereClause, object parameters)
         {

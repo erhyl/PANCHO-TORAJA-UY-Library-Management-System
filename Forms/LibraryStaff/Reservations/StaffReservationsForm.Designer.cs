@@ -32,6 +32,24 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.lblMetricTotalTitle = new System.Windows.Forms.Label();
             this.panelReservationsManagement = new System.Windows.Forms.Panel();
             this.panelCreateReservation = new System.Windows.Forms.Panel();
+            this.panelStaffReservationBookInfo = new System.Windows.Forms.Panel();
+            this.lblBookEligibilityStatus = new System.Windows.Forms.Label();
+            this.lblBookEligibilityTitle = new System.Windows.Forms.Label();
+            this.lblBookCopies = new System.Windows.Forms.Label();
+            this.lblBookStatus = new System.Windows.Forms.Label();
+            this.lblBookAuthor = new System.Windows.Forms.Label();
+            this.lblBookTitle = new System.Windows.Forms.Label();
+            this.lblBookInformationHeader = new System.Windows.Forms.Label();
+            this.panelStaffReservationMemberInfo = new System.Windows.Forms.Panel();
+            this.lblMemberEligibilityStatus = new System.Windows.Forms.Label();
+            this.lblMemberEligibilityTitle = new System.Windows.Forms.Label();
+            this.lblMemberFines = new System.Windows.Forms.Label();
+            this.lblMemberOverdue = new System.Windows.Forms.Label();
+            this.lblMemberReservations = new System.Windows.Forms.Label();
+            this.lblMemberStatus = new System.Windows.Forms.Label();
+            this.lblMemberType = new System.Windows.Forms.Label();
+            this.lblMemberName = new System.Windows.Forms.Label();
+            this.lblMemberEligibilityHeader = new System.Windows.Forms.Label();
             this.btnCreateReservation = new System.Windows.Forms.Button();
             this.txtBookID = new System.Windows.Forms.TextBox();
             this.lblBookID = new System.Windows.Forms.Label();
@@ -54,6 +72,8 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.panelMetricTotal.SuspendLayout();
             this.panelReservationsManagement.SuspendLayout();
             this.panelCreateReservation.SuspendLayout();
+            this.panelStaffReservationBookInfo.SuspendLayout();
+            this.panelStaffReservationMemberInfo.SuspendLayout();
             this.panelFilterTabs.SuspendLayout();
             this.panelMainContainer.SuspendLayout();
             this.SuspendLayout();
@@ -250,6 +270,8 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCreateReservation.BackColor = System.Drawing.Color.White;
             this.panelCreateReservation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelCreateReservation.Controls.Add(this.panelStaffReservationBookInfo);
+            this.panelCreateReservation.Controls.Add(this.panelStaffReservationMemberInfo);
             this.panelCreateReservation.Controls.Add(this.btnCreateReservation);
             this.panelCreateReservation.Controls.Add(this.txtBookID);
             this.panelCreateReservation.Controls.Add(this.lblBookID);
@@ -260,8 +282,212 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.panelCreateReservation.Margin = new System.Windows.Forms.Padding(0);
             this.panelCreateReservation.Name = "panelCreateReservation";
             this.panelCreateReservation.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
-            this.panelCreateReservation.Size = new System.Drawing.Size(1187, 212);
+            this.panelCreateReservation.Size = new System.Drawing.Size(1187, 306);
             this.panelCreateReservation.TabIndex = 4;
+            // 
+            // panelStaffReservationBookInfo
+            // 
+            this.panelStaffReservationBookInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelStaffReservationBookInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
+            this.panelStaffReservationBookInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookEligibilityStatus);
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookEligibilityTitle);
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookCopies);
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookStatus);
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookAuthor);
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookTitle);
+            this.panelStaffReservationBookInfo.Controls.Add(this.lblBookInformationHeader);
+            this.panelStaffReservationBookInfo.Location = new System.Drawing.Point(29, 208);
+            this.panelStaffReservationBookInfo.Name = "panelStaffReservationBookInfo";
+            this.panelStaffReservationBookInfo.Size = new System.Drawing.Size(703, 69);
+            this.panelStaffReservationBookInfo.TabIndex = 7;
+            this.panelStaffReservationBookInfo.Visible = false;
+            // 
+            // lblBookEligibilityStatus
+            // 
+            this.lblBookEligibilityStatus.AutoSize = true;
+            this.lblBookEligibilityStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookEligibilityStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.lblBookEligibilityStatus.Location = new System.Drawing.Point(444, 27);
+            this.lblBookEligibilityStatus.Name = "lblBookEligibilityStatus";
+            this.lblBookEligibilityStatus.Size = new System.Drawing.Size(0, 19);
+            this.lblBookEligibilityStatus.TabIndex = 6;
+            // 
+            // lblBookEligibilityTitle
+            // 
+            this.lblBookEligibilityTitle.AutoSize = true;
+            this.lblBookEligibilityTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookEligibilityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookEligibilityTitle.Location = new System.Drawing.Point(384, 27);
+            this.lblBookEligibilityTitle.Name = "lblBookEligibilityTitle";
+            this.lblBookEligibilityTitle.Size = new System.Drawing.Size(58, 15);
+            this.lblBookEligibilityTitle.TabIndex = 5;
+            this.lblBookEligibilityTitle.Text = "Eligibility:";
+            // 
+            // lblBookCopies
+            // 
+            this.lblBookCopies.AutoSize = true;
+            this.lblBookCopies.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookCopies.Location = new System.Drawing.Point(219, 43);
+            this.lblBookCopies.Name = "lblBookCopies";
+            this.lblBookCopies.Size = new System.Drawing.Size(0, 15);
+            this.lblBookCopies.TabIndex = 4;
+            // 
+            // lblBookStatus
+            // 
+            this.lblBookStatus.AutoSize = true;
+            this.lblBookStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookStatus.Location = new System.Drawing.Point(219, 27);
+            this.lblBookStatus.Name = "lblBookStatus";
+            this.lblBookStatus.Size = new System.Drawing.Size(0, 15);
+            this.lblBookStatus.TabIndex = 3;
+            // 
+            // lblBookAuthor
+            // 
+            this.lblBookAuthor.AutoSize = true;
+            this.lblBookAuthor.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookAuthor.Location = new System.Drawing.Point(9, 43);
+            this.lblBookAuthor.Name = "lblBookAuthor";
+            this.lblBookAuthor.Size = new System.Drawing.Size(0, 15);
+            this.lblBookAuthor.TabIndex = 2;
+            // 
+            // lblBookTitle
+            // 
+            this.lblBookTitle.AutoSize = true;
+            this.lblBookTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookTitle.Location = new System.Drawing.Point(9, 27);
+            this.lblBookTitle.Name = "lblBookTitle";
+            this.lblBookTitle.Size = new System.Drawing.Size(0, 15);
+            this.lblBookTitle.TabIndex = 1;
+            // 
+            // lblBookInformationHeader
+            // 
+            this.lblBookInformationHeader.AutoSize = true;
+            this.lblBookInformationHeader.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookInformationHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblBookInformationHeader.Location = new System.Drawing.Point(6, 6);
+            this.lblBookInformationHeader.Name = "lblBookInformationHeader";
+            this.lblBookInformationHeader.Size = new System.Drawing.Size(115, 17);
+            this.lblBookInformationHeader.TabIndex = 0;
+            this.lblBookInformationHeader.Text = "Book Information";
+            // 
+            // panelStaffReservationMemberInfo
+            // 
+            this.panelStaffReservationMemberInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelStaffReservationMemberInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
+            this.panelStaffReservationMemberInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberEligibilityStatus);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberEligibilityTitle);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberFines);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberOverdue);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberReservations);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberStatus);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberType);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberName);
+            this.panelStaffReservationMemberInfo.Controls.Add(this.lblMemberEligibilityHeader);
+            this.panelStaffReservationMemberInfo.Location = new System.Drawing.Point(29, 71);
+            this.panelStaffReservationMemberInfo.Name = "panelStaffReservationMemberInfo";
+            this.panelStaffReservationMemberInfo.Size = new System.Drawing.Size(703, 69);
+            this.panelStaffReservationMemberInfo.TabIndex = 6;
+            this.panelStaffReservationMemberInfo.Visible = false;
+            // 
+            // lblMemberEligibilityStatus
+            // 
+            this.lblMemberEligibilityStatus.AutoSize = true;
+            this.lblMemberEligibilityStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberEligibilityStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.lblMemberEligibilityStatus.Location = new System.Drawing.Point(444, 27);
+            this.lblMemberEligibilityStatus.Name = "lblMemberEligibilityStatus";
+            this.lblMemberEligibilityStatus.Size = new System.Drawing.Size(0, 19);
+            this.lblMemberEligibilityStatus.TabIndex = 8;
+            // 
+            // lblMemberEligibilityTitle
+            // 
+            this.lblMemberEligibilityTitle.AutoSize = true;
+            this.lblMemberEligibilityTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberEligibilityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberEligibilityTitle.Location = new System.Drawing.Point(384, 27);
+            this.lblMemberEligibilityTitle.Name = "lblMemberEligibilityTitle";
+            this.lblMemberEligibilityTitle.Size = new System.Drawing.Size(58, 15);
+            this.lblMemberEligibilityTitle.TabIndex = 7;
+            this.lblMemberEligibilityTitle.Text = "Eligibility:";
+            // 
+            // lblMemberFines
+            // 
+            this.lblMemberFines.AutoSize = true;
+            this.lblMemberFines.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberFines.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberFines.Location = new System.Drawing.Point(219, 43);
+            this.lblMemberFines.Name = "lblMemberFines";
+            this.lblMemberFines.Size = new System.Drawing.Size(0, 15);
+            this.lblMemberFines.TabIndex = 6;
+            // 
+            // lblMemberOverdue
+            // 
+            this.lblMemberOverdue.AutoSize = true;
+            this.lblMemberOverdue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberOverdue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberOverdue.Location = new System.Drawing.Point(219, 27);
+            this.lblMemberOverdue.Name = "lblMemberOverdue";
+            this.lblMemberOverdue.Size = new System.Drawing.Size(0, 15);
+            this.lblMemberOverdue.TabIndex = 5;
+            // 
+            // lblMemberReservations
+            // 
+            this.lblMemberReservations.AutoSize = true;
+            this.lblMemberReservations.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberReservations.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberReservations.Location = new System.Drawing.Point(9, 43);
+            this.lblMemberReservations.Name = "lblMemberReservations";
+            this.lblMemberReservations.Size = new System.Drawing.Size(0, 15);
+            this.lblMemberReservations.TabIndex = 4;
+            // 
+            // lblMemberStatus
+            // 
+            this.lblMemberStatus.AutoSize = true;
+            this.lblMemberStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberStatus.Location = new System.Drawing.Point(9, 27);
+            this.lblMemberStatus.Name = "lblMemberStatus";
+            this.lblMemberStatus.Size = new System.Drawing.Size(0, 15);
+            this.lblMemberStatus.TabIndex = 3;
+            // 
+            // lblMemberType
+            // 
+            this.lblMemberType.AutoSize = true;
+            this.lblMemberType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberType.Location = new System.Drawing.Point(9, 43);
+            this.lblMemberType.Name = "lblMemberType";
+            this.lblMemberType.Size = new System.Drawing.Size(0, 15);
+            this.lblMemberType.TabIndex = 2;
+            // 
+            // lblMemberName
+            // 
+            this.lblMemberName.AutoSize = true;
+            this.lblMemberName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberName.Location = new System.Drawing.Point(9, 27);
+            this.lblMemberName.Name = "lblMemberName";
+            this.lblMemberName.Size = new System.Drawing.Size(0, 15);
+            this.lblMemberName.TabIndex = 1;
+            // 
+            // lblMemberEligibilityHeader
+            // 
+            this.lblMemberEligibilityHeader.AutoSize = true;
+            this.lblMemberEligibilityHeader.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMemberEligibilityHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMemberEligibilityHeader.Location = new System.Drawing.Point(6, 6);
+            this.lblMemberEligibilityHeader.Name = "lblMemberEligibilityHeader";
+            this.lblMemberEligibilityHeader.Size = new System.Drawing.Size(116, 17);
+            this.lblMemberEligibilityHeader.TabIndex = 0;
+            this.lblMemberEligibilityHeader.Text = "Member Eligibility";
             // 
             // btnCreateReservation
             // 
@@ -271,9 +497,9 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.btnCreateReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateReservation.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateReservation.ForeColor = System.Drawing.Color.White;
-            this.btnCreateReservation.Location = new System.Drawing.Point(211, 163);
+            this.btnCreateReservation.Location = new System.Drawing.Point(790, 239);
             this.btnCreateReservation.Name = "btnCreateReservation";
-            this.btnCreateReservation.Size = new System.Drawing.Size(702, 38);
+            this.btnCreateReservation.Size = new System.Drawing.Size(345, 38);
             this.btnCreateReservation.TabIndex = 5;
             this.btnCreateReservation.Text = "Create Reservation";
             this.btnCreateReservation.UseVisualStyleBackColor = false;
@@ -285,11 +511,12 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.txtBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBookID.ForeColor = System.Drawing.Color.Gray;
-            this.txtBookID.Location = new System.Drawing.Point(211, 109);
+            this.txtBookID.Location = new System.Drawing.Point(29, 177);
             this.txtBookID.Name = "txtBookID";
             this.txtBookID.Size = new System.Drawing.Size(703, 25);
             this.txtBookID.TabIndex = 4;
             this.txtBookID.Text = "Enter book ID or title";
+            this.txtBookID.TextChanged += new System.EventHandler(this.txtBookID_TextChanged);
             this.txtBookID.Enter += new System.EventHandler(this.txtBookID_Enter);
             this.txtBookID.Leave += new System.EventHandler(this.txtBookID_Leave);
             // 
@@ -299,7 +526,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.lblBookID.AutoSize = true;
             this.lblBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBookID.Location = new System.Drawing.Point(211, 86);
+            this.lblBookID.Location = new System.Drawing.Point(25, 155);
             this.lblBookID.Name = "lblBookID";
             this.lblBookID.Size = new System.Drawing.Size(104, 19);
             this.lblBookID.TabIndex = 3;
@@ -311,11 +538,12 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.txtMemberID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMemberID.ForeColor = System.Drawing.Color.Gray;
-            this.txtMemberID.Location = new System.Drawing.Point(211, 54);
+            this.txtMemberID.Location = new System.Drawing.Point(29, 40);
             this.txtMemberID.Name = "txtMemberID";
-            this.txtMemberID.Size = new System.Drawing.Size(703, 25);
+            this.txtMemberID.Size = new System.Drawing.Size(706, 25);
             this.txtMemberID.TabIndex = 2;
             this.txtMemberID.Text = "Enter member ID (e.g., M1001)";
+            this.txtMemberID.TextChanged += new System.EventHandler(this.txtMemberID_TextChanged);
             this.txtMemberID.Enter += new System.EventHandler(this.txtMemberID_Enter);
             this.txtMemberID.Leave += new System.EventHandler(this.txtMemberID_Leave);
             // 
@@ -325,7 +553,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.lblMemberID.AutoSize = true;
             this.lblMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberID.Location = new System.Drawing.Point(211, 31);
+            this.lblMemberID.Location = new System.Drawing.Point(25, 20);
             this.lblMemberID.Name = "lblMemberID";
             this.lblMemberID.Size = new System.Drawing.Size(79, 19);
             this.lblMemberID.TabIndex = 1;
@@ -337,7 +565,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.lblCreateReservationTitle.AutoSize = true;
             this.lblCreateReservationTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCreateReservationTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCreateReservationTitle.Location = new System.Drawing.Point(211, 8);
+            this.lblCreateReservationTitle.Location = new System.Drawing.Point(11, -1);
             this.lblCreateReservationTitle.Name = "lblCreateReservationTitle";
             this.lblCreateReservationTitle.Size = new System.Drawing.Size(193, 21);
             this.lblCreateReservationTitle.TabIndex = 0;
@@ -354,7 +582,7 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.panelReservationsList.Location = new System.Drawing.Point(15, 101);
             this.panelReservationsList.Name = "panelReservationsList";
             this.panelReservationsList.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panelReservationsList.Size = new System.Drawing.Size(1152, 361);
+            this.panelReservationsList.Size = new System.Drawing.Size(1152, 267);
             this.panelReservationsList.TabIndex = 3;
             // 
             // panelFilterTabs
@@ -367,11 +595,12 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.panelFilterTabs.Controls.Add(this.btnFilterActive);
             this.panelFilterTabs.Controls.Add(this.btnFilterAll);
             this.panelFilterTabs.Controls.Add(this.lblReservationsHistory);
-            this.panelFilterTabs.Location = new System.Drawing.Point(24, 433);
+            this.panelFilterTabs.Location = new System.Drawing.Point(24, 527);
             this.panelFilterTabs.Name = "panelFilterTabs";
             this.panelFilterTabs.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.panelFilterTabs.Size = new System.Drawing.Size(1187, 474);
+            this.panelFilterTabs.Size = new System.Drawing.Size(1187, 380);
             this.panelFilterTabs.TabIndex = 3;
+            this.panelFilterTabs.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFilterTabs_Paint);
             // 
             // btnFilterExpired
             // 
@@ -481,6 +710,10 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
             this.panelReservationsManagement.ResumeLayout(false);
             this.panelCreateReservation.ResumeLayout(false);
             this.panelCreateReservation.PerformLayout();
+            this.panelStaffReservationBookInfo.ResumeLayout(false);
+            this.panelStaffReservationBookInfo.PerformLayout();
+            this.panelStaffReservationMemberInfo.ResumeLayout(false);
+            this.panelStaffReservationMemberInfo.PerformLayout();
             this.panelFilterTabs.ResumeLayout(false);
             this.panelFilterTabs.PerformLayout();
             this.panelMainContainer.ResumeLayout(false);
@@ -521,5 +754,23 @@ namespace Project5LMS.Forms.LibraryStaff.Reservations
         private System.Windows.Forms.Button btnFilterAll;
         private System.Windows.Forms.Label lblReservationsHistory;
         private System.Windows.Forms.Panel panelMainContainer;
+        private System.Windows.Forms.Panel panelStaffReservationMemberInfo;
+        private System.Windows.Forms.Label lblMemberEligibilityHeader;
+        private System.Windows.Forms.Label lblMemberName;
+        private System.Windows.Forms.Label lblMemberType;
+        private System.Windows.Forms.Label lblMemberStatus;
+        private System.Windows.Forms.Label lblMemberReservations;
+        private System.Windows.Forms.Label lblMemberOverdue;
+        private System.Windows.Forms.Label lblMemberFines;
+        private System.Windows.Forms.Label lblMemberEligibilityTitle;
+        private System.Windows.Forms.Label lblMemberEligibilityStatus;
+        private System.Windows.Forms.Panel panelStaffReservationBookInfo;
+        private System.Windows.Forms.Label lblBookInformationHeader;
+        private System.Windows.Forms.Label lblBookTitle;
+        private System.Windows.Forms.Label lblBookAuthor;
+        private System.Windows.Forms.Label lblBookStatus;
+        private System.Windows.Forms.Label lblBookCopies;
+        private System.Windows.Forms.Label lblBookEligibilityTitle;
+        private System.Windows.Forms.Label lblBookEligibilityStatus;
     }
 }

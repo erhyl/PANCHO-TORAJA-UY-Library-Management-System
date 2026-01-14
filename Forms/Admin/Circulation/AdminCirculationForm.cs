@@ -10,6 +10,7 @@ using Project5LMS.Helpers;
 using Project5LMS.Services;
 using Project5LMS.Data;
 using Project5LMS.Interfaces;
+using Project5LMS.Forms.Admin.Search;
 using Project5LMS.Models;
 using Project5LMS.Repositories;
 namespace Project5LMS.Forms.Admin.Circulation
@@ -25,6 +26,7 @@ namespace Project5LMS.Forms.Admin.Circulation
         private readonly ITransactionRepository _transactionRepository;
         private readonly IMemberRepository _memberRepository;
         private readonly IReservationService _reservationService;
+        private readonly IBookCopyRepository _bookCopyRepository;
         private readonly BorrowingValidator _borrowingValidator;
         private readonly ReceiptService _receiptService;
         public AdminCirculationForm()
@@ -50,6 +52,7 @@ namespace Project5LMS.Forms.Admin.Circulation
             _transactionRepository = DependencyInjection.GetRequiredService<ITransactionRepository>();
             _memberRepository = DependencyInjection.GetRequiredService<IMemberRepository>();
             _reservationService = ServiceFactory.CreateReservationService();
+            _bookCopyRepository = DependencyInjection.GetRequiredService<IBookCopyRepository>();
             _borrowingValidator = DependencyInjection.GetRequiredService<BorrowingValidator>();
             _receiptService = DependencyInjection.GetRequiredService<ReceiptService>();
             this.ResizeRedraw = true;
@@ -939,7 +942,7 @@ namespace Project5LMS.Forms.Admin.Circulation
             string bookAccessionText = txtReturnBookAccession.Text.Trim();
             if (bookAccessionText == "Format: ACC-000001 or 1" || bookAccessionText.Contains("Format:") || string.IsNullOrWhiteSpace(bookAccessionText))
             {
-                MessageBox.Show("Please enter a Book Accession Number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ErrorHandler.ShowValidationError("Please enter a Book Accession Number.");
                 txtReturnBookAccession.Focus();
                 return;
             }
@@ -948,7 +951,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                 int bookId = GetBookIdFromAccession(bookAccessionText);
                 if (bookId == 0)
                 {
-                    MessageBox.Show("Book not found with the provided accession number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    ErrorHandler.ShowError("Book not found with the provided accession number.", "Error");
                     return;
                 }
                 var activeTransaction = _circulationService.GetActiveTransactionByBook(bookId);
@@ -969,16 +972,33 @@ namespace Project5LMS.Forms.Admin.Circulation
                 bool isOverdue = transaction.DueDate < DateTime.Now;
                 int daysOverdue = isOverdue ? (DateTime.Now - transaction.DueDate).Days : 0;
                 
+                using (var statusForm = new TransactionStatusForm("Book Return"))
+                {
+                    statusForm.Show();
+                    Application.DoEvents();
+                    try
+                    {
+                        statusForm.UpdateStatus("Calculating fine...");
+                        if (fine > 0)
+                        {
+                            statusForm.UpdateStatus($"Fine calculated: {Project5LMS.Helpers.IDFormatter.FormatCurrency(fine)}");
+                        }
+                        statusForm.UpdateStatus("Processing book return...");
                 if (_circulationService.ReturnBook(transactionId))
                 {
                     if (fine > 0)
                     {
+                                statusForm.UpdateStatus("Updating fine record...");
                         _finesService.UpdateTransactionFine(transactionId, fine);
                     }
                     
                     // Generate return receipt
                     string receiptNumber = IDFormatter.FormatReceiptNumber(DateTime.Now, new Random().Next(100000, 999999));
                     string receiptMessage = _receiptService.GenerateReturnReceipt(member, book, transaction, fine, daysOverdue, receiptNumber);
+                            
+                            statusForm.UpdateStatus("Transaction completed successfully!");
+                            System.Threading.Thread.Sleep(Constants.ThreadSleepShort);
+                            statusForm.Close();
                     
                     string fineInfo = fine > 0 ? $", Fine: {Project5LMS.Helpers.IDFormatter.FormatCurrency(fine)}" : "";
                     AuditLogger.LogCirculation("Book Returned",
@@ -992,10 +1012,18 @@ namespace Project5LMS.Forms.Admin.Circulation
                 }
                 else
                 {
+                            statusForm.Close();
                     AuditLogger.LogCirculation("Book Return Failed",
                         $"BookID: {bookId}, TransactionID: {transactionId}",
                         "Failed");
                     throw new InvalidOperationException("Failed to return book. Please try again.");
+                        }
+                    }
+                    catch
+                    {
+                        statusForm.Close();
+                        throw;
+                    }
                 }
                 txtReturnBookAccession.Text = "Format: ACC-000001 or 1";
                 txtReturnBookAccession.ForeColor = Color.Gray;
@@ -1121,12 +1149,34 @@ namespace Project5LMS.Forms.Admin.Circulation
                         lblMemberType.Text = $"Type: {eligibilityInfo.Member.Type}";
                     }
                     
-                    // Member Status
+                    // Member Status - Display actual Status field from database to match AdminMembersForm
                     if (lblMemberStatus != null)
                     {
-                        string statusText = isActive ? "Status: Active" : "Status: Inactive/Expired";
+                        string actualStatus = member.Status ?? "Active";
+                        // If member is expired (ExpirationDate passed), show "Expired" regardless of Status field
+                        if (member.IsExpired && (actualStatus.Equals("Active", StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(actualStatus)))
+                        {
+                            actualStatus = "Expired";
+                        }
+                        string statusText = $"Status: {actualStatus}";
                         lblMemberStatus.Text = statusText;
-                        lblMemberStatus.ForeColor = isActive ? Color.FromArgb(34, 139, 34) : Color.FromArgb(220, 20, 60);
+                        
+                        // Color coding to match AdminMembersForm display
+                        switch (actualStatus.ToLower())
+                        {
+                            case "active":
+                                lblMemberStatus.ForeColor = Color.FromArgb(40, 167, 69); // Green
+                                break;
+                            case "suspended":
+                                lblMemberStatus.ForeColor = Color.FromArgb(220, 53, 69); // Red
+                                break;
+                            case "expired":
+                                lblMemberStatus.ForeColor = Color.FromArgb(255, 193, 7); // Yellow/Orange
+                                break;
+                            default:
+                                lblMemberStatus.ForeColor = Color.FromArgb(220, 53, 69); // Red for unknown/inactive
+                                break;
+                        }
                     }
                     
                     // Current Borrowings
@@ -1150,7 +1200,7 @@ namespace Project5LMS.Forms.Admin.Circulation
                         lblMemberFines.ForeColor = finesPaid ? Constants.GetNeutralColor() : Constants.GetErrorColor();
                     }
                     
-                    // Eligibility Status
+                    // Eligibility Status - Use eligibility logic (considers Status AND ExpirationDate)
                     if (lblEligibilityStatus != null)
                     {
                         if (isEligible)
@@ -1161,7 +1211,24 @@ namespace Project5LMS.Forms.Admin.Circulation
                         else
                         {
                             var reasons = new List<string>();
-                            if (!isActive) reasons.Add("Account inactive/expired");
+                            // Check actual status and expiration separately for clearer messaging
+                            string actualStatus = member.Status ?? "Active";
+                            if (member.IsExpired && (actualStatus.Equals("Active", StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(actualStatus)))
+                            {
+                                actualStatus = "Expired";
+                            }
+                            if (actualStatus.Equals("Suspended", StringComparison.OrdinalIgnoreCase))
+                            {
+                                reasons.Add("Account suspended");
+                            }
+                            else if (member.IsExpired)
+                            {
+                                reasons.Add("Membership expired");
+                            }
+                            else if (!isActive)
+                            {
+                                reasons.Add("Account inactive");
+                            }
                             if (!withinLimit) reasons.Add("Borrowing limit reached");
                             if (!noOverdue) reasons.Add("Has overdue books");
                             if (!finesPaid) reasons.Add("Unpaid fines");
@@ -1441,67 +1508,375 @@ namespace Project5LMS.Forms.Admin.Circulation
             }
         }
         
+        // Helper class to hold active borrower information
+        private class ActiveBorrowerInfo
+        {
+            public int TransactionID { get; set; }
+            public int MemberID { get; set; }
+            public string MemberName { get; set; }
+            public DateTime DueDate { get; set; }
+            public decimal FineAmount { get; set; }
+            public string AccessionNumber { get; set; }
+            public string Barcode { get; set; }
+            public DateTime BorrowDate { get; set; }
+        }
+        
+        // Fetch all active borrowers for a book from the catalog
+        private List<ActiveBorrowerInfo> GetAllActiveBorrowersForBook(int bookId)
+        {
+            List<ActiveBorrowerInfo> borrowers = new List<ActiveBorrowerInfo>();
+            
+            try
+            {
+                using (var conn = _dbContext.GetConnection())
+                {
+                    conn.Open();
+                    // Query all active transactions for this book with member information
+                    // Note: BookCopies are not directly linked to Transactions, so we'll get copies separately
+                    string query = @"SELECT 
+                                        t.TransactionID,
+                                        t.MemberID,
+                                        t.BorrowDate,
+                                        t.DueDate,
+                                        t.Fine,
+                                        CONCAT(m.FirstName, ' ', m.LastName) AS MemberName
+                                    FROM Transactions t
+                                    INNER JOIN Members m ON t.MemberID = m.MemberID
+                                    WHERE t.BookID = @BookID 
+                                    AND (t.Status = 'Borrowed' OR t.Status = 'Active')
+                                    ORDER BY t.DueDate ASC";
+                    
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var borrower = new ActiveBorrowerInfo
+                                {
+                                    TransactionID = reader.GetInt32("TransactionID"),
+                                    MemberID = reader.GetInt32("MemberID"),
+                                    MemberName = reader["MemberName"]?.ToString() ?? "Unknown",
+                                    BorrowDate = reader.GetDateTime("BorrowDate"),
+                                    DueDate = reader.GetDateTime("DueDate"),
+                                    FineAmount = reader["Fine"] != DBNull.Value ? reader.GetDecimal("Fine") : 0m,
+                                    AccessionNumber = null, // Will be populated separately if needed
+                                    Barcode = null // Will be populated separately if needed
+                                };
+                                
+                                // Calculate fine if not already set in transaction
+                                if (borrower.FineAmount == 0)
+                                {
+                                    borrower.FineAmount = _finesService.CalculateFine(borrower.TransactionID);
+                                }
+                                
+                                borrowers.Add(borrower);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error fetching active borrowers for book {bookId}: {ex.Message}");
+            }
+            
+            return borrowers;
+        }
+        
         private void DisplayReturnBookInfo(Book book, int bookId)
         {
-            // For return tab, show book info and transaction details
+            // For return tab, show book info and ALL active transaction details (fetching updated catalog, reservations, and copies)
             if (panelReturnBookInfo != null)
             {
-                panelReturnBookInfo.Visible = true;
+                panelReturnBookInfo.Controls.Clear();
                 
-                var activeTransaction = _circulationService.GetActiveTransactionByBook(bookId);
-                
-                if (lblReturnBookTitle != null)
-                    lblReturnBookTitle.Text = $"Title: {book.Title}";
-                if (lblReturnBookAuthor != null)
-                    lblReturnBookAuthor.Text = $"Author: {book.Author}";
-                
-                if (activeTransaction != null)
+                // Refresh book data from catalog to get latest information
+                book = _bookService.GetBook(bookId);
+                if (book == null)
                 {
-                    var member = _membersService.GetMember(activeTransaction.MemberID);
-                    decimal fine = _finesService.CalculateFine(activeTransaction.TransactionID);
-                    bool isOverdue = activeTransaction.DueDate < DateTime.Now;
-                    int daysOverdue = isOverdue ? (DateTime.Now - activeTransaction.DueDate).Days : 0;
+                    Label lblError = new Label
+                    {
+                        Text = "Book not found in catalog.",
+                        Font = new Font("Segoe UI", 9F),
+                        ForeColor = Color.FromArgb(220, 20, 60),
+                        AutoSize = false,
+                        Location = new Point(5, 5),
+                        Size = new Size(panelReturnBookInfo.Width - 10, 20)
+                    };
+                    panelReturnBookInfo.Controls.Add(lblError);
+                panelReturnBookInfo.Visible = true;
+                    return;
+                }
+                
+                // Get updated book copies information
+                var bookCopies = _bookCopyRepository.GetByBookId(bookId).ToList();
+                int totalCopies = bookCopies.Count;
+                int availableCopies = bookCopies.Count(c => c.IsAvailable);
+                int borrowedCopies = bookCopies.Count(c => c.IsBorrowed);
+                int reservedCopies = bookCopies.Count(c => c.IsReserved);
+                
+                // Get reservations for this book
+                var reservations = _reservationService.GetBookReservations(bookId).ToList();
+                var activeReservations = reservations.Where(r => r.Status == "Pending" || r.Status == "Active" || r.Status == "Ready").ToList();
+                
+                int yPos = 5;
+                int labelHeight = 20;
+                int spacing = 6;
+                int labelWidth = panelReturnBookInfo.Width - 10;
+                
+                // Book Information (from updated catalog)
+                Label lblTitle = new Label
+                {
+                    Text = $"Title: {book.Title}",
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(64, 64, 64),
+                    AutoSize = false,
+                    Location = new Point(5, yPos),
+                    Size = new Size(labelWidth, labelHeight),
+                    MaximumSize = new Size(labelWidth, 0)
+                };
+                panelReturnBookInfo.Controls.Add(lblTitle);
+                yPos += labelHeight + spacing;
+                
+                Label lblAuthor = new Label
+                {
+                    Text = $"Author: {book.Author}",
+                    Font = new Font("Segoe UI", 9F),
+                    ForeColor = Color.FromArgb(64, 64, 64),
+                    AutoSize = false,
+                    Location = new Point(5, yPos),
+                    Size = new Size(labelWidth, labelHeight),
+                    MaximumSize = new Size(labelWidth, 0)
+                };
+                panelReturnBookInfo.Controls.Add(lblAuthor);
+                yPos += labelHeight + spacing;
+                
+                // Updated copies information from BookCopies table
+                Label lblCopies = new Label
+                {
+                    Text = $"Copies: {availableCopies}/{totalCopies} Available | {borrowedCopies} Borrowed | {reservedCopies} Reserved",
+                    Font = new Font("Segoe UI", 9F),
+                    ForeColor = Color.FromArgb(64, 64, 64),
+                    AutoSize = false,
+                    Location = new Point(5, yPos),
+                    Size = new Size(labelWidth, labelHeight)
+                };
+                panelReturnBookInfo.Controls.Add(lblCopies);
+                yPos += labelHeight + spacing;
+                
+                // Show reservations if any
+                if (activeReservations.Count > 0)
+                {
+                    Label lblReservations = new Label
+                    {
+                        Text = $"Active Reservations ({activeReservations.Count}):",
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(255, 140, 0),
+                        AutoSize = false,
+                        Location = new Point(5, yPos),
+                        Size = new Size(labelWidth, labelHeight)
+                    };
+                    panelReturnBookInfo.Controls.Add(lblReservations);
+                    yPos += labelHeight + spacing;
                     
-                    if (lblReturnMemberName != null)
-                        lblReturnMemberName.Text = $"Borrower: {member?.FullName ?? "Unknown"}";
-                    if (lblReturnDueDate != null)
-                        lblReturnDueDate.Text = $"Due Date: {activeTransaction.DueDate:yyyy-MM-dd}";
-                    if (lblReturnOverdue != null)
+                    foreach (var reservation in activeReservations.Take(5)) // Show max 5 reservations
                     {
-                        if (isOverdue)
+                        var reservingMember = _membersService.GetMember(reservation.MemberID);
+                        string reservationInfo = $"• {reservingMember?.FullName ?? "Unknown"} - {reservation.Status}";
+                        if (reservation.PickupDate.HasValue)
                         {
-                            lblReturnOverdue.Text = $"Days Overdue: {daysOverdue}";
-                            lblReturnOverdue.ForeColor = Constants.GetErrorColor();
+                            reservationInfo += $" (Pickup: {reservation.PickupDate.Value:yyyy-MM-dd})";
                         }
-                        else
+                        
+                        Label lblReservation = new Label
                         {
-                            lblReturnOverdue.Text = "Status: On Time";
-                            lblReturnOverdue.ForeColor = Constants.GetSuccessColor();
-                        }
+                            Text = reservationInfo,
+                            Font = new Font("Segoe UI", 8.5F),
+                            ForeColor = Color.FromArgb(255, 140, 0),
+                            AutoSize = false,
+                            Location = new Point(10, yPos),
+                            Size = new Size(labelWidth - 5, labelHeight)
+                        };
+                        panelReturnBookInfo.Controls.Add(lblReservation);
+                        yPos += labelHeight + 2;
                     }
-                    if (lblReturnFine != null)
+                    if (activeReservations.Count > 5)
                     {
-                        lblReturnFine.Text = fine > 0 ? $"Fine: {IDFormatter.FormatCurrency(fine)}" : "Fine: None";
-                        lblReturnFine.ForeColor = fine > 0 ? Constants.GetErrorColor() : Constants.GetNeutralColor();
+                        Label lblMoreReservations = new Label
+                        {
+                            Text = $"  ... and {activeReservations.Count - 5} more",
+                            Font = new Font("Segoe UI", 8F, FontStyle.Italic),
+                            ForeColor = Color.FromArgb(128, 128, 128),
+                            AutoSize = false,
+                            Location = new Point(10, yPos),
+                            Size = new Size(labelWidth - 5, labelHeight)
+                        };
+                        panelReturnBookInfo.Controls.Add(lblMoreReservations);
+                        yPos += labelHeight + 2;
                     }
+                    yPos += spacing;
+                }
+                
+                yPos += spacing; // Extra spacing before borrowers
+                
+                // Show borrowed copies information
+                var borrowedCopiesList = bookCopies.Where(c => c.IsBorrowed).ToList();
+                if (borrowedCopiesList.Count > 0)
+                {
+                    Label lblBorrowedCopiesHeader = new Label
+                    {
+                        Text = $"Borrowed Copies ({borrowedCopiesList.Count}):",
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(0, 102, 204),
+                        AutoSize = false,
+                        Location = new Point(5, yPos),
+                        Size = new Size(labelWidth, labelHeight)
+                    };
+                    panelReturnBookInfo.Controls.Add(lblBorrowedCopiesHeader);
+                    yPos += labelHeight + spacing;
+                    
+                    foreach (var copy in borrowedCopiesList)
+                    {
+                        string copyInfo = !string.IsNullOrEmpty(copy.AccessionNumber) 
+                            ? $"• {copy.AccessionNumber}" 
+                            : $"• Copy ID: {copy.CopyID}";
+                        if (!string.IsNullOrEmpty(copy.Barcode))
+                        {
+                            copyInfo += $" (Barcode: {copy.Barcode})";
+                        }
+                        if (copy.LastCheckedOut.HasValue)
+                        {
+                            copyInfo += $" - Borrowed: {copy.LastCheckedOut.Value:yyyy-MM-dd}";
+                        }
+                        
+                        Label lblCopy = new Label
+                        {
+                            Text = copyInfo,
+                            Font = new Font("Segoe UI", 8.5F),
+                            ForeColor = Color.FromArgb(64, 64, 64),
+                            AutoSize = false,
+                            Location = new Point(10, yPos),
+                            Size = new Size(labelWidth - 5, labelHeight)
+                        };
+                        panelReturnBookInfo.Controls.Add(lblCopy);
+                        yPos += labelHeight + 2;
+                    }
+                    yPos += spacing;
+                }
+                
+                // Fetch ALL active transactions for this book from the catalog
+                List<ActiveBorrowerInfo> activeBorrowers = GetAllActiveBorrowersForBook(bookId);
+                
+                if (activeBorrowers != null && activeBorrowers.Count > 0)
+                {
+                    // Add separator label
+                    Label lblBorrowersHeader = new Label
+                    {
+                        Text = $"Active Borrowers ({activeBorrowers.Count}):",
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(0, 102, 204),
+                        AutoSize = false,
+                        Location = new Point(5, yPos),
+                        Size = new Size(labelWidth, labelHeight)
+                    };
+                    panelReturnBookInfo.Controls.Add(lblBorrowersHeader);
+                    yPos += labelHeight + spacing;
+                    
+                    // Display each active borrower
+                    foreach (var borrower in activeBorrowers)
+                    {
+                        // Borrower name
+                        Label lblBorrower = new Label
+                        {
+                            Text = $"• {borrower.MemberName}",
+                            Font = new Font("Segoe UI", 9F),
+                            ForeColor = Color.FromArgb(64, 64, 64),
+                            AutoSize = false,
+                            Location = new Point(10, yPos),
+                            Size = new Size(labelWidth - 5, labelHeight)
+                        };
+                        panelReturnBookInfo.Controls.Add(lblBorrower);
+                        yPos += labelHeight + 2;
+                        
+                        // Due date and overdue status
+                        bool isOverdue = borrower.DueDate < DateTime.Now;
+                        int daysOverdue = isOverdue ? (DateTime.Now - borrower.DueDate).Days : 0;
+                        string statusText = isOverdue ? $"Due: {borrower.DueDate:yyyy-MM-dd} ({daysOverdue} days overdue)" 
+                                                      : $"Due: {borrower.DueDate:yyyy-MM-dd}";
+                        
+                        Label lblBorrowerDetails = new Label
+                        {
+                            Text = $"  {statusText}",
+                            Font = new Font("Segoe UI", 8.5F),
+                            ForeColor = isOverdue ? Color.FromArgb(220, 20, 60) : Color.FromArgb(64, 64, 64),
+                            AutoSize = false,
+                            Location = new Point(15, yPos),
+                            Size = new Size(labelWidth - 10, labelHeight)
+                        };
+                        panelReturnBookInfo.Controls.Add(lblBorrowerDetails);
+                        yPos += labelHeight + 2;
+                        
+                        // Fine amount if applicable
+                        if (borrower.FineAmount > 0)
+                        {
+                            Label lblBorrowerFine = new Label
+                            {
+                                Text = $"  Fine: {IDFormatter.FormatCurrency(borrower.FineAmount)}",
+                                Font = new Font("Segoe UI", 8.5F),
+                                ForeColor = Color.FromArgb(220, 20, 60),
+                                AutoSize = false,
+                                Location = new Point(15, yPos),
+                                Size = new Size(labelWidth - 10, labelHeight)
+                            };
+                            panelReturnBookInfo.Controls.Add(lblBorrowerFine);
+                            yPos += labelHeight + 2;
+                        }
+                        
+                        yPos += spacing; // Extra spacing between borrowers
+                    }
+                    
+                    // Adjust panel height to fit all content
+                    panelReturnBookInfo.Height = Math.Min(yPos + 10, 400); // Max height 400, scroll if needed
+                    panelReturnBookInfo.AutoScroll = true;
                 }
                 else
                 {
-                    if (lblReturnMemberName != null)
-                        lblReturnMemberName.Text = "Status: No active borrowing";
-                    if (lblReturnDueDate != null)
-                        lblReturnDueDate.Text = "";
-                    if (lblReturnOverdue != null)
-                        lblReturnOverdue.Text = "";
-                    if (lblReturnFine != null)
-                        lblReturnFine.Text = "";
+                    Label lblNoBorrowing = new Label
+                    {
+                        Text = "Status: No active borrowing",
+                        Font = new Font("Segoe UI", 9F),
+                        ForeColor = Color.FromArgb(128, 128, 128),
+                        AutoSize = false,
+                        Location = new Point(5, yPos),
+                        Size = new Size(labelWidth, labelHeight)
+                    };
+                    panelReturnBookInfo.Controls.Add(lblNoBorrowing);
                 }
+                
+                panelReturnBookInfo.Visible = true;
             }
         }
         
         private void DisplayRenewBookInfo(Book book, int bookId)
         {
             // For renew tab, show book info and renewal eligibility
+            // First refresh book data from catalog to ensure we have latest information
+            book = _bookService.GetBook(bookId);
+            if (book == null)
+            {
+                if (panelRenewBookInfo != null)
+                {
+                    panelRenewBookInfo.Visible = true;
+                    if (lblRenewBookTitle != null)
+                        lblRenewBookTitle.Text = "Book not found in catalog.";
+                    if (lblRenewEligibility != null)
+                        lblRenewEligibility.Text = "";
+                }
+                return;
+            }
+            
             if (panelRenewBookInfo != null)
             {
                 panelRenewBookInfo.Visible = true;
@@ -1518,7 +1893,17 @@ namespace Project5LMS.Forms.Admin.Circulation
                     var member = _membersService.GetMember(activeTransaction.MemberID);
                     var privileges = MemberTypePrivileges.GetDefaultPrivileges(member?.Type ?? "Student");
                     bool canRenew = _circulationService.CanRenew(activeTransaction.TransactionID);
-                    bool hasReservations = _reservationService.HasActiveReservations(bookId);
+                    
+                    // Explicitly fetch and check reservations from database before displaying eligibility
+                    var allBookReservations = _reservationService.GetBookReservations(bookId).ToList();
+                    // Filter to only truly active reservations (not expired, cancelled, or fulfilled)
+                    var activeReservations = allBookReservations.Where(r => 
+                        !r.IsCancelled && 
+                        !r.IsFulfilled && 
+                        !r.IsExpired && 
+                        (r.IsPending || r.IsActive || r.IsReady)).ToList();
+                    
+                    bool hasReservations = activeReservations.Count > 0;
                     
                     if (lblRenewMemberName != null)
                         lblRenewMemberName.Text = $"Borrower: {member?.FullName ?? "Unknown"}";
@@ -1537,9 +1922,17 @@ namespace Project5LMS.Forms.Admin.Circulation
                         {
                             var reasons = new List<string>();
                             if (!canRenew) reasons.Add("Renewal limit reached");
-                            if (hasReservations) reasons.Add("Has active reservations");
-                            lblRenewEligibility.Text = $"✗ Not Eligible - {string.Join(", ", reasons)}";
-                            lblRenewEligibility.ForeColor = Constants.GetErrorColor();
+                            // Only show "Has active reservations" if there are actually active reservations
+                            if (hasReservations)
+                            {
+                                reasons.Add($"Has {activeReservations.Count} active reservation(s)");
+                            }
+                            lblRenewEligibility.Text = reasons.Count > 0 
+                                ? $"✗ Not Eligible - {string.Join(", ", reasons)}"
+                                : "✓ Eligible for Renewal";
+                            lblRenewEligibility.ForeColor = reasons.Count > 0 
+                                ? Constants.GetErrorColor() 
+                                : Constants.GetSuccessColor();
                         }
                     }
                 }
@@ -1593,13 +1986,11 @@ namespace Project5LMS.Forms.Admin.Circulation
             }
             else if (tabName == "Return")
             {
-                if (panelReturnBookInfo != null) panelReturnBookInfo.Visible = false;
-                if (lblReturnBookTitle != null) lblReturnBookTitle.Text = "";
-                if (lblReturnBookAuthor != null) lblReturnBookAuthor.Text = "";
-                if (lblReturnMemberName != null) lblReturnMemberName.Text = "";
-                if (lblReturnDueDate != null) lblReturnDueDate.Text = "";
-                if (lblReturnOverdue != null) lblReturnOverdue.Text = "";
-                if (lblReturnFine != null) lblReturnFine.Text = "";
+                if (panelReturnBookInfo != null)
+                {
+                    panelReturnBookInfo.Controls.Clear();
+                    panelReturnBookInfo.Visible = false;
+                }
             }
             else if (tabName == "Renew")
             {

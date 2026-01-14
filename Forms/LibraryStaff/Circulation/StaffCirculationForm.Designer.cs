@@ -15,6 +15,7 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
         private void InitializeComponent()
         {
             this.panelMainContainer = new System.Windows.Forms.Panel();
+            this.panelCirculationManagement = new System.Windows.Forms.Panel();
             this.panelTransactionHistory = new System.Windows.Forms.Panel();
             this.panelTransactionsList = new System.Windows.Forms.Panel();
             this.flowLayoutTransactions = new System.Windows.Forms.FlowLayoutPanel();
@@ -23,7 +24,6 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.tabCheckouts = new System.Windows.Forms.TabPage();
             this.tabReturns = new System.Windows.Forms.TabPage();
             this.lblTransactionHistory = new System.Windows.Forms.Label();
-            this.panelCirculationManagement = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panelReturnBook = new System.Windows.Forms.Panel();
@@ -61,10 +61,10 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.panelMainContainer.SuspendLayout();
+            this.panelCirculationManagement.SuspendLayout();
             this.panelTransactionHistory.SuspendLayout();
             this.panelTransactionsList.SuspendLayout();
             this.tabControl.SuspendLayout();
-            this.panelCirculationManagement.SuspendLayout();
             this.panelReturnBook.SuspendLayout();
             this.panelCheckOutBook.SuspendLayout();
             this.panelCheckoutBookInfo.SuspendLayout();
@@ -79,12 +79,27 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.panelMainContainer.Controls.Add(this.panelCirculationManagement);
             this.panelMainContainer.Controls.Add(this.panelHeader);
             this.panelMainContainer.Location = new System.Drawing.Point(0, 0);
-            this.panelMainContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(32, 30, 32, 30);
-            this.panelMainContainer.Size = new System.Drawing.Size(1820, 1084);
+            this.panelMainContainer.Padding = new System.Windows.Forms.Padding(24, 24, 24, 24);
+            this.panelMainContainer.Size = new System.Drawing.Size(1365, 881);
             this.panelMainContainer.TabIndex = 0;
             this.panelMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainContainer_Paint);
+            // 
+            // panelCirculationManagement
+            // 
+            this.panelCirculationManagement.Controls.Add(this.panelTransactionHistory);
+            this.panelCirculationManagement.Controls.Add(this.label1);
+            this.panelCirculationManagement.Controls.Add(this.label2);
+            this.panelCirculationManagement.Controls.Add(this.panelReturnBook);
+            this.panelCirculationManagement.Controls.Add(this.panelCheckOutBook);
+            this.panelCirculationManagement.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCirculationManagement.Location = new System.Drawing.Point(24, 24);
+            this.panelCirculationManagement.Margin = new System.Windows.Forms.Padding(0);
+            this.panelCirculationManagement.Name = "panelCirculationManagement";
+            this.panelCirculationManagement.Size = new System.Drawing.Size(1317, 833);
+            this.panelCirculationManagement.TabIndex = 1;
+            this.panelCirculationManagement.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCirculationManagement_Paint);
+            this.panelCirculationManagement.Resize += new System.EventHandler(this.panelCirculationManagement_Resize);
             // 
             // panelTransactionHistory
             // 
@@ -94,10 +109,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.panelTransactionHistory.Controls.Add(this.panelTransactionsList);
             this.panelTransactionHistory.Controls.Add(this.tabControl);
             this.panelTransactionHistory.Controls.Add(this.lblTransactionHistory);
-            this.panelTransactionHistory.Location = new System.Drawing.Point(8, 494);
-            this.panelTransactionHistory.Margin = new System.Windows.Forms.Padding(4);
+            this.panelTransactionHistory.Location = new System.Drawing.Point(6, 445);
             this.panelTransactionHistory.Name = "panelTransactionHistory";
-            this.panelTransactionHistory.Size = new System.Drawing.Size(1756, 483);
+            this.panelTransactionHistory.Size = new System.Drawing.Size(1317, 349);
             this.panelTransactionHistory.TabIndex = 2;
             this.panelTransactionHistory.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTransactionHistory_Paint);
             // 
@@ -105,10 +119,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             // 
             this.panelTransactionsList.AutoScroll = true;
             this.panelTransactionsList.Controls.Add(this.flowLayoutTransactions);
-            this.panelTransactionsList.Location = new System.Drawing.Point(4, 82);
-            this.panelTransactionsList.Margin = new System.Windows.Forms.Padding(4);
+            this.panelTransactionsList.Location = new System.Drawing.Point(3, 67);
             this.panelTransactionsList.Name = "panelTransactionsList";
-            this.panelTransactionsList.Size = new System.Drawing.Size(1736, 448);
+            this.panelTransactionsList.Size = new System.Drawing.Size(1302, 364);
             this.panelTransactionsList.TabIndex = 2;
             this.panelTransactionsList.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTransactionsList_Paint);
             // 
@@ -116,11 +129,10 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             // 
             this.flowLayoutTransactions.AutoScroll = true;
             this.flowLayoutTransactions.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutTransactions.Location = new System.Drawing.Point(11, 4);
-            this.flowLayoutTransactions.Margin = new System.Windows.Forms.Padding(4);
+            this.flowLayoutTransactions.Location = new System.Drawing.Point(8, 3);
             this.flowLayoutTransactions.Name = "flowLayoutTransactions";
-            this.flowLayoutTransactions.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.flowLayoutTransactions.Size = new System.Drawing.Size(1721, 405);
+            this.flowLayoutTransactions.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
+            this.flowLayoutTransactions.Size = new System.Drawing.Size(1291, 329);
             this.flowLayoutTransactions.TabIndex = 0;
             this.flowLayoutTransactions.WrapContents = false;
             this.flowLayoutTransactions.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutTransactions_Paint);
@@ -133,21 +145,19 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.tabControl.Controls.Add(this.tabReturns);
             this.tabControl.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl.ItemSize = new System.Drawing.Size(180, 40);
-            this.tabControl.Location = new System.Drawing.Point(0, 27);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl.Location = new System.Drawing.Point(0, 22);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1744, 44);
+            this.tabControl.Size = new System.Drawing.Size(1308, 36);
             this.tabControl.TabIndex = 1;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabAll
             // 
             this.tabAll.Location = new System.Drawing.Point(4, 44);
-            this.tabAll.Margin = new System.Windows.Forms.Padding(4);
             this.tabAll.Name = "tabAll";
-            this.tabAll.Padding = new System.Windows.Forms.Padding(4);
-            this.tabAll.Size = new System.Drawing.Size(1736, 0);
+            this.tabAll.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabAll.Size = new System.Drawing.Size(1300, 0);
             this.tabAll.TabIndex = 0;
             this.tabAll.Text = "All Transactions";
             this.tabAll.UseVisualStyleBackColor = true;
@@ -156,10 +166,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             // tabCheckouts
             // 
             this.tabCheckouts.Location = new System.Drawing.Point(4, 44);
-            this.tabCheckouts.Margin = new System.Windows.Forms.Padding(4);
             this.tabCheckouts.Name = "tabCheckouts";
-            this.tabCheckouts.Padding = new System.Windows.Forms.Padding(4);
-            this.tabCheckouts.Size = new System.Drawing.Size(1528, 0);
+            this.tabCheckouts.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabCheckouts.Size = new System.Drawing.Size(1300, 0);
             this.tabCheckouts.TabIndex = 1;
             this.tabCheckouts.Text = "Checkouts";
             this.tabCheckouts.UseVisualStyleBackColor = true;
@@ -168,10 +177,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             // tabReturns
             // 
             this.tabReturns.Location = new System.Drawing.Point(4, 44);
-            this.tabReturns.Margin = new System.Windows.Forms.Padding(4);
             this.tabReturns.Name = "tabReturns";
-            this.tabReturns.Padding = new System.Windows.Forms.Padding(4);
-            this.tabReturns.Size = new System.Drawing.Size(1528, 0);
+            this.tabReturns.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabReturns.Size = new System.Drawing.Size(1300, 0);
             this.tabReturns.TabIndex = 2;
             this.tabReturns.Text = "Returns";
             this.tabReturns.UseVisualStyleBackColor = true;
@@ -183,38 +191,20 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblTransactionHistory.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTransactionHistory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblTransactionHistory.Location = new System.Drawing.Point(1, 0);
-            this.lblTransactionHistory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTransactionHistory.Name = "lblTransactionHistory";
-            this.lblTransactionHistory.Size = new System.Drawing.Size(165, 23);
+            this.lblTransactionHistory.Size = new System.Drawing.Size(139, 19);
             this.lblTransactionHistory.TabIndex = 0;
             this.lblTransactionHistory.Text = "Transaction History";
             this.lblTransactionHistory.Click += new System.EventHandler(this.lblTransactionHistory_Click);
-            // 
-            // panelCirculationManagement
-            // 
-            this.panelCirculationManagement.Controls.Add(this.panelTransactionHistory);
-            this.panelCirculationManagement.Controls.Add(this.label1);
-            this.panelCirculationManagement.Controls.Add(this.label2);
-            this.panelCirculationManagement.Controls.Add(this.panelReturnBook);
-            this.panelCirculationManagement.Controls.Add(this.panelCheckOutBook);
-            this.panelCirculationManagement.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCirculationManagement.Location = new System.Drawing.Point(32, 30);
-            this.panelCirculationManagement.Margin = new System.Windows.Forms.Padding(0);
-            this.panelCirculationManagement.Name = "panelCirculationManagement";
-            this.panelCirculationManagement.Size = new System.Drawing.Size(1756, 1024);
-            this.panelCirculationManagement.TabIndex = 1;
-            this.panelCirculationManagement.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCirculationManagement_Paint);
-            this.panelCirculationManagement.Resize += new System.EventHandler(this.panelCirculationManagement_Resize);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label1.Location = new System.Drawing.Point(21, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(16, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(489, 54);
+            this.label1.Size = new System.Drawing.Size(389, 45);
             this.label1.TabIndex = 4;
             this.label1.Text = "Circulation Management";
             // 
@@ -223,10 +213,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.label2.Location = new System.Drawing.Point(36, 69);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(27, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(289, 23);
+            this.label2.Size = new System.Drawing.Size(234, 19);
             this.label2.TabIndex = 5;
             this.label2.Text = "Manage book checkouts and returns";
             // 
@@ -241,19 +230,20 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.panelReturnBook.Controls.Add(this.txtReturnBookID);
             this.panelReturnBook.Controls.Add(this.lblReturnBookID);
             this.panelReturnBook.Controls.Add(this.lblReturnBookTitle);
-            this.panelReturnBook.Location = new System.Drawing.Point(927, 104);
+            this.panelReturnBook.Location = new System.Drawing.Point(695, 84);
             this.panelReturnBook.Margin = new System.Windows.Forms.Padding(0);
             this.panelReturnBook.Name = "panelReturnBook";
-            this.panelReturnBook.Padding = new System.Windows.Forms.Padding(29, 30, 29, 30);
-            this.panelReturnBook.Size = new System.Drawing.Size(829, 370);
+            this.panelReturnBook.Padding = new System.Windows.Forms.Padding(22, 24, 22, 24);
+            this.panelReturnBook.Size = new System.Drawing.Size(622, 358);
             this.panelReturnBook.TabIndex = 3;
             this.panelReturnBook.Paint += new System.Windows.Forms.PaintEventHandler(this.panelReturnBook_Paint);
             // 
             // panelReturnBookInfo
             // 
-            this.panelReturnBookInfo.Location = new System.Drawing.Point(37, 173);
+            this.panelReturnBookInfo.Location = new System.Drawing.Point(27, 119);
+            this.panelReturnBookInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelReturnBookInfo.Name = "panelReturnBookInfo";
-            this.panelReturnBookInfo.Size = new System.Drawing.Size(757, 118);
+            this.panelReturnBookInfo.Size = new System.Drawing.Size(568, 118);
             this.panelReturnBookInfo.TabIndex = 8;
             // 
             // btnProcessReturn
@@ -264,10 +254,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.btnProcessReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcessReturn.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProcessReturn.ForeColor = System.Drawing.Color.White;
-            this.btnProcessReturn.Location = new System.Drawing.Point(37, 314);
-            this.btnProcessReturn.Margin = new System.Windows.Forms.Padding(4);
+            this.btnProcessReturn.Location = new System.Drawing.Point(28, 315);
             this.btnProcessReturn.Name = "btnProcessReturn";
-            this.btnProcessReturn.Size = new System.Drawing.Size(761, 47);
+            this.btnProcessReturn.Size = new System.Drawing.Size(571, 38);
             this.btnProcessReturn.TabIndex = 6;
             this.btnProcessReturn.Text = "Process Return";
             this.btnProcessReturn.UseVisualStyleBackColor = false;
@@ -279,10 +268,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblReturnDate.AutoSize = true;
             this.lblReturnDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReturnDate.Location = new System.Drawing.Point(33, 147);
-            this.lblReturnDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReturnDate.Location = new System.Drawing.Point(27, 94);
             this.lblReturnDate.Name = "lblReturnDate";
-            this.lblReturnDate.Size = new System.Drawing.Size(102, 23);
+            this.lblReturnDate.Size = new System.Drawing.Size(83, 19);
             this.lblReturnDate.TabIndex = 5;
             this.lblReturnDate.Text = "Return Date";
             this.lblReturnDate.Click += new System.EventHandler(this.lblReturnDate_Click);
@@ -292,10 +280,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.txtReturnDate.AutoSize = true;
             this.txtReturnDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReturnDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.txtReturnDate.Location = new System.Drawing.Point(145, 121);
-            this.txtReturnDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.txtReturnDate.Location = new System.Drawing.Point(109, 98);
             this.txtReturnDate.Name = "txtReturnDate";
-            this.txtReturnDate.Size = new System.Drawing.Size(0, 23);
+            this.txtReturnDate.Size = new System.Drawing.Size(0, 19);
             this.txtReturnDate.TabIndex = 4;
             this.txtReturnDate.Click += new System.EventHandler(this.txtReturnDate_Click);
             // 
@@ -305,10 +292,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.txtReturnBookID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReturnBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReturnBookID.ForeColor = System.Drawing.Color.Gray;
-            this.txtReturnBookID.Location = new System.Drawing.Point(33, 96);
-            this.txtReturnBookID.Margin = new System.Windows.Forms.Padding(4);
+            this.txtReturnBookID.Location = new System.Drawing.Point(26, 55);
             this.txtReturnBookID.Name = "txtReturnBookID";
-            this.txtReturnBookID.Size = new System.Drawing.Size(761, 30);
+            this.txtReturnBookID.Size = new System.Drawing.Size(571, 25);
             this.txtReturnBookID.TabIndex = 3;
             this.txtReturnBookID.Text = "Scan or enter book ID";
             this.txtReturnBookID.TextChanged += new System.EventHandler(this.txtReturnBookID_TextChanged);
@@ -322,10 +308,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblReturnBookID.AutoSize = true;
             this.lblReturnBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReturnBookID.Location = new System.Drawing.Point(29, 62);
-            this.lblReturnBookID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReturnBookID.Location = new System.Drawing.Point(23, 27);
             this.lblReturnBookID.Name = "lblReturnBookID";
-            this.lblReturnBookID.Size = new System.Drawing.Size(70, 23);
+            this.lblReturnBookID.Size = new System.Drawing.Size(58, 19);
             this.lblReturnBookID.TabIndex = 2;
             this.lblReturnBookID.Text = "Book ID";
             this.lblReturnBookID.Click += new System.EventHandler(this.lblReturnBookID_Click);
@@ -336,10 +321,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblReturnBookTitle.AutoSize = true;
             this.lblReturnBookTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblReturnBookTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblReturnBookTitle.Location = new System.Drawing.Point(28, 28);
-            this.lblReturnBookTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReturnBookTitle.Location = new System.Drawing.Point(22, 0);
             this.lblReturnBookTitle.Name = "lblReturnBookTitle";
-            this.lblReturnBookTitle.Size = new System.Drawing.Size(130, 28);
+            this.lblReturnBookTitle.Size = new System.Drawing.Size(104, 21);
             this.lblReturnBookTitle.TabIndex = 0;
             this.lblReturnBookTitle.Text = "Return Book";
             this.lblReturnBookTitle.Click += new System.EventHandler(this.lblReturnBookTitle_Click);
@@ -356,11 +340,11 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.panelCheckOutBook.Controls.Add(this.txtCheckOutMemberID);
             this.panelCheckOutBook.Controls.Add(this.lblCheckOutMemberID);
             this.panelCheckOutBook.Controls.Add(this.lblCheckOutBookTitle);
-            this.panelCheckOutBook.Location = new System.Drawing.Point(8, 104);
-            this.panelCheckOutBook.Margin = new System.Windows.Forms.Padding(0, 0, 11, 0);
+            this.panelCheckOutBook.Location = new System.Drawing.Point(6, 84);
+            this.panelCheckOutBook.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panelCheckOutBook.Name = "panelCheckOutBook";
-            this.panelCheckOutBook.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
-            this.panelCheckOutBook.Size = new System.Drawing.Size(894, 370);
+            this.panelCheckOutBook.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
+            this.panelCheckOutBook.Size = new System.Drawing.Size(671, 358);
             this.panelCheckOutBook.TabIndex = 2;
             this.panelCheckOutBook.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCheckOutBook_Paint);
             // 
@@ -375,10 +359,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.panelCheckoutBookInfo.Controls.Add(this.lblBorrowBookAuthor);
             this.panelCheckoutBookInfo.Controls.Add(this.lblBorrowBookTitle);
             this.panelCheckoutBookInfo.Controls.Add(this.lblBorrowBookInfoTitle);
-            this.panelCheckoutBookInfo.Location = new System.Drawing.Point(21, 239);
-            this.panelCheckoutBookInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.panelCheckoutBookInfo.Location = new System.Drawing.Point(16, 200);
             this.panelCheckoutBookInfo.Name = "panelCheckoutBookInfo";
-            this.panelCheckoutBookInfo.Size = new System.Drawing.Size(846, 71);
+            this.panelCheckoutBookInfo.Size = new System.Drawing.Size(635, 112);
             this.panelCheckoutBookInfo.TabIndex = 6;
             this.panelCheckoutBookInfo.Visible = false;
             // 
@@ -387,10 +370,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblBorrowBookCopies.AutoSize = true;
             this.lblBorrowBookCopies.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowBookCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowBookCopies.Location = new System.Drawing.Point(900, 33);
-            this.lblBorrowBookCopies.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowBookCopies.Location = new System.Drawing.Point(675, 27);
             this.lblBorrowBookCopies.Name = "lblBorrowBookCopies";
-            this.lblBorrowBookCopies.Size = new System.Drawing.Size(0, 20);
+            this.lblBorrowBookCopies.Size = new System.Drawing.Size(0, 15);
             this.lblBorrowBookCopies.TabIndex = 4;
             // 
             // lblBorrowBookStatus
@@ -398,10 +380,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblBorrowBookStatus.AutoSize = true;
             this.lblBorrowBookStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowBookStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowBookStatus.Location = new System.Drawing.Point(600, 33);
-            this.lblBorrowBookStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowBookStatus.Location = new System.Drawing.Point(450, 27);
             this.lblBorrowBookStatus.Name = "lblBorrowBookStatus";
-            this.lblBorrowBookStatus.Size = new System.Drawing.Size(0, 20);
+            this.lblBorrowBookStatus.Size = new System.Drawing.Size(0, 15);
             this.lblBorrowBookStatus.TabIndex = 3;
             // 
             // lblBorrowBookAuthor
@@ -409,10 +390,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblBorrowBookAuthor.AutoSize = true;
             this.lblBorrowBookAuthor.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowBookAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowBookAuthor.Location = new System.Drawing.Point(300, 33);
-            this.lblBorrowBookAuthor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowBookAuthor.Location = new System.Drawing.Point(225, 27);
             this.lblBorrowBookAuthor.Name = "lblBorrowBookAuthor";
-            this.lblBorrowBookAuthor.Size = new System.Drawing.Size(0, 20);
+            this.lblBorrowBookAuthor.Size = new System.Drawing.Size(0, 15);
             this.lblBorrowBookAuthor.TabIndex = 2;
             // 
             // lblBorrowBookTitle
@@ -420,10 +400,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblBorrowBookTitle.AutoSize = true;
             this.lblBorrowBookTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowBookTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowBookTitle.Location = new System.Drawing.Point(12, 33);
-            this.lblBorrowBookTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowBookTitle.Location = new System.Drawing.Point(9, 27);
             this.lblBorrowBookTitle.Name = "lblBorrowBookTitle";
-            this.lblBorrowBookTitle.Size = new System.Drawing.Size(0, 20);
+            this.lblBorrowBookTitle.Size = new System.Drawing.Size(0, 15);
             this.lblBorrowBookTitle.TabIndex = 1;
             // 
             // lblBorrowBookInfoTitle
@@ -431,10 +410,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblBorrowBookInfoTitle.AutoSize = true;
             this.lblBorrowBookInfoTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBorrowBookInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblBorrowBookInfoTitle.Location = new System.Drawing.Point(4, 0);
-            this.lblBorrowBookInfoTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBorrowBookInfoTitle.Location = new System.Drawing.Point(3, 0);
             this.lblBorrowBookInfoTitle.Name = "lblBorrowBookInfoTitle";
-            this.lblBorrowBookInfoTitle.Size = new System.Drawing.Size(139, 21);
+            this.lblBorrowBookInfoTitle.Size = new System.Drawing.Size(115, 17);
             this.lblBorrowBookInfoTitle.TabIndex = 0;
             this.lblBorrowBookInfoTitle.Text = "Book Information";
             // 
@@ -453,10 +431,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.panelMemberEligibility.Controls.Add(this.lblMemberType);
             this.panelMemberEligibility.Controls.Add(this.lblMemberName);
             this.panelMemberEligibility.Controls.Add(this.lblMemberEligibilityTitle);
-            this.panelMemberEligibility.Location = new System.Drawing.Point(21, 96);
-            this.panelMemberEligibility.Margin = new System.Windows.Forms.Padding(4);
+            this.panelMemberEligibility.Location = new System.Drawing.Point(16, 78);
             this.panelMemberEligibility.Name = "panelMemberEligibility";
-            this.panelMemberEligibility.Size = new System.Drawing.Size(850, 74);
+            this.panelMemberEligibility.Size = new System.Drawing.Size(638, 76);
             this.panelMemberEligibility.TabIndex = 5;
             this.panelMemberEligibility.Visible = false;
             // 
@@ -465,10 +442,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblEligibilityStatus.AutoSize = true;
             this.lblEligibilityStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEligibilityStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this.lblEligibilityStatus.Location = new System.Drawing.Point(980, 33);
-            this.lblEligibilityStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEligibilityStatus.Location = new System.Drawing.Point(735, 27);
             this.lblEligibilityStatus.Name = "lblEligibilityStatus";
-            this.lblEligibilityStatus.Size = new System.Drawing.Size(0, 23);
+            this.lblEligibilityStatus.Size = new System.Drawing.Size(0, 19);
             this.lblEligibilityStatus.TabIndex = 8;
             // 
             // lblEligibilityTitle
@@ -476,10 +452,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblEligibilityTitle.AutoSize = true;
             this.lblEligibilityTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEligibilityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblEligibilityTitle.Location = new System.Drawing.Point(900, 33);
-            this.lblEligibilityTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEligibilityTitle.Location = new System.Drawing.Point(675, 27);
             this.lblEligibilityTitle.Name = "lblEligibilityTitle";
-            this.lblEligibilityTitle.Size = new System.Drawing.Size(76, 20);
+            this.lblEligibilityTitle.Size = new System.Drawing.Size(58, 15);
             this.lblEligibilityTitle.TabIndex = 7;
             this.lblEligibilityTitle.Text = "Eligibility:";
             // 
@@ -488,10 +463,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberFines.AutoSize = true;
             this.lblMemberFines.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberFines.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberFines.Location = new System.Drawing.Point(600, 53);
-            this.lblMemberFines.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberFines.Location = new System.Drawing.Point(450, 43);
             this.lblMemberFines.Name = "lblMemberFines";
-            this.lblMemberFines.Size = new System.Drawing.Size(0, 20);
+            this.lblMemberFines.Size = new System.Drawing.Size(0, 15);
             this.lblMemberFines.TabIndex = 6;
             // 
             // lblMemberOverdue
@@ -499,10 +473,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberOverdue.AutoSize = true;
             this.lblMemberOverdue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberOverdue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberOverdue.Location = new System.Drawing.Point(600, 33);
-            this.lblMemberOverdue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberOverdue.Location = new System.Drawing.Point(450, 27);
             this.lblMemberOverdue.Name = "lblMemberOverdue";
-            this.lblMemberOverdue.Size = new System.Drawing.Size(0, 20);
+            this.lblMemberOverdue.Size = new System.Drawing.Size(0, 15);
             this.lblMemberOverdue.TabIndex = 5;
             // 
             // lblMemberBorrowings
@@ -510,10 +483,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberBorrowings.AutoSize = true;
             this.lblMemberBorrowings.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberBorrowings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberBorrowings.Location = new System.Drawing.Point(300, 53);
-            this.lblMemberBorrowings.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberBorrowings.Location = new System.Drawing.Point(225, 43);
             this.lblMemberBorrowings.Name = "lblMemberBorrowings";
-            this.lblMemberBorrowings.Size = new System.Drawing.Size(0, 20);
+            this.lblMemberBorrowings.Size = new System.Drawing.Size(0, 15);
             this.lblMemberBorrowings.TabIndex = 4;
             // 
             // lblMemberStatus
@@ -521,10 +493,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberStatus.AutoSize = true;
             this.lblMemberStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberStatus.Location = new System.Drawing.Point(300, 33);
-            this.lblMemberStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberStatus.Location = new System.Drawing.Point(225, 27);
             this.lblMemberStatus.Name = "lblMemberStatus";
-            this.lblMemberStatus.Size = new System.Drawing.Size(0, 20);
+            this.lblMemberStatus.Size = new System.Drawing.Size(0, 15);
             this.lblMemberStatus.TabIndex = 3;
             // 
             // lblMemberType
@@ -532,10 +503,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberType.AutoSize = true;
             this.lblMemberType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberType.Location = new System.Drawing.Point(12, 53);
-            this.lblMemberType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberType.Location = new System.Drawing.Point(9, 43);
             this.lblMemberType.Name = "lblMemberType";
-            this.lblMemberType.Size = new System.Drawing.Size(0, 20);
+            this.lblMemberType.Size = new System.Drawing.Size(0, 15);
             this.lblMemberType.TabIndex = 2;
             // 
             // lblMemberName
@@ -543,10 +513,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberName.AutoSize = true;
             this.lblMemberName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberName.Location = new System.Drawing.Point(12, 33);
-            this.lblMemberName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberName.Location = new System.Drawing.Point(9, 27);
             this.lblMemberName.Name = "lblMemberName";
-            this.lblMemberName.Size = new System.Drawing.Size(0, 20);
+            this.lblMemberName.Size = new System.Drawing.Size(0, 15);
             this.lblMemberName.TabIndex = 1;
             // 
             // lblMemberEligibilityTitle
@@ -554,10 +523,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblMemberEligibilityTitle.AutoSize = true;
             this.lblMemberEligibilityTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMemberEligibilityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMemberEligibilityTitle.Location = new System.Drawing.Point(8, 8);
-            this.lblMemberEligibilityTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMemberEligibilityTitle.Location = new System.Drawing.Point(6, 6);
             this.lblMemberEligibilityTitle.Name = "lblMemberEligibilityTitle";
-            this.lblMemberEligibilityTitle.Size = new System.Drawing.Size(143, 21);
+            this.lblMemberEligibilityTitle.Size = new System.Drawing.Size(116, 17);
             this.lblMemberEligibilityTitle.TabIndex = 0;
             this.lblMemberEligibilityTitle.Text = "Member Eligibility";
             // 
@@ -568,10 +536,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.btnProcessCheckOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcessCheckOut.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProcessCheckOut.ForeColor = System.Drawing.Color.White;
-            this.btnProcessCheckOut.Location = new System.Drawing.Point(21, 318);
-            this.btnProcessCheckOut.Margin = new System.Windows.Forms.Padding(4);
+            this.btnProcessCheckOut.Location = new System.Drawing.Point(16, 318);
             this.btnProcessCheckOut.Name = "btnProcessCheckOut";
-            this.btnProcessCheckOut.Size = new System.Drawing.Size(846, 43);
+            this.btnProcessCheckOut.Size = new System.Drawing.Size(634, 35);
             this.btnProcessCheckOut.TabIndex = 4;
             this.btnProcessCheckOut.Text = "Process Check Out";
             this.btnProcessCheckOut.UseVisualStyleBackColor = false;
@@ -583,10 +550,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.txtBorrowBookAccession.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBorrowBookAccession.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBorrowBookAccession.ForeColor = System.Drawing.Color.Gray;
-            this.txtBorrowBookAccession.Location = new System.Drawing.Point(-102, 201);
-            this.txtBorrowBookAccession.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBorrowBookAccession.Location = new System.Drawing.Point(16, 173);
             this.txtBorrowBookAccession.Name = "txtBorrowBookAccession";
-            this.txtBorrowBookAccession.Size = new System.Drawing.Size(846, 30);
+            this.txtBorrowBookAccession.Size = new System.Drawing.Size(635, 25);
             this.txtBorrowBookAccession.TabIndex = 5;
             this.txtBorrowBookAccession.Text = "Enter book ID (e.g., B1001)";
             this.txtBorrowBookAccession.TextChanged += new System.EventHandler(this.txtCheckOutBookID_TextChanged);
@@ -600,10 +566,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblCheckOutBookID.AutoSize = true;
             this.lblCheckOutBookID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckOutBookID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCheckOutBookID.Location = new System.Drawing.Point(17, 174);
-            this.lblCheckOutBookID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCheckOutBookID.Location = new System.Drawing.Point(13, 151);
             this.lblCheckOutBookID.Name = "lblCheckOutBookID";
-            this.lblCheckOutBookID.Size = new System.Drawing.Size(70, 23);
+            this.lblCheckOutBookID.Size = new System.Drawing.Size(58, 19);
             this.lblCheckOutBookID.TabIndex = 4;
             this.lblCheckOutBookID.Text = "Book ID";
             this.lblCheckOutBookID.Click += new System.EventHandler(this.lblCheckOutBookID_Click);
@@ -613,10 +578,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.txtCheckOutMemberID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCheckOutMemberID.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCheckOutMemberID.ForeColor = System.Drawing.Color.Gray;
-            this.txtCheckOutMemberID.Location = new System.Drawing.Point(21, 62);
-            this.txtCheckOutMemberID.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCheckOutMemberID.Location = new System.Drawing.Point(16, 50);
             this.txtCheckOutMemberID.Name = "txtCheckOutMemberID";
-            this.txtCheckOutMemberID.Size = new System.Drawing.Size(850, 30);
+            this.txtCheckOutMemberID.Size = new System.Drawing.Size(638, 25);
             this.txtCheckOutMemberID.TabIndex = 0;
             this.txtCheckOutMemberID.Text = "Format: MEM-000001 or 1";
             this.txtCheckOutMemberID.TextChanged += new System.EventHandler(this.txtCheckOutMemberID_TextChanged);
@@ -629,10 +593,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblCheckOutMemberID.AutoSize = true;
             this.lblCheckOutMemberID.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckOutMemberID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCheckOutMemberID.Location = new System.Drawing.Point(16, 31);
-            this.lblCheckOutMemberID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCheckOutMemberID.Location = new System.Drawing.Point(12, 25);
             this.lblCheckOutMemberID.Name = "lblCheckOutMemberID";
-            this.lblCheckOutMemberID.Size = new System.Drawing.Size(352, 25);
+            this.lblCheckOutMemberID.Size = new System.Drawing.Size(274, 20);
             this.lblCheckOutMemberID.TabIndex = 1;
             this.lblCheckOutMemberID.Text = "Member ID (Format: MEM-000001 or 1)";
             this.lblCheckOutMemberID.Click += new System.EventHandler(this.lblCheckOutMemberID_Click);
@@ -642,10 +605,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblCheckOutBookTitle.AutoSize = true;
             this.lblCheckOutBookTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheckOutBookTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblCheckOutBookTitle.Location = new System.Drawing.Point(16, 3);
-            this.lblCheckOutBookTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCheckOutBookTitle.Location = new System.Drawing.Point(12, 2);
             this.lblCheckOutBookTitle.Name = "lblCheckOutBookTitle";
-            this.lblCheckOutBookTitle.Size = new System.Drawing.Size(163, 28);
+            this.lblCheckOutBookTitle.Size = new System.Drawing.Size(131, 21);
             this.lblCheckOutBookTitle.TabIndex = 0;
             this.lblCheckOutBookTitle.Text = "Check Out Book";
             this.lblCheckOutBookTitle.Click += new System.EventHandler(this.lblCheckOutBookTitle_Click);
@@ -654,10 +616,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             // 
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.lblSubtitle);
-            this.panelHeader.Location = new System.Drawing.Point(32, 30);
-            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
+            this.panelHeader.Location = new System.Drawing.Point(24, 24);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1615, 92);
+            this.panelHeader.Size = new System.Drawing.Size(1211, 75);
             this.panelHeader.TabIndex = 0;
             this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelHeader_Paint);
             // 
@@ -666,10 +627,9 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTitle.Location = new System.Drawing.Point(4, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Location = new System.Drawing.Point(3, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(489, 54);
+            this.lblTitle.Size = new System.Drawing.Size(389, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Circulation Management";
             this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
@@ -679,35 +639,33 @@ namespace Project5LMS.Forms.LibraryStaff.Circulation
             this.lblSubtitle.AutoSize = true;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(19, 54);
-            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSubtitle.Location = new System.Drawing.Point(14, 44);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(289, 23);
+            this.lblSubtitle.Size = new System.Drawing.Size(234, 19);
             this.lblSubtitle.TabIndex = 0;
             this.lblSubtitle.Text = "Manage book checkouts and returns";
             this.lblSubtitle.Click += new System.EventHandler(this.lblSubtitle_Click);
             // 
             // StaffCirculationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1832, 1021);
+            this.ClientSize = new System.Drawing.Size(1374, 830);
             this.Controls.Add(this.panelMainContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(1067, 738);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "StaffCirculationForm";
             this.Text = "Circulation";
             this.Load += new System.EventHandler(this.StaffCirculationForm_Load);
             this.panelMainContainer.ResumeLayout(false);
+            this.panelCirculationManagement.ResumeLayout(false);
+            this.panelCirculationManagement.PerformLayout();
             this.panelTransactionHistory.ResumeLayout(false);
             this.panelTransactionHistory.PerformLayout();
             this.panelTransactionsList.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
-            this.panelCirculationManagement.ResumeLayout(false);
-            this.panelCirculationManagement.PerformLayout();
             this.panelReturnBook.ResumeLayout(false);
             this.panelReturnBook.PerformLayout();
             this.panelCheckOutBook.ResumeLayout(false);
